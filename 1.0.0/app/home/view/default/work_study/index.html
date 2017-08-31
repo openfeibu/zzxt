@@ -1,0 +1,180 @@
+{include file="public/header/nav_membership_header"}
+
+<!--<div class="nav printHide">
+    <ul class="w1000">
+        <li><a href="{:url('/personal')}">首页</a></li>
+        <li class=" active"><a href="{:url('home/workstudy/resume')}">个人信息</a></li>
+        <li><a href="{:url('home/workstudy/list')}">岗位申报</a></li>
+        <li><a href="{:url('home/workstudy/showStatusList')}">申报状态</a></li>
+        <li><a href="{:url('/notice')}">公示公告</a></li>
+    </ul>
+</div>-->
+
+<!-- 主体内容 S -->
+<div class="main w1000" style="background:#fff;">
+    <form action="" method="post">
+
+    <!--startprint1-->
+    <div class="personal_table">
+
+        <table width="756px">
+            <tbody>
+            <tr style="height:30px;">
+                <td colspan="2">
+
+                </td>
+                <td colspan="1" style="text-align: right;">
+                    <span style="font-size: 13px;color: grey;">广东农工商职业技术学院</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center;font-size: 25px;font-weight: bold;border-top:1px solid #000000;line-height:48px;">
+                    勤工助学个人简历
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <table width="756px" class="k-w-table line_table">
+            <tbody>
+            <tr class="line-table-height work_tab">
+                <td rowspan="4" class="k-s-content title" style="width: 40px;">个人信息</td>
+                <td class="k-s-content title">姓名</td>
+                <td class="k-s-content content"><input type="text" name="studentname" value="{$list.studentname}"/></td>
+                <td class="k-s-content title">学号</td>
+                <td class="k-s-content content"><input type="text" name="studentid" value="{$list.studentid}"/></td>
+                <td class="k-s-content title">性别</td>
+                <td class="k-s-content content"><input type="text" name="gender"value="{$list.gender}" /></td>
+            </tr>
+            <tr class="line-table-height">
+                <td class="k-s-content title">系专业班级</td>
+                <td class="k-s-content content"><input type="text" name="class" value="{$list.department_name}{$list.profession}{$list.class}"/></td>
+                <td class="k-s-content title">主修课程</td>
+                <td class="k-s-content content"><input type="text" name="major" value="{$list.major}"/></td>
+                <td class="k-s-content title">出生日期</td>
+                <td class="k-s-content content"><input type="text" name="birthday"value="{$list.birthday}" /></td>
+            </tr>
+            <tr class="line-table-height">
+                <td class="k-s-content title">籍贯</td>
+                <td class="k-s-content content"><input type="text" name="native"value="{$list.native}" /></td>
+                <td class="k-s-content title">民族</td>
+                <td class="k-s-content content"><input type="text" name="nation" value="{$list.nation}"/></td>
+                <td class="k-s-content title">政治面貌</td>
+                <td class="k-s-content content"><input type="text" name="political" value="{$list.political}"/></td>
+            </tr>
+            <tr class="line-table-height">
+                <td class="k-s-content title">身份证号</td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="id_number" value="{$list.id_number}"/></td>
+                <td class="k-s-content title">身高体重</td>
+                <td colspan="2" class="k-s-content content">
+                    <div class="ranking">
+                        <input type="text" name="height"value="{$list.height}">
+                        （身高/cm）
+                        /
+                        <input type="text" name="weight"value="{$list.weight}">
+                        （体重/kg）
+                    </div>
+                </td>
+            </tr>
+            <!--联系方式-->
+            <tr class="line-table-height">
+                <td rowspan="2" class="k-s-content title" style="width: 40px;">联系方式</td>
+                <td class="k-s-content title">微信/QQ</td>
+                <td class="k-s-content content"><input type="text" name="instant_messaging" value="{$list.instant_messaging}"/></td>
+                <td class="k-s-content title">家庭住址</td>
+                <td class="k-s-content content"><input type="text" name="address" value="{$list.address}" /></td>
+                <td class="k-s-content title">联系电话</td>
+                <td class="k-s-content content"><input type="text" name="tel" value="{$list.tel}"/></td>
+            </tr>
+            <tr class="line-table-height">
+                <td class="k-s-content title">邮箱</td>
+                <td class="k-s-content content"><input type="text" name="email" value="{$list.email}"/></td>
+                <td class="k-s-content title">辅导员姓名</td>
+                <td class="k-s-content content"><input type="text" name="counselor_name" value="{$list.counselor_name}"/></td>
+                <td class="k-s-content title">辅导员电话</td>
+                <td class="k-s-content content"><input type="text" name="counselor_tel" value="{$list.counselor_tel}"/></td>
+            </tr>
+            <!--获奖情况-->
+            <tr class="line-table-height">
+                <td class="k-s-content title">获奖情况</td>
+                <td colspan="6">
+                    <textarea name="awards" id="" class="longtext">{$list.awards}</textarea>
+                </td>
+            </tr>
+            <!--工作经历-->
+            <tr class="line-table-height">
+                <td rowspan="6" class="k-s-content title" style="width: 40px;">学习经历与工作实践经历</td>
+                <td colspan="2" class="k-s-content title">日期</td>
+                <td colspan="2" class="k-s-content title">项目名称</td>
+                <td colspan="2" class="k-s-content title">职位</td>
+            </tr>
+            <tr class="line-table-height">
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[0][time]" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[0][name]" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[0][position]" /></td>
+            </tr>
+            <tr class="line-table-height">
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[1][time]" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[1][name]" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[1][position]" /></td>
+            </tr>
+            <tr class="line-table-height">
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[2][time]" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[2][name]" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[2][position]" /></td>
+            </tr>
+            <tr class="line-table-height">
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[3][time]" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[3][name]" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[3][position]" /></td>
+            </tr>
+            <tr class="line-table-height">
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[4][time]" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[4][name]" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="experience[4][position]" /></td>
+            </tr>
+            <!--兴趣爱好-->
+            <tr class="line-table-height">
+                <td class="k-s-content title" style="width: 40px;">兴趣爱好</td>
+                <td colspan="6" class="k-s-content content">
+                    <textarea name="hobby" id="" class="longtext">{$list.hobby}</textarea>
+                </td>
+            </tr>
+            <!--自我评价-->
+            <tr class="line-table-height">
+                <td class="k-s-content title" style="width: 40px;">自我评价</td>
+                <td colspan="6" class="k-s-content content">
+                    <textarea name="self_evaluation" id="" class="longtext">{$list.self_evaluation}</textarea>
+                </td>
+            </tr>
+            <!--申请理由-->
+            <tr class="line-table-height">
+                <td class="k-s-content title" style="width: 40px;">申请理由</td>
+                <td colspan="6" class="k-s-content content">
+                    <textarea name="apply_reason" id="" class="longtext">{$list.apply_reason}</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <button type="submit" class="print printHide">提交</button>
+    </form>
+
+</div>
+<script>
+    if ($("textarea[name='apply_reason']").val() != '') {
+        $.get("{:url('home/workstudy/ajaxforresume')}", function(data){
+            data = JSON.parse(data)
+            $.each(data,function(index, val){
+                $.each(val,function(key, value){
+                    $("input[name='experience["+index+"]["+key+"]']").val(value);
+                })
+            })
+        })
+    }
+
+</script>
+<!-- 主体内容 E -->
+
+{include file="public/footer"}

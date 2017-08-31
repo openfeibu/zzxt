@@ -1,0 +1,125 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>国家助学金班级审核
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div>
+                <div class="personal_num">
+                    <div class="passed">
+                        <p class="success_bg">班级评定通过人数：</p>
+                        <p class="default_bg"><span>{$yes_count}</span>人</p>
+                    </div>
+                    <div class="passed pull-right">
+                        <p class="danger_bg">班级未评定通过人数：</p>
+                        <p class="default_bg"><span>{$no_count}</span>人</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <form class="tab_inquire" method="post">
+                    <p>筛选：</p>
+                    <select class="form-control tab_select class_select" name="assess">
+                        <option value="0">全班评定</option>
+                        <option value="1">班级已评定</option>
+                        <option value="2">班级未评定</option>
+                        <!--<option value="3">院系已评定</option>-->
+                        <!--<option value="4">院系未评定</option>-->
+                    </select>
+                    <div class="tab_search">
+                        <input type="text" placeholder="学号/姓名" name="studentname">
+                        <button class="btn btn-info btn-sm" type="submit">查询</button>
+                    </div>
+                </form>
+                <!--<table class="table table-striped table-bordered table-hover tab_center">
+                    <thead>
+                    <th class="info_bg">序号</th>
+                    <th class="info_bg">姓名</th>
+                    <th class="info_bg">学号</th>
+                    <th class="info_bg">专业</th>
+                    <th class="info_bg">状态</th>
+                    <th class="info_bg">操作</th>
+                    </thead>
+                    <tbody>
+                    {foreach $user as $row}
+                    <tr>
+                        <td class="tab_content">{$row.status_id}</td>
+                        <td class="tab_content">{$row.studentname}</td>
+                        <td class="tab_content">{$row.user_id}</td>
+                        <td class="tab_content">{$row.department_name}{$row.profession}{$row.class}</td>
+                        <td class="tab_content">
+                            {if condition="$row.status == 1"}申请书已经提交
+                            {elseif condition="$row.status==2"}班级小组通过/辅导员通过
+                            {elseif condition="$row.status==3"}院系小组通过
+                            {elseif condition="$row.status==4"}学生处通过
+                            {elseif condition="$row.status==5"}班级小组不通过
+                            {elseif condition="$row.status==6"}院系小组不通过
+                            {elseif condition="$row.status==7"}学生处不通过
+                            {/if}
+                        </td>
+                        <td class="tab_content">
+                            <div class="audit_opera">
+                                <a href="{:url('admin/ScholarshipsGroup/showMaterial',['id'=>$row.status_id,'type_id'=>$id])}" class="btn btn-info btn-sm">添加评语</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>-->
+                <table  id="simple-table"  class="table table-striped table-bordered table-hover tab_center">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>姓名</th>
+                        <th>学号</th>
+                        <th>专业</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    {foreach $user as $row}
+                    <tr>
+                        <td>{$row.status_id}</td>
+                        <td>{$row.studentname}</td>
+                        <td>{$row.user_id}</td>
+                        <td>{$row.department_name}{$row.profession}{$row.class}</td>
+                        <td>
+                            {if condition="$row.status == 1"}申请书已经提交
+                            {elseif condition="$row.status==2"}班级小组通过/辅导员通过
+                            {elseif condition="$row.status==3"}院系小组通过
+                            {elseif condition="$row.status==4"}学生处通过
+                            {elseif condition="$row.status==5"}班级小组不通过
+                            {elseif condition="$row.status==6"}院系小组不通过
+                            {elseif condition="$row.status==7"}学生处不通过
+                            {/if}
+                        </td>
+                        <td>
+                            <div class="audit_opera">
+                                <a href="{:url('admin/ScholarshipsGroup/showMaterial',['id'=>$row.status_id,'type_id'=>$id])}" class="btn btn-info btn-sm">添加评语</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+                <div class="notice_page" style="margin: 40px 0 0  0">
+                    {$list->render()}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,139 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="">设置调查问券</a>
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="ques_des">
+                <p>学生资助管理系统调查问卷编辑</p>
+            </div>
+            <form class="">
+                <div class="ques_module">
+                    <div class="ques_b_title">
+                        <input type="text" value="一、基本情况">
+                        <div class="control_btn">
+                            <a class="btn btn-info btn-sm ques_b_add">添加子类</a>
+                            <a class="btn btn-success btn-sm">点击修改</a>
+                            <a class="btn btn-danger btn-sm ques_b_remove">删除本项</a>
+                        </div>
+                    </div>
+                    <div class="ques_m_title">
+                        <input type="text" value="1、您家庭所在地：">
+                        <div class="control_btn">
+                            选择类型：
+                            <select class="form-control">
+                                <option>单项选择</option>
+                                <option>多项选择</option>
+                                <option>文本框</option>
+                            </select>
+                            <a class="btn btn-info btn-sm ques_m_add">添加子类</a>
+                            <a class="btn btn-success btn-sm">点击修改</a>
+                            <a class="btn btn-danger btn-sm ques_m_remove">删除本项</a>
+                        </div>
+                        <ul class="ques_m_option">
+                            <li>
+                                <input type="text" value="A、 直辖市或省会城市">
+                                <div class="control_btn">
+                                    <a class="btn btn-success btn-sm">点击修改</a>
+                                    <a class="btn btn-danger btn-sm ques_s_remove">删除本项</a>
+                                </div>
+                            </li>
+                            <li>
+                                <input type="text" value="B、 地级市">
+                                <div class="control_btn">
+                                    <a class="btn btn-success btn-sm">点击修改</a>
+                                    <a class="btn btn-danger btn-sm ques_s_remove">删除本项</a>
+                                </div>
+                            </li>
+                            <li>
+                                <input type="text" value="C、 县级市或县城乡镇">
+                                <div class="control_btn">
+                                    <a class="btn btn-success btn-sm">点击修改</a>
+                                    <a class="btn btn-danger btn-sm ques_s_remove">删除本项</a>
+                                </div>
+                            </li>
+                            <li>
+                                <input type="text" value="D、 农村">
+                                <div class="control_btn">
+                                    <a class="btn btn-success btn-sm">点击修改</a>
+                                    <a class="btn btn-danger btn-sm ques_s_remove">删除本项</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="ques_module">
+                    <div class="ques_b_title">
+                        <input type="text" value="二、勤工助学及日常情况">
+                        <div class="control_btn">
+                            <a class="btn btn-info btn-sm ques_b_add">添加子类</a>
+                            <a class="btn btn-success btn-sm">点击修改</a>
+                            <a class="btn btn-danger btn-sm ques_b_remove">删除本项</a>
+                        </div>
+                    </div>
+                    <div class="ques_m_title" tid="2">
+                        <input type="text" value="3、您参加过勤工助学活动：">
+                        <div class="control_btn">
+                            选择类型：
+                            <select class="form-control">
+                                <option>单项选择</option>
+                                <option>多项选择</option>
+                                <option>文本框</option>
+                            </select>
+                            <a class="btn btn-info btn-sm ques_m_add">添加子类</a>
+                            <a class="btn btn-success btn-sm">点击修改</a>
+                            <a class="btn btn-danger btn-sm ques_m_remove">删除本项</a>
+                        </div>
+                        <ul class="ques_m_option" tid="2">
+                            <li>
+                                <input type="text" value="A、是">
+                                <div class="control_btn">
+                                    <a class="btn btn-success btn-sm">点击修改</a>
+                                    <a class="btn btn-danger btn-sm ques_s_remove">删除本项</a>
+                                </div>
+                            </li>
+                            <li>
+                                <input type="text" value="B、否">
+                                <div class="control_btn">
+                                    <a class="btn btn-success btn-sm">点击修改</a>
+                                    <a class="btn btn-danger btn-sm ques_s_remove">删除本项</a>
+                                </div>
+                            </li>
+                            <li>
+                                <input type="text" value="A、是">
+                                <div class="control_btn">
+                                    <a class="btn btn-success btn-sm">点击修改</a>
+                                    <a class="btn btn-danger btn-sm ques_s_remove">删除本项</a>
+                                </div>
+                            </li>
+                            <li>
+                                <input type="text" value="B、否">
+                                <div class="control_btn">
+                                    <a class="btn btn-success btn-sm">点击修改</a>
+                                    <a class="btn btn-danger btn-sm ques_s_remove">删除本项</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <a class="ques_type_add">
+                    <i class="fa fa-plus fa-3x" aria-hidden="true"></i>
+                    <p>点击添加分类</p>
+                </a>
+            </form>
+        </div><!--column/12-->
+    </div><!--row-->
+</div><!--page-content-->
+{/block}

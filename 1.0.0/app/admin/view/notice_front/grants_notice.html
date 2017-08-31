@@ -1,0 +1,77 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1 style="display: inline-block;">
+            您当前操作
+            <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>查看国家助学金院系公示结果
+            </small>
+        </h1>
+        <div class="pull-right" style="margin: 10px 15% 20px 0;">
+            <a href="" class="btn btn-info btn-sm">全院</a>
+            <a href="" class="btn btn-info btn-sm">本系</a>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div >
+                <!--<div>-->
+                    <!--<a href="" class="btn btn-info btn-sm">评估结果公示</a>-->
+                    <!--<a href="" class="btn btn-info btn-sm">助学金公示</a>-->
+                    <!--<a href="" class="btn btn-info btn-sm">奖学金</a>-->
+                    <!--<a href="" class="btn btn-info btn-sm">励志奖学金</a>-->
+                <!--</div>-->
+
+                <table class="table_heading" style="width:100%">
+                    <tr>
+                        <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;line-height: 48px;">
+                            国家助学金结果院系公示
+                        </td>
+                    </tr>
+                </table>
+                <table id="simple-table"  class="table table-striped table-bordered table-hover tab_center">
+                    <thead>
+                    <th>姓名</th>
+                    <th>学号</th>
+                    <th>班级</th>
+                    <th>公示时间</th>
+                    </thead>
+                    <tbody>
+                    {foreach $list as $row}
+                    <tr>
+                        <td>{$row.studentname}</td>
+                        <td>{$row.user_id}</td>
+                        <td>{$row.profession}{$row.class}</td>
+                        <td>{$row.publicity_begin|date='Y-n-d',###}—{$row.publicity_end|date='Y-n-d',###}</td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>
+                <!--<table class="table table-bordered table-hover tab_center">
+                    <thead>
+                    <th class="info_bg">姓名</th>
+                    <th class="info_bg">学号</th>
+                    <th class="info_bg">班级</th>
+                    <th class="info_bg">公示时间</th>
+                    </thead>
+                    <tbody>
+                    {foreach $list as $row}
+                    <tr>
+                        <td>{$row.studentname}</td>
+                        <td>{$row.user_id}</td>
+                        <td>{$row.profession}{$row.class}</td>
+                        <td>{$row.publicity_begin|date='Y-n-d',###}—{$row.publicity_end|date='Y-n-d',###}</td>
+                    </tr>
+                    {/foreach}
+                    </tbody>
+                </table>-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="notice_page">
+    {$list->render()}
+</div>
+{/block}

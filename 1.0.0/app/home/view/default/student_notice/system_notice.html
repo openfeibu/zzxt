@@ -1,0 +1,57 @@
+{include file="public/header/nav_membership_header"}
+
+<!-- 导航 -->
+<!--<div class="nav">-->
+    <!--<ul class="w1000">-->
+        <!--<li class=""><a href="{:url('/index_front')}">首页</a></li>-->
+        <!--<li class=""><a href="{:url('home/Show/evalu_notice')}">家庭经济评估公示</a></li>-->
+        <!--<li class=""><a href="{:url('home/show/grants_notice')}">国家助学金公示</a></li>-->
+        <!--<li class=""><a href="{:url('home/Show/scholar_notice')}">国家奖学金公示</a></li>-->
+        <!--<li class=""><a href="{:url('home/show/motiv_notice')}">国家励志奖学金公示</a></li>-->
+        <!--<li class="active"><a href="{:url('home/Listn/showlist')}">系统公告</a></li>-->
+    <!--</ul>-->
+<!--</div>-->
+<!-- 导航 -->
+<!-- 主体内容 S -->
+<div class="main w1000">
+    <div class="fb-source">
+        <ul>
+            <li>
+                <a href="">首页</a>
+                <span >-></span>
+            </li>
+            <li>
+                <a>资助新闻</a>
+                <span >-></span>
+            </li>
+
+        </ul>
+    </div>
+    <!-- 通知公告 -->
+    <div class="fb-list" >
+
+        <ul>
+            {volist name="lists['news']" id="vo"}
+            <li><a href="{:url('home/News/index',array('id'=>$vo['n_id']))}"><p>{$vo.news_title}</p><span>{$vo.news_time||date="Y-m-d",###}</span></a></li>
+            {/volist}
+        </ul>
+        <div class="fb-page">
+            <!--<ol>-->
+                <!--<li><a href="">首页</a></li>-->
+                <!--<li><a href="">上一页</a></li>-->
+                <!--<li><a class="active" href="">1</a></li>-->
+                <!--<li><a href="">2</a></li>-->
+                <!--<li><a href="">3</a></li>-->
+                <!--<li><a href="">4</a></li>-->
+                <!--<li><a href="">5</a></li>-->
+                <!--<li><a href="">下一页</a></li>-->
+            <!--</ol>-->
+            {$page_html}
+        </div>
+    </div>
+    <!-- 通知公告 -->
+
+</div>
+<!-- 主体内容 E -->
+
+{include file="public/footer"}

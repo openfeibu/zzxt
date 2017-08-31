@@ -1,0 +1,48 @@
+{include file="public/header/scholarships_header"}
+
+{include file="scholarship/scho_header"}
+
+<!-- 主体内容 S -->
+<div class="main w1000" style="background:#fff;">
+    <div class="fb-source source_none" >
+        <ul>
+            <li>
+                <a href="">首页</a>
+                <span >-></span>
+            </li>
+            <li>
+                <a>审核状态</a>
+                <span >-></span>
+            </li>
+        </ul>
+    </div>
+    <div class="myexam">
+        <table width="800" style="margin:0 auto;border-radio:5px;font-size: 16px;line-height: 32px;">
+            <tr class="line-table-height" style="font-size:16px;background:#438EB9;color:#fff;line-height:35px">
+                <td class="k-s-content" width="40%">审核项目</td>
+                <td class="k-s-content" >状态</td>
+            </tr>
+            <tr class="line-table-height">
+                <td class="k-s-content"  width="40%">国家助学金</td>
+                <td class="k-s-content" >
+                    <span {if $m_status == '未申请' || $m_status == '未通过'}class="review-error" {elseif $m_status == '审核中'}class="reviewing" {else/}class="review-success"{/if}>{$m_status}</span>
+                </td>
+            </tr>
+            <tr class="line-table-height">
+                <td class="k-s-content" width="40%">国家奖学金</td>
+                <td class="k-s-content" >
+                    <span {if $u_status == '未申请' || $u_status == '未通过'}class="review-error" {elseif $u_status == '审核中'}class="reviewing" {else/}class="review-success"{/if}>{$u_status}</span>
+                </td>
+            </tr>
+            <tr class="line-table-height">
+                <td class="k-s-content"  width="40%">国家励志奖学金</td>
+                <td class="k-s-content" >
+                    <span {if $n_status == '未申请' || $n_status == '未通过'}class="review-error" {elseif $n_status == '审核中'}class="reviewing" {else/}class="review-success"{/if}>{$n_status}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!-- 主体内容 E -->
+
+{include file="public/footer"}

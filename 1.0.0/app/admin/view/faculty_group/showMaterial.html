@@ -1,0 +1,194 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="{:url('admin/scholarships_group/showreviewlist')}">国家助学金班级审核</a>
+            </small>
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                添加评语
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="w800">
+                <table class="table_heading" style="width:100%">
+                    <tr>
+                        <td colspan="2"></td>
+                        <td style="text-align: right"><span style="font-size: 13px;color:grey;">广东农工商职业技术学院</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
+                            普通本科高校、高等职业学校国家助学金申请表
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered tab_center">
+                    <!--本人情况-->
+                    <tr>
+                        <td rowspan="4" class="tab_title tab_40px">本人情况</td>
+                        <td class="tab_title tab_80px">姓名</td>
+                        <td class="tab_content tab_100px">{$user.studentname}</td>
+                        <td class="tab_title">性别</td>
+                        <td class="tab_content">{$user.gender}</td>
+                        <td class="tab_title">出生年月</td>
+                        <td class="tab_content tab_140px">{$user.birthday}</td>
+                        <td colspan="2" rowspan="4" class="tab_content tab_126px">
+                            <img src="{$user.photo}" style="width: 125px; height: 175px;" alt="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">民族</td>
+                        <td class="tab_content">{$user.nation}</td>
+                        <td class="tab_title">政治面貌</td>
+                        <td class="tab_content">{$user.political}</td>
+                        <td class="tab_title">学号</td>
+                        <td class="tab_content">{$user.user_id}</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">身份证号</td>
+                        <td colspan="3" class="tab_content">{$user.id_number}</td>
+                        <td class="tab_title">联系电话</td>
+                        <td class="tab_content">{$user.tel}</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">学院、院系、班级</td>
+                        <td colspan="5" class="tab_content">广东农工商职业技术学院{$user.department_name}{$user.profession}{$user.class}</td>
+                    </tr>
+                    <!--家庭经济情况-->
+                    <tr>
+                        <td rowspan="3" class="tab_title">家庭经济情况</td>
+                        <td class="tab_title">家庭户口</td>
+                        <td colspan="5" class="tab_content">
+                            <div style="display:inline-block;margin-right: 20px;">
+                                <label>
+                                    <input {if condition="$user.family_type==0"} checked {/if} disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>城镇
+                                </label>
+                            </div>
+                            <div style="display:inline-block;">
+                                <label>
+                                    <input {if condition="$user.family_type==1"} checked {/if} disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>农村
+                                </label>
+                            </div>
+                        </td>
+                        <td class="tab_title">家庭总人口数</td>
+                        <td class="tab_content">{$user.population}</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">家庭月总收入</td>
+                        <td class="tab_content">{$user.monthly_total_income}</td>
+                        <td class="tab_title">人均月收入</td>
+                        <td class="tab_content">{$user.monthly_people_income}</td>
+                        <td class="tab_title">收入来源</td>
+                        <td colspan="3" class="tab_content">{$user.income_source}</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">家庭住址</td>
+                        <td colspan="5" class="tab_content">{$user.address}</td>
+                        <td class="tab_title">邮政编码</td>
+                        <td class="tab_content">{$user.zip_code}</td>
+                    </tr>
+                    <!--家庭成员情况-->
+                    <?php $num = count($user['members']);?>
+                    <tr><!--自行替换为要循环出来的数量+1-->
+                        <td rowspan="{$num+1    }"  class="tab_title">家庭成员情况</td>
+                        <td class="tab_title">姓名</td>
+                        <td class="tab_title">年龄</td>
+                        <td class="tab_title">与本人关系</td>
+                        <td colspan="5" class="tab_title">工作或学习单位</td>
+                    </tr>
+                    {foreach $user.members as $r}
+                    <tr>
+                        <td class="tab_content">{$r.name}</td>
+                        <td class="tab_content">{$r.age}</td>
+                        <td class="tab_content">{$r.relation}</td>
+                        <td colspan="5" class="tab_content">{$r.unit}</td>
+                    </tr>
+                    {/foreach}
+                    <!--申请理由-->
+                    <tr>
+                        <td colspan="9" class="tab_content">
+                            <p class="tab_left">申请理由</p>
+                            <textarea name="" id="" class="tab_opinion" disabled>{$user.reason}</textarea>
+                            <div class="tab_sign">
+                                <label for="">申请人签名：</label>
+                                <input type="text" value="{$user.studentname}" disabled>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="tab_time">
+                                <input type="text" value="{$user.create_at|date='Y',###}" disabled>年
+                                <input type="text" value="{$user.create_at|date='n',###}" disabled>月
+                                <input type="text" value="{$user.create_at|date='d',###}" disabled>日
+                            </div>
+                        </td>
+                    </tr>
+                    <!--班级小组评语-->
+                    <tr>
+                        <td colspan="9" class="tab_content">
+                            <p class="tab_left">班级评定小组意见</p>
+                            <textarea class="tab_opinion" disabled>{$user.group_opinion.text}</textarea>
+                            <div class="tab_sign">
+                                <label for="">组长签名：</label>
+                                <input type="text" value="{$user.group_opinion.name}" disabled>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="tab_time">
+                                <input type="text" value="{$user.group_opinion.time|date='Y',###}" disabled>年
+                                <input type="text" value="{$user.group_opinion.time|date='n',###}"disabled>月
+                                <input type="text" value="{$user.group_opinion.time|date='d',###}"disabled>日
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <form action="{:url('admin/FacultyGroup/fillMultipleOpinion')}" method="post">
+                    <table class="w800">
+                        <tr>
+                            <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">院系小组添加评语：</p></td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="tab_content">
+                                <textarea name="faculty_opinion[text]" id="" class="tab_opinion">{$user.faculty_opinion.text}</textarea>
+                                <div class="tab_sign">
+                                    <label for="">院系小组负责人签名：</label>
+                                    <input type="text" name="faculty_opinion[name]" value="{$user.faculty_opinion.name}">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="tab_time">
+                                    <input type="text" name="faculty_opinion[year]" value="{$user.faculty_opinion.time|date='Y',###}">年
+                                    <input type="text" name="faculty_opinion[month]" value="{$user.faculty_opinion.time|date='n',###}">月
+                                    <input type="text" name="faculty_opinion[day]" value="{$user.faculty_opinion.time|date='d',###}">日
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="height: 30px;"></td>
+                        </tr>
+                        <input type="hidden" value="{$user.user_id}" name="user_id">
+                        <input type="hidden" value="{$id}" name="status_id">
+                        <input type="hidden" value="{$type_id}" name="type_id">
+                            <tr>
+                                <td style="width: 266px;"></td>
+                                <td class="tab_content" style="width: 266px;">
+                                    <input type="submit"  class="btn btn-success" name="pass" value="通过">
+                                    <input type="submit" class="btn btn-danger" name="fail" value="不通过">
+                                </td>
+                                <td style="width: 266px;"></td>
+                            </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

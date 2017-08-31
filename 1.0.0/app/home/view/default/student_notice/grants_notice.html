@@ -1,0 +1,57 @@
+{include file="public/header/nav_membership_header"}
+
+<!-- 导航 -->
+<!--{include file="student_notice/notice_header"}-->
+<!-- 主体内容 S -->
+<div class="main w1000">
+    <div class="fb-source">
+        <ul>
+            <li>
+                <a href="">首页</a>
+                <span >-></span>
+            </li>
+            <li>
+                <a>国家助学金公示结果</a>
+                <span >-></span>
+            </li>
+        </ul>
+    </div>
+    {if empty($list)}
+    公示时间为：{$open_time.begin_time|date='Y-n-d',###} —— {$open_time.end_time|date='Y-n-d',###}
+    {else}
+    <form action="" method="post">
+        <div class="notice_select">
+            <button class="btn btn-sm" style="margin-bottom: 12px;">查看本系</button>
+            <button class="btn btn-sm" style="margin-bottom: 12px;">查看全院</button>
+        </div>
+
+    </form>
+    <table width="756px" class="k-w-table line_table" style="margin: 10px auto 20px auto;">
+        <thead>
+        <th class="info_bg k-s-content title">姓名</th>
+        <th class="info_bg k-s-content title">学号</th>
+        <th class="info_bg k-s-content title">班级</th>
+        <th class="info_bg k-s-content title">评议分数</th>
+        <th class="info_bg k-s-content title">评议等级</th>
+        </thead>
+        <tbody>
+        <tr class="line-table-height">
+            <td class="k-s-content content">{$row.studentname}</td>
+            <td class="k-s-content content">{$row.user_id}</td>
+            <td class="k-s-content content">{$row.profession}{$row.class}</td>
+            <td class="k-s-content content"></td>
+            <td class="k-s-content content"></td>
+        </tr>
+        </tbody>
+    </table>
+    {/if}
+</div>
+<!-- 主体内容 E -->
+
+{include file="public/footer"}
+
+
+
+
+
+

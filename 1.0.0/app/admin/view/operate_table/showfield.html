@@ -1,0 +1,235 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content">
+
+    <div class="row maintop">
+        <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 字段列表：  </label>
+        <div class="col-sm-10">
+            <label class="col-sm-12 no-padding-left">
+                <a class="purple new-row" href="" data-toggle="modal" data-target="#myModal" title="插入到最后">
+                    <i class="ace-icon fa fa-plus-circle bigger-130"></i>添加字段
+                </a>
+            </label>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <form id="export-form" method="post"   class="form-horizontal"  action="{:url('admin/Sys/export')}">
+                    <table class="table table-striped table-bordered table-hover" id="dynamic-table">
+                        <thead>
+                        <tr>
+                            <!--<th width="4%" align="center" style="text-align:center;">-->
+                                <!--<label class="pos-rel">-->
+                                    <!--<input class="check-all ace" id='chkAll' checked="chedked" type="checkbox" value=""  onclick='CheckAll(this.form)'>-->
+                                    <!--<span class="lbl"></span>-->
+                                <!--</label></th>-->
+                            <th>名称</th>
+                            <th class="hidden-sm hidden-xs">标题</th>
+                            <th class="hidden-sm hidden-xs">类型</th>
+                            <!--<th class="hidden-sm hidden-xs">创建时间</th>-->
+                            <th style="border-right:#CCC solid 1px;">操作</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        {foreach $list as $row}
+                        <tr>
+                            <!--<td height="28" align="center" >-->
+                                <!--<label class="pos-rel">-->
+                                    <!--<input class="ids ace" checked="chedked" type="checkbox" name="tables[]" value="">-->
+                                    <!--<span class="lbl"></span>-->
+                                <!--</label>-->
+                            <!--</td>-->
+                            <td>{$row.field}</td>
+                            <td class="hidden-sm hidden-xs">{$row.name}</td>
+                            <td class="hidden-sm hidden-xs">{$row.option_type}</td>
+                            <td>
+                                <div class="hidden-sm hidden-xs action-buttons" >
+                                    <a class="green"  id="" title="修改表" href="{:url('/OperateTable/checkField',['field'=>$row.field])}">
+                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                    </a>
+                                    <a class="red" href="{:url('/OperateTable/delete',['field'=>$row.field])}" title="删除字段">
+                                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                    </a>
+                                </div>
+                                <div class="hidden-md hidden-lg">
+                                    <div class="inline position-relative">
+                                        <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                            <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                            <li>
+                                                <a href="{:url('admin/Sys/optimize?tables='.$v['name'])}" id="optimize_{$v['name']}"  class="tooltip-success" data-rel="tooltip" title="" data-original-title="优化表">
+																	<span class="green">
+																		<i class="ace-icon fa fa-check-circle bigger-120"></i>
+																	</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{:url('admin/Sys/repair?tables='.$v['name'])}" id="repair_{$v['name']}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="修复表">
+																	<span class="green">
+																		<i class="ace-icon fa fa-check-square-o bigger-120"></i>
+																	</span>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="{:url('admin/Sys/exportsql?table='.$v['name'])}"  class="tooltip-error" data-rel="tooltip" title="" data-original-title="备份表">
+																	<span class="red">
+																		<i class="ace-icon fa fa-download bigger-120"></i>
+																	</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {/foreach}
+                        <tr>
+                            <td height="50" colspan="7" align="left">&nbsp;</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">×
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            添加字段
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-->
+                        <div class="row">
+                            <form action="{:url('/admin/OperateTable/addField')}" method="post" id="form2">
+                            <div class="col-xs-12">
+                                <!--<input name="tr_index" id="tr_index" type="hidden" value="" />-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 字段名：  </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="field" onKeyUp="value=value.replace(/[^\w\.\/]/ig,'')" id="model_name" onblur="auto_pk()" class="col-xs-6 col-sm-6" value="" required/>
+                                        <span class="lbl">&nbsp;&nbsp;<span class="red">*</span>必填，标识必须是以字母开头,字母或数字组合</span>
+                                    </div>
+                                </div>
+                                <div class="space-4 col-xs-12"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 名称：  </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="name" id="model_title" value="" class="col-xs-6 col-sm-6" required/>
+                                        <span class="lbl">&nbsp;&nbsp;<span class="red">*</span>必填,可以英文和中文</span>
+                                    </div>
+                                </div>
+                                <div class="space-4 col-xs-12"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 选项：  </label>
+                                    <div class="col-sm-10">
+                                        <textarea name="score"  class="col-xs-6 col-sm-6" required placeholder="选项名字|分数，所需提交的材料（多个材料用|分开）"></textarea>
+                                        <span class="lbl"><span class="red">*</span>选项名字|分数，所需提交的材料（多个材料用|分开）</span><br>
+                                        <span class="lbl">例如:是|100，扶贫帮扶手册|户口簿|相关证明 </span>
+                                    </div>
+                                </div>
+                                <div class="space-4 col-xs-12"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 字段类型：  </label>
+                                    <div class="col-sm-10">
+                                        <select name="field_type"  id="field_type" class="col-xs-10 col-sm-5 selector field_type" required>
+                                            <option value="">请选择字段类型</option>
+                                            <option value="char" >字符型char</option>
+                                            <option value="varchar">字符型varchar</option>
+                                            <option value="text" >字符型text</option>
+                                            <option value="nchar(MAX)" >字符型nchar(MAX)</option>
+                                            <option value="ntext(MAX)" >字符型ntext(MAX)</option>
+                                            <option value="nvarchar(MAX)">字符型nvarchar(MAX)</option>
+                                        </select>
+                                        <span class="lbl"><span class="red">*</span>必填,若选择包含（MAX）长度请填写为-1</span>
+                                    </div>
+                                    <div class="space-4 col-xs-12"></div>
+                                </div>
+                                <div id="input_length">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 字段长度：  </label>
+                                        <div class="col-sm-10">
+                                            <input type="field_length" value="" name="field_length" id="field_length" placeholder="输入字段长度" class="col-xs-10 col-sm-5"/><span class="lbl"></span>
+                                            <span class="lbl"><span class="red">*</span>必填</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-4 col-xs-12"></div>
+                                </div>
+                                <div id="input_default">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 选项类型：  </label>
+                                        <div class="col-sm-10">
+                                            <select name="option_type"  id="option_type" class="col-xs-10 col-sm-5 selector field_type" required>
+                                                <option value="">请选择选项类型</option>
+                                                <option value="text" >文本</option>
+                                                <option value="file">单文件</option>
+                                                <option value="select">选择文本</option>
+                                                <option value="checkbox">复选框</option>
+                                                <option value="radio">单选框</option>
+                                            </select>
+                                            <span class="lbl"><span class="red">*</span>必填</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-4 col-xs-12"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label no-padding-right" for="is_null"> 是否为空： </label>
+                                    <div class="col-sm-10" style="padding-top:5px;">
+                                        <input name="is_null" id="is_null" value="1" class="ace ace-switch ace-switch-4 btn-flat" type="checkbox"  />
+                                        <span class="lbl">&nbsp;&nbsp;默认为空</span>
+                                    </div>
+                                </div>
+                                <div class="space-4 col-xs-12"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label no-padding-right" for="model_status"> 是否启用： </label>
+                                    <div class="col-sm-10" style="padding-top:5px;">
+                                        <input name="enable" id="model_status" value="1" class="ace ace-switch ace-switch-4 btn-flat" type="checkbox"  checked/>
+                                        <span class="lbl">&nbsp;&nbsp;默认启用</span>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary insert-field" id="queren">
+                            确认
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            关闭
+                        </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </div><!-- /.page-content -->
+</div>
+<script>
+    $(function(){
+        $("#queren").click(function () {
+            var form = $("#form2").serialize();
+            $.post("{:url('/admin/OperateTable/addField')}",form,function(data){
+                if (data.code == 400) {
+                    alert(data.msg)
+                }
+                if (data.code == 200) {
+                    window.location.reload();
+                }
+            })
+        })
+    })
+</script>
+{/block}

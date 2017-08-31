@@ -1,0 +1,119 @@
+{include file="public/header/nav_membership_header"}
+<!-- 主体内容 S -->
+<div class="main w1000" style="background:#fff;">
+    <div class="fb-source source_none" >
+        <ul>
+            <li>
+                <a href="">首页</a>
+                <span >-></span>
+            </li>
+            <li>
+                <a>个人中心</a>
+                <span >-></span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1">
+                    <table  id="simple-table"  class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>项目</th>
+                            <th>状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>家庭经济困难认定</td>
+                            <td >
+                                <span class="{$e_class}">
+                                    {if condition="$e_status == 1"}申请书已经提交
+                                    {elseif condition="$e_status==2"}辅导员通过
+                                    {elseif condition="$e_status==3"}班级小组通过
+                                    {elseif condition="$e_status==4"}院系小组通过
+                                    {elseif condition="$e_status==5"}学生处通过
+                                    {elseif condition="$e_status==6"}辅导员不通过
+                                    {elseif condition="$e_status==7"}班级小组不通过
+                                    {elseif condition="$e_status==8"}院系小组不通过
+                                    {elseif condition="$e_status==9"}学生处不通过
+                                    {else}未申请
+                                    {/if}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >国家助学金</td>
+                            <td >
+                                <span class="{$m_class}">
+                                    {if condition="$m_status == 1"}申请书已经提交
+                                    {elseif condition="$m_status==2"}班级小组通过
+                                    {elseif condition="$m_status==3"}院系小组通过
+                                    {elseif condition="$m_status==4"}学生处通过
+                                    {elseif condition="$m_status==5"}班级小组不通过
+                                    {elseif condition="$m_status==6"}院系小组不通过
+                                    {elseif condition="$m_status==7"}学生处不通过
+                                    {else}未申请
+                                    {/if}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >国家励志奖学金</td>
+                            <td >
+                                <span class="{$u_class}">
+                                    {if condition="$u_status == 1"}申请书已经提交
+                                    {elseif condition="$u_status==2"}班级小组通过
+                                    {elseif condition="$u_status==3"}院系小组通过
+                                    {elseif condition="$u_status==4"}学生处通过
+                                    {elseif condition="$u_status==5"}班级小组不通过
+                                    {elseif condition="$u_status==6"}院系小组不通过
+                                    {elseif condition="$u_status==7"}学生处不通过
+                                    {else}未申请
+                                    {/if}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >国家奖学金</td>
+                            <td >
+                                <span class="{$n_class}">
+                                    {if condition="$n_status == 1"}申请书已经提交
+                                    {elseif condition="$n_status==2"}辅导员通过
+                                    {elseif condition="$n_status==3"}院系小组通过
+                                    {elseif condition="$n_status==4"}学生处通过
+                                    {elseif condition="$n_status==5"}班级小组不通过
+                                    {elseif condition="$n_status==6"}院系小组不通过
+                                    {elseif condition="$n_status==7"}学生处不通过
+                                    {else}未申请
+                                    {/if}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >勤工助学</td>
+                            <td >
+                                <span class="{$w_class}">
+                                    {if condition="$w_status == 0"}不通过
+                                    {elseif condition="$w_status==1"}用人部门通过
+                                    {elseif condition="$w_status==2"}学生处通过
+                                    {elseif condition="$w_status==3"}录用
+                                    {elseif condition="$w_status==4"}已经有工作
+                                    {else}未申请
+                                    {/if}
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 主体内容 E -->
+
+
+
+{include file="public/footer"}

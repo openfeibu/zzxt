@@ -1,0 +1,50 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="{:url('admin/EvaluFront/E_counselor_review')}">学生家庭经济困难认定</a>
+            </small>
+            <small>
+                <i class="ace-icon fa fa-angle-double"></i>
+                查看学生资料
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="w900" method="post">
+			<form name="evau_form" action="" id="evalu_form"/>
+                {include file="evaluation/student_information_table"}             
+                <table class="w800">
+                    <tr>
+                        <td colspan="3" style="height: 30px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 266px;"></td>
+                        <td class="tab_content" style="width: 266px;">
+                            <a href="{:url('admin/Counselor/showEvaluationEvidence',['id'=>$status_id])}" class="btn btn-info">查看相关证明</a>
+                            <!--<button type="submit" class="btn btn-success">通过</button>-->
+                            <!--<button type="submit" class="btn btn-danger">不通过</button>-->
+                        </td>
+                        <td style="width: 266px;"></td>
+                    </tr>
+                </table>
+			</form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+ $("#evalu_form").find("input").attr('disabled',true);
+  $("#evalu_form").find("select").attr('disabled',true);
+</script>
+{/block}

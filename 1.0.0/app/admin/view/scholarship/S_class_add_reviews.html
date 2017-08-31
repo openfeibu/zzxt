@@ -1,0 +1,171 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="{:url('admin/MotivFront/M_class_review')}">国家奖学金班级审核</a>
+            </small>
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                添加评语
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <form class="w800" method="post">
+                <table class="table_heading" style="width:100%">
+                    <tr>
+                        <td colspan="2"></td>
+                        <td style="text-align: right"><span style="font-size: 13px;color:grey;">广东农工商职业技术学院</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
+                            普通本科高校、高等职业学校国家奖学金申请表
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered tab_center">
+                    <!--基本情况-->
+                    <tr>
+                        <td rowspan="4" class="tab_title tab_40px">基本情况</td>
+                        <td class="tab_title tab_80px">姓名</td>
+                        <td class="tab_content tab_100px">韦发炫</td>
+                        <td class="tab_title">性别</td>
+                        <td class="tab_content">男</td>
+                        <td class="tab_title">出生年月</td>
+                        <td colspan="2" class="tab_content tab_140px">1997-11-28</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">政治面貌</td>
+                        <td class="tab_content">入党积极分子</td>
+                        <td class="tab_title">民族</td>
+                        <td class="tab_content">汉族</td>
+                        <td class="tab_title">入学时间</td>
+                        <td colspan="2" class="tab_content">2015-09-12</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">专业</td>
+                        <td class="tab_content">物联网应用技术一班</td>
+                        <td class="tab_title">学制</td>
+                        <td class="tab_content">三年</td>
+                        <td class="tab_title">联系电话</td>
+                        <td colspan="2" class="tab_content">13011291209</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">身份证号</td>
+                        <td colspan="6" class="tab_content">440521199711287687</td>
+                    </tr>
+                    <!--学习情况-->
+                    <tr>
+                        <td rowspan="2" class="tab_title">学习情况</td>
+                        <td colspan="4" class="tab_content">
+                            成绩排名：
+                            <input type="text" class="input_border_bottom" style="width: 15%;" value="1" disabled>/
+                            <input type="text" class="input_border_bottom" style="width: 15%;" value="54" disabled>(名次/总人数)
+                        </td>
+                        <td colspan="3" class="tab_content">
+                            实行综合考评排名：
+                            <div style="display:inline-block;margin-right: 20px;">
+                                <label>
+                                    是<input disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>
+                                </label>
+                            </div>
+                            <div style="display:inline-block;">
+                                <label>
+                                    否<input checked disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="tab_content">
+                            必修课 <input type="text" class="input_border_bottom" style="width: 15%;" value="8" disabled>门 ，
+                            其中及格及以上 <input type="text" class="input_border_bottom" style="width: 15%;" value="8" disabled>门
+                        </td>
+                        <td colspan="3" class="tab_content">
+                            如是，排名 <input type="text" class="input_border_bottom" style="width: 10%;" value="1" disabled>/
+                            <input type="text" class="input_border_bottom" style="width: 10%;" value="54" disabled>（名次/总人数）
+                        </td>
+                    </tr>
+                    <!--大学期间主要获奖情况-->
+                    <tr><!--自行替换为要循环出来的数量+1-->
+                        <td rowspan="3"  class="tab_title">大学期间主要获奖情况</td>
+                        <td colspan="2" class="tab_title">日期</td>
+                        <td colspan="3" class="tab_title">奖项名称</td>
+                        <td colspan="3" class="tab_title">颁奖单位</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="tab_content">2015-12-15</td>
+                        <td colspan="3" class="tab_content">校园十大杰出青年</td>
+                        <td colspan="3" class="tab_content">广东农工商职业技术学院</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="tab_content">2016-06-09</td>
+                        <td colspan="3" class="tab_content">全国十佳青年</td>
+                        <td colspan="3" class="tab_content">中央共青团</td>
+                    </tr>
+                    <!--学习成绩-->
+                    <tr>
+                        <td class="tab_title">申请理由（200字）</td>
+                        <td colspan="7" class="tab_content">
+                            <textarea name="" id="" class="tab_opinion" disabled>黑科技阿萨达是发给你们这些破情人坡马老师的可能发挥科技爱空间还是拿到个非农利空破哦配送费登录框阿萨德股份不太困</textarea>
+                            <div class="tab_sign">
+                                <label for="">申请人签名：</label>
+                                <input type="text" value="韦发炫" disabled>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="tab_time">
+                                <input type="text" value="2017" disabled>年
+                                <input type="text" value="11" disabled>月
+                                <input type="text" value="1" disabled>日
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <!--填写评语-->
+                <table class="w800">
+                    <!--<tr>-->
+                        <!--<td class="tab_title"><p class=" tab_left" style="font-size: 16px;">班级小组添加评语：</p></td>-->
+                        <!--<td colspan="2"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td colspan="3" class="tab_content">-->
+                            <!--<textarea name="" id="" class="tab_opinion"></textarea>-->
+                            <!--<div class="tab_sign">-->
+                                <!--<label for="">班级小组负责人签名：</label>-->
+                                <!--<input type="text">-->
+                            <!--</div>-->
+                            <!--<div class="clearfix"></div>-->
+                            <!--<div class="tab_time">-->
+                                <!--<input type="text">年-->
+                                <!--<input type="text">月-->
+                                <!--<input type="text">日-->
+                            <!--</div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <tr>
+                        <td colspan="3" style="height: 30px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 266px;"></td>
+                        <td class="tab_content" style="width: 266px;">
+                            <button type="submit" class="btn btn-success">通过</button>
+                            <button type="submit" class="btn btn-danger">不通过</button>
+                        </td>
+                        <td style="width: 266px;"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}

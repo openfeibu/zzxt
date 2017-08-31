@@ -1,0 +1,39 @@
+{include file="public/header/nav_membership_header"}
+
+<!-- 导航 -->
+<!--{include file="student_notice/notice_header"}-->
+<!-- 主体内容 S -->
+<div class="main w1000">
+    <div class="fb-source">
+        <ul>
+            <li>
+                <a href="{:url('home/Show/index_front')}">首页</a>
+                <span >-></span>
+            </li>
+            <li>
+                <a href="{:url('home/Listn/showlist')}">系统通知</a>
+                <span >-></span>
+            </li>
+            <li>
+                <a>{$news_title}</a>
+                <span >-></span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="details">
+        <div class="details_name">{$news_title}</div>
+        <div class="details_date">发布时间：{$news_time|date="Y-m-d H:i:s",###}</div>
+        <div class="details_con">
+            <p>{$content}</p>
+        </div>
+        <!--<div class="details_enclosure">-->
+            <!--附件：<a href="">重要通知</a>-->
+        <!--</div>-->
+    </div>
+</div>
+<!-- 主体内容 E -->
+
+
+
+{include file="public/footer"}

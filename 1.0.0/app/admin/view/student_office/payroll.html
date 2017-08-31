@@ -1,0 +1,109 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="">津贴报表</a>
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="check_main">
+                <form action="" method="post" style="width: 800px;margin: 0 auto;">
+                    <!--startprint1-->
+                    <table class="table_heading" style="width: 800px">
+                        <!--<tr>-->
+                            <!--<td colspan="2"></td>-->
+                            <!--<td style="text-align: right"><span style="font-size: 13px;color:grey;">广东农工商职业技术学院</span></td>-->
+                        <!--</tr>-->
+                        <tr>
+                            <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
+                                2017学年部门勤工助学岗位申请表
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <label for="">用工单位：</label>
+                            <input type="text" style="width:60%;border-bottom:1px solid #555555;">
+                            </td>
+                            <td></td>
+                            <td>
+                                制表日期：
+                                <input type="text" style="width:15%;border-bottom:1px solid #555555;">年
+                                <input type="text" style="width:15%;border-bottom:1px solid #555555;">月
+                                <input type="text" style="width:15%;border-bottom:1px solid #555555;">日
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered check_tab_body payroll_tab" style="width: 800px;margin: 0;">
+                        <tr>
+                            <td class="tab_title tab_50px">序号</td>
+                            <td class="tab_title" style="width: 100px;">姓名</td>
+                            <td class="tab_title" style="width: 116px;">学号</td>
+                            <td class="tab_title" style="width: 114px;">班级</td>
+                            <td class="tab_title tab_100px">标准（元/小时）</td>
+                            <td class="tab_title tab_80px">工作小时</td>
+                            <td class="tab_title" style="width: 114px;">金额</td>
+                            <td class="tab_title" style="width: 128px;">领款人签名</td>
+                        </tr>
+                        <tr>
+                            <td class="tab_content">1</td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                        </tr>
+                        <tr>
+                            <td class="tab_content">2</td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                        </tr>
+                        <tr style="border: 0;">
+                            <td class="tab_title">合计</td>
+                            <td colspan="5" class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                        </tr>
+                    </table>
+                    <table class="table_heading" style="width: 700px;margin:0 auto 40px auto;">
+                        <tr>
+                            <td colspan="3" style="border:0;"><label for="">审核：</label><input type="text" style="width:60%;border-bottom: 1px solid #555555;"></td>
+                            <td colspan="3" style="border:0;"><label for="">复核：</label><input type="text" style="width:60%;border-bottom: 1px solid #555555;"></td>
+                            <td colspan="2" style="border:0;"><label for="">制表：</label><input type="text" style="width:60%;border-bottom: 1px solid #555555;"></td>
+                        </tr>
+                    </table>
+                    <!--endprint1-->
+                    <div class="btn_center" style="margin: 20px 0  0 -60px;">
+                        <button type="submit" class="btn btn-info" >提交</button>
+                        <button class="btn btn-danger" onclick="preview(1)">打印</button>
+                    </div>
+                </form>
+            </div>
+        </div><!--column/12-->
+    </div><!--row-->
+</div><!--page-content-->
+
+
+
+
+
+{/block}

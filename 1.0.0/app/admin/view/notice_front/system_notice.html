@@ -1,0 +1,42 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>查看系统公告
+            </small>
+        </h1>
+    </div>
+    <div class="clearfix">
+        <div class="col-md-12">
+            <div class=" notice_list ">
+                <ul >
+                    <li><a href="{:url('admin/GrantsFront/G_class_notice')}"><p>2017年国家助学金院系公示结果</p><span>2017-09-05</span></a></li>
+                    <li><a href="{:url('admin/GrantsFront/G_manage_notice')}"><p>2017年国家助学金学院公示结果</p><span>2017-09-05</span></a></li>
+                    <li><a href="{:url('admin/MotivFront/M_faculty_notice')}"><p>2017年国家励志院系奖学金公示结果</p><span>2017-09-05</span></a></li>
+                    <li><a href="{:url('admin/MotivFront/M_manage_notice')}"><p>2017年国家励志学院奖学金公示结果</p><span>2017-09-05</span></a></li>
+                    <li><a href="{:url('admin/ScholarFront/S_faculty_notice')}"><p>2017年国家奖学金院系公示结果</p><span>2017-09-05</span></a></li>
+                    <li><a href="{:url('admin/ScholarFront/S_manage_notice')}"><p>2017年国家奖学金学院公示结果</p><span>2017-09-05</span></a></li>
+                    <li><a href="{:url('admin/EvaluFront/E_faculty_notice')}"><p>2017年家庭经济情况困难认定院系公示结果</p><span>2017-09-05</span></a></li>
+                    <li><a href="{:url('admin/MotivFront/M_sys_notice_det')}"><p>2017年家庭经济情况困难认定学院公示结果</p><span>2017-09-05</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="notice_page">-->
+    <!--<ol>-->
+        <!--<li><a href="">首页</a></li>-->
+        <!--<li><a href="">上一页</a></li>-->
+        <!--<li><a class="active" href="">1</a></li>-->
+        <!--<li><a href="">2</a></li>-->
+        <!--<li><a href="">3</a></li>-->
+        <!--<li><a href="">4</a></li>-->
+        <!--<li><a href="">5</a></li>-->
+        <!--<li><a href="">下一页</a></li>-->
+    <!--</ol>-->
+<!--</div>-->
+{/block}

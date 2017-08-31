@@ -1,0 +1,126 @@
+{include file="public/header/nav_membership_header"}
+
+<!--<div class="nav printHide">
+    <ul class="w1000">
+        <li><a href="{:url('/index_front')}">首页</a></li>
+        <li><a href="{:url('/personal')}">经济困难认定</a></li>
+        <li><a href="{:url('/scho_status')}">国家三金申请</a></li>
+        <li><a href="{:url('/work')}">勤工助学金</a></li>
+        <li class=" active"><a href="{:url('/questionnaire')}">调查问卷</a></li>
+        <li><a href="{:url('/changePassword')}">修改密码</a></li>
+        <li><a href="{:url('/home/show/evalu_notice')}">通知公告</a></li>
+    </ul>
+</div>-->
+
+<div class="main w1000" style="background:#fff;">
+    <div class="personal_table">
+        <table width="756px">
+            <tbody>
+            <tr style="height:30px;">
+                <td colspan="2">
+
+                </td>
+                <td colspan="1" style="text-align: right;">
+                    <span style="font-size: 13px;color: grey;">广东农工商职业技术学院</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center;font-size: 25px;font-weight: bold;border-top:1px solid #000000;line-height:48px;">
+                    学生资助工作调查问卷
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <form class="ques_main" method="post">
+        <div class="ques_intro">
+            <p class="large_font">亲爱的同学：</p>
+            <p class="large_font">您好！为了更好地了解大学生资助工作的开展情况，进一步改进和完善大学生资助工作模式，
+                推动我校发展性学生资助工作的开展。我们特组织了此次问卷调查。
+                本调查采取不记名方式，大约需要花费您2-3分钟时间。
+                希望您能仔细阅读以下内容，并真实客观填写问卷，衷心感谢您的支持和合作！</p>
+        </div>
+
+        <div class="ques_info">
+            <div class="bottom_input ques_input">
+                <label >年级</label>
+                <input type="text" value="{$user_info.grade}" name="grade">
+            </div>
+            <div class="bottom_input ques_input">
+                <label >专业</label>
+                <input type="text" value="{$user_info.profession}" name="profession">
+            </div>
+            <div class="bottom_input ques_input">
+                <label >性别</label>
+                <input type="text" value="{$user_info.gender}" name="gender">
+            </div>
+        </div>
+        {foreach $title as $r}
+            <p class="large_font ques_title">{$r.title}</p>
+            {foreach $list as $row}
+                {if condition="$r.classification_id==$row.question_title_id"}
+                <div class="question">
+                    <p class="middle_font ques_title">{$row.question_id}.{$row.question_name}</p>
+                    <ul class="ques_option">
+                        {foreach $row.question_options as $key => $item}
+                        <li>
+                            <label>
+
+                                {if condition="strstr('其他', $item.text) and $item.type=='text'"}
+                                <input type="radio" name="{$row.question_id}" value="{$key}">
+                                {$item.text}
+                                <div class="bottom_input" style="display:inline-block;">
+                                    <input type="text">
+                                </div>
+
+                                <?php elseif(strstr("其他", $item['text'])  and $item['type']=='checkbox'):?>
+                                <input type="checkbox" name="{$row.question_id}[]" value="{$key}">
+                                {$item.text}
+
+                                <div class="bottom_input" style="display:inline-block;">
+                                    <input type="text" name="{$row.question_id}[]">
+                                </div>
+
+                                {elseif condition="$item.type == 'checkbox'"}
+                                <input type="{$item.type}" name="{$row.question_id}[]" value="{$key}">
+                                {$item.text}
+                                {else}
+                                <input type="{$item.type}" name="{$row.question_id}" value="{$key}">
+                                {$item.text}
+                                {/if}
+
+                            </label>
+                        </li>
+                        {/foreach}
+                    </ul>
+                </div>
+                {/if}
+            {/foreach}
+        {/foreach}
+        <p class="large_font" style="text-align: center;margin:20px 0;">对于您花费宝贵的时间填写完本问卷，在此表示诚挚的感谢。</p>
+        <button type="submit" class="print printHide">提交</button>
+    </form>
+</div>
+
+<script>
+    $(function(){
+        $("input[type!='text']").click(function(){
+            if($(this).attr('type')=="checkbox"){
+            return;
+            }
+            var t = $(this).parent().text();
+            if (t.indexOf("其他") > 0) {
+                var name = $(this).attr('name');
+                $(this).attr('name',name+"[]");
+                var tt = $(this).parent().find("input[type='text']").attr('name',name+"[]");
+            } else {
+                if ($(this).parents("ul").text().indexOf("其他") > 0) {
+                    var oldname = $(this).parents("ul").find("input[type!='text']").attr("name");
+                    var te = $(this).parents("ul").find("label:contains('其他')").find("input[type!='text']").attr('name',oldname);
+                    $(this).parents("ul").find("input[type='text']").removeAttr("name");
+                }
+            }
+        })
+    })
+</script>
+{include file="public/footer"}

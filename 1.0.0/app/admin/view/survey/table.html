@@ -1,0 +1,101 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<script src="__PUBLIC__/others/echarts.js"></script>
+
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="">问卷统计</a>
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="chart_block">
+        <div id="chart1" style="width:1000px;height:4000px;"></div>
+    </div>
+</div><!--page-content-->
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById("chart1"));
+
+    var titles=['28.','29.','30.'];//单个实例内每个图表的标题,数组形式
+    // 指定图表的配置项和数据
+    myChart.setOption({
+        title : [
+        <?php $num=0;$height=0;$x=15;?>
+            {foreach $list as $kkk => $vvv}
+            {
+            text:"<?php if(strlen($vvv['question_name'])>15){echo substr($vvv['question_name'],0,15).'\n'.substr($vvv['question_name'],15);}else{echo $vvv['question_name'];}?>",
+                x:'{$x}%',//每个图表标题的位置，建议与下面的center[0]一致
+                y: '<?php if ($num <2){ echo $height;$x+=30; }elseif($num==2){  echo $height;$height+=300;}?>',
+                textAlign:'center',
+                textStyle:{
+                fontSize:14,}
+            },
+    <?php $num++;?>
+    {if condition="$num==3"}<?php $num=0;$x=15;?>{/if}
+            {/foreach}
+        ],//每添加一个标题都要配置一次
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"//默认的鼠标悬浮框上显示的内容；{a}图表名；{b}数据名；{c}数值；{d}百分比
+        },
+        toolbox: {
+            show : true,
+            feature:{
+                mark:{show: true},
+                dataView : {show: true, readOnly: false},//数据视图工具
+                magicType : {
+                    show: true,
+                    type: ['pie','funnel']
+                },
+                restore : {show: false},//还原配置项，不开启
+                saveAsImage : {show: false}//保存为图片，不开启
+            }
+        },//工具栏
+        calculable : true,
+        series : [
+                <?php $num=0;$height=150;$x=15;?>
+            {foreach $list as $kkk => $row}
+            //第{$num}个图表
+            {
+                name: "{$row.question_name}",
+                type: 'pie',
+                radius:[10,100],//饼图大小
+                center:['{$x}%',"<?php if ($num <2){ echo $height;$x+=30; }elseif($num==2){  echo $height;$height+=300;}?>"],//饼图位置
+                <?php $num++;?>
+                {if condition="$num==3"}<?php $num=0;$x=15;?>{/if}
+                roseType:'radius',//饼图显示模式
+                label:{
+                    normal:{
+                        position:'inside',
+                        formatter:'{d}',//显示的文本内容
+                    }//在图形内显示文本
+                },
+                labelLine:{
+                    normal:{
+                        show:false
+                    }
+                },//饼图的引导线
+                data:[
+                    {foreach $row.question_options as $key => $r}
+                    {value:"{$r.count}", name:"{$r.text}"},
+                    {/foreach}
+                ]//数据
+            },
+    {/foreach}
+        ],
+    })
+
+</script>
+
+
+
+{/block}

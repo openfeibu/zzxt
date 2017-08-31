@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <title>学生资助管理系统-广东农工商职业技术学院</title>
+    <meta name="Keywords" content=""/>
+    <meta name="Description" content=""/>
+    <link rel="stylesheet" type="text/css" href="{$yf_theme_path}public/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="{$yf_theme_path}public/css/css.css">
+    <script src="__PUBLIC__/others/jquery.min-2.2.1.js"></script>
+    <!--<script type="text/javascript" src="{$yf_theme_path}public/js/jquery1.11.3.js"></script>-->
+    <script type="text/javascript" src="{$yf_theme_path}public/js/main.js"></script>
+    <script type="text/javascript" src="{$yf_theme_path}public/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{$yf_theme_path}public/bootstrap/js/bootstrap-hover-dropdown.js"></script>
+
+    <script src="__PUBLIC__/others/jquery.form.js"></script>
+    <script src="__PUBLIC__/layer/layer_zh-cn.js"></script>
+</head>
+<body>
+<!-- 头部 S -->
+<div class="personal_header printHide w1000">
+    <div class="personal_logo">
+        广东农工商职业技术学院学生资助管理系统
+    </div>
+    <div class="personal_r">
+        <span class="nowtime"></span>
+        <p>欢迎你,{$user['member_list_nickname']|default=$user['member_list_username']}<a href="{:url('home/Login/logout')}">退出系统</a></p>
+    </div>
+</div>
+<!-- 头部 E -->
+<div class="container-fluid nav-bg printHide" >
+    <nav class="w1000 ">
+        <ul class="nav nav-tabs">
+            <li  role="presentation" >
+                <a href="{:url('/index_front')}" >首页</a>
+            </li>
+            <li  role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >家庭经济困难认定<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{:url('/personal')}">信息管理</a></li>
+                    <li><a href="{:url('/material')}">佐证材料</a></li>
+                </ul>
+            </li>
+            <li  role="presentation"
+                 {if condition="'getGrants' eq $Think.const.ACTION_NAME"}class="dropdown active"
+                 {elseif condition="'getInspirational' eq $Think.const.ACTION_NAME"} class=" dropdown active"
+                 {elseif condition="'getNationalScholarship' eq $Think.const.ACTION_NAME"}class=" dropdown active"
+                 {else}class="dropdown"
+                 {/if}>
+                <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >三金申请<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li {if condition="'getGrants' eq $Think.const.ACTION_NAME"}class="active"{/if} >
+                        <a  href="javascript:;" onclick="choose_type('3')">国家助学金</a>
+                    </li>
+                    <li id="type2" {if condition="'getInspirational' eq $Think.const.ACTION_NAME"}class="active"{/if} >
+                        <a href="javascript:;" onclick="choose_type('1')">国家奖学金</a>
+                    </li>
+                    <li id="type1" {if condition="'getNationalScholarship' eq $Think.const.ACTION_NAME"}class="active"{/if} >
+                        <a href="javascript:;" onclick="choose_type('2')">国家励志奖学金</a>
+                    </li>
+                </ul>
+                <script>
+                    function choose_type(value) {
+                        var url = "{:url('/home/Scholarship/chooseType')}";
+                        var choose_type = value;
+                        $.ajax({
+                            url:url,
+                            type:'post',
+                            data:{'choose_type':choose_type},
+                            success:function (data) {
+                                if (data.code == 1) {
+                                    window.location.href = data.url;
+                                } else {
+                                    layer.alert(data.msg, {icon: 5}, function (index) {
+                                        layer.close(index);
+                                    });
+                                    return false;
+                                }
+                            }
+                        })
+                    }
+                </script>
+            </li>
+            <li  role="presentation"
+                 {if condition="'index' eq $Think.const.ACTION_NAME"}class="dropdown active"
+                 {elseif condition="'workStudyList' eq $Think.const.ACTION_NAME"} class=" dropdown active"
+                 {else}class="dropdown"
+                {/if}
+            >
+                <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >勤工助学<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{:url('home/workstudy/resume')}">个人简历</a></li>
+                    <li><a href="{:url('home/workstudy/list')}">岗位申报</a></li>
+                </ul>
+            </li>
+            <li  role="presentation" {if condition="'showSurvey' eq $Think.const.ACTION_NAME"}class="active"{/if}><a href="{:url('/questionnaire')}">调查问卷</a></li>
+            <li  role="presentation" {if condition="'examineStatus' eq $Think.const.ACTION_NAME"}class="active"{/if}><a href="{:url('/personal_status')}">个人中心</a></li>
+            <!--<li role="presentation"><a href="">通知公示</a></li>-->
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >通知公示<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li class=""><a href="{:url('home/Show/evalu_notice')}">家庭经济评估公示</a></li>
+                    <li class=""><a href="{:url('home/show/grants_notice')}">国家助学金公示</a></li>
+                    <li class=""><a href="{:url('home/Show/scholar_notice')}">国家奖学金公示</a></li>
+                    <li class=""><a href="{:url('home/show/motiv_notice')}">国家励志奖学金公示</a></li>
+                    <li><a href="{:url('/home/Listn/showList/23')}">系统通知</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
