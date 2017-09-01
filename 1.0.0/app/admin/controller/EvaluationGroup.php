@@ -105,7 +105,7 @@ class EvaluationGroup extends Base
             ->join('yf_evaluation_application app','es.evaluation_id = app.evaluation_id')
             ->where("left(es.user_id,9) = '".$this->user."'")
             ->where("CONVERT(VARCHAR(4),DATEADD(S,es.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->field('es.*,app.assess_fraction,app.score,app.eval_fraction')
+            ->field('es.*,app.assess_fraction,app.score,app.change_fraction')
             ->paginate(20);
         if (empty($data[0]['user_id'])) {
             return $this->error("班级未有人申请");

@@ -236,19 +236,19 @@ class Counselor extends Base
             ->alias('ass')//asshold
             ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
             ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
-          //  ->where('u.faculty_number', $this->faculty)
-            ->field('ass.*,u.*,app.assess_fraction,app.score,app.eval_fraction')
+            ->where('u.faculty_number', $this->faculty)
+            ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
             ->paginate(20);
         //查院
         $faculty_profession = Db::table('yf_user')
             ->field("DISTINCT profession ,profession_number")
-           // ->where('faculty_number', $this->faculty)
+            ->where('faculty_number', $this->faculty)
             ->select();
         //未通过的
         $faculty_count = Db::table('yf_evaluation_status')
             ->alias('ass')//asshold
             ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-            //->where('u.faculty_number', $this->faculty)
+            ->where('u.faculty_number', $this->faculty)
             ->where(function($query){
                 $query->where('ass.status !=3')->where('ass.status !=4');
             })

@@ -179,7 +179,7 @@ class Student extends Base
             }
             //获取插入的id，放入总的状态表中
             $type_id = $insert->getLastInsID();
-            $this->applyStatus->checkStatus($this->user_id, $this->time, $type_id, "multiple_id");
+            $this->applyStatus->checkStatus($this->user_id, $this->time, $type_id, "multiple_id",3);
             //更新申请状态
             $res = $this->applyStatus->updateOperateStatus($this->user_id, $this->status);
             if (!$res) {

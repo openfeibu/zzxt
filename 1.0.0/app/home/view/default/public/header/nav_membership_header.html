@@ -101,9 +101,9 @@
                 </ul>
             </li>
             <li  role="presentation" {if condition="'showSurvey' eq $Think.const.ACTION_NAME"}class="active"{/if}><a href="{:url('/questionnaire')}">调查问卷</a></li>
-            <li  role="presentation" {if condition="'examineStatus' eq $Think.const.ACTION_NAME"}class="active"{/if}><a href="{:url('/personal_status')}">个人中心</a></li>
+            <li  role="presentation" {if condition="'examineStatus' eq $Think.const.ACTION_NAME"}class="active"{/if}><a href="{:url('Student/examineStatus')}">个人中心</a></li>
             <!--<li role="presentation"><a href="">通知公示</a></li>-->
-            <li role="presentation" class="dropdown">
+            <!-- <li role="presentation" class="dropdown">
                 <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >通知公示<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li class=""><a href="{:url('home/Show/evalu_notice')}">家庭经济评估公示</a></li>
@@ -112,7 +112,7 @@
                     <li class=""><a href="{:url('home/show/motiv_notice')}">国家励志奖学金公示</a></li>
                     <li><a href="{:url('/home/Listn/showList/23')}">系统通知</a></li>
                 </ul>
-            </li>
+            </li> -->
         </ul>
     </nav>
 </div>

@@ -170,7 +170,7 @@ class Show extends Base
 		$data['user_id'] = $this->user['member_list_username'];
 		$data['members'] = serialize($post['members']);
 		$eval_fraction = get_score($data);
-		$data['eval_fraction'] = $data['score'] = $eval_fraction;
+		$data['assess_fraction'] = $data['score'] = $eval_fraction;
  		$eva_app = DB::name('evaluation_application')->insert($data);
 		$evaluation_id = Db::name('evaluation_application')->getLastInsID();
 		DB::name('evaluation_status')->insert([

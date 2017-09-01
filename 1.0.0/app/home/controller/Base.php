@@ -22,12 +22,12 @@ class Base extends Common
 	protected function _initialize()
     {
         parent::_initialize();
-//         $member = Db::table('yf_member_list')
-//            ->where('member_list_id',session('hid'))
-//            ->field('member_list_username')
-//            ->find();
-//        $this->user_id = $member['member_list_username'];
-        $this->user_id = '20155535243';
+        $member = Db::table('yf_member_list')
+           ->where('member_list_id',session('hid'))
+           ->field('member_list_username')
+           ->find();
+       $this->user_id = $member['member_list_username'];
+        //$this->user_id = '20155535243';
         $this->time = date('Y', time());
 		//主题
 		$site_options=Options::get_options('site_options',$this->lang);
