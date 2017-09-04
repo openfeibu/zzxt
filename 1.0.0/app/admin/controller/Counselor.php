@@ -30,6 +30,7 @@ class Counselor extends Base
         $this->applyStatus = new ScholarshipsApplyStatus();
         $this->time = date("Y",time());
         $this->faculty = 5;
+		$this->user_id = '201555332';
     }
 
     /**
