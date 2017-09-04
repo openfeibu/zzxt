@@ -188,8 +188,57 @@ class Show extends Base
 	}
     public function material()
     {
+		$eval_app = DB::name('evaluation_application')->where('user_id',$this->user['member_list_username'])->find();
+		$this->assign('eval_app',$eval_app);
+		$material = DB::name('evaluation_material')->where('evaluation_id',$eval_app['evaluation_id'])->find();
+		$this->assign('material',$material);
         return $this->view->fetch(':evaluation/material_front');
     }
+	public function material_upload()
+	{
+		if(request()->file('uploadfile') !== null )
+		{
+			$file = request()->file('uploadfile');
+			$info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');		
+		}
+		if($info){
+			return [
+				'code' => 200,
+				'url' => '/public/uploads/'.$info->getSaveName(),
+				'message' => '上传成功',
+			];
+		}else{
+			return [
+				'code' => 201,
+				'message' => $file->getError(),
+			];
+		}
+	}
+	public function material_post()
+	{
+		$eval_app = DB::name('evaluation_application')->where('user_id',$this->user['member_list_username'])->find();
+		$post = input('post.');
+		$data = [
+			'evaluation_id' => $eval_app['evaluation_id'],
+			'user_id' => $this->user['member_list_username'],
+			'account_book' => !empty($post['account_book_url']) ? $post['account_book_url'] : '',
+			'protection_certificate' => !empty($post['protection_certificate_url']) ? $post['protection_certificate_url'] : '',
+			'low_certificate' => !empty($post['low_certificate_url']) ? $post['low_certificate_url'] : '',
+			'orphan' => !empty($post['orphan_url']) ? $post['orphan_url'] : '',
+			'rescue_card' => !empty($post['rescue_card_url']) ? $post['rescue_card_url'] : '',
+			'help_certificate' => !empty($post['help_certificate_url']) ? $post['help_certificate_url'] : '',
+			'low_income_card' => !empty($post['low_income_card_url']) ? $post['low_income_card_url'] : '',
+			'disability_certificate' => !empty($post['disability_certificate_url']) ? $post['disability_certificate_url'] : '',
+			'child_welfare_certificate' => !empty($post['child_welfare_certificate_url']) ? $post['child_welfare_certificate_url'] : '',
+			'poor_workers' => !empty($post['poor_workers_url']) ? $post['poor_workers_url'] : '',
+			'privilege_card' => !empty($post['privilege_card_url']) ? $post['privilege_card_url'] : '',
+			'sacrifice_card' => !empty($post['sacrifice_card_url']) ? $post['sacrifice_card_url'] : '',
+			'civil_affairs_department' => !empty($post['civil_affairs_department_url']) ? $post['civil_affairs_department_url'] : '',
+			'other' => !empty($post['other_url']) ? $post['other_url'] : '',
+		];
+		DB::name('evaluation_material')->insert($data);
+		header('Location:/material.html');
+	}
     public function evalu_status()
     {
         return $this->view->fetch(':evaluation/evalu_status');

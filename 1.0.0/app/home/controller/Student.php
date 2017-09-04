@@ -101,6 +101,7 @@ class Student extends Base
                     ->find();
                 if ($res) {
                     $this->error("你已经提交过了。请勿重复提交。");
+					//$this->success('成功',url('/home/grants'));
                 }
                 //跳转申请页面
                 $this->success('成功',url('/home/grants'));

@@ -456,7 +456,7 @@ $(".evalu_btn").click(function(){
 	{	
 		$.ajax({
 			type: 'post',
-			url: '{:url('home/show/evaluation_application')}',
+			url: "{:url('home/show/evaluation_application')}",
 			data: $("#evalu_form").serialize(),
 			success: function(data) {
 				if(data.code == 200)

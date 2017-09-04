@@ -73,7 +73,7 @@ class Login extends Base
 		if(strpos($member_list_username,"@")>0){//邮箱登陆
             $where['member_list_email']=$member_list_username;
         }else{
-            $where['member_list_username']=$member_list_username;
+            $where['id_number']=$member_list_username;
         }
 		$member=Db::name("member_list")->where($where)->find();
 		if (!$member||encrypt_password($member_list_pwd,$member['member_list_salt'])!==$member['member_list_pwd']){
@@ -94,7 +94,7 @@ class Login extends Base
 				//更新cookie
 				cookie('yf_logged_user', jiami("{$member['member_list_id']}.{$data['last_login_time']}"));
 			}
-			
+			/*
 			//根据需要决定是否同步后台登录状态
 			$admin=Db::name('admin')->where('member_id',$member['member_list_id'])->find();
 			if($admin){
@@ -112,6 +112,7 @@ class Login extends Base
                 session('admin_auth', $auth);
                 session('admin_auth_sign', data_signature($auth));
 			}
+			*/
 			$this->success('登录成功',url('home/Login/check_active'));
 		}
     }

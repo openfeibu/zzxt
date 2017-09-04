@@ -24,11 +24,12 @@ class ScholarshipsGroup extends Base
     {
         parent::__construct();
         //根据学号来取。登陆人的班级。限制
-        $this->user = '201555352';
+       // $this->user = '201555352';
         //限制只显示今年申请的
         $this->time = date("Y",time());
         $this->multiple = new MultipleScholarship();
         $this->applyStatus = new ScholarshipsApplyStatus();
+
     }
 
     /**
