@@ -69,7 +69,7 @@
         {if condition="!empty($user['member_list_id'])"}
         <p class="personal_name">欢迎&nbsp;&nbsp;<span>{$user['member_list_nickname']|default=$user['member_list_username']}</span></p>
         <div class="personal_link">
-            <a class="btn personal_btn" href="{:url('/questionnaire')}">个人中心</a>
+            <a class="btn personal_btn" href="{:url('/home/student/examinestatus')}">个人中心</a>
             <a class="personal_exit" href="{:url('home/Login/logout')}">退出</a>
         </div>
         {else /}
