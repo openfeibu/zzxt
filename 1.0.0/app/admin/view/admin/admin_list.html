@@ -74,8 +74,8 @@
 									<td>{$v.admin_id|get_groups}</td>
 									<!--<td>{$v.admin_realname}</td>-->
 									<!--<td class="hidden-sm hidden-xs">{$v.admin_tel}</td>-->
-									<?php $num = $v['admin_faculty'] -1;?>
-									<td class="hidden-sm hidden-xs">{if condition="$v.admin_faculty == null"}{else}{$admin_faculty[$num]['faculty_name']}{/if}</td>
+									<?php $num = $v['faculty_number'] -1;?>
+									<td class="hidden-sm hidden-xs">{if condition="$v.faculty_number"}{$faculty_number[$num]['faculty_name']}{else}{/if}</td>
 
 									<td class="hidden-sm hidden-xs">{$v.admin_hits}</td>
 									<td class="hidden-sm hidden-xs">{$v.admin_ip}</td>

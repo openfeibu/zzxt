@@ -24,7 +24,8 @@ class ScholarshipsGroup extends Base
     {
         parent::__construct();
         //根据学号来取。登陆人的班级。限制
-       // $this->user = '201555352';
+        //$this->user = '201555352';
+		$this->class_number = session('admin_auth.class_number');
         //限制只显示今年申请的
         $this->time = date("Y",time());
         $this->multiple = new MultipleScholarship();
@@ -42,8 +43,9 @@ class ScholarshipsGroup extends Base
             return $this->error('该操作有误。请联系管理员解决');
         }
         $data = Db::table('yf_apply_scholarships_status')
-            ->where("left(user_id,9) = '".$this->user."'")
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+			->alias('a')->join('yf_user u','u.studentid = a.user_id')
+			->where("u.class_number = '".$this->class_number."'")
+            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
             ->where('fund_type', $id)
             ->select();
         //获取学生信息
@@ -107,18 +109,20 @@ class ScholarshipsGroup extends Base
 
             //查询未审核人数
             $no_count = Db::table('yf_apply_scholarships_status')
-                ->where('fund_type',$id)
-                ->where("left(user_id,9) = '".$this->user."'")
-                ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+			->alias('a')->join('yf_user u','u.studentid = a.user_id')
+			->where("u.class_number = '".$this->class_number."'")
+                ->where('a.fund_type',$id)
+                ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
                 ->where('status',1)
                 ->count();
             if (empty($no_count)) {
                 $no_count = 0;
             }
             $yes_count = Db::table('yf_apply_scholarships_status')
-                ->where('fund_type',$id)
-                ->where("left(user_id,9) = '".$this->user."'")
-                ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+				->alias('a')->join('yf_user u','u.studentid = a.user_id')
+				->where("u.class_number = '".$this->class_number."'")
+                ->where('a.fund_type',$id)
+                ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
                 ->where('status','<>',1)
                 ->count();
             if (empty($yes_count)) {
@@ -127,17 +131,19 @@ class ScholarshipsGroup extends Base
 
 
             $data_students = Db::table('yf_apply_scholarships_status')
-                ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-                ->where('ass.fund_type' ,$id)
-                ->where("left(user_id,9) = '".$this->user."'")
+                ->alias('a')//asshold
+                ->join('yf_user u', 'a.user_id = u.studentid', 'left')
+				->where("u.class_number = '".$this->class_number."'")
+                ->where('a.fund_type' ,$id)
                 ->where($studentname)
                 ->where($status)
                 ->paginate(20);
 
             $data_data = Db::table('yf_apply_scholarships_status')
-                ->where('fund_type',$id)
-                ->where("left(user_id,9) = '".$this->user."'")
+				->alias('a')//asshold
+                ->join('yf_user u', 'a.user_id = u.studentid', 'left')
+				->where("u.class_number = '".$this->class_number."'")
+                ->where('a.fund_type',$id)
                 ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
                 ->paginate(20);
 
@@ -151,11 +157,13 @@ class ScholarshipsGroup extends Base
 
         //班级申请学生列表
         $data = Db::table('yf_apply_scholarships_status')
-            ->where('fund_type',$id)
-            ->where("left(user_id,9) = '".$this->user."'")
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+			->alias('a')->join('yf_user u','u.studentid = a.user_id')
+			->where("u.class_number = '".$this->class_number."'")
+            ->where('a.fund_type',$id)    
+            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
             ->paginate(20);
-        if (empty($data[0]['user_id'])) {
+
+        if (!$data) {
             return $this->error("班级未有人申请");
         } else {
             foreach ($data->getCollection() as $k => $vo) {
@@ -167,18 +175,20 @@ class ScholarshipsGroup extends Base
         }
         //查询未审核人数
         $no_count = Db::table('yf_apply_scholarships_status')
-            ->where('fund_type',$id)
-            ->where("left(user_id,9) = '".$this->user."'")
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+		->alias('a')->join('yf_user u','u.studentid = a.user_id')
+			->where("u.class_number = '".$this->class_number."'")
+            ->where('a.fund_type',$id)
+            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
             ->where('status',1)
             ->count();
         if (empty($no_count)) {
             $no_count = 0;
         }
         $yes_count = Db::table('yf_apply_scholarships_status')
-            ->where('fund_type',$id)
-            ->where("left(user_id,9) = '".$this->user."'")
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+		->alias('a')->join('yf_user u','u.studentid = a.user_id')
+			->where("u.class_number = '".$this->class_number."'")
+            ->where('a.fund_type',$id)
+            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
             ->where('status','<>',1)
             ->count();
         if (empty($yes_count)) {

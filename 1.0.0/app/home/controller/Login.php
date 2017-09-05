@@ -238,7 +238,7 @@ hello;
     {
 		$this->check_login();
 		if($this->user['user_status']){
-			$this->redirect("/questionnaire");
+			$this->redirect("/home/student/examinestatus");
 		}else{
 			//判断是否激活
 			return $this->view->fetch('user:active');

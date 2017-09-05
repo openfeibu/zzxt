@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Admin as AdminModel;
 use app\admin\model\AuthRule;
+use app\admin\model\ClassCode;
 use think\Db;
 use think\Cache;
 
@@ -26,11 +27,12 @@ class Admin extends Base
 		if($search_name){
 			$map['admin_username']= array('like',"%".$search_name."%");
 		}
-        $faculty = Db::table('yf_faculty')->select();
+        $classCode = new ClassCOde();
+		$faculty = $classCode->getFaculties();
 		$admin_list=Db::name('admin')->where($map)->order('admin_id')->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 		$page = $admin_list->render();
 		$this->assign('admin_list',$admin_list);
-        $this->assign('admin_faculty', $faculty);
+        $this->assign('faculty_number', $faculty);
         $this->assign('page',$page);
 		return $this->fetch();
 	}
@@ -40,9 +42,10 @@ class Admin extends Base
 	public function admin_add()
 	{
 		$auth_group=Db::name('auth_group')->select();
-		$faculty = Db::table('yf_faculty')->select();
+		$classCode = new ClassCOde();
+		$faculty = $classCode->getFaculties();
 		$this->assign('auth_group',$auth_group);
-		$this->assign('admin_faculty', $faculty);
+		$this->assign('faculty_number', $faculty);
 		return $this->fetch();
 	}
 	/**
@@ -58,7 +61,7 @@ class Admin extends Base
         $group_id = $user['group_id'];
         if ($group_id == 20) {
             if (input('group_id','') == 21 or input('group_id','') == 25) {
-                $admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('admin_faculty',''));
+                $admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',''));
                 if($admin_id){
                     $this->success('班级小组添加成功',url('admin/Admin/admin_list'));
                 }else{
@@ -68,7 +71,7 @@ class Admin extends Base
                 $this->error('您没有权限');
             }
         } else {
-            $admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('admin_faculty',''));
+            $admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',''));
             if($admin_id){
                 $this->success('管理员添加成功',url('admin/Admin/admin_list'));
             }else{
@@ -83,10 +86,11 @@ class Admin extends Base
 	{
 		$auth_group=Db::name('auth_group')->select();
 		$admin_list=Db::name('admin')->find(input('admin_id'));
-        $faculty = Db::table('yf_faculty')->select();
+        $classCode = new ClassCOde();
+		$faculty = $classCode->getFaculties();
 		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
 		$this->assign('admin_list',$admin_list);
-        $this->assign('admin_faculty', $faculty);
+        $this->assign('faculty_number', $faculty);
 		$this->assign('auth_group',$auth_group);
 		$this->assign('auth_group_access',$auth_group_access);
 		return $this->fetch();

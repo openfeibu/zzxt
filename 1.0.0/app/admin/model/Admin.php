@@ -74,7 +74,9 @@ class Admin extends Model
             'admin_username'          	 => $user->admin_username,
             'member_id'        			 => $user->member_id,
             'admin_last_ip' 			 => $user->admin_last_ip,
-            'admin_last_time'   		 => $user->admin_last_time
+            'admin_last_time'   		 => $user->admin_last_time,
+			'faculty_number'			 => $user->faculty_number,
+			'class_number' 				 => $user->class_number,
         );
         session('admin_auth', $auth);
 		session('admin_auth_sign', data_signature($auth));
@@ -118,7 +120,7 @@ class Admin extends Model
     /**
      * 增加管理员
      */
-    public static function add($admin_username,$admin_pwd_salt='',$admin_pwd,$admin_email='',$admin_tel='',$admin_open=0,$admin_realname='',$group_id=1,$admin_faculty)
+    public static function add($admin_username,$admin_pwd_salt='',$admin_pwd,$admin_email='',$admin_tel='',$admin_open=0,$admin_realname='',$group_id=1,$faculty_number)
     {
         $admin_pwd_salt=$admin_pwd_salt?:random(10);
         $sldata=array(
@@ -132,7 +134,7 @@ class Admin extends Model
             'admin_ip'=>request()->ip(),
             'admin_addtime'=>time(),
             'admin_changepwd'=>time(),
-            'admin_faculty' => $admin_faculty,
+            'faculty_number' => $faculty_number,
 //            'admin_limit' => $admin_limit,
             'member_id' => ''
         );
@@ -164,7 +166,7 @@ class Admin extends Model
         $admin=self::get($data['admin_id'])->toArray();
         unset($admin['ROW_NUMBER'],$admin['admin_id']);
         $admin['admin_username']=$data['admin_username'];
-        $admin['admin_faculty'] = $data['admin_faculty'];
+        $admin['faculty_number'] = $data['faculty_number'];
 //        $admin['admin_limit'] = $data['admin_limit'];
 //        $admin['admin_email']=$data['admin_email'];
 //        $admin['admin_tel']=$data['admin_tel'];

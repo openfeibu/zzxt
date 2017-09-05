@@ -225,34 +225,7 @@
                 <td rowspan="3" class="k-s-content title" style="width: 40px;">家庭信息</td>
                 <td class="k-s-content title">户籍地址</td>
                 <td class="k-s-content content" colspan="9">
-                    <form action="" name="form1" class="city_form">
-                        <div class="infolist" style="width:55%">
-                            <!--<lable>所在地区：</lable>-->
-                            <div class="liststyle">
-                                <span id="Province">
-                                    <i>请选择省份</i>
-                                    <ul>
-                                        <li><a href="javascript:void(0)" alt="请选择省份">请选择省份</a></li>
-                                    </ul>
-                                    <input type="hidden" name="cho_Province" value="请选择省份">
-                                </span>
-                                <span id="City">
-                                    <i>请选择城市</i>
-                                    <ul>
-                                        <li><a href="javascript:void(0)" alt="请选择城市">请选择城市</a></li>
-                                    </ul>
-                                    <input type="hidden" name="cho_City" value="请选择城市">
-                                </span>
-                                <span id="Area">
-                                    <i>请选择地区</i>
-                                    <ul>
-                                        <li><a href="javascript:void(0)" alt="请选择地区">请选择地区</a></li>
-                                    </ul>
-                                    <input type="hidden" name="cho_Area" value="请选择地区">
-                                </span>
-                            </div>
-                        </div>
-                    </form>
+                    
                     <div style="margin-top:10px;">
                         <label for="">户籍情况：</label>
                         <select name="residence_address_situation" id="" style="width: 200px;">
@@ -260,8 +233,9 @@
 							 <option value="{$key}" {if $key == $eval_app['residence_address_situation'] }selected{/if}>{$val}</option>
 							{/foreach}
                         </select>
+						<input type="text" class="tab_input_bottom" name="residence_address" style="margin-bottom: 5px;width:400px;"  value="{$eval_app.residence_address}"/>
                     </div>
-                    <input type="text" class="tab_input_bottom" name="residence_address" style="margin-bottom: 5px;"  value="{$eval_app.residence_address}"/>
+                    
                 </td>
             </tr>
             <tr class="line-table-height">
