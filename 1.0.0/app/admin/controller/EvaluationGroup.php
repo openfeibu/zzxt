@@ -109,9 +109,11 @@ class EvaluationGroup extends Base
             ->alias('es')
             ->join('yf_evaluation_application app','es.evaluation_id = app.evaluation_id')
             ->join('yf_user u','u.studentid = es.user_id')
+			->order('score desc')
 			->where("u.class_number = '".$this->class_number."'")
             ->where("CONVERT(VARCHAR(4),DATEADD(S,es.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
             ->field('es.*,app.assess_fraction,app.score,app.change_fraction')
+			
             ->paginate(20);
         if (empty($data[0]['user_id'])) {
             return $this->error("班级未有人申请");
@@ -212,6 +214,9 @@ class EvaluationGroup extends Base
             //删除没用的
             unset($data['status_id'],$data['evaluation_id']);
             //更新
+			$evaluation_model = new Evaluation();
+			$eval_app = $evaluation_model->getEvaluation($evaluation_id);
+			$data['score'] = intval($eval_app['assess_fraction']) + intval($data['change_fraction']) ;
             $res = Db::table('yf_evaluation_application')
                 ->where('evaluation_id',$evaluation_id)
                 ->update($data);

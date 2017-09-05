@@ -244,6 +244,7 @@ class Counselor extends Base
             ->alias('ass')//asshold
             ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
             ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
+			->order('score desc')
             ->where('u.faculty_number', $this->faculty)
             ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
             ->paginate(20);
