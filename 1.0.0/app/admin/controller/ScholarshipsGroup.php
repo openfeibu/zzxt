@@ -163,7 +163,7 @@ class ScholarshipsGroup extends Base
             ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
             ->paginate(20);
 
-        if (!$data) {
+        if (!isset($data->data)) {
             return $this->error("班级未有人申请");
         } else {
             foreach ($data->getCollection() as $k => $vo) {

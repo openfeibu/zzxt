@@ -115,15 +115,17 @@ class EvaluationGroup extends Base
             ->field('es.*,app.assess_fraction,app.score,app.change_fraction')
 			
             ->paginate(20);
-        if (empty($data[0]['user_id'])) {
-            return $this->error("班级未有人申请");
-        } else {
+
+        if (isset($data->data)) {
             foreach ($data->getCollection() as $k => $vo) {
                 $user = Db::table('yf_user')
                     ->where('studentid', $vo['user_id'])
                     ->find();
                 $data->data[$k] = array_merge($data->items()[$k], $user);
             }
+        } else {
+            
+			return $this->error("班级未有人申请");
         }
         //查询未审核人数
         $no_count = Db::table('yf_evaluation_status')

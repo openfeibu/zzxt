@@ -46,7 +46,7 @@ class Counselor extends Base
 //            ->where('status', 1)
             ->paginate(20);
         //获取学生信息
-
+		
         foreach ($data->getCollection() as $k => $vo) {
             $user = Db::table('yf_user')
                 ->where('studentid', $vo['user_id'])
@@ -58,8 +58,8 @@ class Counselor extends Base
 		$faculty_not_pass = 0;
 		$this->assign('faculty_pass', $faculty_pass);
 		 $this->assign('faculty_not_pass', $faculty_not_pass);
-		  
-        $this->assign('user', $data->data);
+		$user = isset($data->data) ? $data->data : [];  
+        $this->assign('user', $user);
         $this->assign('list', $data);
         return $this->view->fetch('scholarship_team/counselor_review');
     }
