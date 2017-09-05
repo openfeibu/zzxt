@@ -27,7 +27,7 @@ class Admin extends Base
 		if($search_name){
 			$map['admin_username']= array('like',"%".$search_name."%");
 		}
-        $classCode = new ClassCOde();
+        $classCode = new ClassCode();
 		$faculty = $classCode->getFaculties();
 		$admin_list=Db::name('admin')->where($map)->order('admin_id')->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 		$page = $admin_list->render();
@@ -42,7 +42,7 @@ class Admin extends Base
 	public function admin_add()
 	{
 		$auth_group=Db::name('auth_group')->select();
-		$classCode = new ClassCOde();
+		$classCode = new ClassCode();
 		$faculty = $classCode->getFaculties();
 		$this->assign('auth_group',$auth_group);
 		$this->assign('faculty_number', $faculty);
@@ -56,7 +56,7 @@ class Admin extends Base
 		if($search_name){
 			$map['a.admin_username']= array('like',"%".$search_name."%");
 		}
-        $classCode = new ClassCOde();
+        $classCode = new ClassCode();
 		$faculty = $classCode->getFaculties();
 		$admin_list=Db::name('admin')->alias('a')
 									->join('yf_auth_group_access ags','a.admin_id = ags.uid')
@@ -74,7 +74,7 @@ class Admin extends Base
 	public function counselor_admin_add()
 	{
 		$auth_group=Db::name('auth_group')->where('id in (21,25)')->select();
-		$classCode = new ClassCOde();
+		$classCode = new ClassCode();
 		//var_dump(session('admin_auth.faculty_number'));exit;
 		$class = $classCode->getClass(session('admin_auth.faculty_number'));
 		$this->assign('auth_group',$auth_group);
@@ -146,7 +146,7 @@ class Admin extends Base
 	{
 		$auth_group=Db::name('auth_group')->select();
 		$admin_list=Db::name('admin')->find(input('admin_id'));
-        $classCode = new ClassCOde();
+        $classCode = new ClassCode();
 		$faculty = $classCode->getFaculties();
 		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
 		$this->assign('admin_list',$admin_list);
