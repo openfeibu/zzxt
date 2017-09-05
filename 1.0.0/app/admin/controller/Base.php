@@ -28,7 +28,6 @@ class Base extends Common
 		$this->assign('menus_curr',$menus_curr);
 		//取当前操作菜单父节点下菜单 当前菜单id(仅显示状态)
         $menus_child=$auth->get_admin_parent_menus($id_curr);
-
 		$this->assign('menus_child',$menus_child);
 		$this->assign('id_curr',$id_curr);
 		$this->assign('admin_avatar',session('admin_auth.admin_avatar'));

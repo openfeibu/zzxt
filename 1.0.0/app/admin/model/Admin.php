@@ -120,7 +120,7 @@ class Admin extends Model
     /**
      * 增加管理员
      */
-    public static function add($admin_username,$admin_pwd_salt='',$admin_pwd,$admin_email='',$admin_tel='',$admin_open=0,$admin_realname='',$group_id=1,$faculty_number)
+    public static function add($admin_username,$admin_pwd_salt='',$admin_pwd,$admin_email='',$admin_tel='',$admin_open=0,$admin_realname='',$group_id=1,$faculty_number,$class_number)
     {
         $admin_pwd_salt=$admin_pwd_salt?:random(10);
         $sldata=array(
@@ -136,7 +136,8 @@ class Admin extends Model
             'admin_changepwd'=>time(),
             'faculty_number' => $faculty_number,
 //            'admin_limit' => $admin_limit,
-            'member_id' => ''
+            'member_id' => '',
+			 'class_number' => $class_number,
         );
         $admin=self::create($sldata);
         if($admin){

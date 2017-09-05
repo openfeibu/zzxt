@@ -48,6 +48,66 @@ class Admin extends Base
 		$this->assign('faculty_number', $faculty);
 		return $this->fetch();
 	}
+	public function counselor_admin_list()
+	{
+		$search_name=input('search_name');
+		$this->assign('search_name',$search_name);
+		$map=array();
+		if($search_name){
+			$map['a.admin_username']= array('like',"%".$search_name."%");
+		}
+        $classCode = new ClassCOde();
+		$faculty = $classCode->getFaculties();
+		$admin_list=Db::name('admin')->alias('a')
+									->join('yf_auth_group_access ags','a.admin_id = ags.uid')
+									->join('yf_auth_group ag','ags.group_id = ag.id')
+									->where('ag.id in (21,25)')
+									->where($map)
+									->order('admin_id')
+									->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
+		$page = $admin_list->render();
+		$this->assign('admin_list',$admin_list);
+        $this->assign('faculty_number', $faculty);
+        $this->assign('page',$page);
+		return $this->fetch();
+	}
+	public function counselor_admin_add()
+	{
+		$auth_group=Db::name('auth_group')->where('id in (21,25)')->select();
+		$classCode = new ClassCOde();
+		//var_dump(session('admin_auth.faculty_number'));exit;
+		$class = $classCode->getClass(session('admin_auth.faculty_number'));
+		$this->assign('auth_group',$auth_group);
+		$this->assign('class', $class);
+		return $this->fetch();
+	}
+	public function counselor_admin_runadd()
+	{
+        $aid = session('admin_auth.aid');
+        $user = Db::table('yf_auth_group_access')
+            ->where('uid',$aid)
+            ->find();
+        $group_id = $user['group_id'];
+        if ($group_id == 20) {
+            if (input('group_id','') == 21 or input('group_id','') == 25) {
+                $admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),input('class_number',0));
+                if($admin_id){
+                    $this->success('班级小组添加成功',url('admin/Admin/counselor_admin_list'));
+                }else{
+                    $this->error('班级小组添加失败',url('admin/Admin/counselor_admin_list'));
+                }
+            } else {
+                $this->error('您没有权限');
+            }
+        } else {
+            $admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),input('class_number',0));
+            if($admin_id){
+                $this->success('管理员添加成功',url('admin/Admin/counselor_admin_list'));
+            }else{
+                $this->error('管理员添加失败',url('admin/Admin/counselor_admin_list'));
+            }
+        }
+	}
 	/**
 	 * 管理员添加操作
 	 */
