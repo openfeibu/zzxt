@@ -37,10 +37,10 @@ $(function () {
 	$('body').on('click','.confirm-btn',function () {
         var $url = this.href,
             $info = $(this).data('info');
-        layer.confirm($info, {icon: 3}, function (index) {
+        // layer.confirm($info, {icon: 3}, function (index) {
             layer.close(index);
             window.location.href = $url;
-        });
+        // });
         return false;
     });
 });
