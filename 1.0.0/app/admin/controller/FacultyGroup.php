@@ -11,6 +11,8 @@ namespace app\admin\controller;
 use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\MultipleScholarship;
 use app\home\model\NationalScholarship;
+use app\admin\model\Evaluation;
+use think\Config;
 use think\Db;
 use think\Request;
 
@@ -26,7 +28,7 @@ class FacultyGroup extends Base
     {
         parent::__construct();
         $this->time = date('Y', time());
-        $this->faculty = 5;
+        $this->faculty = session('admin_auth.faculty_number');
         $this->multiple = new MultipleScholarship();
         $this->national = new NationalScholarship();
         $this->applyStatus = new ScholarshipsApplyStatus();
@@ -193,11 +195,15 @@ class FacultyGroup extends Base
                 ->find();
             if (!empty($apply['awards'])) {
                 $apply['awards'] = json_decode($apply['awards'], true);
-            } else {
-                $apply['awards'][0]['date'] = '';
+            } 
+			if(!is_array($apply['awards']))
+			{
+				$apply['awards'] = [];
+				$apply['awards'][0]['date'] = '';
                 $apply['awards'][0]['name'] = '';
                 $apply['awards'][0]['unit'] = '';
             }
+
             if (empty($apply['group_opinion'])) {
                 return $this->error("小组未审核该同学");
             } else {
@@ -210,6 +216,7 @@ class FacultyGroup extends Base
                 $apply['faculty_opinion']['text'] = '';
                 $apply['faculty_opinion']['name'] = '';
             }
+			
             $this->assign('type_id', $type_id);
             $this->assign('id', $apply_id);
             $this->assign('user', $apply);
@@ -598,11 +605,8 @@ class FacultyGroup extends Base
         if (!$data) {
             $this->error("该学生没有填写申请表");
         }
-        $apply = Db::table('yf_evaluation_application')
-            ->alias('app')
-            ->join('yf_user u', 'u.studentid = app.user_id', 'left')
-            ->where('evaluation_id',$data['evaluation_id'])
-            ->find();
+		$evaluation_model = new Evaluation();
+        $apply = $evaluation_model->getEvaluation($data['evaluation_id']);
 
 //        if (!empty($apply['awards'])) {
 //            $apply['awards'] = json_decode($apply['awards'], true);
@@ -623,7 +627,10 @@ class FacultyGroup extends Base
             $apply['faculty_opinion']['text'] = '';
             $apply['faculty_opinion']['name'] = '';
         }
-
+		$this->assign('eval_app', $apply);
+		$eval_form = Config::get('evaluation_form');
+		$this->assign('eval_form',$eval_form);
+		
         $this->assign('status_id', $id);
         $this->assign('user', $apply);
         return $this->view->fetch('evaluation/faculty_add_review');

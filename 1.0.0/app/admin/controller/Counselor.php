@@ -29,8 +29,8 @@ class Counselor extends Base
         $this->national = new NationalScholarship();
         $this->applyStatus = new ScholarshipsApplyStatus();
         $this->time = date("Y",time());
-        $this->faculty = 5;
-		$this->user_id = '201555332';
+        $this->faculty = session('admin_auth.faculty_number');
+		$this->class_number = session('admin_auth.class_number');
     }
 
     /**
@@ -38,11 +38,11 @@ class Counselor extends Base
      */
     public function showNationalList() {
         //获取前9位学号班级代码
-        $uid = substr($this->user_id,0,9);
         $data = Db::table('yf_apply_scholarships_status')
-            ->where('fund_type', 1)
-            ->where("substring(user_id,1,9) = $uid")
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+			->alias('a')->join('yf_user u','u.studentid = a.user_id')
+			->where("u.faculty_number = '".$this->faculty."'")
+            ->where('a.fund_type', 1)
+            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
 //            ->where('status', 1)
             ->paginate(20);
         //获取学生信息
@@ -54,6 +54,11 @@ class Counselor extends Base
             if (!is_array($data->items()[$k])){halt($data->items()[$k]);}
             $data->data[$k] = array_merge($data->items()[$k],$user);
         }
+		$faculty_pass = 0;
+		$faculty_not_pass = 0;
+		$this->assign('faculty_pass', $faculty_pass);
+		 $this->assign('faculty_not_pass', $faculty_not_pass);
+		  
         $this->assign('user', $data->data);
         $this->assign('list', $data);
         return $this->view->fetch('scholarship_team/counselor_review');
@@ -81,7 +86,9 @@ class Counselor extends Base
             ->find();
         if (!empty($apply['awards'])) {
             $apply['awards'] = json_decode($apply['awards'], true);
-        } else {
+        } 
+		if(!is_array($apply['awards'])){
+			$apply['awards'] = [];
             $apply['awards'][0]['date'] = '';
             $apply['awards'][0]['name'] = '';
             $apply['awards'][0]['unit'] = '';

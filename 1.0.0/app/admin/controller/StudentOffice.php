@@ -11,7 +11,9 @@ namespace app\admin\controller;
 use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\MultipleScholarship;
 use app\home\model\NationalScholarship;
+use app\admin\model\ClassCode;
 use think\Db;
+use think\Config;
 use think\Request;
 class StudentOffice extends Base
 {
@@ -74,12 +76,10 @@ class StudentOffice extends Base
                 ->where($faculty_profession_sql)
                 ->paginate(20);
             //查院系的
-            $faculty_profession = Db::table('yf_faculty')
-                ->select();
+			$classCode = new ClassCOde();
+            $faculty_profession = $classCode->getFaculties();
             //这里比较麻烦。先找出提交上来的那个专业。
-            $faculty_name = Db::table('yf_faculty')
-                ->where('faculty_number', $data['faculty'])
-                ->find();
+            $faculty_name = $classCode->getFaculty($data['faculty']);
             if ($data['faculty'] != 0 and $data['grade'] != 0) {
                 $faculty_name = $data['grade'].$faculty_name['faculty_name'];
             } elseif ($data['faculty'] != 0 and $data['grade'] == 0) {
@@ -138,8 +138,8 @@ class StudentOffice extends Base
                 ->paginate(20);
         }
         //查院
-        $faculty_profession = Db::table('yf_faculty')
-            ->select();
+		$classCode = new ClassCOde();
+        $faculty_profession = $classCode->getFaculties();
         //绝笔要撕逼(未通过的)
         $faculty_count = Db::table('yf_apply_scholarships_status')
             ->alias('ass')//asshold
@@ -605,6 +605,9 @@ class StudentOffice extends Base
             $apply['school_opinion']['text'] = '';
             $apply['school_opinion']['name'] = '';
         }
+		$this->assign('eval_app', $apply);
+		$eval_form = Config::get('evaluation_form');
+		$this->assign('eval_form',$eval_form);
         $this->assign('status_id', $id);
         $this->assign('user', $apply);
         return $this->view->fetch('evaluation/manage_add_review');

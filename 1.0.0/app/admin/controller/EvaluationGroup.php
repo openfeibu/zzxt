@@ -10,7 +10,7 @@ namespace app\admin\controller;
 use think\Db;
 use think\Config;
 use think\Request;
-
+use app\admin\model\Evaluation;
 
 class EvaluationGroup extends Base
 {
@@ -100,9 +100,9 @@ class EvaluationGroup extends Base
             $this->assign('no_count',$no_count);
             $this->assign('yes_count',$yes_count);
             $this->assign('user',$data_students);
-            $this->assign('id', $id);
+            // $this->assign('id', $id);
             $this->assign('list', $data_data);
-            return $this->view->fetch();
+            return $this->view->fetch('evaluation/class_review');
         }
         //查找呃
         $data = Db::table('yf_evaluation_status')
@@ -159,11 +159,8 @@ class EvaluationGroup extends Base
         if (!$data) {
             return $this->error("该学生没有填写申请表");
         }
-        $apply = Db::table('yf_evaluation_application')
-            ->alias('app')
-            ->join('yf_user u', 'u.studentid = app.user_id', 'left')
-            ->where('evaluation_id',$data['evaluation_id'])
-            ->find();
+		$evaluation_model = new Evaluation();
+        $apply = $evaluation_model->getEvaluation($data['evaluation_id']);
 
 //        if (!empty($apply['awards'])) {
 //            $apply['awards'] = json_decode($apply['awards'], true);

@@ -13,6 +13,8 @@ use think\Db;
 use think\Request;
 use app\admin\model\WorkStatus;
 use PHPExcel;
+use app\admin\model\ClassCode;
+
 class WorkStudy extends Base
 {
     public function index()
@@ -84,8 +86,8 @@ class WorkStudy extends Base
                 ->where("ws.status is null")
                 ->where($sql)
                 ->paginate(20);
-            $faculty_list = Db::table('yf_faculty')
-                ->select();
+			$classCode = new ClassCOde();
+            $faculty_list = $classCode->getFaculties();
             $this->assign("faculty_list", $faculty_list);
             $this->assign('dir', '岗位申请人列表');
             $this->assign('id', $id);
@@ -99,8 +101,8 @@ class WorkStudy extends Base
             ->where('work_apply_id', $id)
             ->where("ws.status is null")
             ->paginate(20);
-        $faculty_list = Db::table('yf_faculty')
-            ->select();
+		$classCode = new ClassCOde();	
+        $faculty_list = $classCode->getFaculties();
         $this->assign("faculty_list", $faculty_list);
         $this->assign('dir', '岗位申请人列表');
         $this->assign('id', $id);
@@ -623,8 +625,8 @@ class WorkStudy extends Base
         if (empty($data->count())) {
             return $this->error("该岗位没有聘用学生");
         }
-        $facult = Db::table('yf_faculty')
-            ->select();
+		$classCode = new ClassCOde();
+        $facult = $classCode->getFaculties();
         $this->assign('faculty_list', $facult);
         $this->assign('dir',"上岗人员");
         $this->assign('id', $id);
@@ -697,8 +699,8 @@ class WorkStudy extends Base
                 ->where("ws.status = 1")
                 ->where($sql)
                 ->paginate(20);
-            $faculty_list = Db::table('yf_faculty')
-                ->select();
+			$classCode = new ClassCOde();
+            $faculty_list =  $classCode->getFaculties();
             $this->assign("faculty_list", $faculty_list);
             $this->assign('dir', '未审核名单');
             $this->assign('id', $id);
@@ -712,8 +714,8 @@ class WorkStudy extends Base
             ->where('work_apply_id', $id)
             ->where("ws.status = 1")
             ->paginate(20);
-        $faculty_list = Db::table('yf_faculty')
-            ->select();
+		$classCode = new ClassCOde();
+        $faculty_list =  $classCode->getFaculties();
         $this->assign("faculty_list", $faculty_list);
         $this->assign('dir', '未审核名单');
         $this->assign('id', $id);
