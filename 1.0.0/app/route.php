@@ -69,7 +69,7 @@ return [
     'admin/Survey/setOpen' => 'admin/Survey/setOpen',//显示设置调查问卷开关界面
     //---------------------------------------学生端三金申请-----------------------------
     'home/text'=> 'home/Student/text',
-    'home/Scholarship/chooseType'                      => 'home/Student/chooseType',//选择申请类型,后缀加id.(id = 1为国家奖学金，2为励志奖学金，3为助学金)
+    'home/Scholarship/chooseType'                          => 'home/Student/chooseType',//选择申请类型,后缀加id.(id = 1为国家奖学金，2为励志奖学金，3为助学金)
     'home/grants'                                          => 'home/Student/getGrants',//助学金
     'home/inspirational'                                   => 'home/Student/getInspirational',//励志奖学金
     'home/nationalScholarship'                             => 'home/Student/getNationalScholarship',//国家奖学金
@@ -88,12 +88,13 @@ return [
     'admin/FacultyGroup/showMaterial/:id'                  => 'admin/FacultyGroup/showMaterial',//院系小组显示学生信息及添加评语
     //------------------------------------------公告----------------------------------
     'home/Listn/showList/:id'                              => 'home/Listn/showList',
-    'home/Student/examineStatus'                            => 'home/Student/examineStatus',//个人中心状态
+    'home/Student/examineStatus'                           => 'home/Student/examineStatus',//个人中心状态
+    'admin/Notice/showList/:id'                             => 'admin/Notice/showList',//后台公告
     //----------------------------------评估系统(后台)--------------------------------------------------------------
     'admin/Counselor/showEvaluationList'                   => 'admin/Counselor/showEvaluationList',//辅导员审核列表
-    'admin/Counselor/showEvaluationMaterial/:id'               => 'admin/Counselor/showEvaluationMaterial',//辅导员查看学生信息
-    'admin/Counselor/showEvaluationEvidence/:id'            => 'admin/Counselor/showEvaluationEvidence',//辅导员查看佐证材料
-    'admin/EvaluationGroup/showEvaluationList'                   => 'admin/EvaluationGroup/showEvaluationList',//班级小组审核列表
+    'admin/Counselor/showEvaluationMaterial/:id'           => 'admin/Counselor/showEvaluationMaterial',//辅导员查看学生信息
+    'admin/Counselor/showEvaluationEvidence/:id'           => 'admin/Counselor/showEvaluationEvidence',//辅导员查看佐证材料
+    'admin/EvaluationGroup/showEvaluationList'             => 'admin/EvaluationGroup/showEvaluationList',//班级小组审核列表
     'admin/EvaluationGroup/showEvaluationMaterial/:id'               => 'admin/EvaluationGroup/showEvaluationMaterial',//班级小组查看学生信息
     'admin/EvaluationGroup/showEvaluationEvidence/:id'            => 'admin/EvaluationGroup/showEvaluationEvidence',//班级小组查看佐证材料
     'admin/FacultyGroup/showEvaluationList'                   => 'admin/FacultyGroup/showEvaluationList',//院系小组审核列表
