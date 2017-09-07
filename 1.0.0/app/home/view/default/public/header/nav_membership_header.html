@@ -56,14 +56,17 @@
                  {/if}>
                 <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >三金申请<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li {if condition="'getGrants' eq $Think.const.ACTION_NAME"}class="active"{/if} >
+                    <li>
                         <a  href="javascript:;" onclick="choose_type('3')">国家助学金</a>
                     </li>
-                    <li id="type2" {if condition="'getInspirational' eq $Think.const.ACTION_NAME"}class="active"{/if} >
+                    <li>
                         <a href="javascript:;" onclick="choose_type('1')">国家奖学金</a>
                     </li>
-                    <li id="type1" {if condition="'getNationalScholarship' eq $Think.const.ACTION_NAME"}class="active"{/if} >
+                    <li>
                         <a href="javascript:;" onclick="choose_type('2')">国家励志奖学金</a>
+                    </li>
+                    <li class="login_error" id="error_choose">
+
                     </li>
                 </ul>
                 <script>
@@ -78,9 +81,11 @@
                                 if (data.code == 1) {
                                     window.location.href = data.url;
                                 } else {
-                                    layer.alert(data.msg, {icon: 5}, function (index) {
-                                        layer.close(index);
-                                    });
+                                    $('#error_choose').html("")
+                                    $('#error_choose').html(data.msg)
+//                                    layer.alert(data.msg, {icon: 5}, function (index) {
+//                                        layer.close(index);
+//                                    });
                                     return false;
                                 }
                             }
