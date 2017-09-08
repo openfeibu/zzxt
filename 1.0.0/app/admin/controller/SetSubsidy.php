@@ -11,6 +11,10 @@ namespace app\admin\controller;
 use think\Db;
 class SetSubsidy extends Base
 {
+
+    /**
+     * 设置开启时间
+     */
     public function index()
     {
         if (request()->isAjax()) {
@@ -40,6 +44,10 @@ class SetSubsidy extends Base
         return $this->view->fetch();
     }
 
+    /**
+     * 设置公示时间
+     * @return string
+     */
     public function setPublicityTime() {
         if (request()->isAjax()) {
             $data = request()->post();
