@@ -45,22 +45,6 @@
                         <tr>
                             <td >国家助学金</td>
                             <td >
-                                <span class="{$m_class}">
-                                    {if condition="$m_status == 1"}申请书已经提交
-                                    {elseif condition="$m_status==2"}班级小组通过
-                                    {elseif condition="$m_status==3"}院系小组通过
-                                    {elseif condition="$m_status==4"}学生处通过
-                                    {elseif condition="$m_status==5"}班级小组不通过
-                                    {elseif condition="$m_status==6"}院系小组不通过
-                                    {elseif condition="$m_status==7"}学生处不通过
-                                    {else}未申请
-                                    {/if}
-                                </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td >国家励志奖学金</td>
-                            <td >
                                 <span class="{$u_class}">
                                     {if condition="$u_status == 1"}申请书已经提交
                                     {elseif condition="$u_status==2"}班级小组通过
@@ -69,7 +53,23 @@
                                     {elseif condition="$u_status==5"}班级小组不通过
                                     {elseif condition="$u_status==6"}院系小组不通过
                                     {elseif condition="$u_status==7"}学生处不通过
-                                    {else}未申请
+                                    {else}{$u_status}
+                                    {/if}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >国家励志奖学金</td>
+                            <td >
+                                <span class="{$m_class}">
+                                    {if condition="$m_status == 1"}申请书已经提交
+                                    {elseif condition="$m_status==2"}班级小组通过
+                                    {elseif condition="$m_status==3"}院系小组通过
+                                    {elseif condition="$m_status==4"}学生处通过
+                                    {elseif condition="$m_status==5"}班级小组不通过
+                                    {elseif condition="$m_status==6"}院系小组不通过
+                                    {elseif condition="$m_status==7"}学生处不通过
+                                    {else}{$m_status}
                                     {/if}
                                 </span>
                             </td>
@@ -85,7 +85,7 @@
                                     {elseif condition="$n_status==5"}班级小组不通过
                                     {elseif condition="$n_status==6"}院系小组不通过
                                     {elseif condition="$n_status==7"}学生处不通过
-                                    {else}未申请
+                                    {else}{$n_status}
                                     {/if}
                                 </span>
                             </td>

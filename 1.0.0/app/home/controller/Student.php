@@ -56,14 +56,14 @@ class Student extends Base
                             ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
                             ->find();
                         if ($res) {
-                            $this->error("你已经提交过了。请勿重复提交。");
+                            $this->error("审核中");
                         }
                         //跳转申请界面
                         $this->success('成功',url('/home/nationalScholarship'));
                     }
-                    $this->error("你已经申请励志奖学金，根据规定无法申请国家奖学金");
+                    $this->error("请查看个人中心");
                 }
-                $this->error("你不是二年级学生,根据规定只有大二以上才可申请");
+                $this->error("请查看个人中心");
                 break;
 
             //励志奖学金
@@ -82,14 +82,14 @@ class Student extends Base
                             ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
                             ->find();
                         if ($res) {
-                            $this->error("你已经提交过了。请勿重复提交。");
+                            $this->error("审核中");
                         }
                         //跳转申请界面
                         $this->success('成功',url('/home/inspirational'));
                     }
-                    $this->error("你已经申请国家奖学金，根据规定无法申请国家励志奖学金");
+                    $this->error("请查看个人中心");
                 }
-                $this->error("你不是二年级学生,根据规定只有大二以上才可申请");
+                $this->error("请查看个人中心");
                 break;
 
             //助学金
@@ -100,7 +100,7 @@ class Student extends Base
                     ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
                     ->find();
                 if ($res) {
-                    $this->error("你已经提交过了。请勿重复提交。");
+                    $this->error("审核中");
 					//$this->success('成功',url('/home/grants'));
                 }
                 //跳转申请页面
@@ -409,48 +409,127 @@ class Student extends Base
         }
 
         //三金审核状态
-        $user_status = ScholarshipsApplyStatus::where('user_id', $this->user_id)
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this_time")
-            ->field('status,fund_type')
-            ->select();
-        if (empty($user_status['fund_type'])) {
-            $n_status = '未申请';
+//        $user_status = ScholarshipsApplyStatus::where('user_id', $this->user_id)
+//            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this_time")
+//            ->field('status,fund_type')
+//            ->select();
+//        if (empty($user_status['fund_type'])) {
+//            $n_status = '未申请';
+//            $n_class = 'review-error';
+//            $m_status = '未申请';
+//            $m_class = 'review-error';
+//            $u_status = '未申请';
+//            $u_class = 'review-error';
+//        }
+//        foreach ($user_status as $key => $val) {
+//            if ($val['fund_type'] == 1) {
+//                $n_status = $val['status'];
+//                if(0 < $val['status'] && $val['status'] < 4) {
+//                    $n_class = 'reviewing';
+//                } elseif(5 <= $val['status'] && $val['status'] <= 7) {
+//                    $n_class = 'review-error';
+//                } elseif($val['status'] == 4) {
+//                    $n_class = 'review-success';
+//                }
+//            } elseif ($val['fund_type'] == 2) {
+//                $m_status = $val['status'];
+//                if(0 < $val['status'] && $val['status'] < 4) {
+//                    $m_class = 'reviewing';
+//                } elseif(5 <= $val['status'] && $val['status'] <= 7) {
+//                    $m_class = 'review-error';
+//                } elseif($val['status'] == 4) {
+//                    $m_class = 'review-success';
+//                }
+//            } elseif ($val['fund_type'] == 3) {
+//                $u_status = $val['status'];
+//                if(0 <= $val['status'] && $val['status'] < 4) {
+//                    $u_class = 'reviewing';
+//                } elseif(5 <= $val['status'] && $val['status'] <= 7) {
+//                    $u_class = 'review-error';
+//                } elseif($val['status'] == 4) {
+//                    $u_class = 'review-success';
+//                }
+//            }
+//        }
+
+        //判断是否大二
+        $grade = Db::table('yf_user')
+            ->where('studentid', $this->user_id)
+            ->field('grade')
+            ->find();
+        if($grade['grade'] == 2) {
+            //判断是否申请过励志奖学金
+            if ($this->applyStatus->isHaveApply($this->user_id, 1)) {
+                $user_status = ScholarshipsApplyStatus::where('user_id', $this->user_id)
+                    ->where('fund_type', 1)
+                    ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
+                    ->find();
+                if ($user_status) {
+                    $n_status = $user_status['status'];
+                    if(0 < $user_status['status'] && $user_status['status'] < 4) {
+                        $n_class = 'reviewing';
+                    } elseif(5 <= $user_status['status'] && $user_status['status'] <= 7) {
+                        $n_class = 'review-error';
+                    } elseif($user_status['status'] == 4) {
+                        $n_class = 'review-success';
+                    }
+                } else {
+                    $n_status = '未申请';
+                    $n_class = 'review-error';
+                }
+            } else {
+                $n_status = '你已经申请励志奖学金，根据规定无法申请国家奖学金';
+                $n_class = 'review-error';
+            }
+
+            if ($this->applyStatus->isHaveApply($this->user_id, 2)) {
+                $user_status = ScholarshipsApplyStatus::where('user_id', $this->user_id)
+                    ->where('fund_type', 2)
+                    ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
+                    ->find();
+                if ($user_status) {
+                    $m_status = $user_status['status'];
+                    if(0 < $user_status['status'] && $user_status['status'] < 4) {
+                        $m_class = 'reviewing';
+                    } elseif(5 <= $user_status['status'] && $user_status['status'] <= 7) {
+                        $m_class = 'review-error';
+                    } elseif($user_status['status'] == 4) {
+                        $m_class = 'review-success';
+                    }
+                } else {
+                    $m_status = '未申请';
+                    $m_class = 'review-error';
+                }
+            } else {
+                $m_status = '你已经申请国家奖学金，根据规定无法申请励志奖学金';
+                $m_class = 'review-error';
+            }
+
+        } else {
+            $n_status = "你不是二年级学生,根据规定只有大二以上才可申请";
             $n_class = 'review-error';
-            $m_status = '未申请';
+            $m_status = "你不是二年级学生,根据规定只有大二以上才可申请";
             $m_class = 'review-error';
+        }
+
+        $user_status = ScholarshipsApplyStatus::where('user_id', $this->user_id)
+            ->where('fund_type', 3)
+            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
+            ->find();
+        if ($user_status) {
+            $u_status = $user_status['status'];
+            if (0 < $user_status['status'] && $user_status['status'] < 4) {
+                $u_class = 'reviewing';
+            } elseif (5 <= $user_status['status'] && $user_status['status'] <= 7) {
+                $u_class = 'review-error';
+            } elseif ($user_status['status'] == 4) {
+                $u_class = 'review-success';
+            }
+        } else {
             $u_status = '未申请';
             $u_class = 'review-error';
         }
-        foreach ($user_status as $key => $val) {
-            if ($val['fund_type'] == 1) {
-                $n_status = $val['status'];
-                if(0 < $val['status'] && $val['status'] < 4) {
-                    $n_class = 'reviewing';
-                } elseif(5 <= $val['status'] && $val['status'] <= 7) {
-                    $n_class = 'review-error';
-                } elseif($val['status'] == 4) {
-                    $n_class = 'review-success';
-                }
-            } elseif ($val['fund_type'] == 2) {
-                $m_status = $val['status'];
-                if(0 < $val['status'] && $val['status'] < 4) {
-                    $m_class = 'reviewing';
-                } elseif(5 <= $val['status'] && $val['status'] <= 7) {
-                    $m_class = 'review-error';
-                } elseif($val['status'] == 4) {
-                    $m_class = 'review-success';
-                }
-            } elseif ($val['fund_type'] == 3) {
-                $u_status = $val['status'];
-                if(0 <= $val['status'] && $val['status'] < 4) {
-                    $u_class = 'reviewing';
-                } elseif(5 <= $val['status'] && $val['status'] <= 7) {
-                    $u_class = 'review-error';
-                } elseif($val['status'] == 4) {
-                    $u_class = 'review-success';
-                }
-            }
-        }
+
         $this->assign('e_status',$e_status);
         $this->assign('e_class',$e_class);
         $this->assign('w_status',$w_status);

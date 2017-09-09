@@ -282,6 +282,7 @@ footer p{line-height: 28px;}
 .infolist .liststyle span ul li a{display:block;height:36px;line-height:36px;padding:0 8px;color:#494949;}
 
 .login_error{ text-align: center;width: 100%; color: red; margin-top: 20px;}
+.status_error{ text-align: center;width: 100%; color: red; }
 
 
 
