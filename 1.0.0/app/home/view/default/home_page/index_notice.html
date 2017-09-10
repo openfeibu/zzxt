@@ -33,18 +33,16 @@
     </div>
     <!-- 通知公告 -->
     <div class="fb-list" >
-
         <ul>
             {volist name="lists['news']" id="vo"}
             <li><a href="{:url('home/News/index',array('id'=>$vo['n_id']))}"><p>{$vo.news_title}</p><span>{$vo.news_time||date="Y-m-d",###}</span></a></li>
             {/volist}
         </ul>
-        <div class="fb-page">
-            <ol>
-                {$page_html}
-            </ol>
-        </div>
     </div>
+    <div class="fb-page">
+        {$page_html}
+    </div>
+
     <!-- 通知公告 -->
 
 </div>

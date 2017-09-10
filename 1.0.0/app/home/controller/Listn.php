@@ -64,7 +64,7 @@ class Listn extends Base
     public function showList($id) {
         $list_id=$id;
         $page=input('page');
-        $pagesize=10;
+        $pagesize=8;
         $menu=Db::name('menu')->find(5);
         if(empty($menu)){
             $this->error(lang('operation not valid'));
@@ -98,7 +98,7 @@ class Listn extends Base
             }
             //替换成带ajax的class
             $page_html=$lists['page'];
-            $page_html=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$page_html);
+
         }
         $this->assign('menu',$menu);
         $this->assign('page_html',$page_html);
@@ -113,7 +113,7 @@ class Listn extends Base
         } else if ($id == 6) {
             $position = "home_page/fund_policy";
         } else {
-            return $this->error(lang('错误'));
+            return $this->error('错误，请联系管理员');
         }
         return $this->view->fetch(":$position");
     }

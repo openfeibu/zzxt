@@ -1,4 +1,6 @@
 {include file="public/header/nav_guest_header"}
+
+<!-- 导航 -->
 <div class="nav-old">
     <ul class="w1000">
         <li class=""><a href="{:url('/')}">首页</a></li>
@@ -7,15 +9,6 @@
         <li class=""><a href="{:url('/home/Listn/showList/6')}">资助政策</a></li>
     </ul>
 </div>
-<!-- 导航 -->
-<!--<div class="nav">-->
-    <!--<ul class="w1000">-->
-        <!--<li><a href="{:url('/index_front')}">首页</a></li>-->
-        <!--<li class=""><a href="{:url('/home/Listn/showlist/5')}">通知公告</a></li>-->
-        <!--<li class="active"><a href="{:url('/home/Listn/showlist/3')}">资助新闻</a></li>-->
-        <!--<li class=""><a href="{:url('/home/Listn/showlist/6')}">资助政策</a></li>-->
-    <!--</ul>-->
-<!--</div>-->
 <!-- 导航 -->
 <!-- 主体内容 S -->
 <div class="main w1000">
@@ -33,25 +26,14 @@
     </div>
     <!-- 通知公告 -->
     <div class="fb-list" >
-
         <ul>
             {volist name="lists['news']" id="vo"}
             <li><a href="{:url('home/News/index',array('id'=>$vo['n_id']))}"><p>{$vo.news_title}</p><span>{$vo.news_time||date="Y-m-d",###}</span></a></li>
             {/volist}
         </ul>
-        <div class="fb-page">
-            <!--<ol>-->
-                <!--<li><a href="">首页</a></li>-->
-                <!--<li><a href="">上一页</a></li>-->
-                <!--<li><a class="active" href="">1</a></li>-->
-                <!--<li><a href="">2</a></li>-->
-                <!--<li><a href="">3</a></li>-->
-                <!--<li><a href="">4</a></li>-->
-                <!--<li><a href="">5</a></li>-->
-                <!--<li><a href="">下一页</a></li>-->
-            <!--</ol>-->
-            {$page_html}
-        </div>
+    </div>
+    <div class="fb-page">
+        {$page_html}
     </div>
     <!-- 通知公告 -->
 

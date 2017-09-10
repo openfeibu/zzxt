@@ -120,18 +120,18 @@ footer p{line-height: 28px;}
 .fb-list{padding: 10px 25px;margin-top: 20px;}
 .fb-list-title{width: 100%;height:40px;line-height: 40px;font-size: 16px;color:#438EB9;}
 .fb-list-title span{float: left;}
-.fb-list ul{}
+.fb-list ul{height: 280px;}
 .fb-list ul li{height: 35px;line-height: 35px;padding-left: 20px;border-bottom: 1px dashed #ddd;background:url("../images/disc.jpg") no-repeat 8px center;}
 .fb-list ul li p{display: inline-block;*display: inline;*zoom:1;width: 70%;text-overflow:ellipsis; white-space: nowrap; overflow: hidden; }
 .fb-list ul li span{float: right;}
 .fb-list ul li a{color: #333;display: block;height: 28px;font-size:16px;}
 .fb-list ul li a:hover{color:#438EB9;}
 .fb-page{text-align: center;margin:20px 0 0 0;}
-.fb-page ol{text-align: center;}
-.fb-page ol li{display: inline-block;*display: inline;*zoom:1;height: 28px;line-height: 28px;border:1px solid #ddd;}
-.fb-page ol li a{padding: 0 10px;height: 28px;display: block;}
-.fb-page ol li a:hover{background:#438EB9;color: #fff;}
-.fb-page ol li a.active{background:#438EB9;color: #fff;}
+.fb-page ul{text-align: center;}
+/*.fb-page ul li{display: inline-block;*display: inline;*zoom:1;height: 28px;line-height: 28px;border:1px solid #ddd;}*/
+/*.fb-page ul li a{padding: 0 10px;height: 28px;display: block;}*/
+.fb-page ul li a:hover{background:#438EB9;color: #fff;}
+.fb-page ul li a.active{background:#438EB9;color: #fff;}
 .fb-source{padding: 0 25px;border-bottom: 1px solid #ddd;height: 28px;}
 .fb-source ul{}
 .fb-source ul li{display: inline-block;*display: inline;*zoom:1;vertical-align: middle;color: #666;font-size: 18px;}

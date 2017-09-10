@@ -273,14 +273,17 @@
         </div>
         <div class="fb-seamless-con">
             <ul>
-                <li><img src="{$yf_theme_path}public/images/1.jpg" alt=""></li>
-                <li><img src="{$yf_theme_path}public/images/2.jpg" alt=""></li>
-                <li><img src="{$yf_theme_path}public/images/3.jpg" alt=""></li>
-                <li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>
-                <li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>
-                <li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>
-                <li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>
-                <li><img src="{$yf_theme_path}public/images/5.jpg" alt=""></li>
+                {yf:news name="scenery" cid="22" field="n_id,news_title,news_content,news_img" order="news_time desc" limit="6" /}
+                {volist name="scenery" id="vo"}
+                <li><img src="{$vo.news_img}" alt=""></li>
+                <!--<li><img src="{$yf_theme_path}public/images/2.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/3.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/5.jpg" alt=""></li>-->
+                {/volist}
             </ul>
         </div>
     </div>
