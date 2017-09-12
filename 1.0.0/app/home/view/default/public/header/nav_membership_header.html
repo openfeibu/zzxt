@@ -57,15 +57,13 @@
                 <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >三金申请<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a  href="javascript:;" onclick="choose_type('3')">国家助学金</a>
+                        <a href="javascript:;" onclick="choose_type('3')">国家助学金<span class="status_error" id="error_choose_3"></span></a>
                     </li>
                     <li>
-                        <a href="javascript:;" onclick="choose_type('2')">国家励志奖学金</a>
+                        <a href="javascript:;" onclick="choose_type('2')">国家励志奖学金<span class="status_error" id="error_choose_2"></span></a>
                     </li>
                     <li>
-                        <a href="javascript:;" onclick="choose_type('1')">国家奖学金</a>
-                    </li>
-                    <li class="status_error" id="error_choose">
+                        <a href="javascript:;" onclick="choose_type('1')">国家奖学金<span class="status_error" id="error_choose_1"></span></a>
                     </li>
                 </ul>
                 <script>
@@ -80,8 +78,17 @@
                                 if (data.code == 1) {
                                     window.location.href = data.url;
                                 } else {
-                                    $('#error_choose').html("")
-                                    $('#error_choose').html(data.msg)
+                                    if (choose_type == 1) {
+                                        $('#error_choose_1').html("")
+                                        $('#error_choose_1').html("("+data.msg+")")
+                                    } else if (choose_type == 2) {
+                                        $('#error_choose_2').html("")
+                                        $('#error_choose_2').html("("+data.msg+")")
+                                    } else if (choose_type == 3) {
+                                        $('#error_choose_3').html("")
+                                        $('#error_choose_3').html("("+data.msg+")")
+                                    }
+
 //                                    layer.alert(data.msg, {icon: 5}, function (index) {
 //                                        layer.close(index);
 //                                    });
