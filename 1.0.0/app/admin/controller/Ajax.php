@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 use think\Db;
+use app\admin\model\ClassCode;
 
 class Ajax
 {
@@ -30,5 +31,12 @@ class Ajax
 		$module=input('request_module','admin');
 		$list=\ReadClass::readDir(APP_PATH . $module. DS .'controller');
 		return json($list);
+	}
+
+	public function get_class()
+	{
+		$classCode = new ClassCode();
+		$class = $classCode->getClass(input('faculty_number'));
+		return $class;
 	}
 }

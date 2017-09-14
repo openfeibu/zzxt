@@ -1057,4 +1057,23 @@ $(function () {
     $('#geetest_on').click(function(){
         $("#geetest").toggle(200);
     });
+
+	$('.hanle_count').click(function(){
+		var count = $(".class_more").length;
+		if($(this).hasClass('fa-plus-circle'))
+		{
+			var options = $(this).prev('select').html();
+			var select_option_index =  $(this).prev('select').find("option:selected").index();
+			var html = '<select name="class_number[]"  class="col-sm-5 class_more" style="width:20%;margin-right:10px;" required>' + options + '</select>';
+			$(this).before(html);
+			$(this).prev('select').find("option:eq("+select_option_index+")").remove();
+		}
+		if($(this).hasClass('fa-minus-circle'))
+		{
+			if(count >=2)
+			{
+				$(".class_more").last().remove();
+			}
+		}
+	});
 });

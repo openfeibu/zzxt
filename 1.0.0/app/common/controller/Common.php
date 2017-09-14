@@ -60,4 +60,5 @@ class Common extends Controller
     protected function check_admin_login(){
 		return model('admin/Admin')->is_login();
     }
+	
 }
