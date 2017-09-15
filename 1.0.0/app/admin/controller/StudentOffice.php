@@ -459,56 +459,64 @@ class StudentOffice extends Base
                 $studentname = '';
             }
             //年级
-            if ($data['grade'] != 0) {
-                $grade = "current_grade = '".$data['grade']."'";
-            } else {
-                $grade = '';
-            }
-            //专业
-            if ($data['faculty'] != 0) {
-                $faculty_profession_sql = "profession_number = '".$data['faculty']."'";
-            } else {
-                //系别
-                $faculty_profession_sql = 'faculty_number = 5';
-            }
-            //找人
-            $data_students = Db::table('yf_apply_scholarships_status')
+//            if ($data['grade'] != 0) {
+//                $grade = "current_grade = '".$data['grade']."'";
+//            } else {
+//                $grade = '';
+//            }
+//            //专业
+//            if ($data['faculty'] != 0) {
+//                $faculty_profession_sql = "profession_number = '".$data['faculty']."'";
+//            } else {
+//                //系别
+//                $faculty_profession_sql = 'faculty_number = 5';
+//            }
+//            //找人
+//            $data_students = Db::table('yf_apply_scholarships_status')
+//                ->alias('ass')//asshold
+//                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+//                ->where($studentname)
+//                ->where($grade)
+//                ->where($faculty_profession_sql)
+//                ->paginate(20);
+            $data_students = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
                 ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+                ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
+                ->where('u.faculty_number', $this->faculty)
                 ->where($studentname)
-                ->where($grade)
-                ->where($faculty_profession_sql)
+                ->field('ass.*,u.*,app.assess_fraction')
                 ->paginate(20);
-            //查院系的
-            $faculty_profession = Db::table('yf_user')
-                ->field("DISTINCT profession ,profession_number")
-                ->where('faculty_number', $this->faculty)
-                ->select();
-            //这里比较麻烦。先找出提交上来的那个专业。
-
-            $faculty_name = Db::table('yf_user')
-                ->where('profession_number', $data['faculty'])
-                ->field("DISTINCT profession")
-                ->find();
-            if ($data['faculty'] != 0 and $data['grade'] != 0) {
-                $faculty_name = $data['grade'].$faculty_name['profession'];
-            } elseif ($data['faculty'] != 0 and $data['grade'] == 0) {
-                $faculty_name = $faculty_name['profession'];
-            } elseif ($data['faculty'] == 0 and $data['grade'] != 0) {
-                $faculty_name = $data['grade']."全系";
-            } else {
-                $faculty_name = "全系";
-            }
+//            //查院系的
+//            $faculty_profession = Db::table('yf_user')
+//                ->field("DISTINCT profession ,profession_number")
+//                ->where('faculty_number', $this->faculty)
+//                ->select();
+//            //这里比较麻烦。先找出提交上来的那个专业。
+//
+//            $faculty_name = Db::table('yf_user')
+//                ->where('profession_number', $data['faculty'])
+//                ->field("DISTINCT profession")
+//                ->find();
+//            if ($data['faculty'] != 0 and $data['grade'] != 0) {
+//                $faculty_name = $data['grade'].$faculty_name['profession'];
+//            } elseif ($data['faculty'] != 0 and $data['grade'] == 0) {
+//                $faculty_name = $faculty_name['profession'];
+//            } elseif ($data['faculty'] == 0 and $data['grade'] != 0) {
+//                $faculty_name = $data['grade']."全系";
+//            } else {
+//                $faculty_name = "全系";
+//            }
             //再来找那些人
             //未通过的
             $faculty_count = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
                 ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
                 ->where('u.faculty_number', $this->faculty)
-                ->where($grade)
-                ->where($faculty_profession_sql)
+//                ->where($grade)
+//                ->where($faculty_profession_sql)
                 ->where(function($query){
-                    $query->where('ass.status !=3')->where('ass.status !=4');
+                    $query->where('ass.status !=5');
                 })
                 ->count();
             //总得人数
@@ -516,16 +524,16 @@ class StudentOffice extends Base
                 ->alias('ass')//asshold
                 ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
                 ->where('u.faculty_number', $this->faculty)
-                ->where($faculty_profession_sql)
-                ->where($grade)
+//                ->where($faculty_profession_sql)
+//                ->where($grade)
                 ->count();
-            $this->assign('faculty_name', $faculty_name);
+//            $this->assign('faculty_name', $faculty_name);
             $this->assign('faculty_not_pass', $faculty_count);
             $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
             $this->assign('faculty', $this->faculty);
-            $this->assign('profession', $faculty_profession);
+//            $this->assign('profession', $faculty_profession);
             $this->assign('user', $data_students);
-            return $this->fetch();
+            return $this->fetch('evaluation/manage_review');
         }
         //查找呃
         $data = Db::table('yf_evaluation_status')
@@ -546,7 +554,7 @@ class StudentOffice extends Base
             ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
             ->where('u.faculty_number', $this->faculty)
             ->where(function($query){
-                $query->where('ass.status !=3')->where('ass.status !=4');
+                $query->where('ass.status !=5');
             })
             ->count();
         //总得人数

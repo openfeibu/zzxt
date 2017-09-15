@@ -63,9 +63,9 @@
         <table width="800px" class="k-w-table line_table">
             <tbody>
             <tr class="line-table-height">
-                <td rowspan="8" style="width: 40px;">学生基本情况</td>
+                <td class="k-s-content title" rowspan="8" >学生基本情况</td>
                 <td class="k-s-content title" style="text-align: center;">姓名</td>
-                <td colspan="2" class="k-s-content content"><input type="text" name="name" value="{$user_info.studentname}" disabled/></td>
+                <td class="k-s-content content" colspan="2"><input type="text" name="name" value="{$user_info.studentname}" disabled/></td>
                 <td class="k-s-content title">性别</td>
                 <td class="k-s-content content"><input type="text" name="sex"  value="{$user_info.sex}" disabled/></td>
                 <td class="k-s-content title">民族</td>
@@ -198,8 +198,8 @@
                 </td>
             </tr>
             <tr class="line-table-height">
-                <td rowspan="2" class="k-s-content ltitle">健康状况</td>
-                <td class="k-s-content content" colspan="9">
+                <td rowspan="2" class="k-s-content title">健康状况</td>
+                <td class="k-s-content title" colspan="9">
                     1.残疾
                     <div style="display:inline-block;">
                         <label>
@@ -225,7 +225,7 @@
                 </td>
             </tr>
             <tr class="line-table-height">
-                <td class="k-s-content content" colspan="9">
+                <td class="k-s-content title" colspan="9">
                     如是残疾，请选择类别：
 					{foreach $eval_form.disability_type as $key => $val}
                     <div style="display:inline-block;">

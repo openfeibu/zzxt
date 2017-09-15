@@ -15,7 +15,8 @@
             </tr>
             <tr>
                 <td colspan="2" style="padding: 10px">
-                    年级班级（专业）<input type="text" style="border-bottom:1px solid #555555;display:inline-block;width: auto" value="{$user_info.current_grade}{$user_info.profession}{$user_info.class}" disabled>
+                    <label>年级班级（专业）</label>
+                    <input type="text" style="border-bottom:1px solid #555555;display:inline-block;width: auto" value="{$user_info.current_grade}{$user_info.profession}{$user_info.class}" disabled>
                 </td>
                 <td colspan="1">
 
@@ -23,13 +24,16 @@
             </tr>
             <tr>
                 <td style="padding: 5px">
-                    院（系）<input type="text" placeholder="（高校学生填写）" style="border-bottom:1px solid #555555;width: auto" value="{$user_info.department_name}" disabled>
+                    <label>院（系）</label>
+                    <input type="text" placeholder="（高校学生填写）" style="border-bottom:1px solid #555555;width: auto" value="{$user_info.department_name}" disabled>
                 </td>
                 <td style="padding: 5px">
-                    宿舍<input type="text" placeholder="（高校学生填写）" style="border-bottom:1px solid #555555;width: auto" value="">
+                    <label>宿舍</label>
+                    <input type="text" placeholder="（高校学生填写）" style="border-bottom:1px solid #555555;width: auto" value="">
                 </td>
                 <td style="padding: 5px">
-                    学号<input type="text" placeholder="（高校学生填写）" style="border-bottom:1px solid #555555;width: auto" value="{$user_info.studentid}" disabled>
+                    <label>学号</label>
+                    <input type="text" placeholder="（高校学生填写）" style="border-bottom:1px solid #555555;width: auto" value="{$user_info.studentid}" disabled>
                 </td>
             </tr>
             </tbody>
@@ -38,7 +42,7 @@
         <table width="800px" class="k-w-table line_table">
             <tbody>
             <tr class="line-table-height">
-                <td rowspan="8" style="width: 40px;">学生基本情况</td>
+                <td class="k-s-content title"  rowspan="8" style="width: 40px;">学生基本情况</td>
                 <td class="k-s-content title" style="text-align: center;">姓名</td>
                 <td colspan="2" class="k-s-content content"><input type="text" name="name" value="{$user_info.studentname}" disabled/></td>
                 <td class="k-s-content title">性别</td>
@@ -173,8 +177,8 @@
                 </td>
             </tr>
             <tr class="line-table-height">
-                <td rowspan="2" class="k-s-content ltitle">健康状况</td>
-                <td class="k-s-content content" colspan="9">
+                <td rowspan="2" class="k-s-content title" >健康状况</td>
+                <td class="k-s-content title"  colspan="9">
                     1.残疾
                     <div style="display:inline-block;">
                         <label>
@@ -200,7 +204,7 @@
                 </td>
             </tr>
             <tr class="line-table-height">
-                <td class="k-s-content content" colspan="9">
+                <td class="k-s-content title" colspan="9">
                     如是残疾，请选择类别：
 					{foreach $eval_form.disability_type as $key => $val}
                     <div style="display:inline-block;">

@@ -157,14 +157,15 @@ class ScholarshipsGroup extends Base
 
         //班级申请学生列表
         $data = Db::table('yf_apply_scholarships_status')
-			->alias('a')->join('yf_user u','u.studentid = a.user_id')
-			->where("u.class_number = '".$this->class_number."'")
+			->alias('a')
+            ->join('yf_user u','u.studentid = a.user_id')
+//			->where("u.class_number = '".$this->class_number."'")
             ->where('a.fund_type',$id)    
             ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
             ->paginate(20);
 
         if (!isset($data->data)) {
-            return $this->error("班级未有人申请");
+            $this->error("班级未有人申请");
         } else {
             foreach ($data->getCollection() as $k => $vo) {
                 $user = Db::table('yf_user')

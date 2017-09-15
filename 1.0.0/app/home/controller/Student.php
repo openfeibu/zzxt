@@ -304,8 +304,9 @@ class Student extends Base
         //获取学生信息
         $user_info = Db::table('yf_user')
             ->where('studentid', $this->user_id)
-            ->field('studentname,id_number,gender,birthday,political,nation,profession,class,department_name,grade,admission_date,school_system')
+            ->field('studentname,id_number,gender,birthday,political,nation,profession,class,department_name,grade,admission_date')
             ->find();
+        $user_info['school_system'] = '3年';
         //出生年月
         $user_info['birthday'] = substr($user_info['birthday'],0,6);
         //政治面貌

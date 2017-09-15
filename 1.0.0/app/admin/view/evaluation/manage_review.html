@@ -21,56 +21,56 @@
                 <div class="personal_num">
                     <div class="passed">
                         <p class="success_bg"><span></span><span>全院</span><span></span><span>已评定人数</span>：</p>
-                        <p class="default_bg"><span>10</span>人</p>
+                        <p class="default_bg"><span>{$faculty_pass}</span>人</p>
                     </div>
                     <div class="passed pull-right">
                         <p class="danger_bg"><span></span><span>全院</span><span></span><span>未评定人数</span>：</p>
-                        <p class="default_bg"><span>5</span>人</p>
+                        <p class="default_bg"><span>{$faculty_not_pass}</span>人</p>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <form class="tab_inquire" method="post">
-                    <p>筛选：</p>
-                    <select class="form-control tab_select manage_grade" style="width: 11%;">
-                        <option value="">所有年级</option>
-                        <option value="">2015级</option>
-                        <option value="">2016级</option>
-                        <option value="">2017级</option>
-                    </select>
-                    <select class="form-control tab_select manage_fac" style="width: 12%;">
-                        <option value="0">全院</option>
-                        <option value="">国际交流学院</option>
-                        <option value="">外语系</option>
-                        <option value="">商务系</option>
-                        <option value="">机电系</option>
-                        <option value="">计算机系</option>
-                        <option value="">热作系</option>
-                        <option value="">财经系</option>
-                        <option value="">管理系</option>
-                        <option value="">艺术系</option>
-                    </select>
-                    <select class="form-control tab_select manage_sub" style="width:17%;">
-                        <option value="">全系</option>
-                        <option value="">汽车技术服务与营销</option>
-                        <option value="">汽车检测与维修技术</option>
-                        <option value="">汽车电子技术</option>
-                        <option value="">电子信息工程技术</option>
-                        <option value="">通信技术</option>
-                        <option value="">电气自动化技术</option>
-                        <option value="">应用电子技术</option>
-                        <option value="">物联网应用技术</option>
-                    </select>
-                    <select class="form-control tab_select manage_pass" style="width: 12%;">
-                        <option value="0">全院评定</option>
-                        <option value="1">院系已评定</option>
-                        <option value="1">院系未评定</option>
-                    </select>
+                    <!--<p>筛选：</p>-->
+                    <!--<select class="form-control tab_select manage_grade" style="width: 11%;">-->
+                        <!--<option value="">所有年级</option>-->
+                        <!--<option value="">2015级</option>-->
+                        <!--<option value="">2016级</option>-->
+                        <!--<option value="">2017级</option>-->
+                    <!--</select>-->
+                    <!--<select class="form-control tab_select manage_fac" style="width: 12%;">-->
+                        <!--<option value="0">全院</option>-->
+                        <!--<option value="">国际交流学院</option>-->
+                        <!--<option value="">外语系</option>-->
+                        <!--<option value="">商务系</option>-->
+                        <!--<option value="">机电系</option>-->
+                        <!--<option value="">计算机系</option>-->
+                        <!--<option value="">热作系</option>-->
+                        <!--<option value="">财经系</option>-->
+                        <!--<option value="">管理系</option>-->
+                        <!--<option value="">艺术系</option>-->
+                    <!--</select>-->
+                    <!--<select class="form-control tab_select manage_sub" style="width:17%;">-->
+                        <!--<option value="">全系</option>-->
+                        <!--<option value="">汽车技术服务与营销</option>-->
+                        <!--<option value="">汽车检测与维修技术</option>-->
+                        <!--<option value="">汽车电子技术</option>-->
+                        <!--<option value="">电子信息工程技术</option>-->
+                        <!--<option value="">通信技术</option>-->
+                        <!--<option value="">电气自动化技术</option>-->
+                        <!--<option value="">应用电子技术</option>-->
+                        <!--<option value="">物联网应用技术</option>-->
+                    <!--</select>-->
+                    <!--<select class="form-control tab_select manage_pass" style="width: 12%;">-->
+                        <!--<option value="0">全院评定</option>-->
+                        <!--<option value="1">院系已评定</option>-->
+                        <!--<option value="1">院系未评定</option>-->
+                    <!--</select>-->
                     <!--<select class="form-control tab_select manage_fac_sta" style="width: 14%;">-->
                         <!--<option value="">院系最终评分</option>-->
                         <!--<option value="">院系原始评分</option>-->
                     <!--</select>-->
                     <div class="tab_search">
-                        <input type="text" placeholder="学号/姓名">
+                        <input type="text" placeholder="学号/姓名" name="studentname">
                         <button class="btn btn-info btn-sm" type="submit">查询</button>
                     </div>
                 </form>

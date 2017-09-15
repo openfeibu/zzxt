@@ -41,21 +41,15 @@ class EvaluationGroup extends Base
             } else {
                 $studentname = '';
             }
-
             //选择状态
             if (!empty($data['assess'])) {
                 if ($data['assess'] == 1) {
                     $status = "status <> '".$data['assess']."'";
                 }
                 elseif ($data['assess'] == 2) {
-                    $status = "status = '1'";
-                }
-                elseif ($data['assess'] == 3) {
                     $status = "status = '".$data['assess']."'";
                 }
-                elseif ($data['assess'] == 4) {
-                    $status = "status = '".$data['assess']."'";
-                } else {
+                else {
                     $status = '';
                 }
             } else {
@@ -63,35 +57,38 @@ class EvaluationGroup extends Base
             }
 
             //查询未审核人数
-            $no_count = Db::table('yf_apply_scholarships_status')
+            $no_count = Db::table('yf_evaluation_status')
                 ->alias('a')->join('yf_user u','u.studentid = a.user_id')
-				->where("u.class_number = '".$this->class_number."'")
+			    ->where("u.class_number = '".$this->class_number."'")
                 ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-                ->where('a.status',1)
+                ->where('a.status',2)
                 ->count();
             if (empty($no_count)) {
                 $no_count = 0;
             }
-            $yes_count = Db::table('yf_apply_scholarships_status')
+            $yes_count = Db::table('yf_evaluation_status')
                 ->alias('a')->join('yf_user u','u.studentid = a.user_id')
-				->where("u.class_number = '".$this->class_number."'")
+			    ->where("u.class_number = '".$this->class_number."'")
                 ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-                ->where('a.status','<>',1)
+                ->where('a.status','<>',2)
                 ->count();
             if (empty($yes_count)) {
                 $yes_count = 0;
             }
 
-
-            $data_students = Db::table('yf_apply_scholarships_status')
-                ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-                ->where("u.class_number = '".$this->class_number."'")
+            $data = Db::table('yf_evaluation_status')
+                ->alias('es')
+                ->join('yf_evaluation_application app','es.evaluation_id = app.evaluation_id','left')
+                ->join('yf_user u','u.studentid = es.user_id')
+                ->order('score desc')
                 ->where($studentname)
                 ->where($status)
+			->where("u.class_number = '".$this->class_number."'")
+                ->where("CONVERT(VARCHAR(4),DATEADD(S,es.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+                ->field('es.*,app.assess_fraction,app.score,app.change_fraction,u.*')
                 ->paginate(20);
 
-            $data_data = Db::table('yf_apply_scholarships_status')
+            $data_data = Db::table('yf_evaluation_status')
                 ->alias('a')->join('yf_user u','u.studentid = a.user_id')
 				->where("u.class_number = '".$this->class_number."'")
                 ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
@@ -99,7 +96,7 @@ class EvaluationGroup extends Base
 
             $this->assign('no_count',$no_count);
             $this->assign('yes_count',$yes_count);
-            $this->assign('user',$data_students);
+            $this->assign('user',$data);
             // $this->assign('id', $id);
             $this->assign('list', $data_data);
             return $this->view->fetch('evaluation/class_review');
@@ -112,27 +109,26 @@ class EvaluationGroup extends Base
 			->order('score desc')
 			->where("u.class_number = '".$this->class_number."'")
             ->where("CONVERT(VARCHAR(4),DATEADD(S,es.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->field('es.*,app.assess_fraction,app.score,app.change_fraction')
-			
+            ->field('es.*,app.assess_fraction,app.score,app.change_fraction,u.*')
             ->paginate(20);
 
-        if (isset($data->data)) {
-            foreach ($data->getCollection() as $k => $vo) {
-                $user = Db::table('yf_user')
-                    ->where('studentid', $vo['user_id'])
-                    ->find();
-                $data->data[$k] = array_merge($data->items()[$k], $user);
-            }
-        } else {
-            
-			return $this->error("班级未有人申请");
-        }
+//        $data->data[0] = '';
+//        if (!empty($data[0]['use r_id'])) {
+//            foreach ($data->getCollection() as $k => $vo) {
+//                $user = Db::table('yf_user')
+//                    ->where('studentid', $vo['user_id'])
+//                    ->find();
+//                $data->data[$k] = array_merge($data->items()[$k], $user);
+//            }
+//        } else {
+//			return $this->error("班级未有人申请");
+//        }
         //查询未审核人数
         $no_count = Db::table('yf_evaluation_status')
             ->alias('a')->join('yf_user u','u.studentid = a.user_id')
 			->where("u.class_number = '".$this->class_number."'")
             ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->where('a.status',1)
+            ->where('a.status',2)
             ->count();
         if (empty($no_count)) {
             $no_count = 0;
@@ -141,14 +137,14 @@ class EvaluationGroup extends Base
             ->alias('a')->join('yf_user u','u.studentid = a.user_id')
 			->where("u.class_number = '".$this->class_number."'")
             ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->where('a.status','<>',1)
+            ->where('a.status','<>',2)
             ->count();
         if (empty($yes_count)) {
             $yes_count = 0;
         }
         $this->assign('no_count',$no_count);
         $this->assign('yes_count',$yes_count);
-        $this->assign('user', $data->data);
+        $this->assign('user', $data);
         $this->assign('list', $data);
         return $this->view->fetch('evaluation/class_review');
     }
