@@ -91,167 +91,167 @@ function preview(oper)
 //     })
 // });
 //学生处查看院系评定情况
-$(function () {
-    //评估系统班级小组下拉框
-    $(".class_select").change(function () {
-        $(".passed>.success_bg>span").html("");
-        $(".passed>.danger_bg>span").html("");
-        var classVal=$(".class_select").find("option:selected").val();
-        if (classVal==0) {
-            $(".passed>.success_bg").html("评定通过人数：");
-            $(".passed>.danger_bg").html("评定未通过人数：");
-        }else if (classVal==1 || classVal==2) {
-            $(".passed>.success_bg").html("班级已评定人数：");
-            $(".passed>.danger_bg").html("班级未评定人数：");
-        }else if (classVal==3 || classVal==4){
-            $(".passed>.success_bg").html("院系已评定人数：");
-            $(".passed>.danger_bg").html("院系未评定人数：");
-        }
-    });
-    //评估系统辅导员下拉框
-    $(".counselor_sub").change(function () {
-        var counselorSub=$(".counselor_sub").find("option:selected").text();
-        $(".passed>.success_bg>span:first-child").html(counselorSub);
-        $(".passed>.danger_bg>span:first-child").html(counselorSub)
-    });
-    //评估系统院系小组下拉框
-    $(".faculty_grade").change(function () {
-        var facultyGrade=$(".faculty_grade").find("option:selected").text();
-        $(".passed>.success_bg>span:first-child").html(facultyGrade);
-        $(".passed>.danger_bg>span:first-child").html(facultyGrade)
-    });
-    $(".faculty_sub").change(function () {
-       var facultySub=$(".faculty_sub").find("option:selected").text();
-        $(".passed>.success_bg>span:nth-child(2)").html(facultySub);
-        $(".passed>.danger_bg>span:nth-child(2)").html(facultySub)
-    });
-    $(".faculty_pass").change(function () {
-        var facultyPass=$(".faculty_pass").find("option:selected").val();
-        if(facultyPass==0) {
-            $(".passed>.success_bg>span:nth-child(3)").html("已评定人数：");
-            $(".passed>.danger_bg>span:nth-child(3)").html("未评定人数：")
-        }else if (facultyPass==1) {
-            $(".passed>.success_bg>span:nth-child(3)").html("班级已评定：");
-            $(".passed>.danger_bg>span:nth-child(3)").html("班级未评定：")
-        }else if (facultyPass==2) {
-            $(".passed>.success_bg>span:nth-child(3)").html("院系已评定：");
-            $(".passed>.danger_bg>span:nth-child(3)").html("院系未评定：")
-        }
-    });
-    //评估系统学生处下拉框
-    // $(".manage_grade").change(function () {
-    //    var manageGrade=$(".manage_grade").find("option:selected").text();
-    //     $(".passed>.success_bg>span:first-child").html(manageGrade);
-    //     $(".passed>.danger_bg>span:first-child").html(manageGrade)
-    // });
-    // $(".manage_fac").change(function () {
-    //     var manageFac=$(".manage_fac").find("option:selected").text();
-    //     $(".passed>.success_bg>span:nth-child(2)").html(manageFac);
-    //     $(".passed>.danger_bg>span:nth-child(2)").html(manageFac)
-    // });
-    // $(".manage_sub").change(function () {
-    //     var manageSub=$(".manage_sub").find("option:selected").text();
-    //     $(".passed>.success_bg>span:nth-child(3)").html(manageSub);
-    //     $(".passed>.danger_bg>span:nth-child(3)").html(manageSub)
-    // });
-    // $(".manage_pass").change(function () {
-    //     var managePass=$(".manage_pass").find("option:selected").val();
-    //     if(managePass==0){
-    //         $(".passed>.success_bg>span:nth-child(4)").html("全院已评定");
-    //         $(".passed>.danger_bg>span:nth-child(4)").html("全院未评定")
-    //     }else if(managePass==1) {
-    //         $(".passed>.success_bg>span:nth-child(4)").html("院系已评定");
-    //         $(".passed>.danger_bg>span:nth-child(4)").html("院系未评定")
-    //     }
-    // });
-    $(".manage_fac_sta").change(function () {
-        var manageFacsta=$(".manage_fac_sta").find("option:selected").text();
-        $(".passed>.success_bg>span:nth-child(5)").html("（"+manageFacsta+"）");
-        $(".passed>.danger_bg>span:nth-child(5)").html("（"+manageFacsta+"）")
-    });
-    //三金系统下拉框
-    $(".subject_select").change(function () {
-        $(".passed>.success_bg>span:nth-child(2)").html("");
-        $(".passed>.danger_bg>span:nth-child(2)").html("");
-        //获取下拉框被选中项的文本内容
-        var subjectText=$(".subject_select").find("option:selected").text();
-        $(".passed>.success_bg>span:nth-child(2)").html(subjectText);
-        $(".passed>.danger_bg>span:nth-child(2)").html(subjectText);
-    });
-    $(".grade_select").change(function () {
-        $(".passed>.success_bg>span:nth-child(1)").html("");
-        $(".passed>.danger_bg>span:nth-child(1)").html("");
-        var gradeText=$(".grade_select").find("option:selected").text();
-        $(".passed>.success_bg>span:nth-child(1)").html(gradeText);
-        $(".passed>.danger_bg>span:nth-child(1)").html(gradeText);
-    })
-    $(".grade_select ").change(function(){
-        var gradeVal1=$(".grade_select option:selected").val();
-        var subjectVal1=$(".subject_select option:selected").val();
-        console.log(gradeVal1+subjectVal1);
-        $.post("",{
-            grade:gradeVal1,
-            profession:subjectVal1,
-            type:1,
-            faculty:5
-        },function (data) {
-            data=JSON.parse(data);
-            var passed=data.all_pass;
-            var nopass=data.not_pass;
-            $(".personal_num>.passed:nth-child(1)>.default_bg>span").html(passed);
-            $(".personal_num>.passed:nth-child(2)>.default_bg>span").html(nopass)
-        })
-    });
-    $(".subject_select").change(function(){
-        var gradeVal2=$(".grade_select option:selected").val();
-        var subjectVal2=$(".subject_select option:selected").val();
-        $.post("/admin/FacultyGroup/ajaxForFaculty",{
-            grade:gradeVal2,
-            profession:328,
-            type:1,
-            faculty:3
-        },function (data) {
-            data=JSON.parse(data);
-            var passed=data.all_pass;
-            var nopass=data.not_pass;
-            $(".personal_num>.passed:nth-child(1)>.default_bg>span").html(passed);
-            $(".personal_num>.passed:nth-child(2)>.default_bg>span").html(nopass)
-        })
-    });
-    $(".grade_select ").change(function(){
-        var gradeVal1=$(".grade_select option:selected").val();
-        var subjectVal1=$(".faculty_select option:selected").val();
-        console.log(gradeVal1+subjectVal1);
-        $.post("",{
-            grade:gradeVal1,
-            profession:subjectVal1,
-            type:2,
-            faculty:5
-        },function (data) {
-            data=JSON.parse(data);
-            var passed=data.all_pass;
-            var nopass=data.not_pass;
-            $(".personal_num>.passed:nth-child(1)>.default_bg>span").html(passed);
-            $(".personal_num>.passed:nth-child(2)>.default_bg>span").html(nopass)
-        })
-    });
-    $(".faculty_select").change(function(){
-        var gradeVal2=$(".grade_select option:selected").val();
-        var subjectVal2=$(".faculty_select option:selected").val();
-        $.post("/admin/FacultyGroup/ajaxForFaculty",{
-            grade:gradeVal2,
-            profession:533,
-            type:2,
-            faculty:5
-        },function (data) {
-            data=JSON.parse(data);
-            var passed=data.all_pass;
-            var nopass=data.not_pass;
-            $(".personal_num>.passed:nth-child(1)>.default_bg>span").html(passed);
-            $(".personal_num>.passed:nth-child(2)>.default_bg>span").html(nopass)
-        })
-    });
-});
+// $(function () {
+//     //评估系统班级小组下拉框
+//     $(".class_select").change(function () {
+//         $(".passed>.success_bg>span").html("");
+//         $(".passed>.danger_bg>span").html("");
+//         var classVal=$(".class_select").find("option:selected").val();
+//         if (classVal==0) {
+//             $(".passed>.success_bg").html("评定通过人数：");
+//             $(".passed>.danger_bg").html("评定未通过人数：");
+//         }else if (classVal==1 || classVal==2) {
+//             $(".passed>.success_bg").html("班级已评定人数：");
+//             $(".passed>.danger_bg").html("班级未评定人数：");
+//         }else if (classVal==3 || classVal==4){
+//             $(".passed>.success_bg").html("院系已评定人数：");
+//             $(".passed>.danger_bg").html("院系未评定人数：");
+//         }
+//     });
+//     //评估系统辅导员下拉框
+//     $(".counselor_sub").change(function () {
+//         var counselorSub=$(".counselor_sub").find("option:selected").text();
+//         $(".passed>.success_bg>span:first-child").html(counselorSub);
+//         $(".passed>.danger_bg>span:first-child").html(counselorSub)
+//     });
+//     //评估系统院系小组下拉框
+//     $(".faculty_grade").change(function () {
+//         var facultyGrade=$(".faculty_grade").find("option:selected").text();
+//         $(".passed>.success_bg>span:first-child").html(facultyGrade);
+//         $(".passed>.danger_bg>span:first-child").html(facultyGrade)
+//     });
+//     $(".faculty_sub").change(function () {
+//        var facultySub=$(".faculty_sub").find("option:selected").text();
+//         $(".passed>.success_bg>span:nth-child(2)").html(facultySub);
+//         $(".passed>.danger_bg>span:nth-child(2)").html(facultySub)
+//     });
+//     $(".faculty_pass").change(function () {
+//         var facultyPass=$(".faculty_pass").find("option:selected").val();
+//         if(facultyPass==0) {
+//             $(".passed>.success_bg>span:nth-child(3)").html("已评定人数：");
+//             $(".passed>.danger_bg>span:nth-child(3)").html("未评定人数：")
+//         }else if (facultyPass==1) {
+//             $(".passed>.success_bg>span:nth-child(3)").html("班级已评定：");
+//             $(".passed>.danger_bg>span:nth-child(3)").html("班级未评定：")
+//         }else if (facultyPass==2) {
+//             $(".passed>.success_bg>span:nth-child(3)").html("院系已评定：");
+//             $(".passed>.danger_bg>span:nth-child(3)").html("院系未评定：")
+//         }
+//     });
+//     //评估系统学生处下拉框
+//     // $(".manage_grade").change(function () {
+//     //    var manageGrade=$(".manage_grade").find("option:selected").text();
+//     //     $(".passed>.success_bg>span:first-child").html(manageGrade);
+//     //     $(".passed>.danger_bg>span:first-child").html(manageGrade)
+//     // });
+//     // $(".manage_fac").change(function () {
+//     //     var manageFac=$(".manage_fac").find("option:selected").text();
+//     //     $(".passed>.success_bg>span:nth-child(2)").html(manageFac);
+//     //     $(".passed>.danger_bg>span:nth-child(2)").html(manageFac)
+//     // });
+//     // $(".manage_sub").change(function () {
+//     //     var manageSub=$(".manage_sub").find("option:selected").text();
+//     //     $(".passed>.success_bg>span:nth-child(3)").html(manageSub);
+//     //     $(".passed>.danger_bg>span:nth-child(3)").html(manageSub)
+//     // });
+//     // $(".manage_pass").change(function () {
+//     //     var managePass=$(".manage_pass").find("option:selected").val();
+//     //     if(managePass==0){
+//     //         $(".passed>.success_bg>span:nth-child(4)").html("全院已评定");
+//     //         $(".passed>.danger_bg>span:nth-child(4)").html("全院未评定")
+//     //     }else if(managePass==1) {
+//     //         $(".passed>.success_bg>span:nth-child(4)").html("院系已评定");
+//     //         $(".passed>.danger_bg>span:nth-child(4)").html("院系未评定")
+//     //     }
+//     // });
+//     $(".manage_fac_sta").change(function () {
+//         var manageFacsta=$(".manage_fac_sta").find("option:selected").text();
+//         $(".passed>.success_bg>span:nth-child(5)").html("（"+manageFacsta+"）");
+//         $(".passed>.danger_bg>span:nth-child(5)").html("（"+manageFacsta+"）")
+//     });
+//     //三金系统下拉框
+//     $(".subject_select").change(function () {
+//         $(".passed>.success_bg>span:nth-child(2)").html("");
+//         $(".passed>.danger_bg>span:nth-child(2)").html("");
+//         //获取下拉框被选中项的文本内容
+//         var subjectText=$(".subject_select").find("option:selected").text();
+//         $(".passed>.success_bg>span:nth-child(2)").html(subjectText);
+//         $(".passed>.danger_bg>span:nth-child(2)").html(subjectText);
+//     });
+//     $(".grade_select").change(function () {
+//         $(".passed>.success_bg>span:nth-child(1)").html("");
+//         $(".passed>.danger_bg>span:nth-child(1)").html("");
+//         var gradeText=$(".grade_select").find("option:selected").text();
+//         $(".passed>.success_bg>span:nth-child(1)").html(gradeText);
+//         $(".passed>.danger_bg>span:nth-child(1)").html(gradeText);
+//     })
+//     $(".grade_select ").change(function(){
+//         var gradeVal1=$(".grade_select option:selected").val();
+//         var subjectVal1=$(".subject_select option:selected").val();
+//         console.log(gradeVal1+subjectVal1);
+//         $.post("",{
+//             grade:gradeVal1,
+//             profession:subjectVal1,
+//             type:1,
+//             faculty:5
+//         },function (data) {
+//             data=JSON.parse(data);
+//             var passed=data.all_pass;
+//             var nopass=data.not_pass;
+//             $(".personal_num>.passed:nth-child(1)>.default_bg>span").html(passed);
+//             $(".personal_num>.passed:nth-child(2)>.default_bg>span").html(nopass)
+//         })
+//     });
+//     $(".subject_select").change(function(){
+//         var gradeVal2=$(".grade_select option:selected").val();
+//         var subjectVal2=$(".subject_select option:selected").val();
+//         $.post("/admin/FacultyGroup/ajaxForFaculty",{
+//             grade:gradeVal2,
+//             profession:328,
+//             type:1,
+//             faculty:3
+//         },function (data) {
+//             data=JSON.parse(data);
+//             var passed=data.all_pass;
+//             var nopass=data.not_pass;
+//             $(".personal_num>.passed:nth-child(1)>.default_bg>span").html(passed);
+//             $(".personal_num>.passed:nth-child(2)>.default_bg>span").html(nopass)
+//         })
+//     });
+//     $(".grade_select ").change(function(){
+//         var gradeVal1=$(".grade_select option:selected").val();
+//         var subjectVal1=$(".faculty_select option:selected").val();
+//         console.log(gradeVal1+subjectVal1);
+//         $.post("",{
+//             grade:gradeVal1,
+//             profession:subjectVal1,
+//             type:2,
+//             faculty:5
+//         },function (data) {
+//             data=JSON.parse(data);
+//             var passed=data.all_pass;
+//             var nopass=data.not_pass;
+//             $(".personal_num>.passed:nth-child(1)>.default_bg>span").html(passed);
+//             $(".personal_num>.passed:nth-child(2)>.default_bg>span").html(nopass)
+//         })
+//     });
+//     $(".faculty_select").change(function(){
+//         var gradeVal2=$(".grade_select option:selected").val();
+//         var subjectVal2=$(".faculty_select option:selected").val();
+//         $.post("/admin/FacultyGroup/ajaxForFaculty",{
+//             grade:gradeVal2,
+//             profession:533,
+//             type:2,
+//             faculty:5
+//         },function (data) {
+//             data=JSON.parse(data);
+//             var passed=data.all_pass;
+//             var nopass=data.not_pass;
+//             $(".personal_num>.passed:nth-child(1)>.default_bg>span").html(passed);
+//             $(".personal_num>.passed:nth-child(2)>.default_bg>span").html(nopass)
+//         })
+//     });
+// });
 // 修改评分增减
 $(function () {
     $("body").on("click",".modify_add",function () {
