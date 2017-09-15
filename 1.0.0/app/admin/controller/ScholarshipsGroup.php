@@ -164,16 +164,16 @@ class ScholarshipsGroup extends Base
             ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
             ->paginate(20);
 
-        if (!isset($data->data)) {
-            $this->error("班级未有人申请");
-        } else {
-            foreach ($data->getCollection() as $k => $vo) {
-                $user = Db::table('yf_user')
-                    ->where('studentid', $vo['user_id'])
-                    ->find();
-                $data->data[$k] = array_merge($data->items()[$k], $user);
-            }
-        }
+//        if (!isset($data->data)) {
+//            $this->error("班级未有人申请");
+//        } else {
+//            foreach ($data->getCollection() as $k => $vo) {
+//                $user = Db::table('yf_user')
+//                    ->where('studentid', $vo['user_id'])
+//                    ->find();
+//                $data->data[$k] = array_merge($data->items()[$k], $user);
+//            }
+//        }
         //查询未审核人数
         $no_count = Db::table('yf_apply_scholarships_status')
 		->alias('a')->join('yf_user u','u.studentid = a.user_id')
@@ -198,7 +198,7 @@ class ScholarshipsGroup extends Base
         $this->assign('no_count',$no_count);
         $this->assign('yes_count',$yes_count);
         $this->assign('id', $id);
-        $this->assign('user', $data->data);
+        $this->assign('user', $data);
         $this->assign('list', $data);
         return $this->view->fetch();
 
