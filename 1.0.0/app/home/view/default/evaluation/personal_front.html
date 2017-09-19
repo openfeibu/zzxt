@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <td colspan="2" style="padding: 10px">
-                    年级班级（专业）<input type="text" style="border-bottom:1px solid #555555;display:inline-block;width: auto" value="{$user_info.professional_cetegory}{$user_info.class}" disabled>
+                    年级班级（专业）<input type="text" style="border-bottom:1px solid #555555;display:inline-block;width: auto" value="{$user_info.profession}{$user_info.class}" disabled>
                 </td>
                 <td colspan="1">
 
@@ -289,7 +289,7 @@
                         </select>
 						<input type="text" class="tab_input_bottom" name="residence_address" style="margin-bottom: 5px;width:400px;"  value="{$eval_app.residence_address}"/>
                     </div>
-                    
+
                 </td>
             </tr>
             <tr class="line-table-height">
@@ -303,7 +303,7 @@
             <tr class="line-table-height">
                 <td colspan="1" class="k-s-content title">住房情况</td>
                 <td colspan="5" class="k-s-content content">
-					{foreach $eval_form.housing_situation as $key => $val} 
+					{foreach $eval_form.housing_situation as $key => $val}
 					<div style="display:inline-block;">
                         <label>
                             <input type="radio" name="housing_situation" value="{$key}" style="height:auto;width: auto;margin-right: 5px;" / >{$val}
@@ -314,7 +314,7 @@
                 </td>
                 <td colspan="1" class="k-s-content title">购车情况</td>
                 <td colspan="3" class="k-s-content content">
-					{foreach $eval_form.car_situation as $key => $val} 
+					{foreach $eval_form.car_situation as $key => $val}
 					<div style="display:inline-block;">
                         <label>
                             <input type="radio" name="car_situation" value="{$key}" style="height:auto;width: auto;margin-right: 5px;" {if $key == $eval_app['car_situation'] }checked{/if}/>{$val}
@@ -335,14 +335,14 @@
                 <td class="k-s-content title" style="width: 70px;">年收入（元）</td>
                 <td class="k-s-content title" style="width: 70px;">健康状况</td>
             </tr>
-			
+
 			{for start="1" end="8"}
 			 <tr class="line-table-height">
                 <td class="k-s-content content"><input type="text" name="members[name][]" value=""></td>
                 <td class="k-s-content content"><input type="text" name="members[age][]" class="number" value=""></td>
                 <td class="k-s-content content">
                     <select name="members[relationship][]" id="">
-                        {foreach $eval_form.relationship as $key => $val} 
+                        {foreach $eval_form.relationship as $key => $val}
                         <option value="{$key}">{$val}</option>
 						{/foreach}
                     </select>
@@ -351,14 +351,14 @@
                 <td class="k-s-content content"><input type="text" name="members[number][]" value=""></td>
                 <td class="k-s-content content">
 					<select name="members[career][]" id="">
-						{foreach $eval_form.career as $key => $val} 
+						{foreach $eval_form.career as $key => $val}
 						<option value="{$key}">{$val}</option>
 						{/foreach}
 					</select>
 				</td>
                 <td class="k-s-content content">
 					<select name="members[culture][]" id="">
-						{foreach $eval_form.culture as $key => $val} 
+						{foreach $eval_form.culture as $key => $val}
 							<option value="{$key}" >{$val}</option>
 						{/foreach}
 					</select>
@@ -366,19 +366,19 @@
                 <td class="k-s-content content"><input type="text" name="members[income][]" class="number" value=""></td>
                 <td class="k-s-content content">
                     <select name="members[handicap][]" id="">
-						{foreach $eval_form.handicap as $key => $val} 
+						{foreach $eval_form.handicap as $key => $val}
                         <option value="{$key}">{$val}</option>
 						{/foreach}
                     </select>
                     <select name="members[health][]" id="" style="width: 75px;margin-top: 3px;">
-						{foreach $eval_form.health as $key => $val} 
+						{foreach $eval_form.health as $key => $val}
                         <option value="{$key}">{$val}</option>
 						{/foreach}
                     </select>
                 </td>
             </tr>
 			{/for}
-			
+
             <tr class="line-table-height">
                 <td class="k-s-content title">影响家庭紧急状况有关信息</td>
                 <td colspan="10" class="k-s-content content" style="text-align:left;">
@@ -405,7 +405,7 @@
                     <div style="padding: 5px;">
                         <label for="">家庭遭受自然灾害情况</label>
 						<select name="members[natural_disasters_type][]" id="">
-							{foreach $eval_form.natural_disasters_type as $key => $val} 
+							{foreach $eval_form.natural_disasters_type as $key => $val}
 								<option value="{$key}">{$val}</option>
 							{/foreach}
 						</select>
@@ -414,7 +414,7 @@
                     <div style="padding: 5px;">
                         <label for="">家庭遭受突发意外事件</label>
 						<select name="members[unexpected_events_type][]" id="">
-							{foreach $eval_form.unexpected_events_type as $key => $val} 
+							{foreach $eval_form.unexpected_events_type as $key => $val}
 								<option value="{$key}">{$val}</option>
 							{/foreach}
 						</select>
@@ -436,7 +436,7 @@
 		</form>
     </div>
     <!--endprint1-->
-	
+
     <div style="width: 756px;margin:0 auto;">
         注：
         <ul>
@@ -456,7 +456,7 @@
 <script>
 $(".evalu_btn").click(function(){
 	 if(confirm("提交后将不能修改！确定无误提交吗？"))
-	{	
+	{
 		$.ajax({
 			type: 'post',
 			url: "{:url('home/show/evaluation_application')}",
