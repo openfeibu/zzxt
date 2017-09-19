@@ -52,7 +52,7 @@ class Center extends Base
 	public function password()
     {
 		$this->assign($this->user);
-		return $this->view->fetch('user:password');
+		return $this->view->fetch('student_personal_front:change_pd');
     }
 	public function runchangepwd()
     {
@@ -80,7 +80,7 @@ class Center extends Base
 					$data['member_list_id']=$this->user['member_list_id'];
 					$rst=$member->update($data);
 					if ($rst!==false) {
-						$this->success(lang('revise success'),url('home/Center/index'));
+						$this->success(lang('revise success'),url('home/student/examineStatus'));
 					} else {
 						$this->error(lang('revise failed'));
 					}
