@@ -8,9 +8,15 @@ class User extends Model
 {
     protected $table = 'yf_user';
     protected $hidden = ['password'];
-    protected $field = ['id', 'studentid', 'studentname',
-        'id_number', 'gender', 'birthday', 'political', 'nation',
-        'grade', 'class', 'profession',
+
+/*
+    protected $field = ['id', 'candidate_number', 'studentid', 'studentname',
+        'id_number', 'gender', 'birthday', 'political', 'nation', 'type', 'learning_way',
+        'grade', 'class', 'professional_cetegory', 'profession', 'education', 'school_system',
+        'admission_date', 'department_name', 'is_rural_student','current_grade'];*/
+	protected $field = ['id', 'studentid', 'studentname',
+        'id_number', 'gender', 'birthday', 'political', 'nation', 
+        'grade', 'class', 'profession', 
         'admission_date', 'department_name', 'is_rural_student','current_grade'];
     protected $resultSetType = 'array';
 

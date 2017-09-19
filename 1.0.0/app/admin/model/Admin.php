@@ -168,6 +168,7 @@ class Admin extends Model
         unset($admin['ROW_NUMBER'],$admin['admin_id']);
         $admin['admin_username']=$data['admin_username'];
         $admin['faculty_number'] = $data['faculty_number'];
+		$admin['class_number'] = $data['class_number'];
 //        $admin['admin_limit'] = $data['admin_limit'];
 //        $admin['admin_email']=$data['admin_email'];
 //        $admin['admin_tel']=$data['admin_tel'];

@@ -160,13 +160,39 @@ class Admin extends Base
         $this->assign('page',$page);
 		return $this->fetch();
 	}
+	public function counselor_admin_edit()
+	{
+		$auth_group=Db::name('auth_group')->where('id in (21,25)')->select();
+		$admin_list=Db::name('admin')->find(input('admin_id'));
+        $classCode = new ClassCode();
+		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
+		$this->assign('admin_list',$admin_list);
+		$class_numbers = session('admin_auth.class_number') ? explode(',',session('admin_auth.class_number')) : '';
+		$class = $classCode->getClassByNumbers($class_numbers);
+		$this->assign('class', $class);
+		$this->assign('auth_group',$auth_group);
+		$this->assign('auth_group_access',$auth_group_access);
+		return $this->fetch();
+	}
+	public function counselor_admin_runedit()
+	{
+		$data=input('post.');
+		$data['faculty_number'] = session('admin_auth.faculty_number');
+
+		$rst=AdminModel::edit($data);
+		if($rst!==false){
+			$this->success('管理员修改成功',url('admin/Admin/counselor_admin_list'));
+		}else{
+			$this->error('管理员修改失败',url('admin/Admin/counselor_admin_list'));
+		}
+	}
 	public function counselor_admin_add()
 	{
 		$auth_group=Db::name('auth_group')->where('id in (21,25)')->select();
 		$classCode = new ClassCode();
-		//var_dump(session('admin_auth.faculty_number'));exit;
-		$class = $classCode->getClass(session('admin_auth.faculty_number'));
 		$this->assign('auth_group',$auth_group);
+		$class_numbers = session('admin_auth.class_number') ? explode(',',session('admin_auth.class_number')) : '';
+		$class = $classCode->getClassByNumbers($class_numbers);
 		$this->assign('class', $class);
 		return $this->fetch();
 	}
@@ -236,7 +262,7 @@ class Admin extends Base
 	}
 	public function faculty_admin_edit()
 	{
-		$auth_group=Db::name('auth_group')->select();
+		$auth_group=Db::name('auth_group')->where('id in (20)')->select();
 		$admin_list=Db::name('admin')->find(input('admin_id'));
         $classCode = new ClassCode();
 		$faculties = $classCode->getFaculties();
