@@ -70,6 +70,8 @@ class Show extends Base
 		$this->assign('user',$this->user);
 		$this->assign('user_info',$user_info);
 		$eval_app = DB::name('evaluation_application')->where('user_id',$this->user['member_list_username'])->find();
+		$pass_status = DB::name('evaluation_status')->where('user_id',$this->user['member_list_username'])->find();
+        $this->assign('pass_status',$pass_status['status']);
 		if(!$eval_app)
 		{
 			$eval_app = [
@@ -123,13 +125,14 @@ class Show extends Base
 		$user_model = new User();
 		$user_info = $user_model->get_user($this->user['member_list_username']);
 		$eval_app = DB::name('evaluation_application')->where('user_id',$this->user['member_list_username'])->find();
-		if($eval_app)
-		{
-			return [
-				'code' => 201,
-				'message' => '请勿重复申请',
- 			];
-		}
+        $pass_status = DB::name('evaluation_status')->where('user_id',$this->user['member_list_username'])->find();
+//		if($eval_app)
+//		{
+//			return [
+//				'code' => 201,
+//				'message' => $pass_status['evaluation_id'],
+// 			];
+//		}
 		$post=input('post.');
 		$data = [
 			'population' => isset($post['population']) ? intval($post['population']) : 0,
@@ -171,15 +174,25 @@ class Show extends Base
 		$data['members'] = serialize($post['members']);
 		$eval_fraction = get_score($data);
 		$data['assess_fraction'] = $data['score'] = $eval_fraction;
- 		$eva_app = DB::name('evaluation_application')->insert($data);
-		$evaluation_id = Db::name('evaluation_application')->getLastInsID();
-		DB::name('evaluation_status')->insert([
-			'evaluation_id' => $evaluation_id,
-			'status'=> 1,
-			'user_id' => $this->user['member_list_username'],
-			'create_at' => time(),
-			'update_at' => time(),
-		]);
+        if ($pass_status['status'] == 7) {
+            $eva_app = DB::name('evaluation_application')->where('evaluation_id',$pass_status['evaluation_id'])->update($data);
+            DB::name('evaluation_status') ->where('status_id',$pass_status['status_id'])->update([
+                'status'=> 1,
+                'user_id' => $this->user['member_list_username'],
+                'create_at' => time(),
+                'update_at' => time(),
+            ]);
+        } else {
+            $eva_app = DB::name('evaluation_application')->insert($data);
+            $evaluation_id = Db::name('evaluation_application')->getLastInsID();
+            DB::name('evaluation_status')->insert([
+                'evaluation_id' => $evaluation_id,
+                'status'=> 1,
+                'user_id' => $this->user['member_list_username'],
+                'create_at' => time(),
+                'update_at' => time(),
+            ]);
+        }
 
 		return [
 			'code' => 200,
