@@ -13,38 +13,41 @@
                 <i class="ace-icon fa fa-angle-double"></i>
                 查看学生资料
             </small>
-            <!--<small>-->
-            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
-            <!--个人简历-->
-            <!--</small>-->
         </h1>
     </div>
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="w900" method="post">
-			<form name="evau_form" action="" id="evalu_form"/>
-                {include file="evaluation/student_information_table"}             
-                <table class="w800">
-                    <tr>
-                        <td colspan="3" style="height: 30px;"></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 266px;"></td>
-                        <td class="tab_content" style="width: 266px;">
-                            <a href="{:url('admin/Counselor/showEvaluationEvidence',['id'=>$status_id])}" class="btn btn-info">查看相关证明</a>
-                            <!--<button type="submit" class="btn btn-success">通过</button>-->
-                            <!--<button type="submit" class="btn btn-danger">不通过</button>-->
-                        </td>
-                        <td style="width: 266px;"></td>
-                    </tr>
-                </table>
-			</form>
+                <div id="evalu_form">
+                    <!--startprint3-->
+                    {include file="evaluation/student_information_table"}
+                    <!--endprint3-->
+                <button type="button" class="btn btn-info" onclick="preview(3)">打印</button>
+                    <table class="w800">
+                        <tr>
+                            <td colspan="3" style="height: 30px;"></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 266px;"></td>
+                            <form action="{:url('admin/Counselor/evaluationPassingContent')}" method="post">
+                                <td class="tab_content" style="width: 500px;">
+                                    <input type="hidden" name="evaluation_id" value="{$user.evaluation_id}"/>
+                                    <button type="submit" class="btn btn-success" name="pass" value="{$status_id}">通过</button>
+                                    <button type="submit" class="btn btn-danger" name="fail" value="{$status_id}">不通过</button>
+                                    <a href="{:url('admin/Counselor/showEvaluationEvidence',['id'=>$status_id])}" class="btn btn-info">查看相关证明</a>
+                                    <a href="{:url('admin/Counselor/evaluationNext',['id'=>$status_id])}" class="btn btn-success">下一个</a>
+                                </td>
+                            </form>
+                            <td style="width: 266px;"></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script>
  $("#evalu_form").find("input").attr('disabled',true);
-  $("#evalu_form").find("select").attr('disabled',true);
+ $("#evalu_form").find("select").attr('disabled',true);
 </script>
 {/block}

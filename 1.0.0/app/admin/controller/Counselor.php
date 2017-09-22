@@ -267,7 +267,8 @@ class Counselor extends Base
             ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
             ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
 			->order('score desc')
-            ->where('u.faculty_number', $this->faculty)
+			->order('status_id asc')
+//            ->where('u.faculty_number', $this->faculty)
             ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
             ->paginate(20);
         //查院
@@ -281,7 +282,7 @@ class Counselor extends Base
             ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
             ->where('u.faculty_number', $this->faculty)
             ->where(function($query){
-                $query->where('ass.status ==1');
+                $query->where('ass.status',1);
             })
             ->count();
         //总得人数
@@ -336,8 +337,7 @@ class Counselor extends Base
 		$this->assign('eval_app',$apply);
 		$eval_form = Config::get('evaluation_form');
 		$this->assign('eval_form',$eval_form);
-		
-		
+
         return $this->view->fetch('evaluation/counselor_add_review');
     }
 
@@ -362,7 +362,7 @@ class Counselor extends Base
     }
 
     /**
-     * 辅导员初审（通过不通过）(评估系统)
+     * 辅导员初审（通过不通过）(评估系统列表页)
      */
     public function evaluationPassing(Request $request) {
         if ($request->isPost()) {
@@ -374,7 +374,6 @@ class Counselor extends Base
                 $status = 2;
                 unset($data['pass']);
             }
-
             //更新申请状态
             $res = Db::table('yf_evaluation_status')
                 ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
@@ -389,5 +388,69 @@ class Counselor extends Base
             $this->redirect('admin/Counselor/showEvaluationList');
 //            $this->success("提交成功",url('admin/Counselor/showEvaluationList'));
         }
+    }
+    /**
+     * 辅导员初审（通过不通过）(评估系统内容页)
+     */
+    public function evaluationPassingContent(Request $request) {
+        if ($request->isPost()) {
+            $data = $request->post();
+            if (isset($data['fail']) and !empty($data['fail'])) {
+                $status = 6;
+                $data['status_id'] = $data['fail'];
+                unset($data['fail']);
+            } else {
+                $status = 2;
+                $data['status_id'] = $data['pass'];
+                unset($data['pass']);
+            }
+            //更新申请状态
+            $res = Db::table('yf_evaluation_status')
+                ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
+                ->where('status_id', $data['status_id'])
+                ->update([
+                    'update_at' => time(),
+                    'status' => $status
+                ]);
+            if (!$res) {
+                $this->error('插入状态失败');
+            }
+            $this->redirect('admin/Counselor/showEvaluationMaterial',['id'=>$data['status_id']]);
+//            $this->success("提交成功",url('admin/Counselor/showEvaluationList'));
+        }
+    }
+
+    /**
+     * 下一页（评估系统内容页）
+     */
+    public function evaluationNext($id){
+        $data = Db::name('evaluation_status')
+            ->alias('ass')
+            ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
+            ->where("ass.status_id",$id)
+            ->field('app.score')
+            ->find();
+
+            $next = Db::name('evaluation_status')
+                ->alias('ass')
+                ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
+                ->where('app.score','=',$data['score'])
+                ->where('ass.status_id','>',$id)
+                ->field('ass.status_id,app.score')
+                ->order('score desc')
+                ->order('status_id asc')
+                ->select();
+
+            if (empty($next)) {
+                $next = Db::name('evaluation_status')
+                    ->alias('ass')
+                    ->join('yf_evaluation_application app', 'ass.evaluation_id = app.evaluation_id')
+                    ->where('app.score', '<', $data['score'])
+                    ->field('ass.status_id,app.score')
+                    ->order('score desc')
+                    ->select();
+            }
+
+        $this->redirect('admin/Counselor/showEvaluationMaterial',['id'=>$next[0]['status_id']]);
     }
 }
