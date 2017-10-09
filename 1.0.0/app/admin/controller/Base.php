@@ -10,8 +10,9 @@ namespace app\admin\controller;
 
 use app\common\controller\Common;
 use app\admin\model\AuthRule;
+use think\Db;
 
-class Base extends Common 
+class Base extends Common
 {
 	public function _initialize()
 	{
@@ -19,7 +20,7 @@ class Base extends Common
  		if(!$this->check_admin_login()) $this->redirect('admin/Login/login');//未登录
  		$auth=new AuthRule;
 		$id_curr=$auth->get_url_id();
-        if(!$auth->check_auth($id_curr)) $this->error('没有权限',url('admin/Index/index'));
+        if(!$auth->check_auth($id_curr) && $id_curr !=0) $this->error('没有权限',url('admin/Index/index'));
 		//获取有权限的菜单tree
 		$menus=$auth->get_admin_menus();
 		$this->assign('menus',$menus);
@@ -31,5 +32,6 @@ class Base extends Common
 		$this->assign('menus_child',$menus_child);
 		$this->assign('id_curr',$id_curr);
 		$this->assign('admin_avatar',session('admin_auth.admin_avatar'));
+		$this->admin=Db::name('admin')->find(session('admin_auth.aid'));
 	}
 }

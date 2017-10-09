@@ -48,7 +48,7 @@ class Admin extends Base
 		$this->assign('faculty_number', $faculty);
 		return $this->fetch();
 	}
-	
+
 	/**
 	 * 管理员添加操作
 	 */
@@ -133,7 +133,7 @@ class Admin extends Base
 			$this->error('管理员删除失败',$_SERVER['HTTP_REFERER']);
 		}
 	}
-	
+
 	public function counselor_admin_list()
 	{
 		$search_name=input('search_name');
@@ -167,7 +167,7 @@ class Admin extends Base
         $classCode = new ClassCode();
 		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
 		$this->assign('admin_list',$admin_list);
-		$class_numbers = session('admin_auth.class_number') ? explode(',',session('admin_auth.class_number')) : '';
+		$class_numbers = $this->admin['class_number'] ? explode(',',$this->admin['class_number']) : '';
 		$class = $classCode->getClassByNumbers($class_numbers);
 		$this->assign('class', $class);
 		$this->assign('auth_group',$auth_group);
@@ -191,7 +191,7 @@ class Admin extends Base
 		$auth_group=Db::name('auth_group')->where('id in (21,25)')->select();
 		$classCode = new ClassCode();
 		$this->assign('auth_group',$auth_group);
-		$class_numbers = session('admin_auth.class_number') ? explode(',',session('admin_auth.class_number')) : '';
+		$class_numbers = $this->admin['class_number'] ? explode(',',$this->admin['class_number']) : '';
 		$class = $classCode->getClassByNumbers($class_numbers);
 		$this->assign('class', $class);
 		return $this->fetch();
@@ -253,7 +253,7 @@ class Admin extends Base
 		$auth_group=Db::name('auth_group')->where('id in (20)')->select();
 		$classCode = new ClassCode();
 		$faculties = $classCode->getFaculties();
-		$this->assign('faculty_number',session('admin_auth.faculty_number'));	
+		$this->assign('faculty_number',session('admin_auth.faculty_number'));
 		$class = $classCode->getClass(session('admin_auth.faculty_number'));
 		$this->assign('auth_group',$auth_group);
 		$this->assign('class', $class);
@@ -271,8 +271,8 @@ class Admin extends Base
 		$class = $classCode->getClass(session('admin_auth.faculty_number'));
 		$class_numbers = $admin_list['class_number'] ? explode(',',$admin_list['class_number']) : '';
 		$admin_classes = $classCode->getClassByNumbers($class_numbers);
-		
-		$this->assign('faculty_number',session('admin_auth.faculty_number'));	
+
+		$this->assign('faculty_number',session('admin_auth.faculty_number'));
 		$this->assign('class', $class);
 		$this->assign('admin_classes', $admin_classes);
 		$this->assign('admin_list',$admin_list);
@@ -300,7 +300,7 @@ class Admin extends Base
 	public function faculty_admin_runadd()
 	{
         $aid = session('admin_auth.aid');
-	
+
 		$class_number = count($_POST['class_number']) ? implode(',',$_POST['class_number']) : '';
 
 		$admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),$class_number);
@@ -309,7 +309,7 @@ class Admin extends Base
 		}else{
 			$this->error('管理员添加失败',url('admin/Admin/faculty_admin_list'));
 		}
-        
+
 	}
 	/**
 	 * 管理员开启/禁止

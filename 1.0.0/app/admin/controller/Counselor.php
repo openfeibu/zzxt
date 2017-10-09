@@ -30,7 +30,7 @@ class Counselor extends Base
         $this->applyStatus = new ScholarshipsApplyStatus();
         $this->time = date("Y",time());
         $this->faculty = session('admin_auth.faculty_number');
-		$this->class_number = session('admin_auth.class_number');
+		$this->class_number = explode(',',$this->admin['class_number']);
     }
 
     /**
@@ -40,13 +40,13 @@ class Counselor extends Base
         //获取前9位学号班级代码
         $data = Db::table('yf_apply_scholarships_status')
 			->alias('a')->join('yf_user u','u.studentid = a.user_id')
-			->where("u.faculty_number = '".$this->faculty."'")
+			->where("u.class_number",'in',$this->class_number)
             ->where('a.fund_type', 1)
             ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
 //            ->where('status', 1)
             ->paginate(20);
         //获取学生信息
-		
+
         foreach ($data->getCollection() as $k => $vo) {
             $user = Db::table('yf_user')
                 ->where('studentid', $vo['user_id'])
@@ -58,7 +58,7 @@ class Counselor extends Base
 		$faculty_not_pass = 0;
 		$this->assign('faculty_pass', $faculty_pass);
 		 $this->assign('faculty_not_pass', $faculty_not_pass);
-		$user = isset($data->data) ? $data->data : [];  
+		$user = isset($data->data) ? $data->data : [];
         $this->assign('user', $user);
         $this->assign('list', $data);
         return $this->view->fetch('scholarship_team/counselor_review');
@@ -86,7 +86,7 @@ class Counselor extends Base
             ->find();
         if (!empty($apply['awards'])) {
             $apply['awards'] = json_decode($apply['awards'], true);
-        } 
+        }
 		if(!is_array($apply['awards'])){
 			$apply['awards'] = [];
             $apply['awards'][0]['date'] = '';
@@ -170,75 +170,22 @@ class Counselor extends Base
             } else {
                 $studentname = '';
             }
-            //年级
-//            if ($data['grade'] != 0) {
-//                $grade = "current_grade = '".$data['grade']."'";
-//            } else {
-//                $grade = '';
-//            }
-            //专业
-//            if ($data['faculty'] != 0) {
-//                $faculty_profession_sql = "profession_number = '".$data['faculty']."'";
-//            } else {
-//                //系别
-//                $faculty_profession_sql = 'faculty_number = 5';
-//            }
-//            if (!empty($data['assess'])) {
-//                if ($data['assess'] == 1) {
-//                    $status = "status <> '".$data['assess']."'";
-//                }
-//                elseif ($data['assess'] == 2) {
-//                    $status = "status = '".$data['assess']."'";
-//                }
-//                else {
-//                    $status = '';
-//                }
-//            } else {
-//                $status = '';
-//            }
-            //找人
-//            $data_students = Db::table('yf_evaluation_status')
-//                ->alias('ass')//asshold
-//                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-//                ->where($studentname)
-////                ->where($grade)
-////                ->where($faculty_profession_sql)
-//                ->paginate(20);
+
             $data_students = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
                 ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
                 ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
                 ->order('score desc')
                 ->where($studentname)
-            ->where('u.faculty_number', $this->faculty)
+            ->where("u.class_number",'in',$this->class_number)
                 ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
                 ->paginate(20);
-            //查院系的
-//            $faculty_profession = Db::table('yf_user')
-//                ->field("DISTINCT profession ,profession_number")
-//                ->where('faculty_number', $this->faculty)
-//                ->select();
-//            //这里比较麻烦。先找出提交上来的那个专业。
-//
-//            $faculty_name = Db::table('yf_user')
-//                ->where('profession_number', $data['faculty'])
-//                ->field("DISTINCT profession")
-//                ->find();
-//            if ($data['faculty'] != 0 and $data['grade'] != 0) {
-//                $faculty_name = $data['grade'].$faculty_name['profession'];
-//            } elseif ($data['faculty'] != 0 and $data['grade'] == 0) {
-//                $faculty_name = $faculty_name['profession'];
-//            } elseif ($data['faculty'] == 0 and $data['grade'] != 0) {
-//                $faculty_name = $data['grade']."全系";
-//            } else {
-//                $faculty_name = "全系";
-//            }
-            //再来找那些人
+
             //未通过的
             $faculty_count = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
                 ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-                ->where('u.faculty_number', $this->faculty)
+                ->where("u.class_number",'in',$this->class_number)
 //                ->where($grade)
 //                ->where($faculty_profession_sql)
                 ->where(function($query){
@@ -249,7 +196,7 @@ class Counselor extends Base
             $faculty_all_count = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
                 ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-                ->where('u.faculty_number', $this->faculty)
+                ->where("u.class_number",'in',$this->class_number)
 //                ->where($faculty_profession_sql)
 //                ->where($grade)
                 ->count();
@@ -268,7 +215,7 @@ class Counselor extends Base
             ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
 			->order('score desc')
 			->order('status_id asc')
-//            ->where('u.faculty_number', $this->faculty)
+            ->where("u.class_number",'in',$this->class_number)
             ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
             ->paginate(20);
         //查院
@@ -280,7 +227,7 @@ class Counselor extends Base
         $faculty_count = Db::table('yf_evaluation_status')
             ->alias('ass')//asshold
             ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-            ->where('u.faculty_number', $this->faculty)
+            ->where("u.class_number",'in',$this->class_number)
             ->where(function($query){
                 $query->where('ass.status',1);
             })
@@ -289,7 +236,7 @@ class Counselor extends Base
         $faculty_all_count = Db::table('yf_evaluation_status')
             ->alias('ass')//asshold
             ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-            ->where('u.faculty_number', $this->faculty)
+            ->where("u.class_number",'in',$this->class_number)
             ->count();
         $this->assign('faculty_not_pass', $faculty_count);
         $this->assign('faculty_pass', $faculty_all_count-$faculty_count);

@@ -21,7 +21,7 @@ class EvaluationGroup extends Base
     {
         parent::__construct($request);
         //$this->user = '201555352';
-		$this->class_number = session('admin_auth.class_number');
+		$this->class_number = $this->admin['class_number'];
         $this->time = date("Y",time());
     }
 

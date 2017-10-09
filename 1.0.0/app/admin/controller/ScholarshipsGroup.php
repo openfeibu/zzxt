@@ -25,7 +25,7 @@ class ScholarshipsGroup extends Base
         parent::__construct();
         //根据学号来取。登陆人的班级。限制
         //$this->user = '201555352';
-		$this->class_number = session('admin_auth.class_number');
+		$this->class_number = $this->admin['class_number'];
         //限制只显示今年申请的
         $this->time = date("Y",time());
         $this->multiple = new MultipleScholarship();
