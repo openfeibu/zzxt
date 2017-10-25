@@ -95,6 +95,7 @@ class Publicity extends Base
     //                ->where('ms.publicity_end >' . time())
                     ->where('u.faculty_number', $this->faculty)
                     ->paginate(20);
+                halt($data);
                 $this->assign('list', $data);
             }
         } else {
@@ -110,6 +111,7 @@ class Publicity extends Base
 //                ->where('ms.office_end >' . time())
                 ->where('u.faculty_number', $this->faculty)
                 ->paginate(20);
+            halt($data);
             $this->assign('list', $data);
         }
         return $this->view->fetch(':notice_front/grants_notice');
