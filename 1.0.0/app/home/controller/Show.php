@@ -11,6 +11,7 @@ namespace app\home\controller;
 use think\DB;
 use think\Config;
 use app\home\model\User;
+use app\admin\model\EvaluationMaterialConfig;
 
 class Show extends Base
 {
@@ -66,11 +67,11 @@ class Show extends Base
     public function personal()
     {
 		$user_model = new User();
-		$user_info = $user_model->get_user($this->user['member_list_username']);
+		$user_info = $user_model->get_user($this->user['id_number']);
 		$this->assign('user',$this->user);
 		$this->assign('user_info',$user_info);
-		$eval_app = DB::name('evaluation_application')->where('user_id',$this->user['member_list_username'])->find();
-		$pass_status = DB::name('evaluation_status')->where('user_id',$this->user['member_list_username'])->find();
+		$eval_app = DB::name('evaluation_application')->where('member_list_id',$this->user['member_list_id'])->find();
+		$pass_status = DB::name('evaluation_status')->where('member_list_id',$this->user['member_list_id'])->find();
         $this->assign('pass_status',$pass_status['status']);
 		if(!$eval_app)
 		{
@@ -123,9 +124,9 @@ class Show extends Base
 	public function evaluation_application()
 	{
 		$user_model = new User();
-		$user_info = $user_model->get_user($this->user['member_list_username']);
-		$eval_app = DB::name('evaluation_application')->where('user_id',$this->user['member_list_username'])->find();
-        $pass_status = DB::name('evaluation_status')->where('user_id',$this->user['member_list_username'])->find();
+		$user_info = $user_model->get_user($this->user['id_number']);
+		$eval_app = DB::name('evaluation_application')->where('member_list_id',$this->user['member_list_id'])->find();
+        $pass_status = DB::name('evaluation_status')->where('member_list_id',$this->user['member_list_id'])->find();
 //		if($eval_app)
 //		{
 //			return [
@@ -170,15 +171,15 @@ class Show extends Base
 			'other' => isset($post['other']) ? $post['other']  : '',
 			'housing_other' => isset($post['housing_other']) ? $post['housing_other'] : '',
 		];
-		$data['user_id'] = $this->user['member_list_username'];
+		$data['member_list_id'] = $this->user['member_list_id'];
 		$data['members'] = serialize($post['members']);
 		$eval_fraction = get_score($data);
-		$data['assess_fraction'] = $data['score'] = $eval_fraction;
+		$data['assess_fraction'] = $data['score'] = 0;
         if ($pass_status['status'] == 7) {
             $eva_app = DB::name('evaluation_application')->where('evaluation_id',$pass_status['evaluation_id'])->update($data);
             DB::name('evaluation_status') ->where('status_id',$pass_status['status_id'])->update([
                 'status'=> 1,
-                'user_id' => $this->user['member_list_username'],
+                'member_list_id' => $this->user['member_list_id'],
                 'create_at' => time(),
                 'update_at' => time(),
             ]);
@@ -188,7 +189,7 @@ class Show extends Base
             DB::name('evaluation_status')->insert([
                 'evaluation_id' => $evaluation_id,
                 'status'=> 1,
-                'user_id' => $this->user['member_list_username'],
+                'member_list_id' => $this->user['member_list_id'],
                 'create_at' => time(),
                 'update_at' => time(),
             ]);
@@ -196,15 +197,18 @@ class Show extends Base
 
 		return [
 			'code' => 200,
-			'message' => '提交成功', 
+			'message' => '提交成功',
 		];
 	}
     public function material()
     {
-		$eval_app = DB::name('evaluation_application')->where('user_id',$this->user['member_list_username'])->find();
+		$eval_app = DB::name('evaluation_application')->where('member_list_id',$this->user['member_list_id'])->find();
 		$this->assign('eval_app',$eval_app);
-		$material = DB::name('evaluation_material')->where('evaluation_id',$eval_app['evaluation_id'])->find();
+		$material = DB::name('evaluation_material')->alias('em')->join('yf_evaluation_material_config emc ','em.cid = emc.cid')->field('em.evaluation_id,em.member_list_id,em.images,emc.*')->where('em.evaluation_id',$eval_app['evaluation_id'])->select();
 		$this->assign('material',$material);
+		$material_configs = EvaluationMaterialConfig::getConfigs(1);
+		$this->assign('material_configs',$material_configs);
+		$this->assign('m',1);
         return $this->view->fetch(':evaluation/material_front');
     }
 	public function material_upload()
@@ -212,7 +216,8 @@ class Show extends Base
 		if(request()->file('uploadfile') !== null )
 		{
 			$file = request()->file('uploadfile');
-			$info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');		
+
+			$info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
 		}
 		if($info){
 			return [
@@ -229,27 +234,26 @@ class Show extends Base
 	}
 	public function material_post()
 	{
-		$eval_app = DB::name('evaluation_application')->where('user_id',$this->user['member_list_username'])->find();
-		$post = input('post.');
-		$data = [
-			'evaluation_id' => $eval_app['evaluation_id'],
-			'user_id' => $this->user['member_list_username'],
-			'account_book' => !empty($post['account_book_url']) ? $post['account_book_url'] : '',
-			'protection_certificate' => !empty($post['protection_certificate_url']) ? $post['protection_certificate_url'] : '',
-			'low_certificate' => !empty($post['low_certificate_url']) ? $post['low_certificate_url'] : '',
-			'orphan' => !empty($post['orphan_url']) ? $post['orphan_url'] : '',
-			'rescue_card' => !empty($post['rescue_card_url']) ? $post['rescue_card_url'] : '',
-			'help_certificate' => !empty($post['help_certificate_url']) ? $post['help_certificate_url'] : '',
-			'low_income_card' => !empty($post['low_income_card_url']) ? $post['low_income_card_url'] : '',
-			'disability_certificate' => !empty($post['disability_certificate_url']) ? $post['disability_certificate_url'] : '',
-			'child_welfare_certificate' => !empty($post['child_welfare_certificate_url']) ? $post['child_welfare_certificate_url'] : '',
-			'poor_workers' => !empty($post['poor_workers_url']) ? $post['poor_workers_url'] : '',
-			'privilege_card' => !empty($post['privilege_card_url']) ? $post['privilege_card_url'] : '',
-			'sacrifice_card' => !empty($post['sacrifice_card_url']) ? $post['sacrifice_card_url'] : '',
-			'civil_affairs_department' => !empty($post['civil_affairs_department_url']) ? $post['civil_affairs_department_url'] : '',
-			'other' => !empty($post['other_url']) ? $post['other_url'] : '',
-		];
-		DB::name('evaluation_material')->insert($data);
+		$eval_app = DB::name('evaluation_application')->where('member_list_id',$this->user['member_list_id'])->find();
+		$member_list_headpic = $_POST['member_list_headpic_url'];
+		$rst=Db::name('member_list')->where(array('member_list_id'=>$this->user['member_list_id']))->update(['member_list_headpic' => $member_list_headpic]);
+		$cids = $_POST['cids'];
+		$images = $_POST['images'];
+		$data = [];
+		foreach($cids as $key => $val)
+		{
+			if($images[$key])
+			{
+				$data = [
+					'evaluation_id' => $eval_app['evaluation_id'],
+					'cid' => $val,
+					'images' => $images[$key],
+					'member_list_id' => $this->user['member_list_id'],
+				];
+				DB::name('evaluation_material')->insert($data);
+			}
+		}
+
 		header('Location:/material.html');
 	}
     public function evalu_status()

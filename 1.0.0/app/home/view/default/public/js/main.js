@@ -40,8 +40,6 @@ $(function () {
 
             $(this).parent().parent().next().find(".upfile_name").append(serial+"、"+"<u>"+filearr[i].name+"</u>"+"；")//输出文件名
         }
-
+        return false;
     })
 });
-
-

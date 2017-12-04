@@ -27,7 +27,7 @@ class Student extends Base
     {
         parent::__construct();
         $this->applyStatus = new ScholarshipsApplyStatus();
-        $this->user = new User();
+        //$this->user = new User();
         $this->time = date('Y', time());
     }
 
@@ -374,7 +374,7 @@ class Student extends Base
         //家庭经济困难评定状态
         $evaluation_status = Db::table('yf_evaluation_status')
             ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this_time")
-            ->where('user_id', $this->user_id)
+            ->where('member_list_id', $this->user['member_list_id'])
             ->field('status')
             ->find();
         $e_status = $evaluation_status['status'];

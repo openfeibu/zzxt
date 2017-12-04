@@ -35,302 +35,77 @@
             </tr>
             </tbody>
         </table>
-		<!--
-        <table width="756px">
-            <tbody>
-            <tr>
-                <td style="padding: 5px ;font-size:16px;">
-                    姓名：<input type="text" style="border-bottom:1px solid #555555;width: auto">
-                </td>
-                <td style="padding: 5px; font-size:16px;">
-                    年级：<input type="text" style="border-bottom:1px solid #555555;width: auto">
-                </td>
-                <td style="padding: 5px; font-size:16px;">
-                    班级：<input type="text" style="border-bottom:1px solid #555555;width: auto">
-                </td>
-            </tr>
-            <tr>
-                <td style="padding: 5px; font-size:16px;">
-                    院系（专业）：<input type="text" style="border-bottom:1px solid #555555;width: auto">
-                </td>
-                <td style="padding: 5px; font-size:16px;">
-                    宿舍：<input type="text" style="border-bottom:1px solid #555555;width: auto">
-                </td>
-            </tr>
-            </tbody>
-        </table>
-		-->
+
         <br>
 		{if $eval_app}
 		{if $material}
 		<table class="table_one" style="word-wrap: break-word;word-break: break-all;">
             <tbody>
-            <tr class="table-tr">
-                <td>序号</td>
-                <td>证明材料</td>
-                <td>图片</td>
-            </tr>
-            <tr class="table-tr">
-                <td>1</td>
-                <td>户口本</td>
-                <td class="title td_upfile">
-                   <a href="{$material.account_book}" target="_blank"><img src="{$material.account_book}" width="100px;"/></a>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>2</td>
-                <td>五保证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.protection_certificate}" target="_blank"><img src="{$material.protection_certificate}" width="100px;"/></a>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>3</td>
-                <td>低保证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.low_certificate}" target="_blank"><img src="{$material.low_certificate}" width="100px;"/></a>
-					<input type="hidden" name="low_certificate_url" id="low_certificate_url" value=""/>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>4</td>
-                <td>孤儿证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.orphan}" target="_blank"><img src="{$material.orphan}" width="100px;"/></a>
-					<input type="hidden" name="orphan_url" id="orphan_url" value=""/>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>5</td>
-                <td>救助证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.rescue_card}" target="_blank"><img src="{$material.rescue_card}" width="100px;"/></a>
-					<input type="hidden" name="rescue_card_url" id="rescue_card_url" value=""/>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>6</td>
-                <td>帮扶手证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.help_certificate}" target="_blank"><img src="{$material.help_certificate}" width="100px;"/></a>
-					<input type="hidden" name="help_certificate_url" id="help_certificate_url" value=""/>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>7</td>
-                <td>低收入证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.low_income_card}" target="_blank"><img src="{$material.low_income_card}" width="100px;"/></a>
-					<input type="hidden" name="low_income_card_url" id="low_income_card_url" value=""/>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>8</td>
-                <td>残疾人证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.disability_certificate}" target="_blank"><img src="{$material.disability_certificate}" width="100px;"/></a>
-					<input type="hidden" name="disability_certificate_url" id="disability_certificate_url" value=""/>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>9</td>
-                <td>儿童福利证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.child_welfare_certificate}" target="_blank"><img src="{$material.child_welfare_certificate}" width="100px;"/></a>
-					<input type="hidden" name="child_welfare_certificate_url" id="child_welfare_certificate_url" value=""/>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>10</td>
-                <td>特困职工证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.poor_workers}" target="_blank"><img src="{$material.poor_workers}" width="100px;"/></a>
-					<input type="hidden" name="poor_workers_url" id="poor_workers_url" value=""/>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>11</td>
-                <td>优抚对象证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.privilege_card}" target="_blank"><img src="{$material.privilege_card}" width="100px;"/></a>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>12</td>
-                <td>因公牺牲警察证</td>
-                <td class="title td_upfile">
-                    <a href="{$material.sacrifice_card}" target="_blank"><img src="{$material.sacrifice_card}" width="100px;"/></a>
-					<input type="hidden" name="sacrifice_card_url" id="sacrifice_card_url" value=""/>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>13</td>
-                <td>民政等部门证明</td>
-                <td class="title td_upfile">
-                    <a href="{$material.civil_affairs_department}" target="_blank"><img src="{$material.civil_affairs_department}" width="100px;"/></a>
-                </td>
-                
-            </tr>
-            <tr class="table-tr">
-                <td>14</td>
-                <td>其他相关证明</td>
-                <td class="title td_upfile">
-                    <a href="{$material.other}" target="_blank"><img src="{$material.other}" width="100px;"/></a>
-					<input type="hidden" name="other_url" id="other_url" value=""/>
-                </td>
-                
-            </tr>
+                <tr class="table-tr">
+                    <td>序号</td>
+                    <td style="width:100px;">困难情况</td>
+                    <td>证明材料</td>
+                    <td>文件</td>
+                </tr>
+                <tr class="table-tr">
+                    <td>1</td>
+                    <td>免冠证照</td>
+                    <td>本人近期蓝底或红底免冠证件照</td>
+                    <td class="title td_upfile">
+                       <a href="{$user.member_list_headpic}" target="_blank"><img src="{$user.member_list_headpic}" width="100px;"/></a>
+                    </td>
+                </tr>
+                {foreach name="material" item="v"}
+                <tr class="table-tr">
+                    <td>{++$m}</td>
+                    <td>{$v.name}</td>
+                    <td>{$v.desc}</td>
+                    <td class="title td_upfile">
+                        <a href="{$v.images}" target="_blank"><img src="{$v.images}" width="100px;"/></a>
+                    </td>
+                </tr>
+                {/foreach}
             </tbody>
         </table>
 		{else}
-		
+
         <table class="table_one" style="word-wrap: break-word;word-break: break-all;">
             <tbody>
             <tr class="table-tr">
                 <td>序号</td>
+                <td style="width:100px;">困难情况</td>
                 <td>证明材料</td>
+                <td>说明</td>
                 <td>操作</td>
                 <td>状态</td>
             </tr>
             <tr class="table-tr">
                 <td>1</td>
-                <td>户口本</td>
+                <td>免冠证照</td>
+                <td>本人近期蓝底或红底免冠证件照</td>
+                <td>必须上传</td>
                 <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"   name="account_book" id="account_book" class="upfile" ></label>
+                    <label class="file_ui">上传文件<input type="file"   name="member_list_headpic" id="member_list_headpic" class="upfile" ></label>
                     <!--<div class="upfile_name">文件名</div>-->
-					<input type="hidden" name="account_book_url" id="account_book_url" value=""/>
+					<input type="hidden" name="member_list_headpic_url" id="member_list_headpic_url" value=""/>
                 </td>
                 <td ><div class="upfile_name">文件名</div></td>
             </tr>
+            {foreach name="material_configs" item="v"}
             <tr class="table-tr">
-                <td>2</td>
-                <td>五保证</td>
+                <td>{++$m}</td>
+                <td>{$v.name}</td>
+                <td>{$v.desc}</td>
+                <td>{$v.remark}</td>
                 <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="protection_certificate" id="protection_certificate"  class="upfile" ></label>
-					<input type="hidden" name="protection_certificate_url" id="protection_certificate_url" value=""/>
+                    <label class="file_ui">上传文件<input type="file"   name="image_{$v.cid}" id="image_{$v.cid}" class="upfile" ></label>
+                    <!--<div class="upfile_name">文件名</div>-->
+                    <input type="hidden" name="cids[]" id="cids" value="{$v.cid}"/>
+					<input type="hidden" name="images[]" id="image_{$v.cid}_url" value=""/>
                 </td>
-                <td><div class="upfile_name">文件名</div></td>
+                <td ><div class="upfile_name">文件名</div></td>
             </tr>
-            <tr class="table-tr">
-                <td>3</td>
-                <td>低保证</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="low_certificate" id="low_certificate"   class="upfile" ></label>
-					<input type="hidden" name="low_certificate_url" id="low_certificate_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>4</td>
-                <td>孤儿证</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="orphan"  id="orphan"  class="upfile" ></label>
-					<input type="hidden" name="orphan_url" id="orphan_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>5</td>
-                <td>救助证</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="rescue_card"  id="rescue_card"  class="upfile" ></label>
-					<input type="hidden" name="rescue_card_url" id="rescue_card_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>6</td>
-                <td>帮扶手证</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="help_certificate" id="help_certificate"   class="upfile" ></label>
-					<input type="hidden" name="help_certificate_url" id="help_certificate_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>7</td>
-                <td>低收入证</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="low_income_card" id="low_income_card" class="upfile" ></label>
-					<input type="hidden" name="low_income_card_url" id="low_income_card_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>8</td>
-                <td>残疾人证</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="disability_certificate"  id="disability_certificate"  class="upfile" ></label>
-					<input type="hidden" name="disability_certificate_url" id="disability_certificate_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>9</td>
-                <td>儿童福利证</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="child_welfare_certificate" id="child_welfare_certificate"   class="upfile" ></label>
-					<input type="hidden" name="child_welfare_certificate_url" id="child_welfare_certificate_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>10</td>
-                <td>特困职工证</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="poor_workers"  id="poor_workers"  class="upfile" ></label>
-					<input type="hidden" name="poor_workers_url" id="poor_workers_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>11</td>
-                <td>优抚对象证</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="privilege_card"  id="privilege_card"  class="upfile" ></label>
-					<input type="hidden" name="privilege_card_url" id="privilege_card_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>12</td>
-                <td>因公牺牲警察证</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="sacrifice_card" id="sacrifice_card"   class="upfile" ></label>
-					<input type="hidden" name="sacrifice_card_url" id="sacrifice_card_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>13</td>
-                <td>民政等部门证明</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="civil_affairs_department"  id="civil_affairs_department"  class="upfile" ></label>
-					<input type="hidden" name="civil_affairs_department_url" id="civil_affairs_department_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
-            <tr class="table-tr">
-                <td>14</td>
-                <td>其他相关证明</td>
-                <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"  name="other" id="other"   class="upfile" ></label>
-					<input type="hidden" name="other_url" id="other_url" value=""/>
-                </td>
-                <td><div class="upfile_name">文件名</div></td>
-            </tr>
+            {/foreach}
             </tbody>
         </table>
 		<button type="button" class="print printHide material_btn">提交</button>
@@ -345,7 +120,7 @@ $(".upfile").change(function(){
 	load = layer.load(2);
 	var formData = new FormData();
 	var name = $(this).attr('name');
-	formData.append("uploadfile", document.getElementById(name).files[0]);   
+	formData.append("uploadfile", document.getElementById(name).files[0]);
 	$.ajax({
 		url: "{:url('home/Show/material_upload')}",
 		type: "POST",
@@ -357,13 +132,13 @@ $(".upfile").change(function(){
 			if(data.code == 200)
 			{
 				$("#"+name+'_url').val(data.url);
-				layer.msg("上传成功！",{'icon':1});	
-				
+				layer.msg("上传成功！",{'icon':1});
+
 			}
 			else{
-				layer.msg(data.message,{'icon':5});	
+				layer.msg(data.message,{'icon':5});
 			}
-			
+
 		},
 		error: function () {
 			alert("上传失败！");
@@ -372,7 +147,7 @@ $(".upfile").change(function(){
 	});
 });
 $(".material_btn").click(function(){
-	
+
 	if(confirm("上传后不能修改，确定上传？"))
 	{
 		$("#material_form").submit();

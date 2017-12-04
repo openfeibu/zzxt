@@ -163,7 +163,7 @@ footer p{line-height: 28px;}
 .personal_table table{margin:0 auto;}
 .personal_table table input{width: 95%;height: 100%;border:none;outline:none;text-align: center;color: #666}
 
-.line-table-height{ 
+.line-table-height{
     height:30px;
 }
 .line-table-height2{
@@ -195,10 +195,10 @@ footer p{line-height: 28px;}
 .table_one tr{width: 100%;height: 40px;border:1px solid rgb(148, 192, 210);}
 .table_one tr:nth-of-type(1){ font-weight: bold; text-align: center;}
 .table_one .table-tr{ border:1px solid rgb(148, 192, 210)}
-.table_one .table-tr td {border:1px solid rgb(148, 192, 210);text-indent: 15px;}
+.table_one .table-tr td {border:1px solid rgb(148, 192, 210);text-align: center;}
 .table-tr td:nth-of-type(1){ width: 100px;}
-.table-tr td:nth-of-type(2){ width: 300px;}
-.table-tr td:nth-of-type(4),.table-tr td:nth-of-type(3){ width: 200px;text-align: center;}
+.table-tr td:nth-of-type(2){ width: 100px;}
+.table-tr td:nth-of-type(4),.table-tr td:nth-of-type(3){ width: 120px;text-align: center;}
 
 
 .print{width: 100px;height: 32px;border:none;background:#438EB9;color: #fff;margin:25px auto;display: block;cursor: pointer;}
@@ -217,7 +217,7 @@ footer p{line-height: 28px;}
 .upfile{display: none!important;width: 100px!important;height: 32px!important;position: relative;top: 6px;right: 104px;}
 .upfile_name{display:inline-block;width:200px;height:auto;font-size: 14px;line-height: 1.2em;color: #555555;white-space:normal;}
 .td_upfile{white-space:normal;vertical-align: middle;}
-.file_ui{margin: 5px 10px;padding:5px 10px 5px 0px;font-size:14px;line-height:32px;color:#fff;background-color: #438EB9;text-align: center}
+.file_ui{margin: 5px 10px;padding:5px 10px 5px 5px;font-size:14px;line-height:32px;color:#fff;background-color: #438EB9;text-align: center}
 /*国家助学金申请表*/
 .gants_tab td{width: 88px;}
 .line-table-height>td .longtext{width:666px;height:96px;text-align:left;margin:5px 20px;border:1px solid #555555;resize: none}
@@ -283,12 +283,3 @@ footer p{line-height: 28px;}
 
 .login_error{ text-align: center;width: 100%; color: red; margin-top: 20px;}
 .status_error{ text-align: center;width: 100%; color: red; }
-
-
-
-
-
-
-
-
-

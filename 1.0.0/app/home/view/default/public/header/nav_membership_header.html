@@ -44,6 +44,12 @@
             <li  role="presentation" >
                 <a href="{:url('/index_front')}" >首页</a>
             </li>
+            <li role="presentation" {if condition="'showSurvey' eq $Think.const.ACTION_NAME"}class="active"{/if}>
+                <a href="{:url('/questionnaire')}">调查问卷</a>
+            </li>
+            <li role="presentation" {if condition="'examineStatus' eq $Think.const.ACTION_NAME"}class="active"{/if}>
+                <a href="{:url('Student/examineStatus')}">个人中心</a>
+            </li>
             <li  role="presentation" class="dropdown">
                 <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >家庭经济困难认定<span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -113,12 +119,7 @@
                     <li><a href="{:url('home/workstudy/list')}">岗位申报</a></li>
                 </ul>
             </li>
-            <li role="presentation" {if condition="'showSurvey' eq $Think.const.ACTION_NAME"}class="active"{/if}>
-                <a href="{:url('/questionnaire')}">调查问卷</a>
-            </li>
-            <li role="presentation" {if condition="'examineStatus' eq $Think.const.ACTION_NAME"}class="active"{/if}>
-                <a href="{:url('Student/examineStatus')}">个人中心</a>
-            </li>
+
             <li role="presentation"
                 {if condition="'grantsPublicity' eq $Think.const.ACTION_NAME"} class="dropdown active"
                 {elseif condition="'motivPublicity' eq $Think.const.ACTION_NAME"} class=" dropdown active"
