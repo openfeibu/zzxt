@@ -253,7 +253,8 @@ class Show extends Base
 				DB::name('evaluation_material')->insert($data);
 			}
 		}
-
+		$assess_fraction = $evaluation_model::getMaterilaScore($eval_app['evaluation_id']);
+		DB::name('evaluation_application')->where('evaluation_id',$eval_app['evaluation_id'])->update(['assess_fraction' => $assess_fraction,'score' => $assess_fraction]);
 		header('Location:/material.html');
 	}
     public function evalu_status()

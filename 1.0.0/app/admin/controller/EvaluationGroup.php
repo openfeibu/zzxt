@@ -120,18 +120,15 @@ class EvaluationGroup extends Base
             ->where("CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
             ->field('ass.*,app.assess_fraction,app.score,app.change_fraction,u.*')
             ->paginate(20);
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 
-//        $data->data[0] = '';
-//        if (!empty($data[0]['use r_id'])) {
-//            foreach ($data->getCollection() as $k => $vo) {
-//                $user = Db::table('yf_user')
-//                    ->where('studentid', $vo['user_id'])
-//                    ->find();
-//                $data->data[$k] = array_merge($data->items()[$k], $user);
-//            }
-//        } else {
-//			return $this->error("班级未有人申请");
-//        }
+        $data_arr = $data->all();
+        foreach ($data as $key => $val) {
+            $data_arr[$key]['material_score'] = Evaluation::getMaterilaScore($val['evaluation_id']);
+            $data_arr[$key]['rank'] = Evaluation::getGrade($val['score']);
+        }
+
         //查询未审核人数
         $no_count = Db::table('yf_evaluation_status')
             ->alias('ass')
@@ -157,7 +154,8 @@ class EvaluationGroup extends Base
         }
         $this->assign('no_count',$no_count);
         $this->assign('yes_count',$yes_count);
-        $this->assign('user', $data);
+        $this->assign('user', $data_arr);
+        $this->assign('page', $show);
         $this->assign('list', $data);
         return $this->view->fetch('evaluation/class_review');
     }
@@ -228,8 +226,8 @@ class EvaluationGroup extends Base
             //更新
 			$evaluation_model = new Evaluation();
 			$eval_app = $evaluation_model->getEvaluation($evaluation_id);
-            $material_score = $evaluation_model::getMaterilaScore($evaluation_id);
-            $data['assess_fraction'] = $material_score;
+            // $material_score = $evaluation_model::getMaterilaScore($evaluation_id);
+            // $data['assess_fraction'] = $material_score;
 			$data['score'] = intval($eval_app['assess_fraction']) + intval($data['change_fraction']) ;
             $res = Db::table('yf_evaluation_application')
                 ->where('evaluation_id',$evaluation_id)

@@ -518,6 +518,7 @@ class StudentOffice extends Base
         $data_arr = $data->all();
         foreach ($data as $key => $val) {
             $data_arr[$key]['material_score'] = Evaluation::getMaterilaScore($val['evaluation_id']);
+            $data_arr[$key]['rank'] = Evaluation::getGrade($val['score']);
         }
 
         //查院
@@ -577,7 +578,38 @@ class StudentOffice extends Base
     }
     public function evaluation_grade()
     {
+        $grade_configs = \app\admin\model\Evaluation::getGradeConfigs();
+        $this->assign('grade_configs', $grade_configs);
+        return $this->view->fetch('evaluation/evaluation_grades');
+    }
+    public function grade_config_runedit()
+    {
+        $id = input('id');
+        if(!$id){
+            $this->error('参数错误！');
+        }
+        if(input('min') !== null)
+        {
+            $data = [
+                'min' => input('min')
+            ];
+        }
+        else {
+            $data = [
+                'max' => input('max')
+            ];
+        }
 
+        $rst = Db::name('evaluation_grade')->where('id',$id)->update($data);
+        if($rst!==false){
+            $this->success('提交成功');
+        }else{
+            $this->error('提交失败');
+        }
+    }
+    public function numberConfig()
+    {
+        
     }
     /**
      * 查看学生信息（评估系统）

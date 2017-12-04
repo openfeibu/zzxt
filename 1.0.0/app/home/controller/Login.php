@@ -46,7 +46,7 @@ class Login extends Base
 		cookie('yf_logged_user',null);
 		$this->redirect(__ROOT__."/");
 	}
-	
+
     //登录验证
     public function runlogin()
     {
@@ -237,12 +237,12 @@ hello;
     public function check_active()
     {
 		$this->check_login();
-		if($this->user['user_status']){
+		//if($this->user['user_status']){
 			$this->redirect("/home/student/examinestatus");
-		}else{
-			//判断是否激活
-			return $this->view->fetch('user:active');
-		}
+		// }else{
+		// 	//判断是否激活
+		// 	return $this->view->fetch('user:active');
+		// }
 	}
 	//重发激活邮件
     public function resend()

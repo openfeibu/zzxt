@@ -59,4 +59,16 @@ class Evaluation extends Model
         }
         return $material_score;
     }
+    public static function getGradeConfigs()
+    {
+        return Db::name('evaluation_grade')->order('id asc')->select();
+    }
+    public static function getGrade($value)
+    {
+        $grade = '不困难';
+        $grade_config = Db::name('evaluation_grade')
+                   ->where("min <= '$value' AND max >= '$value'")
+                   ->find();
+        return $grade_config ? $grade_config['name'] : $grade;
+    }
 }

@@ -54,7 +54,10 @@
                         <th>序号</th>
                         <th>姓名</th>
                         <th>学号</th>
-                        <th>评定分数</th>
+                        <th >评定分数</th>
+                        <th >加分</th>
+                        <th >总分</th>
+                        <th >评定等级</th>
                         <th>状态</th>
                         <th>操作</th>
                     </tr>
@@ -66,27 +69,21 @@
                         <td>{$row.studentname}</td>
                         <td>{$row.studentid}</td>
                         <td>{$row.assess_fraction}</td>
+                        <td>{$row.change_fraction}</td>
+                        <td>{$row.score}</td>
+                        <td>{$row.rank}</td>
                         <td>
-                            {if condition="$row.status == 1"}申请书已经提交
-                            {elseif condition="$row.status==2"}辅导员通过
-                            {elseif condition="$row.status==3"}班级小组通过
-                            {elseif condition="$row.status==4"}院系小组通过
-                            {elseif condition="$row.status==5"}学生处通过
-                            {elseif condition="$row.status==6"}辅导员不通过
-                            {elseif condition="$row.status==7"}班级小组不通过
-                            {elseif condition="$row.status==8"}院系小组不通过
-                            {elseif condition="$row.status==9"}学生处不通过
-                            {/if}
+                            {php}echo config('evaluation_status.'.$row['status']);{/php}
                         </td>
                         <form action="{:url('admin/FacultyGroup/fillEvaluationOpinion')}" method="post">
                             <td class="tab_content">
                                 <input type="hidden" name="user_name" value="{:session('admin_auth.admin_username')}">
                                 <input type="hidden" name="status_id" value="{$row.status_id}" />
                                 <div class="audit_opera">
-                                    <button class="btn btn-info btn-sm btn-success" name="pass">通过</button>
+                                    <!-- <button class="btn btn-info btn-sm btn-success" name="pass">通过</button> -->
                                 </div>
                                 <div class="audit_opera">
-                                    <button class="btn btn-info btn-sm btn-danger" name="fail" value="1">不通过</button>
+                                    <!-- <button class="btn btn-info btn-sm btn-danger" name="fail" value="1">不通过</button> -->
                                 </div>
 
                                 <div class="audit_opera">
@@ -96,6 +93,9 @@
                         </form>
                     </tr>
                     {/foreach}
+                    <tr>
+                        <td height="50" colspan="12" align="left">{$page}</td>
+                    </tr>
                     </tbody>
                 </table>
 

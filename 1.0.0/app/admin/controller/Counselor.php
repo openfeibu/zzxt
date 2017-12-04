@@ -173,7 +173,8 @@ class Counselor extends Base
 
             $data_students = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                 ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
                 ->order('score desc')
                 ->where($studentname)
@@ -184,7 +185,8 @@ class Counselor extends Base
             //未通过的
             $faculty_count = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                 ->where("u.class_number",'in',$this->class_number)
 //                ->where($grade)
 //                ->where($faculty_profession_sql)
@@ -195,7 +197,8 @@ class Counselor extends Base
             //总得人数
             $faculty_all_count = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                 ->where("u.class_number",'in',$this->class_number)
 //                ->where($faculty_profession_sql)
 //                ->where($grade)
@@ -211,7 +214,8 @@ class Counselor extends Base
         //查找呃
         $data = Db::table('yf_evaluation_status')
             ->alias('ass')//asshold
-            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
             ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
 			->order('score desc')
 			->order('status_id asc')
@@ -226,7 +230,8 @@ class Counselor extends Base
         //未通过的
         $faculty_count = Db::table('yf_evaluation_status')
             ->alias('ass')//asshold
-            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
             ->where("u.class_number",'in',$this->class_number)
             ->where(function($query){
                 $query->where('ass.status',1);
@@ -235,7 +240,8 @@ class Counselor extends Base
         //总得人数
         $faculty_all_count = Db::table('yf_evaluation_status')
             ->alias('ass')//asshold
-            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
             ->where("u.class_number",'in',$this->class_number)
             ->count();
         $this->assign('faculty_not_pass', $faculty_count);
@@ -259,24 +265,12 @@ class Counselor extends Base
         }
         $apply = Db::table('yf_evaluation_application')
             ->alias('app')
-            ->join('yf_user u', 'u.studentid = app.user_id', 'left')
+            ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
             ->where('evaluation_id',$data['evaluation_id'])
+            ->field('u.*,app.*')
             ->find();
 
-//        if (!empty($apply['awards'])) {
-//            $apply['awards'] = json_decode($apply['awards'], true);
-//        } else {
-//            $apply['awards'][0]['date'] = '';
-//            $apply['awards'][0]['name'] = '';
-//            $apply['awards'][0]['unit'] = '';
-//        }
-//        if (!empty($apply['group_opinion'])) {
-//            $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-//        } else {
-//            $apply['group_opinion']['text'] = '';
-//            $apply['group_opinion']['name'] = '';
-//            $apply['group_opinion']['time'] = time();
-//        }
 
         $this->assign('status_id', $id);
         $this->assign('user', $apply);

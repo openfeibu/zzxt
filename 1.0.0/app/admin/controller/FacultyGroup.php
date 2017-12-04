@@ -542,6 +542,14 @@ class FacultyGroup extends Base
             ->where('u.faculty_number', $this->faculty)
             ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
             ->paginate(20);
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+
+        $data_arr = $data->all();
+        foreach ($data as $key => $val) {
+            $data_arr[$key]['material_score'] = Evaluation::getMaterilaScore($val['evaluation_id']);
+            $data_arr[$key]['rank'] = Evaluation::getGrade($val['score']);
+        }
         //查院
         $faculty_profession = Db::table('yf_user')
             ->field("DISTINCT profession ,profession_number")
@@ -568,7 +576,8 @@ class FacultyGroup extends Base
         $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
         $this->assign('faculty', $this->faculty);
         $this->assign('profession', $faculty_profession);
-        $this->assign('user', $data);
+        $this->assign('user', $data_arr);
+        $this->assign('page', $show);
         return $this->view->fetch('evaluation/faculty_review');
     }
 
