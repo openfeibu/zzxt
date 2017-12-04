@@ -195,7 +195,7 @@ class FacultyGroup extends Base
                 ->find();
             if (!empty($apply['awards'])) {
                 $apply['awards'] = json_decode($apply['awards'], true);
-            } 
+            }
 			if(!is_array($apply['awards']))
 			{
 				$apply['awards'] = [];
@@ -216,7 +216,7 @@ class FacultyGroup extends Base
                 $apply['faculty_opinion']['text'] = '';
                 $apply['faculty_opinion']['name'] = '';
             }
-			
+
             $this->assign('type_id', $type_id);
             $this->assign('id', $apply_id);
             $this->assign('user', $apply);
@@ -490,61 +490,24 @@ class FacultyGroup extends Base
             } else {
                 $studentname = '';
             }
-            //年级
-//            if ($data['grade'] != 0) {
-//                $grade = "current_grade = '".$data['grade']."'";
-//            } else {
-//                $grade = '';
-//            }
-//            //专业
-//            if ($data['faculty'] != 0) {
-//                $faculty_profession_sql = "profession_number = '".$data['faculty']."'";
-//            } else {
-//                //系别
-//                $faculty_profession_sql = 'faculty_number = 5';
-//            }
-            //找人
-//            $data_students = Db::table('yf_apply_scholarships_status')
-//                ->alias('ass')//asshold
-//                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-//                ->where($studentname)
-//                ->where($grade)
-//                ->where($faculty_profession_sql)
-//                ->paginate(20);
+
             $data_students = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                 ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
                 ->order('score desc')
                 ->where('u.faculty_number', $this->faculty)
                 ->where($studentname)
                 ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
                 ->paginate(20);
-            //查院系的
-//            $faculty_profession = Db::table('yf_user')
-//                ->field("DISTINCT profession ,profession_number")
-//                ->where('faculty_number', $this->faculty)
-//                ->select();
-//            //这里比较麻烦。先找出提交上来的那个专业。
-//
-//            $faculty_name = Db::table('yf_user')
-//                ->where('profession_number', $data['faculty'])
-//                ->field("DISTINCT profession")
-//                ->find();
-//            if ($data['faculty'] != 0 and $data['grade'] != 0) {
-//                $faculty_name = $data['grade'].$faculty_name['profession'];
-//            } elseif ($data['faculty'] != 0 and $data['grade'] == 0) {
-//                $faculty_name = $faculty_name['profession'];
-//            } elseif ($data['faculty'] == 0 and $data['grade'] != 0) {
-//                $faculty_name = $data['grade']."全系";
-//            } else {
-//                $faculty_name = "全系";
-//            }
+
             //再来找那些人
             //未通过的
             $faculty_count = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                 ->where('u.faculty_number', $this->faculty)
 //                ->where($grade)
 //                ->where($faculty_profession_sql)
@@ -555,7 +518,8 @@ class FacultyGroup extends Base
             //总得人数
             $faculty_all_count = Db::table('yf_evaluation_status')
                 ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                 ->where('u.faculty_number', $this->faculty)
 //                ->where($faculty_profession_sql)
 //                ->where($grade)
@@ -571,7 +535,8 @@ class FacultyGroup extends Base
         //查找呃
         $data = Db::table('yf_evaluation_status')
             ->alias('ass')//asshold
-            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
             ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
 			->order('score desc')
             ->where('u.faculty_number', $this->faculty)
@@ -585,7 +550,8 @@ class FacultyGroup extends Base
         //未通过的
         $faculty_count = Db::table('yf_evaluation_status')
             ->alias('ass')//asshold
-            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
             ->where('u.faculty_number', $this->faculty)
             ->where(function($query){
                 $query->where('ass.status !=4')->where('ass.status !=5');
@@ -594,7 +560,8 @@ class FacultyGroup extends Base
         //总得人数
         $faculty_all_count = Db::table('yf_evaluation_status')
             ->alias('ass')//asshold
-            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
             ->where('u.faculty_number', $this->faculty)
             ->count();
         $this->assign('faculty_not_pass', $faculty_count);
@@ -637,10 +604,11 @@ class FacultyGroup extends Base
             $apply['faculty_opinion']['text'] = '';
             $apply['faculty_opinion']['name'] = '';
         }
-		$this->assign('eval_app', $apply);
+        $apply['members'] = unserialize($apply['members']);
+		$this->assign('eval_app',$apply);
 		$eval_form = Config::get('evaluation_form');
 		$this->assign('eval_form',$eval_form);
-		
+
         $this->assign('status_id', $id);
         $this->assign('user', $apply);
         return $this->view->fetch('evaluation/faculty_add_review');
@@ -680,10 +648,10 @@ class FacultyGroup extends Base
         if ($request->isPost()) {
             $data = $request->post();
             if (isset($data['fail']) and !empty($data['fail'])) {
-                $status = 8;
+                $data['evaluation_status'] = $status = 8;
                 unset($data['fail']);
             } else {
-                $status = 4;
+                $data['evaluation_status'] = $status = 4;
                 unset($data['pass']);
             }
             //状态表id
@@ -717,6 +685,11 @@ class FacultyGroup extends Base
 
             $data['faculty_opinion'] = json_encode($array);
             $data['update_at'] = time();
+
+
+            $evaluation_model = new Evaluation();
+			$eval_app = $evaluation_model->getEvaluation($data['evaluation_id']);
+            $data['score'] = intval($eval_app['assess_fraction']) + intval($data['change_fraction']) ;
             //删除没用的
             unset($data['status_id'],$data['user_name'], $data['evaluation_id']);
             //设置公示时间
@@ -725,6 +698,8 @@ class FacultyGroup extends Base
                 //5天
                 $data['publicity_end'] = time() + 60*60*24*5;
             }
+
+
             //更新评语。
             $res = Db::table("yf_evaluation_application")
                 ->where('evaluation_id', $ssid['evaluation_id'])

@@ -292,19 +292,23 @@ class Counselor extends Base
      * 查看学生佐证材料
      */
     public function showEvaluationEvidence($id) {
-        $data = Db::table('yf_evaluation_status')
-            ->where('status_id', $id)
-            ->find();
-        if (!$data) {
-            return $this->error("该学生没有填写申请表");
-        }
+        // $data = Db::table('yf_evaluation_status')
+        //     ->where('status_id', $id)
+        //     ->find();
+        // if (!$data) {
+        //     return $this->error("该学生没有填写申请表");
+        // }
         $apply = Db::table('yf_evaluation_application')
             ->alias('app')
-            ->join('yf_user u', 'u.studentid = app.user_id', 'left')
-            ->where('evaluation_id',$data['evaluation_id'])
+            ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+            ->where('evaluation_id',$id)
+            ->field('u.*,app.*')
             ->find();
         $this->assign('status_id', $id);
         $this->assign('user', $apply);
+        $material = \app\admin\model\Evaluation::getEvaluationMaterial($id);
+        $this->assign('material', $material);
         return $this->view->fetch('evaluation/manage_check_proof');
     }
 

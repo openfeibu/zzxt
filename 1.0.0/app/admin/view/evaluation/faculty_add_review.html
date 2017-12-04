@@ -22,7 +22,7 @@
                     <tr>
                         <td colspan="11" class="tab_content">
                             <p class="tab_left">班级评定小组意见</p>
-                            <textarea class="tab_opinion">{$user.group_opinion.text}</textarea>
+                            <textarea class="tab_opinion" disabled>{$user.group_opinion.text}</textarea>
                             <div class="tab_sign">
                                 <label for="">组长签名：</label>
                                 <input type="text" value="{$user.group_opinion.name}" disabled>
@@ -36,7 +36,7 @@
                         </td>
                     </tr>
                 </table>
-                <form action="{:url('admin/FacultyGroup/fillEvaluationOpinion')}" method="post">
+                <form action="{:url('admin/FacultyGroup/fillEvaluationOpinion')}" method="post" id="passingForm">
                 <table class="w800">
                     <tr>
                         <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">院系小组添加评语：</p></td>
@@ -49,7 +49,7 @@
                                 <p>院系小组修改评分：</p>
                                 <div class="modify_score">
                                     <button type="button" class="modify_less btn"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                                    <input type="text" name="change_fraction" class="modify_num" value="{$user.assess_fraction}">
+                                    <input type="text" name="change_fraction" class="modify_num" value="{$user.change_fraction}">
                                     <button type="button" class="modify_add btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                         <td class="tab_content" style="width: 266px;">
                             <input type="hidden" name="evaluation_id" value="{$user.evaluation_id}">
                             <input type="hidden" name="status_id" value="{$status_id}">
-                            <a href="{:url('admin/Counselor/showEvaluationEvidence',['id'=>$status_id])}" class="btn btn-info">查看相关证明</a>
+                            <a href="{:url('admin/Counselor/showEvaluationEvidence',['id'=>$user.evaluation_id])}" target="_blank" class="btn btn-info">查看相关证明</a>
                             <button type="submit" class="btn btn-success" name="pass">通过</button>
                             <button type="submit" class="btn btn-danger" name="fail" value="1">不通过</button>
                         </td>
@@ -85,4 +85,12 @@
         </div>
     </div>
 </div>
+{if $user.evaluation_status != 3}
+<script>
+$("#passingForm").find("textarea").attr('disabled',true);
+$("#passingForm").find("input").attr('disabled',true);
+$("#passingForm").find("select").attr('disabled',true);
+$("#passingForm").find("button").attr('disabled',true);
+</script>
+{/if}
 {/block}

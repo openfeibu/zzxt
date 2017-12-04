@@ -81,7 +81,9 @@
                         <th >姓名</th>
                         <th >学号</th>
                         <th >专业</th>
-                        <th >评分</th>
+                        <th >困难认定评分</th>
+                        <th >总加分</th>
+                        <th >最后得分</th>
                         <th >评定等级</th>
                         <th >状态</th>
                         <th >操作</th>
@@ -95,18 +97,11 @@
                         <td>{$row.studentid}</td>
                         <td>{$row.profession}</td>
                         <td>{$row.assess_fraction}</td>
+                        <td>{$row.change_fraction}</td>
+                        <td>{$row.score}</td>
                         <td></td>
                         <td>
-                            {if condition="$row.status == 1"}申请书已经提交
-                            {elseif condition="$row.status==2"}辅导员通过
-                            {elseif condition="$row.status==3"}班级小组通过
-                            {elseif condition="$row.status==4"}院系小组通过
-                            {elseif condition="$row.status==5"}学生处通过
-                            {elseif condition="$row.status==6"}辅导员不通过
-                            {elseif condition="$row.status==7"}班级小组不通过
-                            {elseif condition="$row.status==8"}院系小组不通过
-                            {elseif condition="$row.status==9"}学生处不通过
-                            {/if}
+                            {php}echo config('evaluation_status.'.$row['status']);{/php}
                         </td>
                         <form action="{:url('admin/StudentOffice/fillEvaluationOpinion')}" method="post">
                             <td class="tab_content">
@@ -126,6 +121,9 @@
                         </form>
                     </tr>
                     {/foreach}
+                    <tr>
+                    	<td height="50" colspan="12" align="left">{$page}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

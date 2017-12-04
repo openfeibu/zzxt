@@ -10,7 +10,7 @@
 namespace app\admin\model;
 
 use think\Model;
-
+use think\Db;
 /**
  * 会员模型
  * @package app\admin\model
@@ -48,5 +48,14 @@ class MemberList extends Model
 		}else{
 			return 0;
 		}
+	}
+	public static function getMember($member_list_id)
+	{
+		$member = Db::name('member_list')
+						->alias('m')
+						->join('yf_user u','u.id_number = m.id_number')
+						->field('u.*,m.member_list_id,m.member_list_username,m.member_list_province,m.member_list_city,m.member_list_town,m.member_list_nickname,m.member_list_headpic')
+						->find($member_list_id);
+	    return $member;
 	}
 }
