@@ -822,7 +822,7 @@ function delall(id, url) {
                     window.onbeforeunload = null;
                 }
 				if(data.tab !=undefined){
-					backup(data.tab, tab.id != data.tab.id);					
+					backup(data.tab, tab.id != data.tab.id);
 				}
             } else {
                 updateAlert(data.msg, 'alert-error');
@@ -892,16 +892,16 @@ $(function () {
 })(jQuery);
 /*************************************************************************** 选择列表框change事件********************************************************/
 (function ($) {
-	$('body').on('change','.ajax_change',function () {		
+	$('body').on('change','.ajax_change',function () {
         var $form = $(this).parents("form");
 		$.ajax({
 		    url:$form.attr('action'),
 			type:"POST",
-			data:$form.serialize(),            
+			data:$form.serialize(),
 			success: function(data,status){
 				$("#ajax-data").html(data);
 			}
-		});	
+		});
     });
     $('body').on('click','.range_inputs .applyBtn',function () {
         var reservation=$('#reservation');
@@ -918,15 +918,15 @@ $(function () {
     });
     })(jQuery);
 (function ($) {
-	$('body').on('change','.submit_change',function () {		
-        var $form = $(this).parents("form");	
+	$('body').on('change','.submit_change',function () {
+        var $form = $(this).parents("form");
         $form.submit();
     });
     })(jQuery);
 function ajax_page(page) {
 	$.ajax({
 		type:"POST",
-		data:$('#list-filter').serialize()+'&page='+page,            
+		data:$('#list-filter').serialize()+'&page='+page,
 		success: function(data,status){
 			$("#ajax-data").html(data);
 		}
@@ -937,11 +937,11 @@ $(function () {
 	$('body').on('click','.ajax-search-form',function () {
 		$.ajax({
 			type:"POST",
-			data:$(this).parents("form").serialize(),            
+			data:$(this).parents("form").serialize(),
 			success: function(data,status){
 				$("#ajax-data").html(data);
 			}
-		});	
+		});
         return false;
     });
 });
@@ -952,11 +952,11 @@ $(function () {
 		alert($(this).data('type'));
 		$.ajax({
 			type:"POST",
-			data:{type:$(this).data('type')},            
+			data:{type:$(this).data('type')},
 			success: function(data,status){
 				$("#ajax-data").html(data);
 			}
-		});	
+		});
         return false;
     });
 });
@@ -966,11 +966,11 @@ $(function () {
 		$(this).parents("form")[0].reset();
 		$.ajax({
 			type:"POST",
-			data:{},            
+			data:{},
 			success: function(data,status){
 				$("#ajax-data").html(data);
 			}
-		});	
+		});
         return false;
     });
 });
@@ -982,14 +982,14 @@ $(function () {
 		$.ajax({
 			type:"POST",
 			url:url,
-			data:{},            
+			data:{},
 			success: function(data,status){
 				layer.alert(data.msg, {icon: 6}, function (index) {
                     layer.close(index);
                     window.location.href = data.url;
                 });
 			}
-		});	
+		});
         return false;
     });
 });
@@ -1077,3 +1077,36 @@ $(function () {
 		}
 	});
 });
+
+$(".disabled").find("textarea").attr('disabled',true);
+$(".disabled").find("input").attr('disabled',true);
+$(".disabled").find("select").attr('disabled',true);
+$(".disabled").find("button").attr('disabled',true);
+$("body").on('blur','.score',function(){
+		console.log(123);
+		$this = $(this);
+		var reg = /^[0-9]+.?[0-9]*$/;
+		$this = $(this);
+		value = $this.val();
+        if(!reg.test(value)){
+			$this.after('<span class="save_span">格式不挣钱</span>');
+			$('.save_span').fadeOut('normal').remove();
+			$this.val('');
+			return false;
+		}
+		var cid =  $this.parent().attr('data-id');
+
+		var html = '<img src="/public/img/loading.gif" id="loading_img">';
+		$this.after(html);
+		$.ajax({
+			type:"POST",
+			url: "/admin/StudentOffice/material_config_runedit",
+			data:{'cid':cid,'score':value},
+			success: function(data){
+				$('#loading_img').remove();
+				$this.after('<span class="save_span">已保存</span>');
+				$('.save_span').fadeOut('normal').remove();
+			}
+		});
+
+	});
