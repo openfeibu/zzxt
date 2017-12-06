@@ -609,7 +609,7 @@ class StudentOffice extends Base
     }
     public function numberConfig()
     {
-        
+
     }
     /**
      * 查看学生信息（评估系统）
@@ -636,11 +636,7 @@ class StudentOffice extends Base
 //            $apply['awards'][0]['name'] = '';
 //            $apply['awards'][0]['unit'] = '';
 //        }
-        if (empty($apply['group_opinion'])) {
-            $this->error("小组未审核该同学");
-        } else {
-            $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-        }
+        $apply['group_opinion'] = $apply['group_opinion'] ? json_decode($apply['group_opinion'], true) : [];
         if (!empty($apply['faculty_opinion'])) {
             $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
         } else {

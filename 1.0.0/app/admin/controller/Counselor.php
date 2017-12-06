@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\NationalScholarship;
+use app\admin\model\Evaluation;
 use think\Db;
 use think\Config;
 use think\Request;
@@ -211,17 +212,15 @@ class Counselor extends Base
             $this->assign('user', $data_students);
             return $this->fetch('evaluation/counselor_review');
         }
-        //查找呃
-        $data = Db::table('yf_evaluation_status')
-            ->alias('ass')//asshold
-            ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-            ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
-			->order('score desc')
-			->order('status_id asc')
-            ->where("u.class_number",'in',$this->class_number)
-            ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
-            ->paginate(20);
+
+        $where["u.class_number"] = ['in' , $this->class_number];
+        $data = Evaluation::getEvaluationList($where);
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+
+        $data_arr = $data->all();
+        $data_arr = Evaluation::handleEvaluationList($data_arr);
+
         //查院
         $faculty_profession = Db::table('yf_user')
             ->field("DISTINCT profession ,profession_number")
@@ -248,8 +247,8 @@ class Counselor extends Base
         $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
         $this->assign('faculty', $this->faculty);
         $this->assign('profession', $faculty_profession);
-        $this->assign('user', $data);
-
+        $this->assign('user', $data_arr);
+        $this->assign('page', $show);
         return $this->view->fetch('evaluation/counselor_review');
     }
 

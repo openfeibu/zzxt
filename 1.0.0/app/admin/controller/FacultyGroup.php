@@ -204,11 +204,11 @@ class FacultyGroup extends Base
                 $apply['awards'][0]['unit'] = '';
             }
 
-            if (empty($apply['group_opinion'])) {
-                return $this->error("小组未审核该同学");
-            } else {
-                $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-            }
+            // if (empty($apply['group_opinion'])) {
+            //     return $this->error("小组未审核该同学");
+            // } else {
+            //     $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
+            // }
             if (!empty($apply['faculty_opinion'])) {
                 $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
             } else {
@@ -238,11 +238,11 @@ class FacultyGroup extends Base
                 $apply['members'][0]['relation'] = '';
                 $apply['members'][0]['unit'] = '';
             }
-            if (empty($apply['group_opinion'])) {
-                return $this->error("小组未审核该同学");
-            } else {
-                $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-            }
+            // if (empty($apply['group_opinion'])) {
+            //     return $this->error("小组未审核该同学");
+            // } else {
+            //     $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
+            // }
             if (!empty($apply['faculty_opinion'])) {
                 $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
             } else {
@@ -533,15 +533,9 @@ class FacultyGroup extends Base
             return $this->fetch('evaluation/faculty_review');
         }
         //查找呃
-        $data = Db::table('yf_evaluation_status')
-            ->alias('ass')//asshold
-            ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-            ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
-			->order('score desc')
-            ->where('u.faculty_number', $this->faculty)
-            ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
-            ->paginate(20);
+
+        $where['u.faculty_number'] = $this->faculty;
+        $data = Evaluation::getEvaluationList($where);
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 
@@ -601,11 +595,8 @@ class FacultyGroup extends Base
 //            $apply['awards'][0]['name'] = '';
 //            $apply['awards'][0]['unit'] = '';
 //        }
-        if (empty($apply['group_opinion'])) {
-            $this->error("小组未审核该同学");
-        } else {
-            $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-        }
+
+        $apply['group_opinion'] = $apply['group_opinion'] ? json_decode($apply['group_opinion'], true) : [];
         if (!empty($apply['faculty_opinion'])) {
             $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
         } else {
@@ -673,8 +664,6 @@ class FacultyGroup extends Base
                 ->where('status_id', $status_id)
                 ->field('evaluation_id')
                 ->find();
-            //学号
-            $status_id = $data['status_id'];
             //构造json
             if (empty($data['faculty_opinion']['text'])) {
                 $array['text'] = '经过院系小组讨论，该同学情况属实';

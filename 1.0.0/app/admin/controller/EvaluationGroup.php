@@ -105,29 +105,17 @@ class EvaluationGroup extends Base
             $this->assign('no_count',$no_count);
             $this->assign('yes_count',$yes_count);
             $this->assign('user',$data);
-            // $this->assign('id', $id);
-            $this->assign('list', $data_data);
+
             return $this->view->fetch('evaluation/class_review');
         }
         //查找呃
-        $data = Db::table('yf_evaluation_status')
-            ->alias('ass')
-            ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
-            ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-			->order('score desc')
-			->where("u.class_number = '".$this->class_number."'")
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->field('ass.*,app.assess_fraction,app.score,app.change_fraction,u.*')
-            ->paginate(20);
+        $where = "u.class_number = '".$this->class_number."' AND CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time";
+        $data = Evaluation::getEvaluationList($where);
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 
         $data_arr = $data->all();
-        foreach ($data as $key => $val) {
-            $data_arr[$key]['material_score'] = Evaluation::getMaterilaScore($val['evaluation_id']);
-            $data_arr[$key]['rank'] = Evaluation::getGrade($val['score']);
-        }
+        $data_arr = Evaluation::handleEvaluationList($data_arr);
 
         //查询未审核人数
         $no_count = Db::table('yf_evaluation_status')
@@ -156,7 +144,6 @@ class EvaluationGroup extends Base
         $this->assign('yes_count',$yes_count);
         $this->assign('user', $data_arr);
         $this->assign('page', $show);
-        $this->assign('list', $data);
         return $this->view->fetch('evaluation/class_review');
     }
 

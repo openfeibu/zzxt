@@ -31,7 +31,7 @@
                             <td style="width: 266px;"></td>
 
                                 <td class="tab_content" style="width: 500px;">
-                                    <form action="{:url('admin/Counselor/evaluationPassingContent')}" method="post" id="passingForm">
+                                    <form action="{:url('admin/EvaluationHandle/counselor')}" method="post" id="passingForm" class="passingForm">
                                     <input type="hidden" name="evaluation_id" value="{$user.evaluation_id}"/>
                                     <button type="submit" class="btn btn-success" name="pass" value="{$status_id}">通过</button>
                                     <button type="submit" class="btn btn-danger" name="fail" value="{$status_id}">不通过</button>
@@ -48,7 +48,7 @@
         </div>
     </div>
 </div>
-{if $user.evaluation_status != 3}
+{if $user.evaluation_status != 2}
 <script>
 $("#passingForm").find("textarea").attr('disabled',true);
 $("#passingForm").find("input").attr('disabled',true);

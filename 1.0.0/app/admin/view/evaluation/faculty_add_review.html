@@ -19,6 +19,7 @@
         <div class="col-md-12 column">
             <div class="w900">
                 {include file="evaluation/student_information_table"}
+                    {if $user.group_opinion}
                     <tr>
                         <td colspan="11" class="tab_content">
                             <p class="tab_left">班级评定小组意见</p>
@@ -35,10 +36,11 @@
                             </div>
                         </td>
                     </tr>
+                    {/if}
                 </table>
-                <form action="{:url('admin/FacultyGroup/fillEvaluationOpinion')}" method="post" id="passingForm">
+                <form action="{:url('admin/EvaluationHandle/fillEvaluationOpinion')}" method="post" id="passingForm" class="passingForm">
                 <table class="w800">
-                    <tr>
+                    <!-- <tr>
                         <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">院系小组添加评语：</p></td>
                         <td colspan="2"></td>
                     </tr>
@@ -67,7 +69,7 @@
                     </tr>
                     <tr>
                         <td colspan="3" style="height: 30px;"></td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td style="width: 266px;"></td>
                         <td class="tab_content" style="width: 266px;">

@@ -75,22 +75,24 @@
                         <td>
                             {php}echo config('evaluation_status.'.$row['status']);{/php}
                         </td>
-                        <form action="{:url('admin/FacultyGroup/fillEvaluationOpinion')}" method="post">
+
                             <td class="tab_content">
+                                <form action="{:url('admin/EvaluationHandle/faculty')}" class="passingForm" method="post">
                                 <input type="hidden" name="user_name" value="{:session('admin_auth.admin_username')}">
                                 <input type="hidden" name="status_id" value="{$row.status_id}" />
                                 <div class="audit_opera">
-                                    <!-- <button class="btn btn-info btn-sm btn-success" name="pass">通过</button> -->
+                                    <button class="btn btn-info btn-sm btn-success" name="pass" {if $row.evaluation_status != 3}disabled{/if}>通过</button>
                                 </div>
                                 <div class="audit_opera">
-                                    <!-- <button class="btn btn-info btn-sm btn-danger" name="fail" value="1">不通过</button> -->
+                                    <button class="btn btn-info btn-sm btn-danger" name="fail" {if $row.evaluation_status != 3}disabled{/if} value="1">不通过</button>
                                 </div>
 
                                 <div class="audit_opera">
                                     <a href="{:url('admin/FacultyGroup/showEvaluationMaterial',['id'=>$row.status_id])}" class="btn btn-info btn-sm">查看</a>
                                 </div>
+                                </form>
                             </td>
-                        </form>
+
                     </tr>
                     {/foreach}
                     <tr>
