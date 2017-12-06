@@ -117,7 +117,7 @@
     </tr>
 
     {php}$num = 1;{/php}
-    {for start="1" end="8"}
+    {for start="1" end="5"}
     {if $eval_app['members']['name'][$i-1]}
     {php}$num++;{/php}
     {/if}
@@ -136,7 +136,7 @@
     </tr>
 
 
-    {for start="1" end="8"}
+    {for start="1" end="5"}
     {if $eval_app['members']['name'][$i-1]}
      <tr class="line-table-height">
         <td class="k-s-content content"><input type="text" name="members[name][]" value="{$eval_app['members']['name'][$i-1]}"></td>

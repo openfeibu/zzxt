@@ -125,13 +125,13 @@
                 </tr>
                 {if $is_eval_app}
                 {php}$num = 1;{/php}
-                {for start="1" end="8"}
+                {for start="1" end="6"}
     			{if $eval_app['members']['name'][$i-1]}
                 {php}$num++;{/php}
                 {/if}
                 {/for}
                 {else}
-                {php}$num = 8;{/php}
+                {php}$num = 6;{/php}
                 {/if}
                 <tr class="line-table-height">
                     <td rowspan="{php}echo $num;{/php}" class="k-s-content title" style="width: 40px;">家庭成员情况(含祖父母）</td>
@@ -146,7 +146,7 @@
                 </tr>
                 {if $is_eval_app}
 
-    			{for start="1" end="8"}
+    			{for start="1" end="6"}
     			{if $eval_app['members']['name'][$i-1]}
     			 <tr class="line-table-height">
                     <td class="k-s-content content"><input type="text" name="members[name][]" value="{$eval_app['members']['name'][$i-1]}"></td>
@@ -170,7 +170,7 @@
     			{/if}
     			{/for}
                 {else}
-                {for start="1" end="8"}
+                {for start="1" end="6"}
     			 <tr class="line-table-height">
                     <td class="k-s-content content"><input type="text" name="members[name][]" value=""></td>
                     <td class="k-s-content content"><input type="text" name="members[age][]" class="number" value=""></td>
