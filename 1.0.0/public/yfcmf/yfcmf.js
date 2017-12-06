@@ -1083,30 +1083,134 @@ $(".disabled").find("input").attr('disabled',true);
 $(".disabled").find("select").attr('disabled',true);
 $(".disabled").find("button").attr('disabled',true);
 $("body").on('blur','.score',function(){
-		console.log(123);
-		$this = $(this);
-		var reg = /^[0-9]+.?[0-9]*$/;
-		$this = $(this);
-		value = $this.val();
-        if(!reg.test(value)){
-			$this.after('<span class="save_span">格式不挣钱</span>');
+	console.log(123);
+	$this = $(this);
+	var reg = /^[0-9]+.?[0-9]*$/;
+	$this = $(this);
+	value = $this.val();
+    if(!reg.test(value)){
+		$this.after('<span class="save_span">格式不正确</span>');
+		$('.save_span').fadeOut('normal').remove();
+		$this.val('');
+		return false;
+	}
+	var cid =  $this.parent().attr('data-id');
+
+	var html = '<img src="/public/img/loading.gif" id="loading_img">';
+	$this.after(html);
+	$.ajax({
+		type:"POST",
+		url: "/admin/StudentOffice/material_config_runedit",
+		data:{'cid':cid,'score':value},
+		success: function(data){
+			$('#loading_img').remove();
+			$this.after('<span class="save_span">已保存</span>');
 			$('.save_span').fadeOut('normal').remove();
-			$this.val('');
+		}
+	});
+
+});
+$("body").on('blur','.grade',function(){
+	console.log(123);
+	$this = $(this);
+	var reg = /^[0-9]+.?[0-9]*$/;
+	$this = $(this);
+	value = $this.val();
+	name = $this.attr('name');
+    if(!reg.test(value)){
+		$this.after('<span class="save_span">格式不正确</span>');
+		$('.save_span').fadeOut('normal').remove();
+		$this.val('');
+		return false;
+	}
+	var id =  $this.parent().attr('data-id');
+	if(name == 'min')
+	{
+		pdata = {'id':id,'min':value};
+	}else{
+		pdata = {'id':id,'max':value};
+	}
+	var html = '<img src="/public/img/loading.gif" id="loading_img">';
+	$this.after(html);
+	$.ajax({
+		type:"POST",
+		url: "/admin/StudentOffice/grade_config_runedit",
+		data:pdata,
+		success: function(data){
+			$('#loading_img').remove();
+			$this.after('<span class="save_span">已保存</span>');
+			$('.save_span').fadeOut('normal').remove();
+		}
+	});
+
+});
+$(".passingForm button[type='submit']").click(function(){
+	$this = $(this);
+	var url = $(this).closest("form").attr('action');
+	data = $(this).closest("form").serialize();
+	name = $(this).attr('name');
+	fail = '';
+	if(name == 'fail')
+	{
+		fail = 1;
+	}
+	data = data +"&"+"fail="+fail;
+//	console.log(data);return false;
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:url,
+		data:data,// 你的formid
+		async: false,
+		error: function(request) {
+			layer.msg("连接失败",{icon: 5});
+			return false;
+		},
+		success: function(data) {
+			$this.closest("form").find("button[name='pass']").attr('disabled',true);
+			$this.closest("form").find("button[name='fail']").attr('disabled',true);
+			if (data.code == 200) {
+                layer.msg(data.msg,{icon: 6});
+            }else{
+                layer.msg(data.msg,{icon: 5});
+            }
 			return false;
 		}
-		var cid =  $this.parent().attr('data-id');
-
-		var html = '<img src="/public/img/loading.gif" id="loading_img">';
-		$this.after(html);
-		$.ajax({
-			type:"POST",
-			url: "/admin/StudentOffice/material_config_runedit",
-			data:{'cid':cid,'score':value},
-			success: function(data){
-				$('#loading_img').remove();
-				$this.after('<span class="save_span">已保存</span>');
-				$('.save_span').fadeOut('normal').remove();
-			}
-		});
-
 	});
+	return false;
+});
+$(".passingDiv button").click(function(){
+	$this = $(this);
+	var url = $(this).closest(".passingDiv").attr('action');
+	var status_id = $(this).closest(".passingDiv").find("input[name = 'status_id']").val();
+	name = $(this).attr('name');
+	fail = '';
+	if(name == 'fail')
+	{
+		fail = 1;
+	}
+	//console.log(status_id);return false;
+	data = {'status_id':status_id,'fail':fail};
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:url,
+		data:data,// 你的formid
+		async: false,
+		error: function(request) {
+			layer.msg("连接失败",{icon: 5});
+			return false;
+		},
+		success: function(data) {
+			$this.closest(".passingDiv").find("button[name='pass']").attr('disabled',true);
+			$this.closest(".passingDiv").find("button[name='fail']").attr('disabled',true);
+			if (data.code == 200) {
+                layer.msg(data.msg,{icon: 6});
+            }else{
+                layer.msg(data.msg,{icon: 5});
+            }
+			return false;
+		}
+	});
+	return false;
+});
