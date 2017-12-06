@@ -74,7 +74,7 @@
     </div>
 </div>
 
-{if $user.evaluation_status != 1}
+{if !in_array($user.evaluation_status,[1,7])}
 <script>
 $("#passingForm").find("textarea").attr('disabled',true);
 $("#passingForm").find("input").attr('disabled',true);

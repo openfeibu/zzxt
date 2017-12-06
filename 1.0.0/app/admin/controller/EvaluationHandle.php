@@ -37,6 +37,7 @@ class EvaluationHandle extends Base
         } else {
             $evdata['evaluation_status'] = $status = 4;
         }
+        //var_dump($evdata);exit;
         $data['publicity_begin'] = time();
         //5天
         $data['publicity_end'] = time() + 60*60*24*5;
