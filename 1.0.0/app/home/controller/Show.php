@@ -12,6 +12,7 @@ use think\DB;
 use think\Config;
 use app\home\model\User;
 use app\admin\model\EvaluationMaterialConfig;
+use app\admin\model\Evaluation;
 
 class Show extends Base
 {
@@ -253,7 +254,7 @@ class Show extends Base
 				DB::name('evaluation_material')->insert($data);
 			}
 		}
-		$assess_fraction = $evaluation_model::getMaterilaScore($eval_app['evaluation_id']);
+		$assess_fraction = Evaluation::getMaterilaScore($eval_app['evaluation_id']);
 		DB::name('evaluation_application')->where('evaluation_id',$eval_app['evaluation_id'])->update(['assess_fraction' => $assess_fraction,'score' => $assess_fraction]);
 		header('Location:/material.html');
 	}
