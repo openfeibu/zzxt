@@ -91,4 +91,21 @@ class Evaluation extends Model
         }
         return $data;
     }
+    public static function isExistMemberEvaluation($member_list_id)
+    {
+        $eval_app = Db::table('yf_evaluation_application')
+				->where('member_list_id',$member_list_id)
+                ->field('evaluation_id')
+				->find();
+        return $eval_app ? $eval_app['evaluation_id'] : 0;
+    }
+    public static function isExistMemberEvaluationPass($member_list_id)
+    {
+        $eval_app = Db::table('yf_evaluation_application')
+				->where('member_list_id',$member_list_id)
+                ->where(['evaluation_status' => ['in','4,5']])
+                ->field('evaluation_id')
+				->find();
+        return $eval_app ? $eval_app['evaluation_id'] : 0;
+    }
 }

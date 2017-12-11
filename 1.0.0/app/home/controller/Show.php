@@ -173,6 +173,7 @@ class Show extends Base
 			'housing_other' => isset($post['housing_other']) ? $post['housing_other'] : '',
 		];
 		$data['member_list_id'] = $this->user['member_list_id'];
+		$data['id_number'] = $this->user['id_number'];
 		$data['members'] = serialize($post['members']);
 		$eval_fraction = get_score($data);
 		$data['assess_fraction'] = $data['score'] = 0;

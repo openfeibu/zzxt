@@ -24,10 +24,10 @@ class Base extends Common
         parent::_initialize();
         $member = Db::table('yf_member_list')
            ->where('member_list_id',session('hid'))
-           ->field('member_list_username')
+           ->field('member_list_username,id_number')
            ->find();
-       $this->user_id = $member['member_list_username'];
-        //$this->user_id = '20155535243';
+       	$this->user_id = $member['member_list_username'];
+		$this->id_number = $member['id_number'];
         $this->time = date('Y', time());
 		//主题
 		$site_options=Options::get_options('site_options',$this->lang);

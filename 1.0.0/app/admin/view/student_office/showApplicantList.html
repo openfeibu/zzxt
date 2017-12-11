@@ -51,52 +51,10 @@
                     </div>
                     <div class="clearfix"></div>
                 </form>
-
-                <!--<table class="table table-striped table-bordered table-hover tab_center">
-                    <thead>
-                    <th class="info_bg">序号</th>
-                    <th class="info_bg">姓名</th>
-                    <th class="info_bg">学号</th>
-                    <th class="info_bg">班级</th>
-                    <th class="info_bg">评定状态</th>
-                    <th class="info_bg">操作</th>
-                    </thead>
-                    <tbody>
-                    <?php $num = 1;?>
-                    {foreach $user as $row}
-                    <tr>
-                        <td class="tab_content">{$num++}</td>
-                        <td class="tab_content">{$row.studentname}</td>
-                        <td class="tab_content">{$row.studentid}</td>
-                        <td class="tab_content">{$row.profession}{$row.class}</td>
-                        <td class="tab_content">
-                            {if condition="$row.status == 1"}申请书已经提交
-                            {elseif condition="$row.status==2"}班级小组通过/辅导员通过
-                            {elseif condition="$row.status==3"}院系小组通过
-                            {elseif condition="$row.status==4"}学生处通过
-                            {elseif condition="$row.status==5"}班级小组不通过
-                            {elseif condition="$row.status==6"}院系小组不通过
-                            {elseif condition="$row.status==7"}学生处不通过
-                            {/if}
-                        </td>
-                        <td class="tab_content">
-                            <div class="audit_opera">
-                                <a href="{:url('admin/StudentOffice/showMaterial',['id'=>$row.status_id,'type_id'=>$type_id])}" class="btn btn-info btn-sm">通过</a>
-                            </div>
-                            <div class="audit_opera">
-                                <a href="{:url('admin/StudentOffice/showMaterial',['id'=>$row.status_id,'type_id'=>$type_id])}" class="btn btn-info btn-sm">不通过</a>
-                            </div>
-                            <div class="audit_opera">
-                                <a href="{:url('admin/StudentOffice/showMaterial',['id'=>$row.status_id,'type_id'=>$type_id])}" class="btn btn-info btn-sm">查看</a>
-                            </div>
-                        </td>
-                    </tr>
-                    {/foreach}
-                    </tbody>
-                </table>-->
+                <form class="ajaxForm" id="alldel" name="alldel" method="post" action="{:url('admin/ScholarshipHandle/MultipleStudentOfficeFillAll')}">
                 <table class="table table-striped table-bordered table-hover tab_center">
                     <thead>
-                    <th>序号</th>
+                    <th>ID</th>
                     <th>姓名</th>
                     <th>学号</th>
                     <th>班级</th>
@@ -107,34 +65,46 @@
                     <?php $num = 1;?>
                     {foreach $user as $row}
                     <tr>
-                        <td>{$num++}</td>
+                        <td>
+                            {if $row.check_status == 4}
+							<label class="pos-rel">
+								<input name="n_id[]" id="navid" class="ace" type="checkbox" value="{$row.status_id}">
+								<span class="lbl"></span>
+							</label>
+                            {/if}
+                            {$row.status_id}
+                        </td>
                         <td>{$row.studentname}</td>
                         <td>{$row.studentid}</td>
                         <td>{$row.profession}{$row.class}</td>
                         <td>
-                            {if condition="$row.status == 1"}申请书已经提交
-                            {elseif condition="$row.status==2"}班级小组通过/辅导员通过
-                            {elseif condition="$row.status==3"}院系小组通过
-                            {elseif condition="$row.status==4"}学生处通过
-                            {elseif condition="$row.status==5"}班级小组不通过
-                            {elseif condition="$row.status==6"}院系小组不通过
-                            {elseif condition="$row.status==7"}学生处不通过
-                            {/if}
+                            {php}echo config('check_status.'.$row['check_status']);{/php}
                         </td>
                         <td class="tab_content">
-                            <div class="audit_opera">
-                                <a href="{:url('admin/FacultyGroup/showMaterial',['id'=>$row.status_id,'type_id'=>$type_id])}" class="btn btn-info btn-sm btn-success">通过</a>
-                            </div>
-                            <div class="audit_opera">
-                                <a href="{:url('admin/FacultyGroup/showMaterial',['id'=>$row.status_id,'type_id'=>$type_id])}" class="btn btn-info btn-sm btn-danger">不通过</a>
-                            </div>
-                            <div class="audit_opera">
-                                <a href="{:url('admin/FacultyGroup/showMaterial',['id'=>$row.status_id,'type_id'=>$type_id])}" class="btn btn-info btn-sm">查看</a>
+                            <div action="{:url('admin/ScholarshipHandle/MultipleStudentOfficeFill')}" class="passingDiv" method="post">
+                                <input type="hidden" name="status_id" value="{$row.status_id}" />
+                                <div class="audit_opera">
+                                    <button class="btn btn-info btn-sm btn-success" type="submit" name="pass" {if $row.check_status != 4}disabled{/if}>通过</button>
+                                </div>
+                                <div class="audit_opera">
+                                    <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if $row.check_status != 4}disabled{/if} value="1">不通过</button>
+                                </div>
+                                <div class="audit_opera">
+                                    <a href="{:url('admin/StudentOffice/showMaterial',['id'=>$row.status_id,'type_id'=>$type_id])}" class="btn btn-info btn-sm">查看</a>
+                                </div>
                             </div>
                         </td>
                     </tr>
                     {/foreach}
+                    <tr>
+                        <td align="left" class="hidden-xs center">
+                    		<button id="passSubmit" class="btn btn-purple btn-sm hidden-xs" name="pass">通过&nbsp;</button>
+                            <button id="failSubmit" class="btn btn-danger  btn-sm hidden-xs" name="fail">不通过</button>
+                    	</td>
+                    	<td height="50" colspan="12" align="left">{$page}</td>
+                    </tr>
                     </tbody>
+                    </form>
                 </table>
                 <div class="notice_page">
                     {$user->render()}

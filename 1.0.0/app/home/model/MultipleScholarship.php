@@ -2,6 +2,7 @@
 
 namespace app\home\model;
 
+use think\Db;
 use think\Model;
 
 class MultipleScholarship extends Model
@@ -61,12 +62,45 @@ class MultipleScholarship extends Model
      * @param $time
      * @return int|string
      */
-    public function updateClassOpinion($uid, $data, $time, $type_id)
+    public function updateClassOpinion($application_id, $data, $time)
     {
-        $bool = $this->where('user_id', $uid)
-            ->where('application_type', $type_id)
+        $bool = $this->where('multiple_id', $application_id)
             ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $time")
             ->update($data);
         return $bool;
+    }
+    public static function getMultipleList($where = [])
+    {
+        $data = Db::name('multiple_scholarship')
+                    ->alias('ms')
+                    ->join('yf_apply_scholarships_status ass','ass.application_id = ms.multiple_id')
+                    ->join('yf_member_list m', 'm.member_list_id = ms.member_list_id')
+                    ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+                    ->where($where)
+                    ->field('u.*,ass.status_id,ms.check_status,ms.multiple_id,m.member_list_username,m.member_list_nickname')
+                    ->paginate(20);
+        return $data;
+    }
+    public static function isHaveApply($member_list_id,$type)
+    {
+        // $time = date('Y', time());
+        // if($type == 1) {
+        //     $bool = Db::name('multiple_scholarship')->where('member_list_id', $member_list_id)
+        //         ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $time")
+        //         ->where('application_type', '2')
+        //         ->find();
+        //     if ($bool) {
+        //         return true;
+        //     }
+        // } else if ($type == 2) {
+        //     $bool = ScholarshipsApplyStatus::where('member_list_id', $member_list_id)
+        //         ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $time")
+        //         ->where('application_type', '1')
+        //         ->find();
+        //     if ($bool) {
+        //         return true;
+        //     }
+        // }
+        return false;
     }
 }

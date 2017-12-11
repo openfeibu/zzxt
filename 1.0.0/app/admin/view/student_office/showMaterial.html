@@ -175,17 +175,17 @@
                     </tr>
 
                 </table>
-                <form action="{:url('admin/StudentOffice/fillMultipleOpinion')}" method="post">
+                <form action="{:url('admin/ScholarshipHandle/MultipleStudentOfficeFill')}" method="post" id="passingForm" class="passingForm">
                     <table class="w800">
-                        <tr>
-                            <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">院系小组添加评语：</p></td>
+                        <!-- <tr>
+                            <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">资助管理添加评语：</p></td>
                             <td colspan="2"></td>
                         </tr>
                         <tr>
                             <td colspan="3" class="tab_content">
                                 <textarea name="schoole_opinion[text]" id="" class="tab_opinion">{$user.schoole_opinion.text}</textarea>
                                 <div class="tab_sign">
-                                    <label for="">学校小组负责人签名：</label>
+                                    <label for="">资助管理负责人签名：</label>
                                     <input type="text" name="schoole_opinion[name]" value="{$user.schoole_opinion.name}">
                                 </div>
                                 <div class="clearfix"></div>
@@ -195,18 +195,17 @@
                                     <input type="text" name="schoole_opinion[day]" value="{$user.schoole_opinion.time|date='d',###}">日
                                 </div>
                             </td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td colspan="3" style="height: 30px;"></td>
                         </tr>
-                        <input type="hidden" value="{$user.user_id}" name="user_id">
                         <input type="hidden" value="{$id}" name="status_id">
                         <input type="hidden" value="{$type_id}"name="type_id">
                             <tr>
                                 <td style="width: 266px;"></td>
                                 <td class="tab_content" style="width: 266px;">
-                                    <input type="submit"  class="btn btn-success" name="pass" value="通过">
-                                    <input type="submit" class="btn btn-danger" name="fail" value="不通过">
+                                    <button type="submit"  class="btn btn-success" name="pass">通过</button>
+                                    <button type="submit" class="btn btn-danger" name="fail" value="1">不通过</button>
                                 </td>
                                 <td style="width: 266px;"></td>
                             </tr>
@@ -216,4 +215,12 @@
         </div>
     </div>
 </div>
+{if !in_array($user.check_status,[4])}
+<script>
+$(".passingForm").find("textarea").attr('disabled',true);
+$(".passingForm").find("input").attr('disabled',true);
+$(".passingForm").find("select").attr('disabled',true);
+$(".passingForm").find("button").attr('disabled',true);
+</script>
+{/if}
 {/block}

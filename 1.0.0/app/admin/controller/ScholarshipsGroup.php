@@ -9,6 +9,8 @@
 namespace app\admin\controller;
 use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\MultipleScholarship;
+use app\home\model\NationalScholarship;
+use app\admin\model\User as UserModel;
 use think\Db;
 use think\Request;
 
@@ -69,6 +71,7 @@ class ScholarshipsGroup extends Base
     /**
      * 助学金审核列表/励志奖学金
      */
+     /*
     public function showReviewList($id)
     {
         if ($id != 3 and $id !=2) {
@@ -155,25 +158,9 @@ class ScholarshipsGroup extends Base
             return $this->view->fetch();
         }
 
-        //班级申请学生列表
-        $data = Db::table('yf_apply_scholarships_status')
-			->alias('a')
-            ->join('yf_user u','u.studentid = a.user_id')
-//			->where("u.class_number = '".$this->class_number."'")
-            ->where('a.fund_type',$id)    
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->paginate(20);
-
-//        if (!isset($data->data)) {
-//            $this->error("班级未有人申请");
-//        } else {
-//            foreach ($data->getCollection() as $k => $vo) {
-//                $user = Db::table('yf_user')
-//                    ->where('studentid', $vo['user_id'])
-//                    ->find();
-//                $data->data[$k] = array_merge($data->items()[$k], $user);
-//            }
-//        }
+        $data = MultipleScholarship::getMultipleList();
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
         //查询未审核人数
         $no_count = Db::table('yf_apply_scholarships_status')
 		->alias('a')->join('yf_user u','u.studentid = a.user_id')
@@ -200,10 +187,52 @@ class ScholarshipsGroup extends Base
         $this->assign('id', $id);
         $this->assign('user', $data);
         $this->assign('list', $data);
+        $this->assign('page', $show);
         return $this->view->fetch();
-
+    }*/
+    public function showReviewList()
+    {
+        return $this->showReviewListHandle(3);
     }
-
+    public function showReviewList2()
+    {
+        return $this->showReviewListHandle(2);
+    }
+    public function showReviewListHandle($id)
+    {
+        $where['ms.application_type'] = $id;
+        $data = MultipleScholarship::getMultipleList($where);
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+        //查询未审核人数
+        $no_count = Db::table('yf_apply_scholarships_status')
+		->alias('a')->join('yf_user u','u.studentid = a.user_id')
+			->where("u.class_number = '".$this->class_number."'")
+            ->where('a.fund_type',$id)
+            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+            ->where('status',1)
+            ->count();
+        if (empty($no_count)) {
+            $no_count = 0;
+        }
+        $yes_count = Db::table('yf_apply_scholarships_status')
+		->alias('a')->join('yf_user u','u.studentid = a.user_id')
+			->where("u.class_number = '".$this->class_number."'")
+            ->where('a.fund_type',$id)
+            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+            ->where('status','<>',1)
+            ->count();
+        if (empty($yes_count)) {
+            $yes_count = 0;
+        }
+        $this->assign('no_count',$no_count);
+        $this->assign('yes_count',$yes_count);
+        $this->assign('id', $id);
+        $this->assign('user', $data);
+        $this->assign('list', $data);
+        $this->assign('page', $show);
+        return $this->view->fetch('showReviewList');
+    }
     /**
      * 小组查看学生申请资料(助学金+励志)
      */
@@ -221,16 +250,21 @@ class ScholarshipsGroup extends Base
         if ($data['fund_type'] == 1) {
             $type = "yf_national_scholarship";
             $field = "national_id";
-            $id = $data['nation'];
+            $id = $data['national_id'];
         } else {
             $type = "yf_multiple_scholarship";
             $field = "multiple_id";
             $id = $data['multiple_id'];
         }
+        $user_model = new UserModel();
+        $user_fields = UserModel::getUserFields('u');
+        $user_fields = implode(',',$user_fields);
         $apply = Db::table($type)
             ->alias('w')
-            ->join('yf_user u', 'u.studentid = w.user_id', 'left')
+            ->join('yf_member_list m', 'm.member_list_id = w.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
             ->where($field,$id)
+            ->field('w.*,m.member_list_nickname,m.member_list_headpic,'.$user_fields)
             ->find();
 //        $apply['photo'] =
         if (!empty($apply['members'])) {
@@ -306,22 +340,14 @@ class ScholarshipsGroup extends Base
      * 获取申请学生列表(国家奖学金)
      */
     public function showNationalList() {
-        //获取前9位学号班级代码
-        $uid = substr($this->user_id,0,9);
-        $data = ScholarshipsApplyStatus::where('fund_type', 1)
-            ->where("substring(user_id,1,9) = $uid")
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-//            ->where('status', 1)
-            ->select();
-        //获取学生信息
-        foreach ($data as $k => $vo) {
-            $user = Db::table('yf_user')
-                ->where('studentid', $vo['user_id'])
-                ->find();
-            $data[$k]['user_name'] = $user;
-        }
+
+        $data = NationalScholarship::getNationalList();
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+
         $this->assign('user', $data);
-        return $this->view->fetch('scholarship_team/class_review');
+        $this->assign('page', $show);
+        return $this->view->fetch('showNationalList');
     }
 
     /**

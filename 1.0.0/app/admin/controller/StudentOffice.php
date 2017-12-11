@@ -37,6 +37,7 @@ class StudentOffice extends Base
     /**获取申请学生列表
      * @return mixed
      */
+     /*
     public function showApplicantList($id)
     {
         if ($id != 3 and $id !=2 and $id != 1) {
@@ -129,15 +130,13 @@ class StudentOffice extends Base
                 ->where('ass.fund_type', $id)
                 ->paginate(20);
         } else {
-            $data = Db::table('yf_apply_scholarships_status')
-                ->alias('ass')
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-                ->join('yf_multiple_scholarship ms', 'ass.multiple_id = ms.multiple_id', 'left')
-                ->field('ms.*,u.*,ass.status,ass.status_id')
-                ->where('ms.publicity_end <'.time())
-                ->where('ass.fund_type', $id)
-                ->paginate(20);
+            $where = [
+                //'ms.publicity_end' => ['<',time()],
+            ];
+            $data = MultipleScholarship::getMultipleList($where);
         }
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
         //查院
 		$classCode = new ClassCOde();
         $faculty_profession = $classCode->getFaculties();
@@ -160,9 +159,61 @@ class StudentOffice extends Base
         $this->assign('faculty_name', '院系');
         $this->assign('faculty', $faculty_profession);
         $this->assign('user', $data);
+        $this->assign('page', $show);
         return $this->fetch();
     }
-
+    */
+    public function showApplicantList()
+    {
+        return $this->showApplicantListHandle(3);
+    }
+    public function showApplicantList2()
+    {
+        return $this->showApplicantListHandle(2);
+    }
+    public function showApplicantList3()
+    {
+        return $this->showApplicantListHandle(1);
+    }
+    public function showApplicantListHandle($id)
+    {
+        if($id == 1)
+        {
+            $data = NationalScholarship::getNationalList();
+        }else{
+            $where = [
+                //'ms.publicity_end' => ['<',time()],
+                'ms.application_type' => $id,
+            ];
+            $data = MultipleScholarship::getMultipleList($where);
+        }
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+        //查院
+        $classCode = new ClassCOde();
+        $faculty_profession = $classCode->getFaculties();
+        //绝笔要撕逼(未通过的)
+        $faculty_count = Db::table('yf_apply_scholarships_status')
+            ->alias('ass')//asshold
+            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->where('ass.fund_type', $id)
+            ->where('ass.status !=4')
+            ->count();
+        //总得人数
+        $faculty_all_count = Db::table('yf_apply_scholarships_status')
+            ->alias('ass')//asshold
+            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->where('ass.fund_type', $id)
+            ->count();
+        $this->assign('type_id', $id);
+        $this->assign('faculty_not_pass', $faculty_count);
+        $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
+        $this->assign('faculty_name', '院系');
+        $this->assign('faculty', $faculty_profession);
+        $this->assign('user', $data);
+        $this->assign('page', $show);
+        return $this->fetch('showApplicantList');
+    }
     /**
      * 查看学生申请资料
      */
@@ -252,7 +303,6 @@ class StudentOffice extends Base
             $this->assign('user', $apply);
             return $this->view->fetch();
         }
-
     }
 
     /**

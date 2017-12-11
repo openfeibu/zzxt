@@ -9,6 +9,7 @@ use think\File;
 use app\home\model\Survey;
 use app\home\model\Identify;
 use app\home\model\Poor;
+use app\admin\model\Evaluation as EvaluationModle;
 use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\NationalScholarship;
 use app\home\model\MultipleScholarship;
@@ -48,22 +49,22 @@ class Student extends Base
                 ->field('grade')
                 ->find();
                 //判断是否大二
-                if($grade['grade'] == 2) {
+                if($grade['grade'] == 2 || $grade['grade'] == 3) {
                     //判断是否申请过励志奖学金
-                    if ($this->applyStatus->isHaveApply($this->user_id, $type)) {
+                    if (MultipleScholarship::isHaveApply($this->user['member_list_id'], $type)) {
                         $res = ScholarshipsApplyStatus::where('user_id', $this->user_id)
                             ->where('fund_type', $type)
                             ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
                             ->find();
                         if ($res) {
-                            $this->error("审核中");
+                            $this->error("抱歉，你已申请励志奖学金，不能申请奖学金");
                         }
                         //跳转申请界面
                         $this->success('成功',url('/home/nationalScholarship'));
                     }
-                    $this->error("请查看个人中心");
+                    $this->success('成功',url('/home/nationalScholarship'));
                 }
-                $this->error("请查看个人中心");
+                $this->error("抱歉，大二或大三生才能申请奖学金");
                 break;
 
             //励志奖学金
@@ -76,32 +77,25 @@ class Student extends Base
                 if($grade['grade'] == 2) {
                     //判断是否贫困生
                     //判断是否申请过国家奖学金
-                    if ($this->applyStatus->isHaveApply($this->user_id, $type)) {
-                        $res = ScholarshipsApplyStatus::where('user_id', $this->user_id)
-                            ->where('fund_type', $type)
-                            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
-                            ->find();
-                        if ($res) {
-                            $this->error("审核中");
-                        }
-                        //跳转申请界面
+                    // if ($this->applyStatus->isHaveApply($this->user_id, $type)) {
+                    //     $res = ScholarshipsApplyStatus::where('user_id', $this->user_id)
+                    //         ->where('fund_type', $type)
+                    //         ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
+                    //         ->find();
+                    //     //跳转申请界面
                         $this->success('成功',url('/home/inspirational'));
-                    }
-                    $this->error("请查看个人中心");
+                    //}
+                    $this->error("抱歉，大二学生才能申请励志奖学金");
                 }
-                $this->error("请查看个人中心");
+                $this->error("抱歉，大二学生才能申请励志奖学金");
                 break;
 
             //助学金
             case 3 :
-                //判断是否贫困生
-                $res = ScholarshipsApplyStatus::where('user_id', $this->user_id)
-                    ->where('fund_type', $type)
-                    ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
-                    ->find();
-                if ($res) {
-                    $this->error("审核中");
-					//$this->success('成功',url('/home/grants'));
+                $is_eval_app_pass = EvaluationModle::isExistMemberEvaluationPass($this->user['member_list_id']);
+                if(!$is_eval_app_pass)
+                {
+                    $this->error('抱歉，通过家庭困难认定后才能申请');
                 }
                 //跳转申请页面
                 $this->success('成功',url('/home/grants'));
@@ -118,35 +112,20 @@ class Student extends Base
     public function getGrants(Request $request)
     {
         $type_id = 3;
-        $user_info = Db::table('yf_user')
-            ->where('studentid', $this->user_id)
-            ->field('studentid,studentname,id_number,gender,birthday,political,nation,profession,class,department_name,grade')
-            ->find();
-
-        //出生年月
-        $user_info['birthday'] = substr($user_info['birthday'],0,6);
+        $user_model = new User();
+        $user_info = $user_model->get_user($this->user['id_number']);
         //政治面貌
         $user_info['political'] = substr($user_info['political'],-6,6);
-        $user_info['college'] = "广东农工商职业技术学院";
-
         $this->assign('user_info', $user_info);
-
+        $is_eval_app_pass = EvaluationModle::isExistMemberEvaluationPass($this->user['member_list_id']);
+        $this->assign('is_eval_app_pass', $is_eval_app_pass);
         //是否post提交
         if ($request->isPost()) {
             $this->applyStatus->storeByChooseType($this->user_id, $type_id, $this->time);
             $data = $request->post();
-            $file = $request->file('photo');
-            if (empty($file)) {
-                return $this->error("请上传头像");
-            } else {
-                $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-                if ($info) {
-                    // 成功上传后 获取图片路径
-                    $data['photo'] = '../public/uploads/' . $info->getSaveName();
-                }
-            }
-            $data['user_id'] = $this->user_id;
 
+            $data['user_id'] = $this->user['member_list_username'];
+            $data['member_list_id'] = $this->user['member_list_id'];
             //助学金
             $data['application_type'] = $type_id;
             $data['members'] = json_encode($data['members']);
@@ -190,15 +169,17 @@ class Student extends Base
         }
         //get请求访问，显示相关的数据
         $data = Db::table('yf_multiple_scholarship')
-            ->where('user_id', $this->user_id)
+            ->where('member_list_id', $this->user['member_list_id'])
             ->where('application_type',$type_id)
             ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
             ->find();
-        if (empty($data['photo'])) {
-            $data['photo'] = 'images/images/defaultGraph.jpg';
+
+        $is_data = $data ? true : false;
+        $this->assign('is_data', $is_data);
+        $data['time'] = $data ? $data['create_at'] : time();
+        if ($data) {
+            $data['members'] = json_decode($data['members'], true);
         }
-        $data['photo'] = '..' . $data['photo'];
-        $data['time'] = time();
         $this->assign('list', $data);
         return $this->view->fetch('scholarship/scho_grants');
     }
@@ -211,15 +192,10 @@ class Student extends Base
     public function getInspirational(Request $request)
     {
         $type_id = 2;
-        $user_info = Db::table('yf_user')
-            ->where('studentid', $this->user_id)
-            ->field('studentid,studentname,id_number,gender,birthday,political,nation,profession,class,department_name,grade')
-            ->find();
-        //出生年月
-        $user_info['birthday'] = substr($user_info['birthday'],0,6);
+        $user_model = new User();
+        $user_info = $user_model->get_user($this->user['id_number']);
         //政治面貌
         $user_info['political'] = substr($user_info['political'],-6,6);
-        $user_info['college'] = "广东农工商职业技术学院";
         $this->assign('user_info', $user_info);
 
         //是否post提交
@@ -227,18 +203,9 @@ class Student extends Base
             $this->applyStatus->storeByChooseType($this->user_id, $type_id, $this->time);
             $data = $request->post();
             $file = $request->file('photo');
-            if (empty($file)) {
-                return $this->error("未上传头像");
-            } else {
-                $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-                if ($info) {
-                    // 成功上传后 获取图片路径
-                    $data['photo'] = '/public/uploads/' . $info->getSaveName();
-                }
-            }
 
             //励志奖学金
-            $data['user_id'] = $this->user_id;
+            $data['member_list_id'] = $this->user['member_list_id'];
             $data['application_type'] = $type_id;
             $data['members'] = json_encode($data['members']);
 
@@ -275,7 +242,7 @@ class Student extends Base
             if (!$res) {
                 return $this->error("插入状态失败");
             }
-            $this->applyStatus->checkStatus($this->user_id, $this->time, $multiple_id, "multiple_id" , $type_id);
+            $this->applyStatus->checkStatus($this->user_id, $this->time, $multiple_id, "national_id" , $type_id);
             return $this->success("提交成功");
         }
         //get请求访问，显示相关的数据
@@ -284,10 +251,7 @@ class Student extends Base
             ->where('application_type',$type_id)
             ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
             ->find();
-        if (empty($data['photo'])) {
-            $data['photo'] = 'images/images/defaultGraph.jpg';
-        }
-        $data['photo'] = '..' . $data['photo'];
+
         $data['time'] = time();
         $this->assign('list', $data);
         return $this->view->fetch('scholarship/scho_motiv');
@@ -318,18 +282,19 @@ class Student extends Base
             $this->applyStatus->storeByChooseType($this->user_id, 1, $this->time);
             $data = $request->post();
             $data['user_id'] = $this->user_id;
+            $data['member_list_id'] = $this->user['member_list_id'];
             $data['awards'] = json_encode($data['awards']);
 
             //删除不必要的数据
 //            unset($data['studentname'],$data['gender'],$data['birthday'],$data['birthday']);
             //检查本年是否已经提交过
-            $bool = NationalScholarship::where('user_id', $this->user_id)
+            $bool = NationalScholarship::where('member_list_id', $this->user['member_list_id'])
                 ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
                 ->find();
             if ($bool) {
                 //提交过，做更新处理
                 $data['update_at'] = time();
-                $apply = NationalScholarship::where('user_id', $this->user_id)
+                $apply = NationalScholarship::where('member_list_id', $this->user['member_list_id'])
                     ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
                     ->update($data);
                 if (!$apply) {
@@ -346,7 +311,8 @@ class Student extends Base
             }
             //获取插入的id，放入总的状态表中
             $national_id = $bool->getLastInsID();
-            //更新申请状态
+
+            // //更新申请状态
             $res = $this->applyStatus->updateOperateStatus($this->user_id, $this->status);
             if (!$res) {
                 return $this->error("插入状态失败");

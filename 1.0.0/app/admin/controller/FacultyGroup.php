@@ -38,6 +38,7 @@ class FacultyGroup extends Base
      * 获取申请学生列表
      * @return mixed
      */
+     /*
     public function showApplicantList($id)
     {
         if ($id !=3 and $id !=2 and $id != 1) {
@@ -132,12 +133,7 @@ class FacultyGroup extends Base
         //get请求
 
         //查找呃
-        $data = Db::table('yf_apply_scholarships_status')
-            ->alias('ass')//asshold
-            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-            ->where('ass.fund_type', $id)
-            ->where('u.faculty_number', $this->faculty)
-            ->paginate(20);
+        $data = MultipleScholarship::getMultipleList();
         //查院
         $faculty_profession = Db::table('yf_user')
             ->field("DISTINCT profession ,profession_number")
@@ -169,7 +165,63 @@ class FacultyGroup extends Base
         $this->assign('user', $data);
         return $this->fetch();
     }
+    */
+    public function showApplicantList()
+    {
+        return $this->showApplicantListHandle(3);
+    }
+    public function showApplicantList2()
+    {
+        return $this->showApplicantListHandle(2);
+    }
+    public function showApplicantList3()
+    {
+        return $this->showApplicantListHandle(1);
+    }
+    public function showApplicantListHandle($id)
+    {
+        if($id == 1)
+        {
+            $data = NationalScholarship::getNationalList();
+        }else{
+            $where['ms.application_type'] = $id;
+            $data = MultipleScholarship::getMultipleList($where);
+        }
 
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+        //查院
+        $faculty_profession = Db::table('yf_user')
+            ->field("DISTINCT profession ,profession_number")
+            ->where('faculty_number', $this->faculty)
+            ->select();
+        //绝笔要撕逼(未通过的)
+        $faculty_count = Db::table('yf_apply_scholarships_status')
+            ->alias('ass')//asshold
+            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->where('ass.fund_type', $id)
+            ->where('u.faculty_number', $this->faculty)
+            ->where(function($query){
+                $query->where('ass.status !=3')->where('ass.status !=4');
+            })
+            ->count();
+        //总得人数
+        $faculty_all_count = Db::table('yf_apply_scholarships_status')
+            ->alias('ass')//asshold
+            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->where('ass.fund_type', $id)
+            ->where('u.faculty_number', $this->faculty)
+            ->count();
+        $this->assign('type_id', $id);
+        $this->assign('faculty_not_pass', $faculty_count);
+        $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
+        $this->assign('faculty_name', '院系');
+        $this->assign('faculty', $this->faculty);
+        $this->assign('profession', $faculty_profession);
+        $this->assign('user', $data);
+        $this->assign('page', $show);
+        return $this->fetch('showApplicantList');
+    }
     /**
      * 查看学生申请资料
      */
@@ -204,11 +256,6 @@ class FacultyGroup extends Base
                 $apply['awards'][0]['unit'] = '';
             }
 
-            // if (empty($apply['group_opinion'])) {
-            //     return $this->error("小组未审核该同学");
-            // } else {
-            //     $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-            // }
             if (!empty($apply['faculty_opinion'])) {
                 $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
             } else {
@@ -216,11 +263,17 @@ class FacultyGroup extends Base
                 $apply['faculty_opinion']['text'] = '';
                 $apply['faculty_opinion']['name'] = '';
             }
-
+            if (!empty($apply['group_opinion'])) {
+                $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
+            } else {
+                $apply['group_opinion']['time'] = time();
+                $apply['group_opinion']['text'] = '';
+                $apply['group_opinion']['name'] = '';
+            }
             $this->assign('type_id', $type_id);
             $this->assign('id', $apply_id);
             $this->assign('user', $apply);
-            return $this->view->fetch('scholarship_team/faculty_add_review');
+            return $this->view->fetch();
         } else {
             $type = "yf_multiple_scholarship";
             $field = "multiple_id";
@@ -238,17 +291,20 @@ class FacultyGroup extends Base
                 $apply['members'][0]['relation'] = '';
                 $apply['members'][0]['unit'] = '';
             }
-            // if (empty($apply['group_opinion'])) {
-            //     return $this->error("小组未审核该同学");
-            // } else {
-            //     $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-            // }
+
             if (!empty($apply['faculty_opinion'])) {
                 $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
             } else {
                 $apply['faculty_opinion']['time'] = time();
                 $apply['faculty_opinion']['text'] = '';
                 $apply['faculty_opinion']['name'] = '';
+            }
+            if (!empty($apply['group_opinion'])) {
+                $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
+            } else {
+                $apply['group_opinion']['time'] = time();
+                $apply['group_opinion']['text'] = '';
+                $apply['group_opinion']['name'] = '';
             }
             $this->assign('type_id', $type_id);
             $this->assign('id', $apply_id);

@@ -188,6 +188,7 @@ footer p{line-height: 28px;}
 .k-s-content{
     border:1px solid #999;
     text-align: center;
+    height: 30px;
 }
 .k-w-table {border:1px solid rgb(148, 192, 210);border-collapse:collapse;}
 

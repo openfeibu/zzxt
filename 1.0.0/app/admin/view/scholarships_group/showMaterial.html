@@ -29,22 +29,31 @@
                     </tr>
                     <tr>
                         <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
+                            {if $type == 1}
                             普通本科高校、高等职业学校国家助学金申请表
+                            {elseif $type == 2}
+                            普通本科高校、高等职业学校国家励志奖学金申请表
+                            {else}
+                            普通本科高校、高等职业学校国家奖学金申请表
+                            {/if}
                         </td>
                     </tr>
                 </table>
                 <table class="table table-bordered tab_center">
                     <!--本人情况-->
+                    {if $type == 1}
+                    {include file="common/scholar" /}
+                    {else}
                     <tr>
                         <td rowspan="4" class="tab_title tab_40px">本人情况</td>
                         <td class="tab_title tab_80px">姓名</td>
-                        <td class="tab_content tab_100px">{$user.studentname}</td>
+                        <td class="tab_content tab_100px">{$user.member_list_nickname}</td>
                         <td class="tab_title">性别</td>
                         <td class="tab_content">{$user.gender}</td>
                         <td class="tab_title">出生年月</td>
                         <td class="tab_content tab_140px">{$user.birthday}</td>
                         <td colspan="2" rowspan="4" class="tab_content tab_126px">
-                            <img src="{$user.photo}" style="width: 125px; height: 175px;" alt="">
+                            <img src="{$user.member_list_headpic}" style="width: 125px; height: 175px;" alt="">
                         </td>
                     </tr>
                     <tr>
@@ -122,6 +131,7 @@
                         <!--<td colspan="5" class="tab_content">曜日莫奈窗帘科技迷途知返高能预警</td>-->
                     <!--</tr>-->
                     <!--申请理由-->
+                    {/if}
                     <tr>
                         <td colspan="9" class="tab_content">
                             <p class="tab_left">申请理由</p>
@@ -139,7 +149,7 @@
                         </td>
                     </tr>
                 </table>
-                <form action="{:url('admin/ScholarshipsGroup/fillOpinion')}" method="post">
+                <form action="{:url('admin/ScholarshipHandle/MultipleGroupFill')}" method="post" id="passingForm" class="passingForm">
                     <table class="w800">
                         <tr>
                             <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">班级小组添加评语：</p></td>
@@ -169,8 +179,8 @@
                             <tr>
                                 <td style="width: 266px;"></td>
                                 <td class="tab_content" style="width: 266px;">
-                                    <input type="submit"  class="btn btn-success" name="pass" value="通过">
-                                    <input type="submit" class="btn btn-danger" name="fail" value="不通过">
+                                    <button type="submit"  class="btn btn-success" name="pass">通过</button>
+                                    <button type="submit" class="btn btn-danger" name="fail" value="1">不通过</button>
                                 </td>
                                 <td style="width: 266px;"></td>
                             </tr>
@@ -180,4 +190,12 @@
         </div>
     </div>
 </div>
+{if !in_array($user.check_status,[1])}
+<script>
+$(".passingForm").find("textarea").attr('disabled',true);
+$(".passingForm").find("input").attr('disabled',true);
+$(".passingForm").find("select").attr('disabled',true);
+$(".passingForm").find("button").attr('disabled',true);
+</script>
+{/if}
 {/block}

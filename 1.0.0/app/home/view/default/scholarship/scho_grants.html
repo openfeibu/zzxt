@@ -14,7 +14,8 @@
         </ul>
     </div>
     <!--startprint2-->
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data" id="schoForm">
+        {if $is_eval_app_pass}
         <div class="personal_table">
             <table width="756px">
                 <tbody>
@@ -66,8 +67,8 @@
                         <td class="k-s-content content"><input type="text" name="tel" /></td>
                     </tr>
                     <tr class="line-table-height">
-                        <td colspan="2" class="k-s-content title">学院、院系、班级</td>
-                        <td colspan="4" class="k-s-content content"><input type="text" name="" value="{$user_info.college,$user_info.department_name,$user_info.profession,$user_info.class}"/></td>
+                        <td colspan="2" class="k-s-content title">院系、班级</td>
+                        <td colspan="4" class="k-s-content content"><input type="text" name="" value="{$user_info.department_name,$user_info.profession,$user_info.class}"/></td>
                     </tr>
 
                     <!--家庭经济情况-->
@@ -77,12 +78,12 @@
                         <td colspan="3" class="k-s-content content">
                             <div style="display:inline-block;">
                                 <label>
-                                    <input type="radio" name="family_type" value="城镇" style="height:auto;width: auto;margin-right: 5px;"/>城镇
+                                    <input type="radio" name="family_type" value="城镇" style="height:auto;width: auto;margin-right: 5px;" {if condition="$user_info.is_rural_student=='否'"} checked {/if} disabled/>城镇
                                 </label>
                             </div>
                             <div style="display:inline-block;">
                                 <label>
-                                    <input type="radio" name="family_type" value="农村" style="height:auto;width: auto;margin-right: 5px;"/>农村
+                                    <input type="radio" name="family_type" value="农村" style="height:auto;width: auto;margin-right: 5px;" {if condition="$user_info.is_rural_student=='是'"} checked {/if} disabled/>农村
                                 </label>
                             </div>
                         </td>
@@ -111,6 +112,16 @@
                         <td class="k-s-content title">与本人关系</td>
                         <td colspan="4" class="k-s-content title">工作或学习单位</td>
                     </tr>
+                    {if $is_data}
+                    {foreach $list.members as $r}
+                    <tr>
+                        <td class="k-s-content content">{$r.name}</td>
+                        <td class="k-s-content content">{$r.age}</td>
+                        <td class="k-s-content content">{$r.relation}</td>
+                        <td colspan="4" class="k-s-content content">{$r.unit}</td>
+                    </tr>
+                    {/foreach}
+                    {else}
                     <tr class="line-table-height">
                         <td class="k-s-content content"><input type="text" name="members[0][name]" /></td>
                         <td class="k-s-content content"><input type="text" name="members[0][age]" /></td>
@@ -141,11 +152,12 @@
                         <td class="k-s-content content"><input type="text" name="members[4][relation]" /></td>
                         <td colspan="4" class="k-s-content content"><input type="text" name="members[4][unit]" /></td>
                     </tr>
+                    {/if}
                     <!--申请理由-->
                     <tr class="line-table-height">
                         <td colspan="8" class="k-s-content content" style="text-align: left;">
                             <label>申请理由：</label>
-                            <textarea name="reason" id="" class="longtext"></textarea>
+                            <textarea name="reason" id="" class="longtext">{$list.reason}</textarea>
                             <div style="float: right;">
                                 <div class="level_form">
                                     <div class="signature">
@@ -155,15 +167,15 @@
                                 </div>
                                 <div class="level_form">
                                     <div class="level_time">
-                                        <input type="text" value="{$list.time|date='Y',###}">
+                                        <input type="text" value="{$list.time|date='Y',###}" disabled>
                                         <label for="">年</label>
                                     </div>
                                     <div class="level_time">
-                                        <input type="text" value="{$list.time|date='m',###}">
+                                        <input type="text" value="{$list.time|date='m',###}" disabled>
                                         <label for="">月</label>
                                     </div>
                                     <div class="level_time">
-                                        <input type="text" value="{$list.time|date='d',###}">
+                                        <input type="text" value="{$list.time|date='d',###}" disabled>
                                         <label for="">日</label>
                                     </div>
                                 </div>
@@ -174,10 +186,23 @@
             </table>
         </div>
         <!--endprint2-->
+        {if !$is_data}
         <button class="print printHide" type="submit" >提交</button>
+        {/if}
         <button class="print printHide" onclick="preview(2)">打印</button>
+        {else}
+        <div>
+            <p style="color:red;font-size:18px;text-align:center;">抱歉，通过家庭困难认定后才能申请</p>
+        </div>
+        {/if}
     </form>
 </div>
-
+{if $is_data}
+<script>
+$("#schoForm").find("input").attr('disabled',true);
+$("#schoForm").find("select").attr('disabled',true);
+$("#schoForm").find("textarea").attr('disabled',true);
+</script>
+{/if}
 
 {include file="public/footer"}

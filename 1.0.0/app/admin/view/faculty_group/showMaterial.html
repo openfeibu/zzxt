@@ -29,12 +29,21 @@
                     </tr>
                     <tr>
                         <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
+                            {if $type_id == 1}
                             普通本科高校、高等职业学校国家助学金申请表
+                            {elseif $type_id == 2}
+                            普通本科高校、高等职业学校国家励志奖学金申请表
+                            {else}
+                            普通本科高校、高等职业学校国家奖学金申请表
+                            {/if}
                         </td>
                     </tr>
                 </table>
                 <table class="table table-bordered tab_center">
                     <!--本人情况-->
+                    {if $type_id == 1}
+                    {include file="common/scholar" /}
+                    {else}
                     <tr>
                         <td rowspan="4" class="tab_title tab_40px">本人情况</td>
                         <td class="tab_title tab_80px">姓名</td>
@@ -132,6 +141,7 @@
                             </div>
                         </td>
                     </tr>
+                    {/if}
                     <!--班级小组评语-->
                     <tr>
                         <td colspan="9" class="tab_content">
@@ -150,7 +160,7 @@
                         </td>
                     </tr>
                 </table>
-                <form action="{:url('admin/FacultyGroup/fillMultipleOpinion')}" method="post">
+                <form action="{:url('admin/ScholarshipHandle/MultipleFacultyFill')}" method="post" id="passingForm" class="passingForm">
                     <table class="w800">
                         <tr>
                             <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">院系小组添加评语：</p></td>
@@ -180,8 +190,8 @@
                             <tr>
                                 <td style="width: 266px;"></td>
                                 <td class="tab_content" style="width: 266px;">
-                                    <input type="submit"  class="btn btn-success" name="pass" value="通过">
-                                    <input type="submit" class="btn btn-danger" name="fail" value="不通过">
+                                    <button type="submit"  class="btn btn-success" name="pass">通过</button>
+                                    <button type="submit" class="btn btn-danger" name="fail" value="1">不通过</button>
                                 </td>
                                 <td style="width: 266px;"></td>
                             </tr>
@@ -191,4 +201,12 @@
         </div>
     </div>
 </div>
+{if (!in_array($user.check_status,[2]) && $type_id !=1) || (!in_array($user.check_status,[3]) && $type_id ==1)}
+<script>
+$(".passingForm").find("textarea").attr('disabled',true);
+$(".passingForm").find("input").attr('disabled',true);
+$(".passingForm").find("select").attr('disabled',true);
+$(".passingForm").find("button").attr('disabled',true);
+</script>
+{/if}
 {/block}

@@ -58,7 +58,7 @@ class ScholarshipsApplyStatus extends Model
         $data['user_id'] = $user_id;
         $data['create_at'] = time();
         $data['update_at'] = $data['create_at'];
-        $data[$multiple_name] = $multiple_id;
+        $data['application_id'] = $data[$multiple_name] = $multiple_id;
         $bool = ScholarshipsApplyStatus::where('user_id', $user_id)
             ->where('fund_type', $fund_type)
             ->update($data);
@@ -82,7 +82,8 @@ class ScholarshipsApplyStatus extends Model
             ->where('fund_type', $fund_type)
             ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $time")
             ->update([
-                $multiple_name => $multiple_id
+                $multiple_name => $multiple_id,
+                'application_id' => $multiple_id
             ]);
         return $bool;
     }

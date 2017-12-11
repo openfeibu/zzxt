@@ -53,19 +53,12 @@
                     <tbody>
                     {foreach $user as $row}
                     <tr>
-                        <td>{$row.status_id}</td>
+                        <td>{$row.multiple_id}</td>
                         <td>{$row.studentname}</td>
-                        <td>{$row.user_id}</td>
+                        <td>{$row.member_list_username}</td>
                         <td>{$row.department_name}{$row.profession}{$row.class}</td>
                         <td>
-                            {if condition="$row.status == 1"}申请书已经提交
-                            {elseif condition="$row.status==2"}班级小组通过/辅导员通过
-                            {elseif condition="$row.status==3"}院系小组通过
-                            {elseif condition="$row.status==4"}学生处通过
-                            {elseif condition="$row.status==5"}班级小组不通过
-                            {elseif condition="$row.status==6"}院系小组不通过
-                            {elseif condition="$row.status==7"}学生处不通过
-                            {/if}
+                            {php}echo config('check_status.'.$row['check_status']);{/php}
                         </td>
                         <td>
                             <div class="audit_opera">

@@ -87,20 +87,7 @@
                                 if (data.code == 1) {
                                     window.location.href = data.url;
                                 } else {
-                                    if (choose_type == 1) {
-                                        $('#error_choose_1').html("")
-                                        $('#error_choose_1').html("("+data.msg+")")
-                                    } else if (choose_type == 2) {
-                                        $('#error_choose_2').html("")
-                                        $('#error_choose_2').html("("+data.msg+")")
-                                    } else if (choose_type == 3) {
-                                        $('#error_choose_3').html("")
-                                        $('#error_choose_3').html("("+data.msg+")")
-                                    }
-
-//                                    layer.alert(data.msg, {icon: 5}, function (index) {
-//                                        layer.close(index);
-//                                    });
+                                    layer.alert(data.msg, {icon: 5});
                                     return false;
                                 }
                             }
