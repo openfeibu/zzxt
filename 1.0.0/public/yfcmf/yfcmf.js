@@ -893,12 +893,14 @@ $(function () {
 /*************************************************************************** 选择列表框change事件********************************************************/
 (function ($) {
 	$('body').on('change','.ajax_change',function () {
+		load = layer.load(2);
         var $form = $(this).parents("form");
 		$.ajax({
 		    url:$form.attr('action'),
 			type:"POST",
 			data:$form.serialize(),
 			success: function(data,status){
+				if(typeof load!="undefined"){layer.close(load);}
 				$("#ajax-data").html(data);
 			}
 		});
@@ -1144,7 +1146,7 @@ $("body").on('blur','.grade',function(){
 	});
 
 });
-$(".passingForm button[type='submit']").click(function(){
+$('body').on('click',".passingForm button[type='submit']",function () {
 	$this = $(this);
 	var url = $(this).closest("form").attr('action');
 	data = $(this).closest("form").serialize();
@@ -1179,7 +1181,7 @@ $(".passingForm button[type='submit']").click(function(){
 	});
 	return false;
 });
-$(".passingDiv button").click(function(){
+$('body').on('click','.passingDiv button',function () {
 	$this = $(this);
 	var url = $(this).closest(".passingDiv").attr('action');
 	var status_id = $(this).closest(".passingDiv").find("input[name = 'status_id']").val();
@@ -1213,4 +1215,15 @@ $(".passingDiv button").click(function(){
 		}
 	});
 	return false;
+});
+$('body').on('change','.faculty_more',function () {
+	var faculty_number = $(this).val();
+	var $this = $(this);
+	$.ajax({
+		url: $this.attr('href'),
+		data:{'faculty_number':faculty_number},
+		success: function(data){
+			$this.next(".class_more").html(data.html);
+		}
+	});
 });
