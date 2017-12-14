@@ -13,7 +13,7 @@ use think\Db;
 use think\Request;
 use app\admin\model\WorkStatus;
 use PHPExcel;
-use app\admin\model\ClassCode;
+use app\admin\model\ClassCode as ClassCodeModel;
 
 class WorkStudy extends Base
 {
@@ -34,7 +34,7 @@ class WorkStudy extends Base
             $field[$key] = 'w.' . $row;
         }
         $field = implode(',', $field);
-        $sql = "SELECT w.*, count(ws.id) AS apply_count,(select count(*) from yf_work_status where work_apply_id = w.work_id and status=3) as count,(select count(*) from yf_work_status where work_apply_id = w.work_id and status is null) as not_count FROM yf_work_status AS ws RIGHT JOIN yf_work_apply_table AS w ON w.work_id = ws.work_apply_id 
+        $sql = "SELECT w.*, count(ws.id) AS apply_count,(select count(*) from yf_work_status where work_apply_id = w.work_id and status=3) as count,(select count(*) from yf_work_status where work_apply_id = w.work_id and status is null) as not_count FROM yf_work_status AS ws RIGHT JOIN yf_work_apply_table AS w ON w.work_id = ws.work_apply_id
  WHERE w.department = '".$id."' GROUP BY ";
         $sql .= $field;
         $data = Db::query($sql);
@@ -101,7 +101,7 @@ class WorkStudy extends Base
             ->where('work_apply_id', $id)
             ->where("ws.status is null")
             ->paginate(20);
-		$classCode = new ClassCOde();	
+		$classCode = new ClassCOde();
         $faculty_list = $classCode->getFaculties();
         $this->assign("faculty_list", $faculty_list);
         $this->assign('dir', '岗位申请人列表');
@@ -601,7 +601,7 @@ class WorkStudy extends Base
             $field[$key] = 'w.' . $row;
         }
         $field = implode(',', $field);
-        $sql = "SELECT w.*, count(ws.id) AS apply_count,(select count(*) from yf_work_status where work_apply_id = w.work_id and status=3) as count,(select count(*) from yf_work_status where work_apply_id = w.work_id and status =1) as not_count FROM yf_work_status AS ws RIGHT JOIN yf_work_apply_table AS w ON w.work_id = ws.work_apply_id 
+        $sql = "SELECT w.*, count(ws.id) AS apply_count,(select count(*) from yf_work_status where work_apply_id = w.work_id and status=3) as count,(select count(*) from yf_work_status where work_apply_id = w.work_id and status =1) as not_count FROM yf_work_status AS ws RIGHT JOIN yf_work_apply_table AS w ON w.work_id = ws.work_apply_id
   GROUP BY ";
         $sql .= $field;
         $data = Db::query($sql);

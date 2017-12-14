@@ -10,7 +10,7 @@ namespace app\admin\controller;
 
 use app\admin\model\Admin as AdminModel;
 use app\admin\model\AuthRule;
-use app\admin\model\ClassCode;
+use app\admin\model\ClassCode as ClassCodeModel;
 use think\Db;
 use think\Cache;
 
@@ -27,7 +27,7 @@ class Admin extends Base
 		if($search_name){
 			$map['admin_username']= array('like',"%".$search_name."%");
 		}
-        $classCode = new ClassCode();
+        $classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
 		$admin_list=Db::name('admin')->where($map)->order('admin_id')->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 		$page = $admin_list->render();
@@ -42,7 +42,7 @@ class Admin extends Base
 	public function admin_add()
 	{
 		$auth_group=Db::name('auth_group')->select();
-		$classCode = new ClassCode();
+		$classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
 		$this->assign('auth_group',$auth_group);
 		$this->assign('faculty_number', $faculty);
@@ -87,7 +87,7 @@ class Admin extends Base
 	{
 		$auth_group=Db::name('auth_group')->select();
 		$admin_list=Db::name('admin')->find(input('admin_id'));
-        $classCode = new ClassCode();
+        $classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
 		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
 		$this->assign('admin_list',$admin_list);
@@ -145,7 +145,7 @@ class Admin extends Base
 		if(session('admin_auth.faculty_number')){
 			$map['a.faculty_number']= session('admin_auth.faculty_number');
 		}
-        $classCode = new ClassCode();
+        $classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
 		$admin_list=Db::name('admin')->alias('a')
 									->join('yf_auth_group_access ags','a.admin_id = ags.uid')
@@ -164,7 +164,7 @@ class Admin extends Base
 	{
 		$auth_group=Db::name('auth_group')->where('id in (21,25)')->select();
 		$admin_list=Db::name('admin')->find(input('admin_id'));
-        $classCode = new ClassCode();
+        $classCode = new ClassCodeModel();
 		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
 		$this->assign('admin_list',$admin_list);
 		$class_numbers = $this->admin['class_number'] ? explode(',',$this->admin['class_number']) : '';
@@ -189,7 +189,7 @@ class Admin extends Base
 	public function counselor_admin_add()
 	{
 		$auth_group=Db::name('auth_group')->where('id in (21,25)')->select();
-		$classCode = new ClassCode();
+		$classCode = new ClassCodeModel();
 		$this->assign('auth_group',$auth_group);
 		$class_numbers = $this->admin['class_number'] ? explode(',',$this->admin['class_number']) : '';
 		$class = $classCode->getClassByNumbers($class_numbers);
@@ -232,7 +232,7 @@ class Admin extends Base
 		if($search_name){
 			$map['a.admin_username']= array('like',"%".$search_name."%");
 		}
-        $classCode = new ClassCode();
+        $classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
 		$admin_list=Db::name('admin')->alias('a')
 									->join('yf_auth_group_access ags','a.admin_id = ags.uid')
@@ -251,7 +251,7 @@ class Admin extends Base
 	public function faculty_admin_add()
 	{
 		$auth_group=Db::name('auth_group')->where('id in (20)')->select();
-		$classCode = new ClassCode();
+		$classCode = new ClassCodeModel();
 		$faculties = $classCode->getFaculties();
 		$this->assign('faculty_number',session('admin_auth.faculty_number'));
 		$class = $classCode->getClass(session('admin_auth.faculty_number'));
@@ -264,7 +264,7 @@ class Admin extends Base
 	{
 		$auth_group=Db::name('auth_group')->where('id in (20)')->select();
 		$admin_list=Db::name('admin')->find(input('admin_id'));
-        $classCode = new ClassCode();
+        $classCode = new ClassCodeModel();
 		$faculties = $classCode->getFaculties();
 		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
 

@@ -11,7 +11,7 @@ namespace app\admin\controller;
 use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\MultipleScholarship;
 use app\home\model\NationalScholarship;
-use app\admin\model\ClassCode;
+use app\admin\model\ClassCode as ClassCodeModel;
 use app\admin\model\Evaluation;
 use think\Db;
 use think\Config;
@@ -32,6 +32,9 @@ class StudentOffice extends Base
         $this->multiple = new MultipleScholarship();
         $this->national = new NationalScholarship();
         $this->applyStatus = new ScholarshipsApplyStatus();
+        $this->classCode = new ClassCodeModel();
+        $faculties = $this->classCode->getFaculties();
+        $this->assign('faculties',$faculties);
     }
 
     /**获取申请学生列表
@@ -177,21 +180,42 @@ class StudentOffice extends Base
     }
     public function showApplicantListHandle($id)
     {
+        $faculty_number = input('faculty_number',0);
+        $class_number = input('class_number',0);
+        $studentname = input('studentname','');
+        $status = input('status','');
+        $where = ' 1 = 1 ';
+        if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }else{
+            if($faculty_number)
+            {
+                $where .= " AND u.faculty_number = '".$faculty_number."'";
+            }
+        }
+        if($status)
+        {
+            $where .= " AND status = '".$status."'";
+        }
+        if($studentname)
+        {
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+        }
         if($id == 1)
         {
-            $data = NationalScholarship::getNationalList();
+            $data = NationalScholarship::getNationalList($where);
         }else{
-            $where = [
-                //'ms.publicity_end' => ['<',time()],
-                'ms.application_type' => $id,
-            ];
+            // $where = [
+            //     //'ms.publicity_end' => ['<',time()],
+            //     'ms.application_type' => $id,
+            // ];
+            $where .= " AND ms.application_type = '".$id."'";
             $data = MultipleScholarship::getMultipleList($where);
         }
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
-        //查院
-        $classCode = new ClassCOde();
-        $faculty_profession = $classCode->getFaculties();
+        $faculty_profession = $this->classCode->getFaculties();
         //绝笔要撕逼(未通过的)
         $faculty_count = Db::table('yf_apply_scholarships_status')
             ->alias('ass')//asshold
@@ -212,7 +236,11 @@ class StudentOffice extends Base
         $this->assign('faculty', $faculty_profession);
         $this->assign('user', $data);
         $this->assign('page', $show);
-        return $this->fetch('showApplicantList');
+        if(request()->isAjax()){
+			return $this->fetch('ajax_showApplicationList');
+		}else{
+			return $this->fetch('showApplicantList');
+		}
     }
     /**
      * 查看学生申请资料
@@ -496,72 +524,29 @@ class StudentOffice extends Base
      * 查看学生列表（评估系统）
      */
     public function showEvaluationList() {
-        //$where['ass.status'] = array('in',array_keys(config('evaluation_status')));
-        $where['ass.status'] = array('in','4,5,9');
-        if (request()->isPost()) {
-            $data = request()->post();
-            //学号
-            if (!empty($data['studentname'])) {
-                //学号
-                if (strlen($data['studentname']) == 11) {
-                    $studentname = "studentid = '".$data['studentname']."'";
-                } else {
-                    $studentname = "studentname = '".$data['studentname']."'";
-                }
-            } else {
-                $studentname = '';
+        $faculty_number = input('faculty_number',0);
+        $class_number = input('class_number',0);
+        $studentname = input('studentname','');
+        $status = input('status','');
+        $where = ' 1 = 1 ';
+        if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }else{
+            if($faculty_number)
+            {
+                $where .= " AND u.faculty_number = '".$faculty_number."'";
             }
-            $data_students = Db::table('yf_evaluation_status')
-                ->alias('ass')//asshold
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
-                ->where('u.faculty_number', $this->faculty)
-                ->where($studentname)
-                ->where($where)
-                ->field('ass.*,u.*,app.assess_fraction')
-                ->paginate(20);
-
-            //再来找那些人
-            //未通过的
-            $faculty_count = Db::table('yf_evaluation_status')
-                ->alias('ass')//asshold
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->where('u.faculty_number', $this->faculty)
-//                ->where($grade)
-//                ->where($faculty_profession_sql)
-                ->where(function($query){
-                    $query->where('ass.status !=5');
-                })
-                ->where($where)
-                ->count();
-            //总得人数
-            $faculty_all_count = Db::table('yf_evaluation_status')
-                ->alias('ass')//asshold
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->where('u.faculty_number', $this->faculty)
-                ->where($where)
-                ->count();
-//            $this->assign('faculty_name', $faculty_name);
-            $this->assign('faculty_not_pass', $faculty_count);
-            $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
-            $this->assign('faculty', $this->faculty);
-//            $this->assign('profession', $faculty_profession);
-            $this->assign('user', $data_students);
-            return $this->fetch('evaluation/manage_review');
         }
-        //查找呃
-        $data = Db::table('yf_evaluation_status')
-            ->alias('ass')//asshold
-            ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-            ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
-            ->where('u.faculty_number', $this->faculty)
-            ->where($where)
-            ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
-            ->paginate(20);
+        if($status)
+        {
+            $where .= " AND status = '".$status."'";
+        }
+        if($studentname)
+        {
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+        }
+        $data = Evaluation::getEvaluationList($where);
         $show=$data->render();
 		$show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 
@@ -602,7 +587,11 @@ class StudentOffice extends Base
         $this->assign('user', $data_arr);
         $this->assign('page', $show);
         $this->assign('status', [4,5,9]);
-        return $this->view->fetch('evaluation/manage_review');
+        if(request()->isAjax()){
+			return $this->fetch('evaluation/manage_ajax_review');
+		}else{
+			return $this->fetch('evaluation/manage_review');
+		}
     }
     public function showEvaluationMaterialConfigs() {
         $material_configs = \app\admin\model\EvaluationMaterialConfig::getConfigs();

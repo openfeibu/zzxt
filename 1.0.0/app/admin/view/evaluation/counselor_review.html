@@ -29,20 +29,20 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <form class="tab_inquire" method="post">
-                    <!--<p>筛选：</p>-->
-                    <!--<select class="form-control tab_select counselor_sub" name="faculty">-->
-                        <!--<option value="0">所有专业</option>-->
-                        <!--<option value="1">电子信息工程技术</option>-->
-                        <!--<option value="2">应用电子技术</option>-->
-                        <!--<option value="3">通信工程技术</option>-->
-                        <!--<option value="4">物联网应用技术</option>-->
-                    <!--</select>-->
-                    <!--<select class="form-control tab_select counselor_pass" name="assess">-->
-                        <!--<option value="0">专业评定</option>-->
-                        <!--<option value="1">已评定</option>-->
-                        <!--<option value="2">未评定</option>-->
-                    <!--</select>-->
+                <form class="tab_inquire" method="post" action="{:url('admin/Counselor/showEvaluationList')}">
+                    <p>筛选：</p>
+                    <select class="form-control tab_select counselor_sub ajax_change" name="class_number">-->
+                        <option value="0">所有专业</option>
+                        {foreach $classes as $row}
+                        <option value="{$row.class_number}">{$row.current_grade}{$row.class_name}</option>
+                        {/foreach}
+                    </select>
+                    <select class="form-control tab_select class_select ajax_change" name="status">
+                        <option value="0">全部</option>
+                        {foreach $Think.config.evaluation_status as $k => $v}
+                        <option value="{$k}">{$v}</option>
+                        {/foreach}
+                    </select>
                     <div class="tab_search">
                         <input type="text" placeholder="学号/姓名" name="studentname">
                         <button class="btn btn-info btn-sm" type="submit">查询</button>
@@ -63,38 +63,8 @@
                             <th>操作</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    {foreach $user as $num => $row}
-                    <tr>
-                        <td>{$num+1}</td>
-                        <td>{$row.studentname}</td>
-                        <td>{$row.studentid}</td>
-                        <td>{$row.assess_fraction}</td>
-                        <td>{$row.change_fraction}</td>
-                        <td>{$row.score}</td>
-                        <td>{$row.rank}</td>
-                        <td>
-                            {php}echo config('evaluation_status.'.$row['status']);{/php}
-                        </td>
-
-                        <td class="tab_content">
-                            <form action="{:url('admin/EvaluationHandle/counselor')}" method="post" class="passingForm">
-                                <input type="hidden" name="status_id" value="{$row.status_id}" />
-                                <div class="audit_opera">
-                                    <button class="btn btn-info btn-sm btn-success" type="submit" {if !in_array($row.evaluation_status,[2,8])}disabled{/if} name="pass">通过</button>
-                                </div>
-                                <div class="audit_opera">
-                                    <button class="btn btn-info btn-sm btn-danger" type="submit" {if !in_array($row.evaluation_status,[2,8])}disabled{/if} name="fail" value="1">不通过</button>
-                                </div>
-
-                            <div class="audit_opera">
-                                <a href="{:url('admin/Counselor/showEvaluationMaterial',['id'=>$row.status_id])}" class="btn btn-info btn-sm">查看</a>
-                            </div>
-                            </form>
-                        </td>
-
-                    </tr>
-                    {/foreach}
+                    <tbody id="ajax-data">
+                    {include file="evaluation\counselor_ajax_review"}
                     </tbody>
                 </table>
 

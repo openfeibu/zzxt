@@ -198,10 +198,30 @@ class ScholarshipsGroup extends Base
     {
         return $this->showReviewListHandle(2);
     }
+    public function showReviewList3()
+    {
+        return $this->showReviewListHandle(1);
+    }
     public function showReviewListHandle($id)
     {
-        $where['ms.application_type'] = $id;
-        $data = MultipleScholarship::getMultipleList($where);
+        $where = " 1 = 1 ";
+        $status = input('status','');
+        $studentname = input('studentname','');
+        if($status)
+        {
+            $where .= " AND ass.status = '".$status."'";
+        }
+        if($studentname)
+        {
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+        }
+        if($id == 1)
+        {
+            $data = NationalScholarship::getNationalList($where);
+        }else{
+            $where .= " AND ms.application_type = '".$id."'";
+            $data = MultipleScholarship::getMultipleList($where);
+        }
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
         //查询未审核人数
@@ -231,7 +251,11 @@ class ScholarshipsGroup extends Base
         $this->assign('user', $data);
         $this->assign('list', $data);
         $this->assign('page', $show);
-        return $this->view->fetch('showReviewList');
+        if(request()->isAjax()){
+			return $this->fetch('ajax_showReviewList');
+		}else{
+			return $this->fetch('showReviewList');
+		}
     }
     /**
      * 小组查看学生申请资料(助学金+励志)

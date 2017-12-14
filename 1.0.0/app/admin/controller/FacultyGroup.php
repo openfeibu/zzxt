@@ -12,6 +12,7 @@ use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\MultipleScholarship;
 use app\home\model\NationalScholarship;
 use app\admin\model\Evaluation;
+use app\admin\model\ClassCode as ClassCodeModel;
 use think\Config;
 use think\Db;
 use think\Request;
@@ -29,9 +30,12 @@ class FacultyGroup extends Base
         parent::__construct();
         $this->time = date('Y', time());
         $this->faculty = session('admin_auth.faculty_number');
+        $this->classCode = new ClassCodeModel();
         $this->multiple = new MultipleScholarship();
         $this->national = new NationalScholarship();
         $this->applyStatus = new ScholarshipsApplyStatus();
+        $classes = $this->classCode->getClass($this->faculty);
+        $this->assign('classes', $classes);
     }
 
     /**
@@ -180,11 +184,29 @@ class FacultyGroup extends Base
     }
     public function showApplicantListHandle($id)
     {
+        $studentname = input('studentname','');
+        $status = input('status','');
+        $class_number = input('class_number',0);
+        $where = ' 1 = 1 ';
+        if($studentname)
+        {
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+        }
+        if($status)
+        {
+            $where .= " AND ass.status = '".$status."'";
+        }
+        if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }else{
+            $where .= " AND u.faculty_number = ".$this->faculty." ";
+        }
         if($id == 1)
         {
-            $data = NationalScholarship::getNationalList();
+            $data = NationalScholarship::getNationalList($where);
         }else{
-            $where['ms.application_type'] = $id;
+            $where .= " AND ms.application_type = '".$id."'";
             $data = MultipleScholarship::getMultipleList($where);
         }
 
@@ -220,7 +242,11 @@ class FacultyGroup extends Base
         $this->assign('profession', $faculty_profession);
         $this->assign('user', $data);
         $this->assign('page', $show);
-        return $this->fetch('showApplicantList');
+        if(request()->isAjax()){
+			return $this->fetch('ajax_showApplicationList');
+		}else{
+			return $this->fetch('showApplicantList');
+		}
     }
     /**
      * 查看学生申请资料
@@ -533,64 +559,24 @@ class FacultyGroup extends Base
      * 查看学生列表（评估系统）
      */
     public function showEvaluationList() {
-        if (request()->isPost()) {
-            $data = request()->post();
-            //学号
-            if (!empty($data['studentname'])) {
-                //学号
-                if (strlen($data['studentname']) == 11) {
-                    $studentname = "studentid = '".$data['studentname']."'";
-                } else {
-                    $studentname = "studentname = '".$data['studentname']."'";
-                }
-            } else {
-                $studentname = '';
-            }
-
-            $data_students = Db::table('yf_evaluation_status')
-                ->alias('ass')//asshold
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
-                ->order('score desc')
-                ->where('u.faculty_number', $this->faculty)
-                ->where($studentname)
-                ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
-                ->paginate(20);
-
-            //再来找那些人
-            //未通过的
-            $faculty_count = Db::table('yf_evaluation_status')
-                ->alias('ass')//asshold
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->where('u.faculty_number', $this->faculty)
-//                ->where($grade)
-//                ->where($faculty_profession_sql)
-                ->where(function($query){
-                    $query->where('ass.status !=4')->where('ass.status !=5');
-                })
-                ->count();
-            //总得人数
-            $faculty_all_count = Db::table('yf_evaluation_status')
-                ->alias('ass')//asshold
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->where('u.faculty_number', $this->faculty)
-//                ->where($faculty_profession_sql)
-//                ->where($grade)
-                ->count();
-//            $this->assign('faculty_name', $faculty_name);
-            $this->assign('faculty_not_pass', $faculty_count);
-            $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
-            $this->assign('faculty', $this->faculty);
-//            $this->assign('profession', $faculty_profession);
-            $this->assign('user', $data_students);
-            return $this->fetch('evaluation/faculty_review');
+        $studentname = input('studentname','');
+        $status = input('status','');
+        $class_number = input('class_number',0);
+        $where = ' 1 = 1 ';
+        if($studentname)
+        {
+            $where = " (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
         }
-        //查找呃
-
-        $where['u.faculty_number'] = $this->faculty;
+        if($status)
+        {
+            $where .= " AND ass.status = '".$status."'";
+        }
+        if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }else{
+            $where .= " AND u.faculty_number = ".$this->faculty." ";
+        }
         $data = Evaluation::getEvaluationList($where);
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
@@ -600,6 +586,7 @@ class FacultyGroup extends Base
             $data_arr[$key]['material_score'] = Evaluation::getMaterilaScore($val['evaluation_id']);
             $data_arr[$key]['rank'] = Evaluation::getGrade($val['score']);
         }
+
         //查院
         $faculty_profession = Db::table('yf_user')
             ->field("DISTINCT profession ,profession_number")
@@ -628,7 +615,11 @@ class FacultyGroup extends Base
         $this->assign('profession', $faculty_profession);
         $this->assign('user', $data_arr);
         $this->assign('page', $show);
-        return $this->view->fetch('evaluation/faculty_review');
+        if(request()->isAjax()){
+			return $this->fetch('evaluation/faculty_ajax_review');
+		}else{
+			return $this->fetch('evaluation/faculty_review');
+		}
     }
 
     /**

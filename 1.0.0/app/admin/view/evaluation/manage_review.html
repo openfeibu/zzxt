@@ -29,46 +29,22 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <form class="tab_inquire" method="post">
-                    <!--<p>筛选：</p>-->
-                    <!--<select class="form-control tab_select manage_grade" style="width: 11%;">-->
-                        <!--<option value="">所有年级</option>-->
-                        <!--<option value="">2015级</option>-->
-                        <!--<option value="">2016级</option>-->
-                        <!--<option value="">2017级</option>-->
-                    <!--</select>-->
-                    <!--<select class="form-control tab_select manage_fac" style="width: 12%;">-->
-                        <!--<option value="0">全院</option>-->
-                        <!--<option value="">国际交流学院</option>-->
-                        <!--<option value="">外语系</option>-->
-                        <!--<option value="">商务系</option>-->
-                        <!--<option value="">机电系</option>-->
-                        <!--<option value="">计算机系</option>-->
-                        <!--<option value="">热作系</option>-->
-                        <!--<option value="">财经系</option>-->
-                        <!--<option value="">管理系</option>-->
-                        <!--<option value="">艺术系</option>-->
-                    <!--</select>-->
-                    <!--<select class="form-control tab_select manage_sub" style="width:17%;">-->
-                        <!--<option value="">全系</option>-->
-                        <!--<option value="">汽车技术服务与营销</option>-->
-                        <!--<option value="">汽车检测与维修技术</option>-->
-                        <!--<option value="">汽车电子技术</option>-->
-                        <!--<option value="">电子信息工程技术</option>-->
-                        <!--<option value="">通信技术</option>-->
-                        <!--<option value="">电气自动化技术</option>-->
-                        <!--<option value="">应用电子技术</option>-->
-                        <!--<option value="">物联网应用技术</option>-->
-                    <!--</select>-->
-                    <!--<select class="form-control tab_select manage_pass" style="width: 12%;">-->
-                        <!--<option value="0">全院评定</option>-->
-                        <!--<option value="1">院系已评定</option>-->
-                        <!--<option value="1">院系未评定</option>-->
-                    <!--</select>-->
-                    <!--<select class="form-control tab_select manage_fac_sta" style="width: 14%;">-->
-                        <!--<option value="">院系最终评分</option>-->
-                        <!--<option value="">院系原始评分</option>-->
-                    <!--</select>-->
+                <form class="tab_inquire" method="post" action="{:url('admin/StudentOffice/showEvaluationList')}">
+                    <select class="form-control tab_select counselor_sub ajax_change faculty_more" name="faculty_number" href="{:url('admin/ClassCode/getClasses')}">
+                        <option value="0">所有系</option>
+                        {foreach $faculties as $row}
+                        <option value="{$row.faculty_number}">{$row.faculty_name}</option>
+                        {/foreach}
+                    </select>
+                    <select class="form-control tab_select counselor_sub ajax_change class_more" name="class_number" >
+                        <option value="0">所有专业</option>
+                    </select>
+                    <select class="form-control tab_select class_select ajax_change" name="status">
+                        <option value="0">全部状态</option>
+                        {foreach $Think.config.evaluation_status as $k => $v}
+                        <option value="{$k}">{$v}</option>
+                        {/foreach}
+                    </select>
                     <div class="tab_search">
                         <input type="text" placeholder="学号/姓名" name="studentname">
                         <button class="btn btn-info btn-sm" type="submit">查询</button>
@@ -96,55 +72,8 @@
                         <th >操作</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {foreach $user as $num => $row}
-                    <tr>
-                        <td class="hidden-xs" height="28" >
-                            {if $row.status == 4}
-							<label class="pos-rel">
-								<input name="n_id[]" id="navid" class="ace" type="checkbox" value="{$row.evaluation_id}">
-								<span class="lbl"></span>
-							</label>
-                            {/if}
-                            {$row.evaluation_id}
-						</td>
-                        <td>{$row.studentname}</td>
-                        <td>{$row.studentid}</td>
-                        <td>{$row.profession}</td>
-                        <td>{$row.assess_fraction}</td>
-                        <td>{$row.change_fraction}</td>
-                        <td>{$row.score}</td>
-                        <td>{$row.rank}</td>
-                        <td>
-                            {php}echo config('evaluation_status.'.$row['status']);{/php}
-                        </td>
-
-                            <td class="tab_content">
-                                <div action="{:url('admin/EvaluationHandle/studentOffice')}" class="passingDiv" method="post">
-                                <input type="hidden" name="user_name" value="{:session('admin_auth.admin_username')}">
-                                <input type="hidden" name="status_id" value="{$row.status_id}" />
-                                <div class="audit_opera">
-                                    <button class="btn btn-info btn-sm btn-success" type="submit" name="pass" {if $row.status != 4}disabled{/if}>通过</button>
-                                </div>
-                                <div class="audit_opera">
-                                    <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if $row.status != 4}disabled{/if} value="1">不通过</button>
-                                </div>
-
-                                <div class="audit_opera">
-                                    <a href="{:url('admin/StudentOffice/showEvaluationMaterial',['id'=>$row.status_id])}" class="btn btn-info btn-sm">查看</a>
-                                </div>
-                                </div>
-                            </td>
-
-                    </tr>
-                    {/foreach}
-                    <tr>
-                        <td align="left" class="hidden-xs center">
-                    		<button id="passSubmit" class="btn btn-purple btn-sm hidden-xs" name="pass">通过&nbsp;</button>
-                            <button id="failSubmit" class="btn btn-danger  btn-sm hidden-xs" name="fail">不通过</button>
-                    	</td>
-                    	<td height="50" colspan="12" align="left">{$page}</td>
-                    </tr>
+                    <tbody id="ajax-data">
+                    {include file="evaluation\manage_ajax_review"}
                     </tbody>
                 </table>
                 </form>

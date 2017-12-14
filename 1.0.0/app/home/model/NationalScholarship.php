@@ -28,14 +28,14 @@ class NationalScholarship extends Model
             ->find();
         return $result->getData();
     }
-    public static function getNationalList()
+    public static function getNationalList($where = [])
     {
         $data = Db::name('national_scholarship')
                     ->alias('ns')
                     ->join('yf_apply_scholarships_status ass','ass.application_id = ns.national_id')
                     ->join('yf_member_list m', 'm.member_list_id = ns.member_list_id')
                     ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                    //->where($where)
+                    ->where($where)
                     ->field('u.*,ass.status_id,ns.check_status,ns.national_id,m.member_list_username,m.member_list_nickname')
                     ->paginate(20);
         return $data;

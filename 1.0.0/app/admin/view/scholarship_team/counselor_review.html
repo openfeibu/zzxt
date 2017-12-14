@@ -27,69 +27,28 @@
                         <p class="danger_bg"><span></span><span>全系</span>未评定人数：</p>
                         <p class="default_bg"><span>{$faculty_not_pass}</span>人</p>
                     </div>
-                </div> 
+                </div>
                 <div class="clearfix"></div>
-                <form class="tab_inquire">
+                <form class="tab_inquire" method="post" action="{:url('admin/Counselor/showEvaluationList')}">
                     <p>筛选：</p>
-                    <select class="form-control tab_select grade_select" style="width:15%;">
-                        <option value="0"></option>
-                        <option value=""><a href="">2015级</a></option>
-                        <option value=""><a href="">2016级</a></option>
-                        <option value=""><a href="">2017级</a></option>
+                    <select class="form-control tab_select counselor_sub ajax_change" name="class_number">-->
+                        <option value="0">所有专业</option>
+                        {foreach $classes as $row}
+                        <option value="{$row.class_number}">{$row.current_grade}{$row.class_name}</option>
+                        {/foreach}
                     </select>
-                    <select class="form-control tab_select subject_select">
-                        <option value="0"><a href="">全系</a></option>
-                        <option value=""><a href="">汽车技术服务与营销</a></option>
-                        <option value=""><a href="">汽车检测与维修技术</a></option>
-                        <option value=""><a href="">汽车电子技术</a></option>
-                        <option value=""><a href="">电子信息工程技术</a></option>
-                        <option value=""><a href="">通信技术</a></option>
-                        <option value=""><a href="">电气自动化技术</a></option>
-                        <option value=""><a href="">应用电子技术</a></option>
-                        <option value=""><a href="">物联网应用技术</a></option>
+                    <select class="form-control tab_select class_select ajax_change" name="status">
+                        <option value="0">全部</option>
+                        {foreach $Think.config.evaluation_status as $k => $v}
+                        <option value="{$k}">{$v}</option>
+                        {/foreach}
                     </select>
-                    <button class="btn btn-info btn-sm" style="margin-bottom: 3px;">查询</button>
-                    <div class="tab_search pull-right">
-                        <input type="text">
-                        <button class="btn btn-info btn-sm" type="submit">搜索</button>
+                    <div class="tab_search">
+                        <input type="text" placeholder="学号/姓名" name="studentname">
+                        <button class="btn btn-info btn-sm" type="submit">查询</button>
                     </div>
-                    <div class="clearfix"></div><!--清除浮动-->
+
                 </form>
-                <!--<table class="table table-striped table-bordered table-hover tab_center">
-                    <thead>
-                    <th class="info_bg">序号</th>
-                    <th class="info_bg">姓名</th>
-                    <th class="info_bg">学号</th>
-                    <th class="info_bg">状态</th>
-                    <th class="info_bg">操作</th>
-                    </thead>
-                    <tbody>
-                    {foreach name="user" item="vo" key="k" }
-                    <tr>
-                        <td class="tab_content">{$k+1}</td>
-
-                        <td class="tab_content">{$vo.studentname}</td>
-
-                        <td class="tab_content">{$vo.user_id}</td>
-                        <td class="tab_content">
-                            {if condition="$vo.status == 1"}申请书已经提交
-                            {elseif condition="$vo.status == 2"}辅导员通过
-                            {elseif condition="$vo.status == 3"}院系小组通过
-                            {elseif condition="$vo.status == 4"}学生处通过
-                            {elseif condition="$vo.status == 5"}辅导员不通过
-                            {elseif condition="$vo.status == 6"}院系小组不通过
-                            {elseif condition="$vo.status == 7"}学生处不通过
-                            {/if}
-                        </td>
-                        <td class="tab_content">
-                            <div class="audit_opera">
-                                <a href="{:url('admin/Counselor/showMaterial',['id' => $vo.status_id])}" class="btn btn-info btn-sm">添加评语</a>
-                            </div>
-                        </td>
-                    </tr>
-                    {/foreach}
-                    </tbody>
-                </table>-->
                 <table class="table table-striped table-bordered table-hover tab_center">
                     <thead>
                     <th>序号</th>
@@ -98,38 +57,12 @@
                     <th>状态</th>
                     <th>操作</th>
                     </thead>
-                    <tbody>
-                    {foreach name="user" item="vo" key="k" }
-                    <tr>
-                        <td>{$k+1}</td>
-
-                        <td>{$vo.studentname}</td>
-
-                        <td>{$vo.user_id}</td>
-                        <td>
-                            {if condition="$vo.status == 1"}申请书已经提交
-                            {elseif condition="$vo.status == 2"}辅导员通过
-                            {elseif condition="$vo.status == 3"}院系小组通过
-                            {elseif condition="$vo.status == 4"}学生处通过
-                            {elseif condition="$vo.status == 5"}辅导员不通过
-                            {elseif condition="$vo.status == 6"}院系小组不通过
-                            {elseif condition="$vo.status == 7"}学生处不通过
-                            {/if}
-                        </td>
-                        <td>
-                            <div class="audit_opera">
-                                <a href="{:url('admin/Counselor/showMaterial',['id' => $vo.status_id])}" class="btn btn-info btn-sm">添加评语</a>
-                            </div>
-                        </td>
-                    </tr>
-                    {/foreach}
+                    <tbody id="ajax-data">
+                        {include file="scholarship_team\counselor_ajax_review"}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>
-<div class="notice_page" style="margin: 40px 0 0  0">
-    {$list->render()}
 </div>
 {/block}

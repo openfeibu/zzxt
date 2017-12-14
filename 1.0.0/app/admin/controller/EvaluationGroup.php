@@ -11,6 +11,7 @@ use think\Db;
 use think\Config;
 use think\Request;
 use app\admin\model\Evaluation;
+use app\admin\model\ClassCode as ClassCodeModel;
 
 class EvaluationGroup extends Base
 {
@@ -22,7 +23,9 @@ class EvaluationGroup extends Base
         parent::__construct($request);
         //$this->user = '201555352';
 		$this->class_number = $this->admin['class_number'];
+        $this->classCode = new ClassCodeModel();
         $this->time = date("Y",time());
+
     }
 
     /**
@@ -30,86 +33,22 @@ class EvaluationGroup extends Base
      */
     public function showEvaluationList() {
         //$where['ass.status'] = array('in','1,3,4');
-        if(request()->isPost()) {
-            $data = request()->post();
-            if (!empty($data['studentname'])) {
-                //学号或名字查询
-                if (strlen($data['studentname']) == 11) {
-                    $studentname = "studentid = '".$data['studentname']."'";
-                } else {
-                    $studentname = "studentname = '".$data['studentname']."'";
-                }
-            } else {
-                $studentname = '';
-            }
-            //选择状态
-            if (!empty($data['assess'])) {
-                if ($data['assess'] == 1) {
-                    $status = "status <> '".$data['assess']."'";
-                }
-                elseif ($data['assess'] == 2) {
-                    $status = "status = '".$data['assess']."'";
-                }
-                else {
-                    $status = '';
-                }
-            } else {
-                $status = '';
-            }
+        $studentname = input('studentname','');
+        $status = input('status','');
 
-            //查询未审核人数
-            $no_count = Db::table('yf_evaluation_status')
-                ->alias('ass')
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-			    ->where("u.class_number = '".$this->class_number."'")
-                ->where("CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-                ->where('ass.status',2)
-                ->count();
-            if (empty($no_count)) {
-                $no_count = 0;
-            }
-            $yes_count = Db::table('yf_evaluation_status')
-                ->alias('ass')
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-			    ->where("u.class_number = '".$this->class_number."'")
-                ->where("CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-                ->where('ass.status','<>',2)
-                ->count();
-            if (empty($yes_count)) {
-                $yes_count = 0;
-            }
-
-            $data = Db::table('yf_evaluation_status')
-                ->alias('ass')
-                ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id','left')
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->order('score desc')
-                ->where($studentname)
-                ->where($status)
-			->where("u.class_number = '".$this->class_number."'")
-                ->where("CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-                ->field('ass.*,app.assess_fraction,app.score,app.change_fraction,u.*')
-                ->paginate(20);
-
-            $data_data = Db::table('yf_evaluation_status')
-                ->alias('ass')
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-				->where("u.class_number = '".$this->class_number."'")
-                ->where("CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-                ->paginate(20);
-
-            $this->assign('no_count',$no_count);
-            $this->assign('yes_count',$yes_count);
-            $this->assign('user',$data);
-
-            return $this->view->fetch('evaluation/class_review');
+        $where = ' 1 = 1 ';
+        if($studentname)
+        {
+            $where = " (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
         }
+        if($status)
+        {
+            $where .= " AND status = '".$status."'";
+        }
+
         //查找呃
-        $where = "u.class_number = '".$this->class_number."' AND CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time";
+        $where .= " AND u.class_number = '".$this->class_number."' AND CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time";
+        //var_dump($where);exit;
         $data = Evaluation::getEvaluationList($where);
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
@@ -144,7 +83,12 @@ class EvaluationGroup extends Base
         $this->assign('yes_count',$yes_count);
         $this->assign('user', $data_arr);
         $this->assign('page', $show);
-        return $this->view->fetch('evaluation/class_review');
+        $this->assign('evaluation_status', config::get('evaluation_status'));
+        if(request()->isAjax()){
+			return $this->fetch('evaluation/class_ajax_review');
+		}else{
+			return $this->fetch('evaluation/class_review');
+		}
     }
 
     /**

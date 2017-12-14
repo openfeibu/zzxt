@@ -11,10 +11,10 @@ namespace app\admin\controller;
 use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\NationalScholarship;
 use app\admin\model\Evaluation;
+use app\admin\model\ClassCode as ClassCodeModel;
 use think\Db;
 use think\Config;
 use think\Request;
-
 
 class Counselor extends Base
 {
@@ -32,37 +32,47 @@ class Counselor extends Base
         $this->time = date("Y",time());
         $this->faculty = session('admin_auth.faculty_number');
 		$this->class_number = explode(',',$this->admin['class_number']);
+        $this->classCode = new ClassCodeModel();
+        $classes = $this->classCode->getClassByNumbers($this->class_number);
+		$this->assign('classes', $classes);
     }
 
     /**
      * 获取申请学生列表(国家奖学金)
      */
     public function showNationalList() {
-        //获取前9位学号班级代码
-        $data = Db::table('yf_apply_scholarships_status')
-			->alias('a')->join('yf_user u','u.studentid = a.user_id')
-			->where("u.class_number",'in',$this->class_number)
-            ->where('a.fund_type', 1)
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-//            ->where('status', 1)
-            ->paginate(20);
-        //获取学生信息
-
-        foreach ($data->getCollection() as $k => $vo) {
-            $user = Db::table('yf_user')
-                ->where('studentid', $vo['user_id'])
-                ->find();
-            if (!is_array($data->items()[$k])){halt($data->items()[$k]);}
-            $data->data[$k] = array_merge($data->items()[$k],$user);
+        $class_number = input('class_number',0);
+        $studentname = input('studentname','');
+        $status = input('status','');
+        $where = ' 1 = 1 ';
+        if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }else{
+                //$where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
         }
+        if($status)
+        {
+            $where .= " AND status = '".$status."'";
+        }
+        if($studentname)
+        {
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+        }
+        $data = NationalScholarship::getNationalList($where);
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 		$faculty_pass = 0;
 		$faculty_not_pass = 0;
 		$this->assign('faculty_pass', $faculty_pass);
-		 $this->assign('faculty_not_pass', $faculty_not_pass);
-		$user = isset($data->data) ? $data->data : [];
-        $this->assign('user', $user);
-        $this->assign('list', $data);
-        return $this->view->fetch('scholarship_team/counselor_review');
+		$this->assign('faculty_not_pass', $faculty_not_pass);
+        $this->assign('user', $data);
+        $this->assign('page', $show);
+        if(request()->isAjax()){
+			return $this->fetch('scholarship_team/counselor_ajax_review');
+		}else{
+			return $this->fetch('scholarship_team/counselor_review');
+		}
     }
 
     /**
@@ -158,62 +168,24 @@ class Counselor extends Base
      * 获取申请学生列表(评估系统)
      */
     public function showEvaluationList() {
-        if (request()->isPost()) {
-            $data = request()->post();
-            //学号
-            if (!empty($data['studentname'])) {
-                //学号
-                if (strlen($data['studentname']) == 11) {
-                    $studentname = "studentid = '".$data['studentname']."'";
-                } else {
-                    $studentname = "studentname = '".$data['studentname']."'";
-                }
-            } else {
-                $studentname = '';
-            }
-
-            $data_students = Db::table('yf_evaluation_status')
-                ->alias('ass')//asshold
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
-                ->order('score desc')
-                ->where($studentname)
-            ->where("u.class_number",'in',$this->class_number)
-                ->field('ass.*,u.*,app.assess_fraction,app.score,app.change_fraction')
-                ->paginate(20);
-
-            //未通过的
-            $faculty_count = Db::table('yf_evaluation_status')
-                ->alias('ass')//asshold
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->where("u.class_number",'in',$this->class_number)
-//                ->where($grade)
-//                ->where($faculty_profession_sql)
-                ->where(function($query){
-                    $query->where('ass.status ==1');
-                })
-                ->count();
-            //总得人数
-            $faculty_all_count = Db::table('yf_evaluation_status')
-                ->alias('ass')//asshold
-                ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->where("u.class_number",'in',$this->class_number)
-//                ->where($faculty_profession_sql)
-//                ->where($grade)
-                ->count();
-//            $this->assign('faculty_name', $faculty_name);
-            $this->assign('faculty_not_pass', $faculty_count);
-            $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
-            $this->assign('faculty', $this->faculty);
-//            $this->assign('profession', $faculty_profession);
-            $this->assign('user', $data_students);
-            return $this->fetch('evaluation/counselor_review');
+        $class_number = input('class_number',0);
+        $studentname = input('studentname','');
+        $status = input('status','');
+        $where = ' 1 = 1 ';
+        if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }else{
+            $where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
         }
-
-        $where["u.class_number"] = ['in' , $this->class_number];
+        if($status)
+        {
+            $where .= " AND status = '".$status."'";
+        }
+        if($studentname)
+        {
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+        }
         $data = Evaluation::getEvaluationList($where);
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
@@ -249,7 +221,11 @@ class Counselor extends Base
         $this->assign('profession', $faculty_profession);
         $this->assign('user', $data_arr);
         $this->assign('page', $show);
-        return $this->view->fetch('evaluation/counselor_review');
+        if(request()->isAjax()){
+			return $this->fetch('evaluation/counselor_ajax_review');
+		}else{
+			return $this->fetch('evaluation/counselor_review');
+		}
     }
 
     /**

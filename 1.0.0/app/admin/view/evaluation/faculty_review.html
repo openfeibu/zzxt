@@ -29,23 +29,24 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <form class="tab_inquire" method="post">
-                    <!--<p>筛选：</p>-->
-                    <!--<select class="form-control tab_select counselor_sub">-->
-                        <!--<option value="0">所有专业</option>-->
-                        <!--<option value="1">电子信息工程技术</option>-->
-                        <!--<option value="2">应用电子技术</option>-->
-                        <!--<option value="3">通信工程技术</option>-->
-                        <!--<option value="4">物联网应用技术</option>-->
-                    <!--</select>-->
-                    <!--<select class="form-control tab_select counselor_pass">-->
-                        <!--<option value="0">专业评定</option>-->
-                        <!--<option value="1">班级已评定</option>-->
-                        <!--<option value="2">班级未评定</option>-->
-                    <!--</select>-->
+                <form class="tab_inquire" method="post" action="{:url('admin/FacultyGroup/showEvaluationList')}">
+
+                    <select class="form-control tab_select counselor_sub ajax_change" name="class_number">
+                        <option value="0">所有专业</option>
+                        {foreach $classes as $row}
+                        <option value="{$row.class_number}">{$row.current_grade}{$row.class_name}</option>
+                        {/foreach}
+                    </select>
+
+                    <select class="form-control tab_select class_select ajax_change" name="status">
+                        <option value="0">全部状态</option>
+                        {foreach $Think.config.evaluation_status as $k => $v}
+                        <option value="{$k}">{$v}</option>
+                        {/foreach}
+                    </select>
                     <div class="tab_search">
                         <input type="text" placeholder="学号/姓名" name="studentname">
-                        <button class="btn btn-info btn-sm" type="submit">查询</button>
+                        <button class="btn btn-info btn-sm ajax-search-form" type="submit">查询</button>
                     </div>
                 </form>
                 <table  id="simple-table"  class="table table-striped table-bordered table-hover tab_center">
@@ -62,42 +63,8 @@
                         <th>操作</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    {foreach $user as $num => $row}
-                    <tr>
-                        <td>{$num+1}</td>
-                        <td>{$row.studentname}</td>
-                        <td>{$row.studentid}</td>
-                        <td>{$row.assess_fraction}</td>
-                        <td>{$row.change_fraction}</td>
-                        <td>{$row.score}</td>
-                        <td>{$row.rank}</td>
-                        <td>
-                            {php}echo config('evaluation_status.'.$row['status']);{/php}
-                        </td>
-
-                            <td class="tab_content">
-                                <form action="{:url('admin/EvaluationHandle/faculty')}" class="passingForm" method="post">
-                                <input type="hidden" name="user_name" value="{:session('admin_auth.admin_username')}">
-                                <input type="hidden" name="status_id" value="{$row.status_id}" />
-                                <div class="audit_opera">
-                                    <button class="btn btn-info btn-sm btn-success" type="submit" name="pass" {if !in_array($row.evaluation_status,[3,9])}disabled{/if} >通过</button>
-                                </div>
-                                <div class="audit_opera">
-                                    <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if !in_array($row.evaluation_status,[3,9])}disabled{/if} value="1">不通过</button>
-                                </div>
-
-                                <div class="audit_opera">
-                                    <a href="{:url('admin/FacultyGroup/showEvaluationMaterial',['id'=>$row.status_id])}" class="btn btn-info btn-sm">查看</a>
-                                </div>
-                                </form>
-                            </td>
-
-                    </tr>
-                    {/foreach}
-                    <tr>
-                        <td height="50" colspan="12" align="left">{$page}</td>
-                    </tr>
+                    <tbody id="ajax-data">
+                    {include file="evaluation\faculty_ajax_review"}
                     </tbody>
                 </table>
 
