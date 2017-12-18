@@ -1,16 +1,7 @@
 {foreach $user as $num => $row}
 <tr>
-    <td>{$num+1}</td>
-    <td>{$row.studentname}</td>
-    <td>{$row.studentid}</td>
-    <td>{$row.assess_fraction}</td>
-    <td>{$row.change_fraction}</td>
-    <td>{$row.score}</td>
-    <td>{$row.rank}</td>
-    <td>
-        {php}echo config('evaluation_status.'.$row['status']);{/php}
-    </td>
-
+    <td>{$row.evaluation_id}</td>
+    {include file="common\evaluation_val"}
     <td class="tab_content">
         <form action="{:url('admin/EvaluationHandle/counselor')}" method="post" class="passingForm">
             <input type="hidden" name="status_id" value="{$row.status_id}" />

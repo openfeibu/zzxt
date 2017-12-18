@@ -49,8 +49,14 @@
                         <input type="text" placeholder="学号/姓名" name="studentname">
                         <button class="btn btn-info btn-sm" type="submit">查询</button>
                     </div>
+                    <div class="tab_search">
+                        <a href="{:url('admin/StudentOffice/showEvaluationListExport')}" title="导出">
+                            导出：
+    						<i class="fa fa-download export"></i>
+    					</a>
+                    </div>
                 </form>
-            	<form class="ajaxForm" id="alldel" name="alldel" method="post" action="{:url('admin/EvaluationHandle/studentOfficePassAll')}">
+            	<form class="ajaxForm" id="alldel" name="alldel" method="post" action="{:url('admin/EvaluationHandle/studentOfficeAll')}">
                 <table  id="simple-table"  class="table table-striped table-bordered table-hover tab_center">
                     <thead>
                     <tr>
@@ -61,14 +67,7 @@
 							</label>
                             ID
 						</th>
-                        <th >姓名</th>
-                        <th >学号</th>
-                        <th >专业</th>
-                        <th >评定分数</th>
-                        <th >加分</th>
-                        <th >总分</th>
-                        <th >评定等级</th>
-                        <th >状态</th>
+                        {include file="common\evaluation_key"}
                         <th >操作</th>
                     </tr>
                     </thead>

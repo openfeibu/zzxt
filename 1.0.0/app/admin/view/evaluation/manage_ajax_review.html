@@ -9,33 +9,23 @@
         {/if}
         {$row.evaluation_id}
     </td>
-    <td>{$row.studentname}</td>
-    <td>{$row.studentid}</td>
-    <td>{$row.profession}</td>
-    <td>{$row.assess_fraction}</td>
-    <td>{$row.change_fraction}</td>
-    <td>{$row.score}</td>
-    <td>{$row.rank}</td>
-    <td>
-        {php}echo config('evaluation_status.'.$row['status']);{/php}
+    {include file="common\evaluation_val"}
+    <td class="tab_content">
+        <div action="{:url('admin/EvaluationHandle/studentOffice')}" class="passingDiv" method="post">
+        <input type="hidden" name="user_name" value="{:session('admin_auth.admin_username')}">
+        <input type="hidden" name="status_id" value="{$row.status_id}" />
+        <div class="audit_opera">
+            <button class="btn btn-info btn-sm btn-success" type="submit" name="pass" {if $row.status != 4}disabled{/if}>通过</button>
+        </div>
+        <div class="audit_opera">
+            <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if $row.status != 4}disabled{/if} value="1">不通过</button>
+        </div>
+
+        <div class="audit_opera">
+            <a href="{:url('admin/StudentOffice/showEvaluationMaterial',['id'=>$row.status_id])}" class="btn btn-info btn-sm">查看</a>
+        </div>
+        </div>
     </td>
-
-        <td class="tab_content">
-            <div action="{:url('admin/EvaluationHandle/studentOffice')}" class="passingDiv" method="post">
-            <input type="hidden" name="user_name" value="{:session('admin_auth.admin_username')}">
-            <input type="hidden" name="status_id" value="{$row.status_id}" />
-            <div class="audit_opera">
-                <button class="btn btn-info btn-sm btn-success" type="submit" name="pass" {if $row.status != 4}disabled{/if}>通过</button>
-            </div>
-            <div class="audit_opera">
-                <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if $row.status != 4}disabled{/if} value="1">不通过</button>
-            </div>
-
-            <div class="audit_opera">
-                <a href="{:url('admin/StudentOffice/showEvaluationMaterial',['id'=>$row.status_id])}" class="btn btn-info btn-sm">查看</a>
-            </div>
-            </div>
-        </td>
 
 </tr>
 {/foreach}

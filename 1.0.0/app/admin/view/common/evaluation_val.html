@@ -1,0 +1,10 @@
+<td>{$row.studentname}</td>
+<td>{$row.studentid}</td>
+<td>{$row.profession}</td>
+<td>{$row.assess_fraction}</td>
+<td>{$row.change_fraction}</td>
+<td>{$row.score}</td>
+<td>{$row.rank}</td>
+<td>
+    {php}echo config('evaluation_status.'.$row['status']);{/php}
+</td>

@@ -594,6 +594,71 @@ class StudentOffice extends Base
 			return $this->fetch('evaluation/manage_review');
 		}
     }
+    public  function showEvaluationListExport()
+    {
+        $faculty_number = input('faculty_number',0);
+        $class_number = input('class_number',0);
+        $studentname = input('studentname','');
+        $status = input('status','');
+        $where = ' 1 = 1 ';
+        if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }else{
+            if($faculty_number)
+            {
+                $where .= " AND u.faculty_number = '".$faculty_number."'";
+            }
+        }
+        if($status)
+        {
+            $where .= " AND status = '".$status."'";
+        }
+        if($studentname)
+        {
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+        }
+        $data = Evaluation::getAllEvaluationList($where);
+
+        $field_titles = ['高职专业负责人','高职专业'];
+        $fields = ['admin_username','recruit_major_name'];
+        $table = '高职专业负责人'.date('YmdHis');
+        error_reporting(E_ALL);
+        date_default_timezone_set('Asia/chongqing');
+        $objPHPExcel = new \PHPExcel();
+        //import("Org.Util.PHPExcel.Reader.Excel5");
+        /*设置excel的属性*/
+        $objPHPExcel->getProperties()->setCreator("wuzhijie")//创建人
+        ->setLastModifiedBy("wuzhijie")//最后修改人
+        ->setKeywords("excel")//关键字
+        ->setCategory("result file");//种类
+
+        //第一行数据
+        $objPHPExcel->setActiveSheetIndex(0);
+        $active = $objPHPExcel->getActiveSheet();
+        foreach($field_titles as $i=>$name){
+            $ck = num2alpha($i++) . '1';
+            $active->setCellValue($ck, $name);
+        }
+        //填充数据
+        foreach($data as $k => $v){
+            $k=$k+1;
+            $num=$k+1;//数据从第二行开始录入
+            $objPHPExcel->setActiveSheetIndex(0);
+            foreach($fields as $i=>$name){
+                $ck = num2alpha($i++) . $num;
+                $active->setCellValue($ck, $v[$name]);
+            }
+        }
+        $objPHPExcel->getActiveSheet()->setTitle($table);
+        $objPHPExcel->setActiveSheetIndex(0);
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$table.'.xls"');
+        header('Cache-Control: max-age=0');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+        exit;
+    }
     public function showEvaluationMaterialConfigs() {
         $material_configs = \app\admin\model\EvaluationMaterialConfig::getConfigs();
         $this->assign('material_configs', $material_configs);

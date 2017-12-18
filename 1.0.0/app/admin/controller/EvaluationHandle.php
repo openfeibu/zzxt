@@ -78,9 +78,10 @@ class EvaluationHandle extends Base
         }
         $this->success("操作成功",url('admin/StudentOffice/showEvaluationList',array('p'=>$p)));
     }
+
     public function studentOfficeFailAll()
     {
-        
+
     }
     public function evaluationGroup(Request $request)
     {

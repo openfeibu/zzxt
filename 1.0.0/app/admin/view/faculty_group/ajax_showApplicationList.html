@@ -1,12 +1,7 @@
-<?php $num = 1;?>
 {foreach $user as $row}
 <tr>
-    <td>{$num++}</td>
-    <td>{$row.studentname}</td>
-    <td>{$row.studentid}</td>
-    <td>
-        {php}echo config('check_status.'.$row['check_status']);{/php}
-    </td>
+    <td>{$row.status_id}</td>
+    {include file="common\group_application_val"}
     <td class="tab_content">
         <div action="{:url('admin/ScholarshipHandle/MultipleFacultyFill')}" class="passingDiv" method="post">
         <input type="hidden" name="status_id" value="{$row.status_id}" />
