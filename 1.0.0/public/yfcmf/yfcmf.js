@@ -937,10 +937,12 @@ function ajax_page(page) {
 /*搜索form*/
 $(function () {
 	$('body').on('click','.ajax-search-form',function () {
+		load = layer.load(2);
 		$.ajax({
 			type:"POST",
 			data:$(this).parents("form").serialize(),
 			success: function(data,status){
+				if(typeof load!="undefined"){layer.close(load);}
 				$("#ajax-data").html(data);
 			}
 		});
