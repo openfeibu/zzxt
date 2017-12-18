@@ -31,6 +31,15 @@ class Base extends Common
         $menus_child=$auth->get_admin_parent_menus($id_curr);
 		$this->assign('menus_child',$menus_child);
 		$this->assign('id_curr',$id_curr);
+		if(session('admin_auth.aid')){
+			$admin=Db::name('admin')->alias("a")->join(config('database.prefix').'auth_group_access b','a.admin_id =b.uid')
+					->join(config('database.prefix').'auth_group c','b.group_id = c.id')
+					->where(array('a.admin_id'=>session('admin_auth.aid')))->find();
+			$news_count=Db::name('News')->where(array('news_auto'=>session('admin_auth.member_id')))->count();
+			$admin['news_count']=$news_count;
+		}
+		$this->admin = $admin;
+		$this->assign('admin', $admin);
 		$this->assign('admin_avatar',session('admin_auth.admin_avatar'));
 		$this->admin=Db::name('admin')->find(session('admin_auth.aid'));
 	}
