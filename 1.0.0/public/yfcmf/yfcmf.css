@@ -8,3 +8,10 @@
     vertical-align: middle;
     margin-left: 10px;
 }
+.export_btn{
+    float: right;
+    vertical-align: middle;
+}
+.export{
+    font-size: 30px;
+}
