@@ -1,0 +1,16 @@
+{if count($list)}
+{foreach $list as $row}
+<tr>
+    <td>{$row.studentname}</td>
+    <td>{$row.id_number}</td>
+    <td>{$row.profession}{$row.class}</td>
+</tr>
+{/foreach}
+<tr>
+    <td height="50" colspan="12" align="left">{$page}</td>
+</tr>
+{else}
+<tr>
+    <td height="50" colspan="12" align="center">暂无数据</td>
+</tr>
+{/if}

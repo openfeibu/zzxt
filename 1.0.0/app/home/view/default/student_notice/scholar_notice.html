@@ -17,11 +17,11 @@
     </div>
     <form action="" method="post">
         <div class="notice_select">
-            <button class="btn btn-sm" style="margin-bottom: 12px;" name="department" value="1">查看本系</button>
-            <button class="btn btn-sm" style="margin-bottom: 12px;" name="school" value="2">查看全院</button>
+            <button type="submit" class="btn btn-sm ajax-search-form" style="margin-bottom: 12px;" name="faculty" value="1">查看本系通过</button>
+            <button type="submit" class="btn btn-sm ajax-search-form" style="margin-bottom: 12px;" name="faculty" value="0">查看全校通过</button>
         </div>
     </form>
-    {if empty($list[1])}
+    {if !isset($list)}
     公示时间为：{$open_time.begin_time|date='Y-n-d',###} —— {$open_time.end_time|date='Y-n-d',###}
     {else}
     <table width="756px" class="k-w-table line_table" style="margin: 10px auto 20px auto;">
@@ -29,30 +29,13 @@
         <th class="info_bg k-s-content title">姓名</th>
         <th class="info_bg k-s-content title">学号</th>
         <th class="info_bg k-s-content title">班级</th>
-        <!--<th class="info_bg k-s-content title">公示时间</th>-->
         </thead>
-        <tbody>
-        {foreach $list as $row}
-        <tr class="line-table-height">
-            <td class="k-s-content content">{$row.studentname}</td>
-            <td class="k-s-content content">{$row.user_id}</td>
-            <td class="k-s-content content">{$row.profession}{$row.class}</td>
-            <td class="k-s-content content"></td>
-        </tr>
-        {/foreach}
+        <tbody id="ajax-data">
+            {include file="student_notice\scholar_ajax_notice"}
         </tbody>
     </table>
-    <div class="fb-page">
-        {$list->render()}
-    </div>
     {/if}
 </div>
 <!-- 主体内容 E -->
 
 {include file="public/footer"}
-
-
-
-
-
-

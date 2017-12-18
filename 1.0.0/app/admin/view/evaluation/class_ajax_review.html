@@ -1,0 +1,22 @@
+{foreach $user as $num => $row}
+<tr>
+    <td>{$num+1}</td>
+    <td>{$row.studentname}</td>
+    <td>{$row.studentid}</td>
+    <td>{$row.assess_fraction}</td>
+    <td>{$row.change_fraction}</td>
+    <td>{$row.score}</td>
+    <td>{$row.rank}</td>
+    <td>
+        {php}echo config('evaluation_status.'.$row['status']);{/php}
+    </td>
+    <td>
+        <div class="audit_opera">
+            <a href="{:url('admin/EvaluationGroup/showEvaluationMaterial',['id'=>$row.status_id])}" class="btn btn-info btn-sm">添加评语</a>
+        </div>
+    </td>
+</tr>
+{/foreach}
+<tr>
+    <td height="50" colspan="12" align="left">{$page}</td>
+</tr>

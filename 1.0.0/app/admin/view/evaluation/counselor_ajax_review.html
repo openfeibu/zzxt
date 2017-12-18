@@ -1,0 +1,34 @@
+{foreach $user as $num => $row}
+<tr>
+    <td>{$num+1}</td>
+    <td>{$row.studentname}</td>
+    <td>{$row.studentid}</td>
+    <td>{$row.assess_fraction}</td>
+    <td>{$row.change_fraction}</td>
+    <td>{$row.score}</td>
+    <td>{$row.rank}</td>
+    <td>
+        {php}echo config('evaluation_status.'.$row['status']);{/php}
+    </td>
+
+    <td class="tab_content">
+        <form action="{:url('admin/EvaluationHandle/counselor')}" method="post" class="passingForm">
+            <input type="hidden" name="status_id" value="{$row.status_id}" />
+            <div class="audit_opera">
+                <button class="btn btn-info btn-sm btn-success" type="submit" {if !in_array($row.evaluation_status,[2,8])}disabled{/if} name="pass">通过</button>
+            </div>
+            <div class="audit_opera">
+                <button class="btn btn-info btn-sm btn-danger" type="submit" {if !in_array($row.evaluation_status,[2,8])}disabled{/if} name="fail" value="1">不通过</button>
+            </div>
+
+        <div class="audit_opera">
+            <a href="{:url('admin/Counselor/showEvaluationMaterial',['id'=>$row.status_id])}" class="btn btn-info btn-sm">查看</a>
+        </div>
+        </form>
+    </td>
+
+</tr>
+{/foreach}
+<tr>
+    <td height="50" colspan="12" align="left">{$page}</td>
+</tr>

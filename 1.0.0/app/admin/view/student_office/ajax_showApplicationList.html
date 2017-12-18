@@ -1,0 +1,41 @@
+<?php $num = 1;?>
+{foreach $user as $row}
+<tr>
+    <td>
+        {if $row.check_status == 4}
+        <label class="pos-rel">
+            <input name="n_id[]" id="navid" class="ace" type="checkbox" value="{$row.status_id}">
+            <span class="lbl"></span>
+        </label>
+        {/if}
+        {$row.status_id}
+    </td>
+    <td>{$row.studentname}</td>
+    <td>{$row.studentid}</td>
+    <td>{$row.profession}{$row.class}</td>
+    <td>
+        {php}echo config('check_status.'.$row['check_status']);{/php}
+    </td>
+    <td class="tab_content">
+        <div action="{:url('admin/ScholarshipHandle/MultipleStudentOfficeFill')}" class="passingDiv" method="post">
+            <input type="hidden" name="status_id" value="{$row.status_id}" />
+            <div class="audit_opera">
+                <button class="btn btn-info btn-sm btn-success" type="submit" name="pass" {if $row.check_status != 4}disabled{/if}>通过</button>
+            </div>
+            <div class="audit_opera">
+                <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if $row.check_status != 4}disabled{/if} value="1">不通过</button>
+            </div>
+            <div class="audit_opera">
+                <a href="{:url('admin/StudentOffice/showMaterial',['id'=>$row.status_id,'type_id'=>$type_id])}" class="btn btn-info btn-sm">查看</a>
+            </div>
+        </div>
+    </td>
+</tr>
+{/foreach}
+<tr>
+    <td align="left" class="hidden-xs center">
+        <button id="passSubmit" class="btn btn-purple btn-sm hidden-xs" name="pass">通过&nbsp;</button>
+        <button id="failSubmit" class="btn btn-danger  btn-sm hidden-xs" name="fail">不通过</button>
+    </td>
+    <td height="50" colspan="12" align="left">{$page}</td>
+</tr>

@@ -9,12 +9,6 @@
             <i class="ace-icon fa fa-angle-double-right"></i>查看学生家庭经济情况评估院系公示结果
             </small>
         </h1>
-        <form action="" method="post">
-            <div class="pull-right" style="margin: 10px 15% 20px 0;">
-                <button class="btn btn-info btn-sm" name="school" value="2">全院</button>
-                <button class="btn btn-info btn-sm" name="department" value="1">本系</button>
-            </div>
-        </form>
     </div>
     <div class="row clearfix">
         <div class="col-md-12 column">
@@ -26,37 +20,36 @@
                         </td>
                     </tr>
                 </table>
-                {if empty($list[1])}
+                <form class="tab_inquire" method="post">
+                    <select class="form-control tab_select counselor_sub ajax_change faculty_more" name="faculty_number" href="{:url('admin/ClassCode/getClasses')}">
+                        <option value="0">所有系</option>
+                        {foreach $faculties as $row}
+                        <option value="{$row.faculty_number}">{$row.faculty_name}</option>
+                        {/foreach}
+                    </select>
+                    <select class="form-control tab_select counselor_sub ajax_change class_more" name="class_number" >
+                        <option value="0">所有专业</option>
+                    </select>
+                </form>
+                {if !isset($list)}
                 公示时间为：{$open_time.begin_time|date='Y-n-d',###} —— {$open_time.end_time|date='Y-n-d',###}
                 {else}
                 <table class="table table-bordered table-hover tab_center table-striped">
                     <thead>
                     <th>姓名</th>
-                    <th>学号</th>
+                    <th>身份证</th>
                     <th>班级</th>
                     <th>评议分数</th>
                     <th>评议等级</th>
                     <!--<th>公示时间</th>-->
                     </thead>
-                    <tbody>
-                    {foreach $list as $row}
-                    <tr>
-                        <td>{$row.studentname}</td>
-                        <td>{$row.user_id}</td>
-                        <td>{$row.profession}{$row.class}</td>
-                        <!--<td>{$row.publicity_begin|date='Y-n-d',###}—{$row.publicity_end|date='Y-n-d',###}</td>-->
-                    </tr>
-                    {/foreach}
+                    <tbody id="ajax-data">
+                    {include file="notice_front\evaluation_ajax_notice"}
                     </tbody>
                 </table>
                 {/if}
             </div>
         </div>
     </div>
-</div>
-<div class="notice_page">
-    {if !empty($list[1])}
-    {$list->render()}
-    {/if}
 </div>
 {/block}

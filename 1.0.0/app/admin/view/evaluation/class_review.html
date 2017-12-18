@@ -31,7 +31,6 @@
                 </div>
                 <form class="tab_inquire" method="post"  class="" action="{:url('admin/EvaluationGroup/showEvaluationList')}">
                     <p>筛选：</p>
-                    {php}$evaluation_status = config::get('evaluation_status'){/php}
                     <select class="form-control tab_select class_select ajax_change" name="status">
                         <option value="0">全部</option>
                         {foreach $Think.config.evaluation_status as $k => $v}

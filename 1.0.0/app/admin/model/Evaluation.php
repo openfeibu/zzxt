@@ -80,8 +80,20 @@ class Evaluation extends Model
                     ->join('yf_user u', 'u.id_number = m.id_number', 'left')
         			->order('score desc')
         			->where($where)
-                    ->field('ass.*,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,u.*')
+                    ->field('ass.*,m.member_list_username,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,u.*')
                     ->paginate(20);
+    }
+    public static function getAllEvaluationList($where)
+    {
+        return Db::table('yf_evaluation_status')
+                    ->alias('ass')
+                    ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
+                    ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
+                    ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+        			->order('score desc')
+        			->where($where)
+                    ->field('ass.*,m.member_list_username,m.member_list_nickname,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,u.*')
+                    ->select();
     }
     public static function handleEvaluationList($data)
     {
