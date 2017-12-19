@@ -1385,7 +1385,7 @@ function get_menu_model($menus)
  * @return array
  */
 function get_data($table,$join,$joinon,$ids,$cid,$field,$limit,$order,$where_str,$ispage,$pagesize,$key,$page=0)
-{	
+{
 	$where=array();
 	$config=array();
 	if(!empty($page)){
@@ -1431,7 +1431,7 @@ function get_data($table,$join,$joinon,$ids,$cid,$field,$limit,$order,$where_str
 			if($model){
 				$where[$model['model_cid']]=array('in',$id);
 			}
-		}			
+		}
 	}
 	$count=Db::name($table)->field($field)->where($where_str)->where($where)->count();
 	if($ispage=='true'){
@@ -1709,7 +1709,7 @@ function get_score($eval_app)
 		{
 			$score += $eval_score_config['annual_income']['min2']['score'];
 		}
-		
+
 	}
 	if(isset($eval_app['school_population'])){
 		if($eval_app['school_population'] >= $eval_score_config['school_population']['min']['value'])
@@ -1720,9 +1720,47 @@ function get_score($eval_app)
 	//var_dump($eval_app['members']);exit;
 	if(isset($eval_app['members']))
 	{
-		
+
 	}
-	
-	
+
+
 	return $score;
+}
+function export_excel($data,$table,$field_titles,$fields)
+{
+	error_reporting(E_ALL);
+	date_default_timezone_set('Asia/chongqing');
+	$objPHPExcel = new \PHPExcel();
+	//import("Org.Util.PHPExcel.Reader.Excel5");
+	/*设置excel的属性*/
+	$objPHPExcel->getProperties()->setCreator("wuzhijie")//创建人
+	->setLastModifiedBy("wuzhijie")//最后修改人
+	->setKeywords("excel")//关键字
+	->setCategory("result file");//种类
+
+	//第一行数据
+	$objPHPExcel->setActiveSheetIndex(0);
+	$active = $objPHPExcel->getActiveSheet();
+	foreach($field_titles as $i=>$name){
+		$ck = num2alpha($i++) . '1';
+		$active->setCellValue($ck, $name);
+	}
+	//填充数据
+	foreach($data as $k => $v){
+		$k=$k+1;
+		$num=$k+1;//数据从第二行开始录入
+		$objPHPExcel->setActiveSheetIndex(0);
+		foreach($fields as $i=>$name){
+			$ck = num2alpha($i++) . $num;
+			$active->setCellValue($ck, $v[$name]);
+		}
+	}
+	$objPHPExcel->getActiveSheet()->setTitle($table);
+	$objPHPExcel->setActiveSheetIndex(0);
+	header('Content-Type: application/vnd.ms-excel');
+	header('Content-Disposition: attachment;filename="'.$table.'.xls"');
+	header('Cache-Control: max-age=0');
+	$objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+	$objWriter->save('php://output');
+	exit;
 }

@@ -282,6 +282,11 @@ $configs= [
         '8' => '院系小组不通过',
         '9' => '学生处不通过',
     ],
+    'application_type' => [
+        '1' => '奖学金',
+        '2' => '励志奖学金',
+        '3' => '助学金',
+    ],
 ];
 //动态设置
 if(file_exists($file=ROOT_PATH."data/conf/config.php")){

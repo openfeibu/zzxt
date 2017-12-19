@@ -50,6 +50,12 @@
                         <input type="text" placeholder="学号/姓名" name="studentname">
                         <button class="btn btn-info btn-sm" type="submit">查询</button>
                     </div>
+                    <div class="tab_search">
+                        <a href="{:url('admin/StudentOffice/applicantListExport',array('id' => $type_id))}" title="导出">
+                            导出：
+    						<i class="fa fa-download export"></i>
+    					</a>
+                    </div>
                 </form>
                 <form class="ajaxForm" id="alldel" name="alldel" method="post" action="{:url('admin/ScholarshipHandle/MultipleStudentOfficeFillAll')}">
                 <table class="table table-striped table-bordered table-hover tab_center">

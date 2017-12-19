@@ -81,6 +81,18 @@ class MultipleScholarship extends Model
                     ->paginate(20);
         return $data;
     }
+    public static function getAllMultipleList($where = [])
+    {
+        $data = Db::name('multiple_scholarship')
+                    ->alias('ms')
+                    ->join('yf_apply_scholarships_status ass','ass.application_id = ms.multiple_id')
+                    ->join('yf_member_list m', 'm.member_list_id = ms.member_list_id')
+                    ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+                    ->where($where)
+                    ->field('u.*,ass.status_id,ass.status,ms.check_status,ms.multiple_id,m.member_list_username,m.member_list_nickname')
+                    ->select();
+        return $data;
+    }
     public static function isHaveApply($member_list_id,$type)
     {
         // $time = date('Y', time());

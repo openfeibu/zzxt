@@ -37,136 +37,6 @@ class StudentOffice extends Base
         $faculties = $this->classCode->getFaculties();
         $this->assign('faculties',$faculties);
     }
-
-    /**获取申请学生列表
-     * @return mixed
-     */
-     /*
-    public function showApplicantList($id)
-    {
-        if ($id != 3 and $id !=2 and $id != 1) {
-            return $this->error('该操作有误。请联系管理员解决');
-        }
-        if (request()->isPost()) {
-            $data = request()->post();
-            //学号
-            if (!empty($data['studentname'])) {
-                //学号
-                if (strlen($data['studentname']) == 11) {
-                    $studentname = "studentid = '".$data['studentname']."'";
-                } else {
-                    $studentname = "studentname = '".$data['studentname']."'";
-                }
-            } else {
-                $studentname = '';
-            }
-            //年级
-            if ($data['grade'] != 0) {
-                $grade = "current_grade = '".$data['grade']."'";
-            } else {
-                $grade = '';
-            }
-            //系别
-            if ($data['faculty'] != 0) {
-                $faculty_profession_sql = "faculty_number = '".$data['faculty']."'";
-            } else {
-                $faculty_profession_sql = '';
-            }
-            //找人
-            $data_students = Db::table('yf_apply_scholarships_status')
-                ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-                ->where('ass.fund_type' ,$id)
-                ->where($studentname)
-                ->where($grade)
-                ->where($faculty_profession_sql)
-                ->paginate(20);
-            //查院系的
-			$classCode = new ClassCOde();
-            $faculty_profession = $classCode->getFaculties();
-            //这里比较麻烦。先找出提交上来的那个专业。
-            $faculty_name = $classCode->getFaculty($data['faculty']);
-            if ($data['faculty'] != 0 and $data['grade'] != 0) {
-                $faculty_name = $data['grade'].$faculty_name['faculty_name'];
-            } elseif ($data['faculty'] != 0 and $data['grade'] == 0) {
-                $faculty_name = $faculty_name['faculty_name'];
-            } elseif ($data['faculty'] == 0 and $data['grade'] != 0) {
-                $faculty_name = $data['grade']."全院";
-            } else {
-                $faculty_name = "全院";
-            }
-            //绝笔要撕逼(未通过的)
-            $faculty_count = Db::table('yf_apply_scholarships_status')
-                ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-                ->where('ass.fund_type', $id)
-                ->where($grade)
-                ->where($faculty_profession_sql)
-                ->where('ass.status !=4')
-                ->count();
-            //总得人数
-            $faculty_all_count = Db::table('yf_apply_scholarships_status')
-                ->alias('ass')//asshold
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-                ->where($grade)
-                ->where('ass.fund_type', $id)
-                ->where($faculty_profession_sql)
-                ->count();
-            $this->assign('type_id', $id);
-            $this->assign('faculty_name', $faculty_name);
-            $this->assign('faculty_not_pass', $faculty_count);
-            $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
-            $this->assign('faculty', $faculty_profession);
-//            $this->assign('profession', $faculty_profession);
-            $this->assign('user', $data_students);
-            return $this->fetch();
-        }
-        //get请求
-
-        //查找呃
-        if ($id == 1) {
-            $data = Db::table('yf_apply_scholarships_status')
-                ->alias('ass')
-                ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-                ->join('yf_national_scholarship ms', 'ass.national_id = ms.national_id', 'left')
-                ->field('ms.*,u.*,ass.status,ass.status_id')
-                ->where('ms.publicity_end <'.time())
-                ->where('ass.fund_type', $id)
-                ->paginate(20);
-        } else {
-            $where = [
-                //'ms.publicity_end' => ['<',time()],
-            ];
-            $data = MultipleScholarship::getMultipleList($where);
-        }
-        $show=$data->render();
-        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
-        //查院
-		$classCode = new ClassCOde();
-        $faculty_profession = $classCode->getFaculties();
-        //绝笔要撕逼(未通过的)
-        $faculty_count = Db::table('yf_apply_scholarships_status')
-            ->alias('ass')//asshold
-            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-            ->where('ass.fund_type', $id)
-            ->where('ass.status !=4')
-            ->count();
-        //总得人数
-        $faculty_all_count = Db::table('yf_apply_scholarships_status')
-            ->alias('ass')//asshold
-            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
-            ->where('ass.fund_type', $id)
-            ->count();
-        $this->assign('type_id', $id);
-        $this->assign('faculty_not_pass', $faculty_count);
-        $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
-        $this->assign('faculty_name', '院系');
-        $this->assign('faculty', $faculty_profession);
-        $this->assign('user', $data);
-        $this->assign('page', $show);
-        return $this->fetch();
-    }
-    */
     public function showApplicantList()
     {
         return $this->showApplicantListHandle(3);
@@ -207,10 +77,6 @@ class StudentOffice extends Base
         {
             $data = NationalScholarship::getNationalList($where);
         }else{
-            // $where = [
-            //     //'ms.publicity_end' => ['<',time()],
-            //     'ms.application_type' => $id,
-            // ];
             $where .= " AND ms.application_type = '".$id."'";
             $data = MultipleScholarship::getMultipleList($where);
         }
@@ -242,6 +108,45 @@ class StudentOffice extends Base
 		}else{
 			return $this->fetch('showApplicantList');
 		}
+    }
+    public function applicantListExport($id)
+    {
+        $faculty_number = input('faculty_number',0);
+        $class_number = input('class_number',0);
+        $studentname = input('studentname','');
+        $status = input('status','');
+        $where = ' 1 = 1 ';
+        if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }else{
+            if($faculty_number)
+            {
+                $where .= " AND u.faculty_number = '".$faculty_number."'";
+            }
+        }
+        if($status)
+        {
+            $where .= " AND status = '".$status."'";
+        }
+        if($studentname)
+        {
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+        }
+        if($id == 1)
+        {
+            $data = NationalScholarship::getAllNationalList($where);
+        }else{
+            $where .= " AND ms.application_type = '".$id."'";
+            $data = MultipleScholarship::getAllMultipleList($where);
+        }
+        foreach ($data as $key => $val) {
+            $data[$key]['status'] = config('check_status.'.$val['status']);
+        }
+        $field_titles = ['姓名','学号','院系','专业','班级','状态'];
+        $fields = ['studentname','studentid','department_name','profession','class','status'];
+        $table = config('application_type.'.$id).date('YmdHis');
+        export_excel($data,$table,$field_titles,$fields);
     }
     /**
      * 查看学生申请资料
@@ -502,26 +407,6 @@ class StudentOffice extends Base
     }
 
     /**
-     * 公示5天
-     */
-//    public function showPublicity()
-//    {
-//        $data = Db::table('yf_apply_scholarships_status')
-//            ->alias('ass')
-//            ->join('yf_user u', 'u.studentid = ass.user_id', 'left')
-//            ->join('yf_multiple_scholarship ms', 'ms.multiple_id = ass.multiple_id', 'left')
-//            ->field('ms.*,u.*')
-//            ->where('ass.fund_type', 2)
-//            ->where('ass.status',4)
-//            ->where('ms.office_begin < '.time())
-//            ->where('ms.office_end >'.time())
-////            ->where('u.faculty_number', 5)
-//            ->paginate(20);
-//        $this->assign('list', $data);
-//        return $this->fetch();
-//    }
-
-    /**
      * 查看学生列表（评估系统）
      */
     public function showEvaluationList() {
@@ -594,7 +479,7 @@ class StudentOffice extends Base
 			return $this->fetch('evaluation/manage_review');
 		}
     }
-    public  function showEvaluationListExport()
+    public function showEvaluationListExport()
     {
         $faculty_number = input('faculty_number',0);
         $class_number = input('class_number',0);
@@ -619,45 +504,14 @@ class StudentOffice extends Base
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
         }
         $data = Evaluation::getAllEvaluationList($where);
-
-        $field_titles = ['高职专业负责人','高职专业'];
-        $fields = ['admin_username','recruit_major_name'];
-        $table = '高职专业负责人'.date('YmdHis');
-        error_reporting(E_ALL);
-        date_default_timezone_set('Asia/chongqing');
-        $objPHPExcel = new \PHPExcel();
-        //import("Org.Util.PHPExcel.Reader.Excel5");
-        /*设置excel的属性*/
-        $objPHPExcel->getProperties()->setCreator("wuzhijie")//创建人
-        ->setLastModifiedBy("wuzhijie")//最后修改人
-        ->setKeywords("excel")//关键字
-        ->setCategory("result file");//种类
-
-        //第一行数据
-        $objPHPExcel->setActiveSheetIndex(0);
-        $active = $objPHPExcel->getActiveSheet();
-        foreach($field_titles as $i=>$name){
-            $ck = num2alpha($i++) . '1';
-            $active->setCellValue($ck, $name);
+        foreach ($data as $key => $val) {
+            $data[$key]['rank'] = Evaluation::getGrade($val['score']);
+            $data[$key]['status'] = config('evaluation_status.'.$val['status']);
         }
-        //填充数据
-        foreach($data as $k => $v){
-            $k=$k+1;
-            $num=$k+1;//数据从第二行开始录入
-            $objPHPExcel->setActiveSheetIndex(0);
-            foreach($fields as $i=>$name){
-                $ck = num2alpha($i++) . $num;
-                $active->setCellValue($ck, $v[$name]);
-            }
-        }
-        $objPHPExcel->getActiveSheet()->setTitle($table);
-        $objPHPExcel->setActiveSheetIndex(0);
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'.$table.'.xls"');
-        header('Cache-Control: max-age=0');
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save('php://output');
-        exit;
+        $field_titles = ['姓名','学号','专业','系统分','评议分','总分','评定等级','状态'];
+        $fields = ['studentname','studentid','profession','assess_fraction','change_fraction','score','rank','status'];
+        $table = '学生家庭经济困难认定'.date('YmdHis');
+        export_excel($data,$table,$field_titles,$fields);
     }
     public function showEvaluationMaterialConfigs() {
         $material_configs = \app\admin\model\EvaluationMaterialConfig::getConfigs();
