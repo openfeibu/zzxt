@@ -28,7 +28,7 @@ class NationalScholarship extends Model
             ->find();
         return $result->getData();
     }
-    public static function getNationalList($where = [])
+    public static function getNationalList($where = [],$order = '')
     {
         $data = Db::name('national_scholarship')
                     ->alias('ns')
@@ -36,6 +36,7 @@ class NationalScholarship extends Model
                     ->join('yf_member_list m', 'm.member_list_id = ns.member_list_id')
                     ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                     ->where($where)
+                    ->order($order)
                     ->field('u.*,ass.status_id,ns.check_status,ns.national_id,m.member_list_username,m.member_list_nickname')
                     ->paginate(20);
         return $data;

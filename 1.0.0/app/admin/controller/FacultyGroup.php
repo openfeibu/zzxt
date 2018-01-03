@@ -202,12 +202,14 @@ class FacultyGroup extends Base
         }else{
             $where .= " AND u.faculty_number = ".$this->faculty." ";
         }
+        $order = "charindex(','+convert(varchar,check_status)+',',',1,2,3,4,5,6,7,8,')";
+        $where .= " AND check_status in(2,1,3,4,5,6,7,8)";
         if($id == 1)
         {
-            $data = NationalScholarship::getNationalList($where);
+            $data = NationalScholarship::getNationalList($where,$order);
         }else{
             $where .= " AND ms.application_type = '".$id."'";
-            $data = MultipleScholarship::getMultipleList($where);
+            $data = MultipleScholarship::getMultipleList($where,$order);
         }
 
         $show=$data->render();

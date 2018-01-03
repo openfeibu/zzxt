@@ -69,7 +69,7 @@ class MultipleScholarship extends Model
             ->update($data);
         return $bool;
     }
-    public static function getMultipleList($where = [])
+    public static function getMultipleList($where = [],$order = '')
     {
         $data = Db::name('multiple_scholarship')
                     ->alias('ms')
@@ -77,6 +77,7 @@ class MultipleScholarship extends Model
                     ->join('yf_member_list m', 'm.member_list_id = ms.member_list_id')
                     ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                     ->where($where)
+                    ->order($order)
                     ->field('u.*,ass.status_id,ms.check_status,ms.multiple_id,m.member_list_username,m.member_list_nickname')
                     ->paginate(20);
         return $data;
