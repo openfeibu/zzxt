@@ -1183,7 +1183,86 @@ $('body').on('click',".passingForm button[type='submit']",function () {
 	});
 	return false;
 });
+$('body').on('click',".passingForm2 button[type='submit']",function () {
+	$this = $(this);
+	var url = $(this).closest("form").attr('action');
+	data = $(this).closest("form").serialize();
+	name = $(this).attr('name');
+	text = $(this).closest("tr").find(".text").val();
+	textname = $(this).closest("tr").find(".text").attr('name');
+	change_fraction = $(this).closest("tr").find(".change_fraction").val();
+	fail = '';
+	if(name == 'fail')
+	{
+		fail = 1;
+	}
+	data = data +"&"+"fail="+fail+"&"+textname+"="+text+"&change_fraction="+change_fraction;
+	//console.log(data);return false;
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:url,
+		data:data,// 你的formid
+		async: false,
+		error: function(request) {
+			layer.msg("连接失败",{icon: 5});
+			return false;
+		},
+		success: function(data) {
+			$this.closest("form").find("button[name='pass']").attr('disabled',true);
+			$this.closest("form").find("button[name='fail']").attr('disabled',true);
+			if (data.code == 200) {
+				$this.closest("tr").find(".text").attr("disabled",true);
+				$this.closest("tr").find(".change_fraction").attr("disabled",true);
+				$this.closest("tr").find(".score").text(data.score);
+				$this.closest("tr").find(".status").text(data.status);
+                layer.msg(data.msg,{icon: 6});
+            }else{
+                layer.msg(data.msg,{icon: 5});
+            }
+			return false;
+		}
+	});
+	return false;
+});
 $('body').on('click','.passingDiv button',function () {
+	$this = $(this);
+	var url = $(this).closest(".passingDiv").attr('action');
+	var status_id = $(this).closest(".passingDiv").find("input[name = 'status_id']").val();
+	name = $(this).attr('name');
+	fail = '';
+	if(name == 'fail')
+	{
+		fail = 1;
+	}
+	text = $(this).closest("tr").find(".text").val();
+	textname = $(this).closest("tr").find(".text").attr('name');
+	//console.log(status_id);return false;
+	data = {'status_id':status_id,'fail':fail,''+textname+'':textname};
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:url,
+		data:data,// 你的formid
+		async: false,
+		error: function(request) {
+			layer.msg("连接失败",{icon: 5});
+			return false;
+		},
+		success: function(data) {
+			$this.closest(".passingDiv").find("button[name='pass']").attr('disabled',true);
+			$this.closest(".passingDiv").find("button[name='fail']").attr('disabled',true);
+			if (data.code == 200) {
+                layer.msg(data.msg,{icon: 6});
+            }else{
+                layer.msg(data.msg,{icon: 5});
+            }
+			return false;
+		}
+	});
+	return false;
+});
+$('body').on('click','.passingDiv2 button',function () {
 	$this = $(this);
 	var url = $(this).closest(".passingDiv").attr('action');
 	var status_id = $(this).closest(".passingDiv").find("input[name = 'status_id']").val();
