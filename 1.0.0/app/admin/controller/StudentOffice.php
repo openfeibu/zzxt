@@ -587,35 +587,15 @@ class StudentOffice extends Base
             ->field('u.*,app.*')
             ->where('evaluation_id',$data['evaluation_id'])
             ->find();
-
-//        if (!empty($apply['awards'])) {
-//            $apply['awards'] = json_decode($apply['awards'], true);
-//        } else {
-//            $apply['awards'][0]['date'] = '';
-//            $apply['awards'][0]['name'] = '';
-//            $apply['awards'][0]['unit'] = '';
-//        }
-        $apply['group_opinion'] = $apply['group_opinion'] ? json_decode($apply['group_opinion'], true) : [];
-        if (!empty($apply['faculty_opinion'])) {
-            $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
-        } else {
-            $apply['faculty_opinion']['time'] = time();
-            $apply['faculty_opinion']['text'] = '';
-            $apply['faculty_opinion']['name'] = '';
-        }
-        if (!empty($apply['school_opinion'])) {
-            $apply['school_opinion'] = json_decode($apply['school_opinion'], true);
-        } else {
-            $apply['school_opinion']['time'] = time();
-            $apply['school_opinion']['text'] = '';
-            $apply['school_opinion']['name'] = '';
-        }
+        $apply = handleApply($apply);
         $apply['members'] = unserialize($apply['members']);
 		$this->assign('eval_app', $apply);
 		$eval_form = Config::get('evaluation_form');
 		$this->assign('eval_form',$eval_form);
         $this->assign('status_id', $id);
         $this->assign('user', $apply);
+        $material = \app\admin\model\Evaluation::getEvaluationMaterial($apply['evaluation_id']);
+        $this->assign('material', $material);
         return $this->view->fetch('evaluation/manage_add_review');
     }
 

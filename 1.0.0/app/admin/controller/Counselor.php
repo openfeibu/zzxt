@@ -11,6 +11,7 @@ namespace app\admin\controller;
 use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\NationalScholarship;
 use app\admin\model\Evaluation;
+use app\home\model\MultipleScholarship;
 use app\admin\model\ClassCode as ClassCodeModel;
 use think\Db;
 use think\Config;
@@ -36,7 +37,80 @@ class Counselor extends Base
         $classes = $this->classCode->getClassByNumbers($this->class_number);
 		$this->assign('classes', $classes);
     }
-
+    public function showApplicantList()
+    {
+        return $this->showApplicantListHandle(3);
+    }
+    public function showApplicantList2()
+    {
+        return $this->showApplicantListHandle(2);
+    }
+    public function showApplicantList3()
+    {
+        return $this->showApplicantListHandle(1);
+    }
+    public function showApplicantListHandle($id)
+    {
+        $faculty_number = input('faculty_number',0);
+        $class_number = input('class_number',0);
+        $studentname = input('studentname','');
+        $status = input('status','');
+        $where = ' 1 = 1 ';
+        if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }else{
+            $where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
+        }
+        if($status)
+        {
+            $where .= " AND status = '".$status."'";
+        }
+        if($studentname)
+        {
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+        }
+        if($id == 1)
+        {
+            $data = NationalScholarship::getNationalList($where);
+        }else{
+            $where .= " AND ms.application_type = '".$id."'";
+            $data = MultipleScholarship::getMultipleList($where);
+        }
+        $show=$data->render();
+        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+        $data_arr = $data->all();
+        foreach($data_arr as $key => $value)
+        {
+            $data_arr[$key] = handleApply($value);
+        }
+        $faculty_profession = $this->classCode->getFaculties();
+        //绝笔要撕逼(未通过的)
+        $faculty_count = Db::table('yf_apply_scholarships_status')
+            ->alias('ass')//asshold
+            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->where('ass.fund_type', $id)
+            ->where('ass.status !=4')
+            ->count();
+        //总得人数
+        $faculty_all_count = Db::table('yf_apply_scholarships_status')
+            ->alias('ass')//asshold
+            ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
+            ->where('ass.fund_type', $id)
+            ->count();
+        $this->assign('type_id', $id);
+        $this->assign('faculty_not_pass', $faculty_count);
+        $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
+        $this->assign('faculty_name', '院系');
+        $this->assign('faculty', $faculty_profession);
+        $this->assign('user', $data_arr);
+        $this->assign('page', $show);
+        if(request()->isAjax()){
+			return $this->fetch('scholarship_team/counselor_ajax_review');
+		}else{
+			return $this->fetch('scholarship_team/counselor_review');
+		}
+    }
     /**
      * 获取申请学生列表(国家奖学金)
      */
@@ -49,7 +123,7 @@ class Counselor extends Base
         {
             $where .= " AND u.class_number = '".$class_number."'";
         }else{
-                //$where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
+            $where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
         }
         if($status)
         {
@@ -104,13 +178,7 @@ class Counselor extends Base
             $apply['awards'][0]['name'] = '';
             $apply['awards'][0]['unit'] = '';
         }
-        if (!empty($apply['group_opinion'])) {
-            $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-        } else {
-            $apply['group_opinion']['text'] = '';
-            $apply['group_opinion']['name'] = '';
-            $apply['group_opinion']['time'] = time();
-        }
+        $apply = handleApply($apply);
 
         $this->assign('id', $id);
         $this->assign('user', $apply);
@@ -186,7 +254,10 @@ class Counselor extends Base
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
         }
-        $data = Evaluation::getEvaluationList($where);
+    //    $order = "ORDER BY CHARINDEX(',' + CONVERT(VARCHAR(10), ass.status) + ',' + '1,2,3,4,5,6,7,8')";
+        $order = "charindex(','+convert(varchar,status)+',',',1,2,3,4,5,6,7,8,')";
+        $where .= " AND ass.status in(1,2,3,4,5,6,7,8)";
+        $data = Evaluation::getEvaluationList($where,$order);
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 
@@ -245,7 +316,7 @@ class Counselor extends Base
             ->where('evaluation_id',$data['evaluation_id'])
             ->field('u.*,app.*')
             ->find();
-
+        $apply = handleApply($apply);
 
         $this->assign('status_id', $id);
         $this->assign('user', $apply);
@@ -253,7 +324,8 @@ class Counselor extends Base
 		$this->assign('eval_app',$apply);
 		$eval_form = Config::get('evaluation_form');
 		$this->assign('eval_form',$eval_form);
-
+        $material = \app\admin\model\Evaluation::getEvaluationMaterial($apply['evaluation_id']);
+        $this->assign('material', $material);
         return $this->view->fetch('evaluation/counselor_add_review');
     }
 

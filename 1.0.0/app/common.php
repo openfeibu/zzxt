@@ -1764,3 +1764,21 @@ function export_excel($data,$table,$field_titles,$fields)
 	$objWriter->save('php://output');
 	exit;
 }
+function handleApply($apply = array())
+{
+	if (!empty($apply['group_opinion'])) {
+		$apply['group_opinion'] = json_decode($apply['group_opinion'], true);
+	} else {
+		$apply['group_opinion']['text'] = '';
+		$apply['group_opinion']['name'] = '';
+		$apply['group_opinion']['time'] = time();
+	}
+	if (!empty($apply['faculty_opinion'])) {
+		$apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
+	} else {
+		$apply['faculty_opinion']['time'] = time();
+		$apply['faculty_opinion']['text'] = '';
+		$apply['faculty_opinion']['name'] = '';
+	}
+	return $apply;
+}

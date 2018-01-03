@@ -1,15 +1,30 @@
 {foreach $user as $num => $row}
+
 <tr>
     <td>{$row.evaluation_id}</td>
-    {include file="common\evaluation_val"}
+    <td>{$row.studentname}</td>
+    <td>{$row.studentid}</td>
+    <td>{$row.profession}</td>
+    <td>{$row.assess_fraction}</td>
+    <td ><input name="change_fraction" value="{$row.change_fraction}" class="change_fraction" style="width:40px" {if !in_array($row.evaluation_status,[1,2])}disabled{/if}></td>
+    <td class="score">{$row.score}</td>
+    <td>{$row.rank}</td>
+    <td class="status">
+        {php}echo config('evaluation_status.'.$row['status']);{/php}
+    </td>
+
+    <td>
+        <textarea name="group_opinion[text]" class="tab_opinion text" style="height:60px;" {if !in_array($row.evaluation_status,[1,2])}disabled{/if}>{$row.group_opinion.text}</textarea>
+    </td>
     <td class="tab_content">
-        <form action="{:url('admin/EvaluationHandle/counselor')}" method="post" class="passingForm">
+        <form action="{:url('admin/EvaluationHandle/counselor')}" method="post" class="passingForm2">
             <input type="hidden" name="status_id" value="{$row.status_id}" />
+            <input type="hidden" name="evaluation_id" value="{$row.evaluation_id}" />
             <div class="audit_opera">
-                <button class="btn btn-info btn-sm btn-success" type="submit" {if !in_array($row.evaluation_status,[2,8])}disabled{/if} name="pass">通过</button>
+                <button class="btn btn-info btn-sm btn-success" type="submit" {if !in_array($row.evaluation_status,[1,2])}disabled{/if} name="pass">通过</button>
             </div>
             <div class="audit_opera">
-                <button class="btn btn-info btn-sm btn-danger" type="submit" {if !in_array($row.evaluation_status,[2,8])}disabled{/if} name="fail" value="1">不通过</button>
+                <button class="btn btn-info btn-sm btn-danger" type="submit" {if !in_array($row.evaluation_status,[1,2])}disabled{/if} name="fail" value="1">不通过</button>
             </div>
 
         <div class="audit_opera">
@@ -17,8 +32,8 @@
         </div>
         </form>
     </td>
-
 </tr>
+
 {/foreach}
 <tr>
     <td height="50" colspan="12" align="left">{$page}</td>

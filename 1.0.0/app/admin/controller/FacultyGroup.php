@@ -212,6 +212,11 @@ class FacultyGroup extends Base
 
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+        $data_arr = $data->all();
+        foreach($data_arr as $key => $value)
+        {
+            $data_arr[$key] = handleApply($value);
+        }
         //查院
         $faculty_profession = Db::table('yf_user')
             ->field("DISTINCT profession ,profession_number")
@@ -240,7 +245,7 @@ class FacultyGroup extends Base
         $this->assign('faculty_name', '院系');
         $this->assign('faculty', $this->faculty);
         $this->assign('profession', $faculty_profession);
-        $this->assign('user', $data);
+        $this->assign('user', $data_arr);
         $this->assign('page', $show);
         if(request()->isAjax()){
 			return $this->fetch('ajax_showApplicationList');
@@ -255,7 +260,6 @@ class FacultyGroup extends Base
     {
         $apply_id = $id;
         $data = Db::table('yf_apply_scholarships_status')
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
             ->where('status_id', $id)
             ->find();
         if (!$data) {
@@ -282,20 +286,7 @@ class FacultyGroup extends Base
                 $apply['awards'][0]['unit'] = '';
             }
 
-            if (!empty($apply['faculty_opinion'])) {
-                $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
-            } else {
-                $apply['faculty_opinion']['time'] = time();
-                $apply['faculty_opinion']['text'] = '';
-                $apply['faculty_opinion']['name'] = '';
-            }
-            if (!empty($apply['group_opinion'])) {
-                $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-            } else {
-                $apply['group_opinion']['time'] = time();
-                $apply['group_opinion']['text'] = '';
-                $apply['group_opinion']['name'] = '';
-            }
+            $apply = handleApply($apply);
             $this->assign('type_id', $type_id);
             $this->assign('id', $apply_id);
             $this->assign('user', $apply);
@@ -318,20 +309,7 @@ class FacultyGroup extends Base
                 $apply['members'][0]['unit'] = '';
             }
 
-            if (!empty($apply['faculty_opinion'])) {
-                $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
-            } else {
-                $apply['faculty_opinion']['time'] = time();
-                $apply['faculty_opinion']['text'] = '';
-                $apply['faculty_opinion']['name'] = '';
-            }
-            if (!empty($apply['group_opinion'])) {
-                $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-            } else {
-                $apply['group_opinion']['time'] = time();
-                $apply['group_opinion']['text'] = '';
-                $apply['group_opinion']['name'] = '';
-            }
+            $apply = handleApply($apply);
             $this->assign('type_id', $type_id);
             $this->assign('id', $apply_id);
             $this->assign('user', $apply);
@@ -582,11 +560,7 @@ class FacultyGroup extends Base
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 
         $data_arr = $data->all();
-        foreach ($data as $key => $val) {
-            $data_arr[$key]['material_score'] = Evaluation::getMaterilaScore($val['evaluation_id']);
-            $data_arr[$key]['rank'] = Evaluation::getGrade($val['score']);
-        }
-
+        $data_arr = Evaluation::handleEvaluationList($data_arr);
         //查院
         $faculty_profession = Db::table('yf_user')
             ->field("DISTINCT profession ,profession_number")
@@ -635,22 +609,8 @@ class FacultyGroup extends Base
 		$evaluation_model = new Evaluation();
         $apply = $evaluation_model->getEvaluation($data['evaluation_id']);
 
-//        if (!empty($apply['awards'])) {
-//            $apply['awards'] = json_decode($apply['awards'], true);
-//        } else {
-//            $apply['awards'][0]['date'] = '';
-//            $apply['awards'][0]['name'] = '';
-//            $apply['awards'][0]['unit'] = '';
-//        }
+        $apply = handleApply($apply);
 
-        $apply['group_opinion'] = $apply['group_opinion'] ? json_decode($apply['group_opinion'], true) : [];
-        if (!empty($apply['faculty_opinion'])) {
-            $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
-        } else {
-            $apply['faculty_opinion']['time'] = time();
-            $apply['faculty_opinion']['text'] = '';
-            $apply['faculty_opinion']['name'] = '';
-        }
         $apply['members'] = unserialize($apply['members']);
 		$this->assign('eval_app',$apply);
 		$eval_form = Config::get('evaluation_form');
@@ -658,6 +618,10 @@ class FacultyGroup extends Base
 
         $this->assign('status_id', $id);
         $this->assign('user', $apply);
+
+        $material = \app\admin\model\Evaluation::getEvaluationMaterial($apply['evaluation_id']);
+        $this->assign('material', $material);
+
         return $this->view->fetch('evaluation/faculty_add_review');
     }
 

@@ -2,8 +2,11 @@
 <tr>
     <td>{$row.evaluation_id}</td>
     {include file="common\evaluation_val"}
+    <td>
+        <textarea name="faculty_opinion[text]" class="tab_opinion text" style="height:60px;" {if !in_array($row.evaluation_status,[3,9])}disabled{/if}>{$row.faculty_opinion.text}</textarea>
+    </td>
     <td class="tab_content">
-        <form action="{:url('admin/EvaluationHandle/faculty')}" class="passingForm" method="post">
+        <form action="{:url('admin/EvaluationHandle/faculty')}" class="passingForm2" method="post">
         <input type="hidden" name="user_name" value="{:session('admin_auth.admin_username')}">
         <input type="hidden" name="status_id" value="{$row.status_id}" />
         <div class="audit_opera">

@@ -27,6 +27,19 @@ class EvaluationHandle extends Base
         } else {
             $evdata['evaluation_status'] = $status = 3;
         }
+        //构造评语什么的
+        $array['text'] = $data['group_opinion']['text'];
+        $array['name'] = '';
+        $array['time'] = time();
+        $evdata['group_opinion'] = json_encode($array);
+        $id = $data['status_id'];
+        $evaluation_id = $data['evaluation_id'];
+        //更新
+        $evaluation_model = new Evaluation();
+        $eval_app = $evaluation_model->getEvaluation($evaluation_id);
+
+        $evdata['score'] = intval($eval_app['assess_fraction']) + intval($data['change_fraction']) ;
+        $evdata['change_fraction'] = intval($data['change_fraction']);
         return $this->fill($data,$evdata,$status);
     }
     public function faculty(Request $request)
@@ -118,13 +131,11 @@ class EvaluationHandle extends Base
             ->update($evdata);
         //更新申请状态
         $res = Db::table('yf_evaluation_status')
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
             ->where('status_id', $status_id)
             ->update([
                 'update_at' => time(),
                 'status' => $status
             ]);
-
         if (!$res) {
             return [
                 'code' => '201',
@@ -134,6 +145,8 @@ class EvaluationHandle extends Base
         return [
             'code' => '200',
             'msg' => '操作成功',
+            'score' => isset($evdata['score']) ? $evdata['score'] : '',
+            'status' => config('evaluation_status.'.$evdata['evaluation_status']),
         ];
     }
 }

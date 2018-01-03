@@ -34,8 +34,9 @@ class ScholarshipHandle extends Base
         }
         //构造评语什么的
         $array['text'] = $data['group_opinion']['text'];
-        $array['name'] = $data['group_opinion']['name'];
-        $array['time'] = strtotime($data['group_opinion']['year']."-".$data['group_opinion']['month']."-".$data['group_opinion']['day']);
+        //$array['name'] = $data['group_opinion']['name'];
+        $array['name'] = '';
+        $array['time'] = time();
         $update_app_data['group_opinion'] = json_encode($array);
         //状态表的id
         $status_id = $data['status_id'];
@@ -61,8 +62,9 @@ class ScholarshipHandle extends Base
         }
         //构造评语
         $array['text'] = $data['group_opinion']['text'];
-        $array['name'] = $data['group_opinion']['name'];
-        $array['time'] = strtotime($data['group_opinion']['year']."-".$data['group_opinion']['month']."-".$data['group_opinion']['day']);
+        //$array['name'] = $data['group_opinion']['name'];
+        $array['name'] = '';
+        $array['time'] = time();
         $update_app_data['group_opinion'] = json_encode($array);
 
         //状态表的id
@@ -87,8 +89,9 @@ class ScholarshipHandle extends Base
         if(isset($data['faculty_opinion']))
         {
             $array['text'] = $data['faculty_opinion']['text'];
-            $array['name'] = $data['faculty_opinion']['name'];
-            $array['time'] = strtotime($data['faculty_opinion']['year']."-".$data['faculty_opinion']['month']."-".$data['faculty_opinion']['day']);
+            //$array['name'] = $data['faculty_opinion']['name'];
+            $array['name'] = '';
+            $array['time'] = time();
             $update_app_data['faculty_opinion'] = json_encode($array);
         }
 
@@ -116,9 +119,9 @@ class ScholarshipHandle extends Base
         if(isset($data['faculty_opinion']))
         {
             $array['text'] = $data['faculty_opinion']['text'];
-            $array['name'] = $data['faculty_opinion']['name'];
-            $array['time'] = strtotime($data['faculty_opinion']['year']."-".$data['faculty_opinion']['month']."-".$data['faculty_opinion']['day']);
-            $update_app_data['faculty_opinion'] = json_encode($array);
+            //$array['name'] = $data['faculty_opinion']['name'];
+            $array['name'] = '';
+            $array['time'] = time();
         }
 
         $update_app_data['update_at'] = time();

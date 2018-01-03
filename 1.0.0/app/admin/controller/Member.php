@@ -29,8 +29,11 @@ class Member extends Base
 		}
 		$member_model=new MemberList;
 		$member_list=$member_model->alias('a')->join(config('database.prefix').'member_group b','a.member_list_groupid=b.member_group_id')
+				->join('yf_user u','u.id_number = a.id_number')
 				->where($where)->where('member_list_username|member_list_email','like',"%".$key."%")
-				->order('member_list_addtime desc')->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
+				->order('member_list_addtime desc')
+				->field('u.*,a.member_list_id,a.member_list_username,a.member_list_province,a.member_list_city,a.member_list_town,a.member_list_nickname,a.member_list_headpic,a.member_list_addtime,a.member_list_open,a.user_status')
+				->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 		$show=$member_list->render();
 		$show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 		$this->assign('opentype_check',$opentype_check);

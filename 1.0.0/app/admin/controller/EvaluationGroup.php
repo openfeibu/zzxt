@@ -104,20 +104,7 @@ class EvaluationGroup extends Base
 		$evaluation_model = new Evaluation();
         $apply = $evaluation_model->getEvaluation($data['evaluation_id']);
 
-//        if (!empty($apply['awards'])) {
-//            $apply['awards'] = json_decode($apply['awards'], true);
-//        } else {
-//            $apply['awards'][0]['date'] = '';
-//            $apply['awards'][0]['name'] = '';
-//            $apply['awards'][0]['unit'] = '';
-//        }
-        if (!empty($apply['group_opinion'])) {
-            $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-        } else {
-            $apply['group_opinion']['text'] = '';
-            $apply['group_opinion']['name'] = '';
-            $apply['group_opinion']['time'] = time();
-        }
+        $apply = handleApply($apply);
 
         $this->assign('status_id', $id);
         $this->assign('user', $apply);
@@ -126,7 +113,8 @@ class EvaluationGroup extends Base
 		$this->assign('eval_app',$apply);
 		$eval_form = Config::get('evaluation_form');
 		$this->assign('eval_form',$eval_form);
-
+        $material = \app\admin\model\Evaluation::getEvaluationMaterial($apply['evaluation_id']);
+        $this->assign('material', $material);
 
         return $this->view->fetch('evaluation/class_add_review');
     }

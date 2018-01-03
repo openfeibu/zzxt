@@ -2,8 +2,11 @@
 <tr>
     <td>{$row.status_id}</td>
     {include file="common\group_application_val"}
+    <td>
+        <textarea name="faculty_opinion[text]" class="tab_opinion text" style="height:60px;" {if !in_array($row.check_status,[3])}disabled{/if}>{$row.faculty_opinion.text}</textarea>
+    </td>
     <td class="tab_content">
-        <div action="{:url('admin/ScholarshipHandle/MultipleFacultyFill')}" class="passingDiv" method="post">
+        <div action="{:url('admin/ScholarshipHandle/MultipleFacultyFill')}" class="passingDiv2" method="post">
         <input type="hidden" name="status_id" value="{$row.status_id}" />
         {if $type_id == 1}
         <div class="audit_opera">

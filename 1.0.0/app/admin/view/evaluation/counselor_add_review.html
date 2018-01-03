@@ -23,32 +23,67 @@
                     {include file="evaluation/student_information_table"}
                     <!--endprint3-->
                 <button type="button" class="btn btn-info" onclick="preview(3)">打印</button>
+                    <form action="{:url('admin/EvaluationHandle/counselor')}" method="post" id="passingForm" class="passingForm">
                     <table class="w800">
+                        <tr >
+                            <h3 style="text-align:center">佐证材料</h3>
+                        </tr>
+                        <tr>
+                            <div class="photo">
+                                <ul>
+                                    {foreach name="material" item="v"}
+                                    <li>
+                                        <div class="img">
+                                            <div class="cell"><img src="{$v.images}" alt="{$v.name}"></div>
+                                        </div>
+                                        <p>{$v.name}</p>
+                                    </li>
+                                    {/foreach}
+                                </ul>
+                            </div>
+                        </tr>
                         <tr>
                             <td colspan="3" style="height: 30px;"></td>
                         </tr>
                         <tr>
+                            <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">添加评语：</p></td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="tab_content">
+                                <textarea name="group_opinion[text]" class="tab_opinion">{$user.group_opinion.text}</textarea>
+                                <div class="modify pull-left">
+                                    <p>修改评分：</p>
+                                    <div class="modify_score">
+                                        <button type="button" class="modify_less btn"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                        <input type="text" name="change_fraction" class="modify_num" value="{$user.change_fraction}">
+                                        <button type="button" class="modify_add btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td style="width: 266px;"></td>
 
                                 <td class="tab_content" style="width: 500px;">
-                                    <form action="{:url('admin/EvaluationHandle/counselor')}" method="post" id="passingForm" class="passingForm">
+                                    <input type="hidden" name="status_id" value="{$status_id}"/>
                                     <input type="hidden" name="evaluation_id" value="{$user.evaluation_id}"/>
                                     <button type="submit" class="btn btn-success" name="pass" value="{$status_id}">通过</button>
                                     <button type="submit" class="btn btn-danger" name="fail" value="{$status_id}">不通过</button>
-                                    <a href="{:url('admin/Counselor/showEvaluationEvidence',['id'=>$status_id])}" class="btn btn-info">查看相关证明</a>
                                     <a href="{:url('admin/Counselor/evaluationNext',['id'=>$status_id])}" class="btn btn-success">下一个</a>
-                                    </form>
                                 </td>
 
                             <td style="width: 266px;"></td>
                         </tr>
                     </table>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{if !in_array($user.evaluation_status,[2,7])}
+{if !in_array($user.evaluation_status,[1,2])}
 <script>
 $("#passingForm").find("textarea").attr('disabled',true);
 $("#passingForm").find("input").attr('disabled',true);
