@@ -1238,7 +1238,8 @@ $('body').on('click','.passingDiv button',function () {
 	text = $(this).closest("tr").find(".text").val();
 	textname = $(this).closest("tr").find(".text").attr('name');
 	//console.log(status_id);return false;
-	data = {'status_id':status_id,'fail':fail,''+textname+'':textname};
+	data = {'status_id':status_id,'fail':fail};
+	data[textname] = text;
 	$.ajax({
 		cache: true,
 		type: "POST",
