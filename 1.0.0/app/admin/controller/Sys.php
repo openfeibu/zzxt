@@ -164,12 +164,12 @@ class Sys extends Base
 	{
 		if (!request()->isAjax()){
 			$this->error('提交方式不正确',url('admin/Sys/urlsetsys'));
-		}		
+		}
         Db::name('route')->insert(input('post.'));
         $p=input('p',1,'intval');
         if(config('url_route_mode')=='2') Cache::rm('routes');
         $this->success('路由规则添加成功',url('admin/Sys/urlsetsys',array('p'=>$p)),1);
-		
+
 	}
 	/*
      * 修改路由规则操作
@@ -215,7 +215,7 @@ class Sys extends Base
 	{
 		if (!request()->isAjax()){
 			$this->error('提交方式不正确',url('admin/Sys/urlsetsys'));
-		}	
+		}
         $route=Db::name('route');
         foreach (input('post.') as $id => $listorder){
             $route->where(array('id' => $id ))->setField('listorder' , $listorder);
@@ -755,7 +755,7 @@ class Sys extends Base
 		if(!request()->isAjax()){
 			$this->error('提交方式不正确',url('admin/Sys/admin_rule_list'));
 		}else{
-			$name=input('name');
+			$name=trim(input('name'));
 			$old_pid=input('old_pid');
 			$old_level=input('old_level',0,'intval');
 			$pid=input('pid');
@@ -772,7 +772,7 @@ class Sys extends Base
 				$sldata=array(
 					'id'=>input('id',1,'intval'),
 					'name'=>$name,
-					'title'=>input('title'),
+					'title'=>trim(input('title')),
 					'status'=>input('status',0,'intval'),
                     'notcheck'=>input('notcheck',0,'intval'),
 					'pid'=>input('pid',0,'intval'),
