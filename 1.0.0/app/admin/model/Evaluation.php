@@ -67,8 +67,16 @@ class Evaluation extends Model
     {
         $grade = '不困难';
         $grade_config = Db::name('evaluation_grade')
-                   ->where("min <= '$value' AND max >= '$value'")
+                   ->where("max <= '$value'")
+                   ->order("max desc")
                    ->find();
+        if($grade_config){
+            return $grade_config ? $grade_config['name'] : $grade;
+        }else{
+            $grade_config = Db::name('evaluation_grade')
+                       ->where("min <= '$value' AND max >= '$value'")
+                       ->find();
+        }
         return $grade_config ? $grade_config['name'] : $grade;
     }
     public static function getEvaluationList($where,$order = '')

@@ -434,7 +434,9 @@ class StudentOffice extends Base
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
         }
-        $data = Evaluation::getEvaluationList($where);
+        $order = "charindex(','+convert(varchar,status)+',',',4,3,1,2,5,6,7,8,')";
+        $where .= " AND ass.status in(1,2,3,4,5,6,7,8)";
+        $data = Evaluation::getEvaluationList($where,$order);
         $show=$data->render();
 		$show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 

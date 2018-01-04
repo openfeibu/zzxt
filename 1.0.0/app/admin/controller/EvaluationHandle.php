@@ -147,6 +147,7 @@ class EvaluationHandle extends Base
             'msg' => '操作成功',
             'score' => isset($evdata['score']) ? $evdata['score'] : '',
             'status' => config('evaluation_status.'.$evdata['evaluation_status']),
+            'rank' => isset($evdata['score']) ? Evaluation::getGrade($evdata['score']) : '',
         ];
     }
 }

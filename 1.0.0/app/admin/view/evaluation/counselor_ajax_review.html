@@ -8,7 +8,7 @@
     <td>{$row.assess_fraction}</td>
     <td ><input name="change_fraction" value="{$row.change_fraction}" class="change_fraction" style="width:40px" {if !in_array($row.evaluation_status,[1,2])}disabled{/if}></td>
     <td class="score">{$row.score}</td>
-    <td>{$row.rank}</td>
+    <td class="rank">{$row.rank}</td>
     <td class="status">
         {php}echo config('evaluation_status.'.$row['status']);{/php}
     </td>

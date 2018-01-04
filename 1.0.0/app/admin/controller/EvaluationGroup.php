@@ -47,9 +47,11 @@ class EvaluationGroup extends Base
         }
 
         //查找呃
-        $where .= " AND u.class_number = '".$this->class_number."' AND CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time";
-        //var_dump($where);exit;
-        $data = Evaluation::getEvaluationList($where);
+        $where .= " AND u.class_number = '".$this->class_number."' ";
+
+        $order = "charindex(','+convert(varchar,status)+',',',1,2,3,4,5,6,7,8,')";
+        $where .= " AND ass.status in(1,2,3,4,5,6,7,8)";
+        $data = Evaluation::getEvaluationList($where,$order);
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 
@@ -63,6 +65,7 @@ class EvaluationGroup extends Base
             ->join('yf_user u', 'u.id_number = m.id_number', 'left')
 			->where("u.class_number = '".$this->class_number."'")
             ->where("CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
+            ->where('ass.status','<>',2)
             ->where('ass.status',2)
             ->count();
         if (empty($no_count)) {
@@ -74,7 +77,7 @@ class EvaluationGroup extends Base
             ->join('yf_user u', 'u.id_number = m.id_number', 'left')
 			->where("u.class_number = '".$this->class_number."'")
             ->where("CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->where('ass.status','<>',2)
+            ->where('ass.status',2)
             ->count();
         if (empty($yes_count)) {
             $yes_count = 0;
