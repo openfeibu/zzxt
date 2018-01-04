@@ -77,9 +77,9 @@ class ScholarshipHandle extends Base
     {
         $data = $request->post();
         if (isset($data['fail']) and !empty($data['fail'])) {
-            $update_app_data['check_status'] = $status = 8;
+            $update_app_data['check_status'] = $status = 7;
         } else {
-            $update_app_data['check_status'] = $status = 4;
+            $update_app_data['check_status'] = $status = 3;
         }
         //状态表id
         $status_id = $data['status_id'];

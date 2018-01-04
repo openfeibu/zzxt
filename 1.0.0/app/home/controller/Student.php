@@ -177,9 +177,10 @@ class Student extends Base
         $is_data = $data ? true : false;
         $this->assign('is_data', $is_data);
         $data['time'] = $data ? $data['create_at'] : time();
-        if ($data) {
+        if (isset($data['members'])) {
             $data['members'] = json_decode($data['members'], true);
         }
+        $data['reason'] = isset($data['reason']) ? $data['reason'] : '';
         $this->assign('list', $data);
         return $this->view->fetch('scholarship/scho_grants');
     }
