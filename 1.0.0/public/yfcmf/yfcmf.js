@@ -1216,6 +1216,7 @@ $('body').on('click',".passingForm2 button[type='submit']",function () {
 				$this.closest("tr").find(".change_fraction").attr("disabled",true);
 				$this.closest("tr").find(".score").text(data.score);
 				$this.closest("tr").find(".status").text(data.status);
+				$this.closest("tr").find(".rank").text(data.rank);
                 layer.msg(data.msg,{icon: 6});
             }else{
                 layer.msg(data.msg,{icon: 5});
@@ -1265,8 +1266,8 @@ $('body').on('click','.passingDiv button',function () {
 });
 $('body').on('click','.passingDiv2 button',function () {
 	$this = $(this);
-	var url = $(this).closest(".passingDiv").attr('action');
-	var status_id = $(this).closest(".passingDiv").find("input[name = 'status_id']").val();
+	var url = $(this).closest(".passingDiv2").attr('action');
+	var status_id = $(this).closest(".passingDiv2").find("input[name = 'status_id']").val();
 	name = $(this).attr('name');
 	fail = '';
 	if(name == 'fail')
@@ -1275,6 +1276,7 @@ $('body').on('click','.passingDiv2 button',function () {
 	}
 	//console.log(status_id);return false;
 	data = {'status_id':status_id,'fail':fail};
+	data[textname] = text;
 	$.ajax({
 		cache: true,
 		type: "POST",
@@ -1286,8 +1288,8 @@ $('body').on('click','.passingDiv2 button',function () {
 			return false;
 		},
 		success: function(data) {
-			$this.closest(".passingDiv").find("button[name='pass']").attr('disabled',true);
-			$this.closest(".passingDiv").find("button[name='fail']").attr('disabled',true);
+			$this.closest(".passingDiv2").find("button[name='pass']").attr('disabled',true);
+			$this.closest(".passingDiv2").find("button[name='fail']").attr('disabled',true);
 			if (data.code == 200) {
                 layer.msg(data.msg,{icon: 6});
             }else{
