@@ -85,7 +85,7 @@ class News extends Base
 			return $this->fetch('ajax_news_list');
 		}else{
 			return $this->fetch();
-		}		
+		}
 	}
     /**
      * 添加显示
@@ -202,7 +202,7 @@ class News extends Base
 			'news_pic_content'=>input('news_pic_content',''),
 			'news_pic_allurl'=>$picall_url,//多图路径
 			'news_img'=>$img_one,//封面图片路径
-			'news_open'=>input('news_open',0),
+			'news_open'=>input('news_open',1),
 			'news_scontent'=>input('news_scontent',''),
 			'news_content'=>htmlspecialchars_decode(input('news_content')),
 			'news_auto'=>session('admin_auth.member_id'),
@@ -352,7 +352,7 @@ class News extends Base
 			'news_source'=>input('news_source',''),
 			'news_pic_type'=>input('news_pic_type'),
 			'news_pic_content'=>input('news_pic_content',''),
-			'news_open'=>input('news_open',0),
+			'news_open'=>input('news_open',1),
 			'news_scontent'=>input('news_scontent',''),
 			'news_content'=>htmlspecialchars_decode(input('news_content')),
 			'listorder'=>input('listorder',50,'intval'),
@@ -523,7 +523,7 @@ class News extends Base
 			return $this->fetch('ajax_news_back');
 		}else{
 			return $this->fetch();
-		}	
+		}
 	}
     /**
      * 还原文章
