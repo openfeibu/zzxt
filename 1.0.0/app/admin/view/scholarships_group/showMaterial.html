@@ -7,7 +7,7 @@
             您当前操作
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
-                <a href="{:url('admin/scholarships_group/showreviewlist')}">国家助学金班级审核</a>
+                <a href="{:url('admin/scholarships_group/showreviewlist')}">国家{php}echo config('application_type.'.$type_id);{/php}班级审核</a>
             </small>
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
@@ -29,19 +29,13 @@
                     </tr>
                     <tr>
                         <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
-                            {if $type == 1}
-                            普通本科高校、高等职业学校国家助学金申请表
-                            {elseif $type == 2}
-                            普通本科高校、高等职业学校国家励志奖学金申请表
-                            {else}
-                            普通本科高校、高等职业学校国家奖学金申请表
-                            {/if}
+                            普通本科高校、高等职业学校国家{php}echo config('application_type.'.$type_id);{/php}申请表
                         </td>
                     </tr>
                 </table>
                 <table class="table table-bordered tab_center">
                     <!--本人情况-->
-                    {if $type == 1}
+                    {if $type_id == 1}
                     {include file="common/scholar" /}
                     {else}
                     <tr>
@@ -175,7 +169,7 @@
                         </tr>
                         <input type="hidden" value="{$user.user_id}" name="user_id">
                         <input type="hidden" value="{$id}" name="status_id">
-                        <input type="hidden" value="{$type}" name="type_id">
+                        <input type="hidden" value="{$type_id}" name="type_id">
                             <tr>
                                 <td style="width: 266px;"></td>
                                 <td class="tab_content" style="width: 266px;">

@@ -13,6 +13,7 @@ use app\home\model\NationalScholarship;
 use app\admin\model\Evaluation;
 use app\home\model\MultipleScholarship;
 use app\admin\model\ClassCode as ClassCodeModel;
+use app\admin\model\User as UserModel;
 use think\Db;
 use think\Config;
 use think\Request;
@@ -32,9 +33,10 @@ class Counselor extends Base
         $this->applyStatus = new ScholarshipsApplyStatus();
         $this->time = date("Y",time());
         $this->faculty = session('admin_auth.faculty_number');
-		$this->class_number = explode(',',$this->admin['class_number']);
         $this->classCode = new ClassCodeModel();
-        $classes = $this->classCode->getClassByNumbers($this->class_number);
+		$admin_professiones = session('admin_professiones');
+		$classes = $this->classCode->getCounselorClasses($admin_professiones);
+		$this->class_number = array_column($classes, 'class_number');
 		$this->assign('classes', $classes);
     }
     public function showApplicantList()
@@ -100,6 +102,11 @@ class Counselor extends Base
             ->join('yf_user u', 'ass.user_id = u.studentid', 'left')
             ->where('ass.fund_type', $id)
             ->count();
+		if ($id == 3) {
+            $name = "国家助学金";
+        } elseif($id == 2) {
+            $name = "国家励志奖学金";
+        }
         $this->assign('type_id', $id);
         $this->assign('faculty_not_pass', $faculty_count);
         $this->assign('faculty_pass', $faculty_all_count-$faculty_count);
@@ -154,34 +161,47 @@ class Counselor extends Base
     /**
      * 查看学生申请资料
      */
-    public function showMaterial($id) {
+    public function showMaterial($id,$type_id) {
+        $apply_id = $id;
         $data = Db::table('yf_apply_scholarships_status')
+            ->where('fund_type', $type_id)
             ->where('status_id', $id)
             ->find();
         if (!$data) {
             return $this->error("该学生没有填写申请表");
         }
-
-        $type = "yf_national_scholarship";
-        $field = "national_id";
-        $national_id = $data['national_id'];
-
+        //判断类型
+        if ($data['fund_type'] == 1) {
+            $type = "yf_national_scholarship";
+            $field = "national_id";
+            $id = $data['national_id'];
+        } else {
+            $type = "yf_multiple_scholarship";
+            $field = "multiple_id";
+            $id = $data['multiple_id'];
+        }
+        $user_model = new UserModel();
+        $user_fields = UserModel::getUserFields('u');
+        $user_fields = implode(',',$user_fields);
         $apply = Db::table($type)
             ->alias('w')
-            ->join('yf_user u', 'u.studentid = w.user_id', 'left')
-            ->where($field,$national_id)
+            ->join('yf_member_list m', 'm.member_list_id = w.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+            ->where($field,$id)
+            ->field('w.*,m.member_list_nickname,m.member_list_headpic,'.$user_fields)
             ->find();
+		
         if (!empty($apply['awards'])) {
             $apply['awards'] = json_decode($apply['awards'], true);
         }
-		if(!is_array($apply['awards'])){
+		if(!isset($apply['awards']) || !is_array($apply['awards'])){
 			$apply['awards'] = [];
             $apply['awards'][0]['date'] = '';
             $apply['awards'][0]['name'] = '';
             $apply['awards'][0]['unit'] = '';
         }
         $apply = handleApply($apply);
-
+		$this->assign('type_id', $type_id);
         $this->assign('id', $id);
         $this->assign('user', $apply);
         return $this->view->fetch('scholarship_team/counselor_add_review');

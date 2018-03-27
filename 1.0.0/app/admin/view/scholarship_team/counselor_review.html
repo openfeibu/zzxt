@@ -6,7 +6,7 @@
         <h1>
             您当前操作
             <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>国家励志奖学金院系审核
+                <i class="ace-icon fa fa-angle-double-right"></i>国家{php}echo config('application_type.'.$type_id);{/php}院系审核
             </small>
             <!--<small>-->
             <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <form class="tab_inquire" method="post" action="{:url('admin/Counselor/showEvaluationList')}">
+                <form class="tab_inquire" method="post" action="">
                     <p>筛选：</p>
                     <select class="form-control tab_select counselor_sub ajax_change" name="class_number">-->
                         <option value="0">所有专业</option>

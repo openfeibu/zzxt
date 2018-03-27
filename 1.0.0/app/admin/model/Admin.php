@@ -80,7 +80,8 @@ class Admin extends Model
         );
         session('admin_auth', $auth);
 		session('admin_auth_sign', data_signature($auth));
-
+		$admin_professiones = self::getAdminProfessiones($user->admin_id);
+		session('admin_professiones',$admin_professiones);
         // 记住登录
         if ($rememberme) {
             $signin_token = $user->admin_username.$user->admin_id.$user->admin_last_time;
@@ -129,7 +130,7 @@ class Admin extends Model
             'admin_pwd'=>encrypt_password($admin_pwd,$admin_pwd_salt),
             'admin_email'=>$admin_email,
             'admin_tel'=>$admin_tel,
-            'admin_open'=>$admin_open,
+            'admin_open'=>1,
             'admin_realname'=>$admin_realname,
             'admin_ip'=>request()->ip(),
             'admin_addtime'=>time(),
@@ -168,12 +169,10 @@ class Admin extends Model
         unset($admin['ROW_NUMBER'],$admin['admin_id']);
         $admin['admin_username']=$data['admin_username'];
         $admin['faculty_number'] = $data['faculty_number'];
-		$admin['class_number'] = $data['class_number'];
-//        $admin['admin_limit'] = $data['admin_limit'];
-//        $admin['admin_email']=$data['admin_email'];
-//        $admin['admin_tel']=$data['admin_tel'];
-//        $admin['admin_realname']=$data['admin_realname'];
-        $admin['admin_open']=$data['admin_open'];
+		if(isset($data['class_number']))
+		{
+			$admin['class_number'] = $data['class_number'];
+		}
         if($data['admin_pwd']){
             $admin['admin_pwd_salt']=random(10);
             $admin['admin_pwd']=encrypt_password($data['admin_pwd'],$admin['admin_pwd_salt']);
@@ -198,4 +197,8 @@ class Admin extends Model
             return false;
         }
     }
+	public static function getAdminProfessiones($admin_id)
+	{
+		return Db::name('admin_profession')->where('admin_id',$admin_id)->order('current_grade','asc')->select();
+	}
 }

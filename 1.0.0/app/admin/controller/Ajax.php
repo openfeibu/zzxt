@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 use think\Db;
 use app\admin\model\ClassCode;
+use app\admin\model\DataHandle;
 
 class Ajax
 {
@@ -38,5 +39,15 @@ class Ajax
 		$classCode = new ClassCode();
 		$class = $classCode->getClass(input('faculty_number'));
 		return $class;
+	}
+	public function getStudents()
+	{
+		$value = input('value');
+		$years = getYears();
+		$where = " where (姓名 = '".$value."' OR 学号 LIKE '".$value."%' OR 身份证号 LIKE '%".$value."%') AND 当前所在级 in ($years) ";
+		$fields = " top 10 身份证号 as id_number , 学号 as studentid, 姓名 as name ";
+		$dataHandleClass = new DataHandle();
+		$data = $dataHandleClass->getStudents($where,$fields);
+		return json($data);
 	}
 }

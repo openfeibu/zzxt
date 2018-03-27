@@ -48,4 +48,8 @@ class User extends Model
         }
         return array_values($user_fields);
     }
+	public static function getUserFromSchool()
+	{
+		
+	}
 }

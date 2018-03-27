@@ -16,7 +16,7 @@
                 <div class="audit_opera">
                     <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if !in_array($row.check_status,[1,2])}disabled{/if} value="1">不通过</button>
                 </div>
-                <a href="{:url('admin/Counselor/showMaterial',['id' => $row.status_id])}" class="btn btn-info btn-sm">查看</a>
+                <a href="{:url('admin/Counselor/showMaterial',['id'=>$row.status_id,'type_id'=>$type_id])}" class="btn btn-info btn-sm">查看</a>
             </div>
         </div>
     </td>

@@ -23,6 +23,21 @@ return [
         'hostport'       => '1433',
     // 连接dsn
         'dsn'            => 'sqlsrv:Server=139.199.184.111;Database=zzxt',
+	'db2' => array(
+		'type' => 'sqlsrv',
+		'hostname'       => '211.66.88.2',
+		// 数据库名
+		'database'       => 'jwxt',
+		// 用户名
+		'username'       => 'sa',
+		// 密码
+		'password'       => 'ngsaibwlzxmssql',
+		// 端口
+		'hostport'       => '1433',
+		// 连接dsn
+		'dsn'            => 'sqlsrv:Server=211.66.88.2;Database=jwxt',
+		'prefix_' => '',
+	),
     // 数据库连接参数
     'params'         => [],
     // 数据库编码默认采用utf8

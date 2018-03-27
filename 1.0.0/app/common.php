@@ -1782,3 +1782,15 @@ function handleApply($apply = array())
 	}
 	return $apply;
 }
+function getYears()
+{
+	$year = date('Y');
+	$month = date('m');
+	if($month < 9){
+		$years = [$year-3,$year-2,$year-1];
+	}else{
+		$years = [$year-2,$year-1,$year];
+	}
+	$years = implode(',',$years);
+	return $years;
+}

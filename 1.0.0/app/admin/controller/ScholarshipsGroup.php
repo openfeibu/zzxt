@@ -67,129 +67,6 @@ class ScholarshipsGroup extends Base
         $this->assign('user', $data);
         return $this->view->fetch();
     }
-
-    /**
-     * 助学金审核列表/励志奖学金
-     */
-     /*
-    public function showReviewList($id)
-    {
-        if ($id != 3 and $id !=2) {
-            return $this->error('该操作有误。请联系管理员解决');
-        }
-        if(request()->isPost()) {
-            $data = request()->post();
-            if (!empty($data['studentname'])) {
-                //学号或名字查询
-                if (strlen($data['studentname']) == 11) {
-                    $studentname = "studentid = '".$data['studentname']."'";
-                } else {
-                    $studentname = "studentname = '".$data['studentname']."'";
-                }
-            } else {
-                $studentname = '';
-            }
-
-            //选择状态
-            if (!empty($data['assess'])) {
-                if ($data['assess'] == 1) {
-                    $status = "status <> '".$data['assess']."'";
-                }
-                elseif ($data['assess'] == 2) {
-                    $status = "status = '1'";
-                }
-                elseif ($data['assess'] == 3) {
-                    $status = "status = '".$data['assess']."'";
-                }
-                elseif ($data['assess'] == 4) {
-                    $status = "status = '".$data['assess']."'";
-                } else {
-                    $status = '';
-                }
-            } else {
-                $status = '';
-            }
-
-            //查询未审核人数
-            $no_count = Db::table('yf_apply_scholarships_status')
-			->alias('a')->join('yf_user u','u.studentid = a.user_id')
-			->where("u.class_number = '".$this->class_number."'")
-                ->where('a.fund_type',$id)
-                ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-                ->where('status',1)
-                ->count();
-            if (empty($no_count)) {
-                $no_count = 0;
-            }
-            $yes_count = Db::table('yf_apply_scholarships_status')
-				->alias('a')->join('yf_user u','u.studentid = a.user_id')
-				->where("u.class_number = '".$this->class_number."'")
-                ->where('a.fund_type',$id)
-                ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-                ->where('status','<>',1)
-                ->count();
-            if (empty($yes_count)) {
-                $yes_count = 0;
-            }
-
-
-            $data_students = Db::table('yf_apply_scholarships_status')
-                ->alias('a')//asshold
-                ->join('yf_user u', 'a.user_id = u.studentid', 'left')
-				->where("u.class_number = '".$this->class_number."'")
-                ->where('a.fund_type' ,$id)
-                ->where($studentname)
-                ->where($status)
-                ->paginate(20);
-
-            $data_data = Db::table('yf_apply_scholarships_status')
-				->alias('a')//asshold
-                ->join('yf_user u', 'a.user_id = u.studentid', 'left')
-				->where("u.class_number = '".$this->class_number."'")
-                ->where('a.fund_type',$id)
-                ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-                ->paginate(20);
-
-            $this->assign('no_count',$no_count);
-            $this->assign('yes_count',$yes_count);
-            $this->assign('user',$data_students);
-            $this->assign('id', $id);
-            $this->assign('list', $data_data);
-            return $this->view->fetch();
-        }
-
-        $data = MultipleScholarship::getMultipleList();
-        $show=$data->render();
-        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
-        //查询未审核人数
-        $no_count = Db::table('yf_apply_scholarships_status')
-		->alias('a')->join('yf_user u','u.studentid = a.user_id')
-			->where("u.class_number = '".$this->class_number."'")
-            ->where('a.fund_type',$id)
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->where('status',1)
-            ->count();
-        if (empty($no_count)) {
-            $no_count = 0;
-        }
-        $yes_count = Db::table('yf_apply_scholarships_status')
-		->alias('a')->join('yf_user u','u.studentid = a.user_id')
-			->where("u.class_number = '".$this->class_number."'")
-            ->where('a.fund_type',$id)
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,a.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->where('status','<>',1)
-            ->count();
-        if (empty($yes_count)) {
-            $yes_count = 0;
-        }
-        $this->assign('no_count',$no_count);
-        $this->assign('yes_count',$yes_count);
-        $this->assign('id', $id);
-        $this->assign('user', $data);
-        $this->assign('list', $data);
-        $this->assign('page', $show);
-        return $this->view->fetch();
-    }*/
     public function showReviewList()
     {
         return $this->showReviewListHandle(3);
@@ -306,7 +183,7 @@ class ScholarshipsGroup extends Base
             $apply['group_opinion']['name'] = '';
             $apply['group_opinion']['time'] = time();
         }
-        $this->assign('type', $type_id);
+        $this->assign('type_id', $type_id);
         $this->assign('id', $apply_id);
         $this->assign('user', $apply);
         return $this->view->fetch();

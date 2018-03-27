@@ -10,7 +10,7 @@
 				您当前操作
 				<small>
 					<i class="ace-icon fa fa-angle-double-right"></i>
-					修改系统管理员
+					修改评议小组
 				</small>
 			</h1>
 		</div>
@@ -34,10 +34,10 @@
 					<div class="space-4"></div>
 
 					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 登录用户名：  </label>
+						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 学生身份证：  </label>
 						<div class="col-sm-10">
 							<input type="text" name="admin_username" id="admin_username"  value="{$admin_list.admin_username}"  class="col-xs-10 col-sm-5" readonly/>
-							<span class="lbl col-xs-12 col-sm-7"><span class="red">*</span>用户名必须是以字母开头，数字、符号组合</span>
+							<span class="lbl col-xs-12 col-sm-7"><span class="red">*</span>密码默认身份证后六位</span>
 						</div>
 					</div>
 					<div class="space-4"></div>
@@ -55,7 +55,7 @@
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 班级：  </label>
 						<div class="col-sm-10">
 							<select name="class_number" id="">
-								{foreach $class as $row}
+								{foreach $classes as $row}
 								<option value="{$row.class_number}" {if $row.class_number == $admin_list.class_number}selected{/if}>{$row.current_grade}{$row.class_name}</option>
 								{/foreach}
 							</select>
@@ -91,7 +91,7 @@
 						<!--</div>-->
 					<!--</div>-->
 					<!--<div class="space-4"></div>-->
-
+					<!--
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 是否审核： </label>
 						<div class="col-sm-10" style="padding-top:5px;">
@@ -100,7 +100,7 @@
 						</div>
 					</div>
 					<div class="space-4"></div>
-
+					-->
 					<div class="clearfix form-actions">
 						<div class="col-md-offset-3 col-md-9">
 							<button class="btn btn-info" type="submit">
