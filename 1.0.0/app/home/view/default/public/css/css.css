@@ -62,7 +62,12 @@ body{background: #eeeeee;min-height:100%;position:relative;}
 .dropdown .dropdown-menu li>a{ font-size: 16px;}
 .dropdown .dropdown-menu {  background:#FFF;}
 .dropdown .dropdown-menu li>a:hover{ color: #438EB9; background:#FFF;}
-.nav-tabs>li>a:hover{background:#FFF;}
+.nav-tabs>li:hover >a{color:#555;}
+.nav-tabs>li:hover .caret {
+    border-top-color: #53616d;
+    border-bottom-color: #428bca;
+}
+.nav-tabs>li>a{cursor:pointer;}
 .nav  .open>a{ background:#FFF!important; color: #555!important;}
 .nav-tabs>li.active>a{border: none;}
 .nav-tabs>li.active>a:hover{border: none; border-radius:4px 4px 0px 0px;}

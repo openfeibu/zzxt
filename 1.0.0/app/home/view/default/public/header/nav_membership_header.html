@@ -51,7 +51,7 @@
                 <a href="{:url('Student/examineStatus')}">个人中心</a>
             </li>
             <li  role="presentation" class="dropdown">
-                <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >家庭经济困难认定<span class="caret"></span></a>
+                <a class="dropdown-toggle"   role="button" aria-haspopup="true" aria-expanded="false" >家庭经济困难认定<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="{:url('/personal')}">信息管理</a></li>
                     <li><a href="{:url('/material')}">佐证材料</a></li>
@@ -63,7 +63,7 @@
                  {elseif condition="'getNationalScholarship' eq $Think.const.ACTION_NAME"}class=" dropdown active"
                  {else}class="dropdown"
                  {/if}>
-                <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >三金申请<span class="caret"></span></a>
+                <a class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false" >三金申请<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="javascript:;" onclick="choose_type('3')">国家助学金<span class="status_error" id="error_choose_3"></span></a>
@@ -100,7 +100,7 @@
                  {elseif condition="'workStudyList' eq $Think.const.ACTION_NAME"} class=" dropdown active"
                  {else}class="dropdown"
                 {/if}>
-                <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >勤工助学<span class="caret"></span></a>
+                <a class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false" >勤工助学<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="{:url('home/workstudy/resume')}">个人简历</a></li>
                     <li><a href="{:url('home/workstudy/list')}">岗位申报</a></li>
@@ -115,7 +115,7 @@
                 {elseif condition="'showlist' eq $Think.const.ACTION_NAME"} class=" dropdown active"
                 {else} class="dropdown"
                 {/if}>
-                <a class="dropdown-toggle" data-hover="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" >通知公示<span class="caret"></span></a>
+                <a class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false" >通知公示<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="{:url('/home/Publicity/evaluPublicity')}">家庭经济评估公示</a>
@@ -138,4 +138,14 @@
     </nav>
 </div>
 </body>
+<script>
+$("body").on("mouseover mouseout",".nav-tabs li.dropdown",function(event){  if(event.type == "mouseover"){   
+//鼠标悬浮 
+$(this).find(".dropdown-menu").stop().fadeIn(200)
+}else if(event.type == "mouseout"){ 
+  //鼠标离开 
+  $(this).find(".dropdown-menu").stop().fadeOut(200)
+  } })
+
+</script>
 </html>

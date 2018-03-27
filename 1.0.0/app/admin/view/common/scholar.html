@@ -33,9 +33,9 @@
     <td colspan="3" class="k-s-content title" style="text-align: center;">
         <div class="ranking">
             成绩排名：
-            <input type="text" name="course_ranking">
+            <input type="text" name="course_ranking" style="width:50px;border-bottom: 1px solid #555555;">
             /
-            <input type="text" name="course_total_people">
+            <input type="text" name="course_total_people" style="width:50px;border-bottom: 1px solid #555555;">
             （名次/总人数）
         </div>
     </td>
@@ -63,9 +63,9 @@
     <td colspan="4" class="k-s-content title" style="text-align: center;">
         <div class="ranking">
             如是，排名：
-            <input type="text" name="assessment_ranking">
+            <input type="text" name="assessment_ranking" style="width:50px;border-bottom: 1px solid #555555;">
             /
-            <input type="text" name="assessment_total_people">
+            <input type="text" name="assessment_total_people" style="width:50px;border-bottom: 1px solid #555555;">
             （名次/总人数）
         </div>
     </td>
@@ -101,25 +101,25 @@
 <tr class="line-table-height">
     <td class="k-s-content title">申请理由(200字)</td>
     <td colspan="7" class="k-s-content content" style="text-align: left;">
-        <textarea name="reason" id="" class="longtext"></textarea>
+        <textarea name="reason" id="" class="longtext"  style="width:100%;height:200px;resize:none;"></textarea>
         <div style="float: right;">
-            <div class="level_form">
+            <div class="level_form" style="float: left;">
                 <div class="signature">
-                    <label for="">申请人签名（手签）：</label>
-                    <input type="text" value="{$user.studentname}">
+                    <label for="" style="float: left;">申请人签名（手签）：</label>
+                    <input type="text" value="{$user.studentname}" style="float: left;width:200px;border-bottom: 1px solid #555555;">
                 </div>
             </div>
-            <div class="level_form">
-                <div class="level_time">
-                    <input type="text" value="">
+            <div class="level_form" style="float: left;margin-left:10px;">
+                <div class="level_time" style="float: left;">
+                    <input type="text" value=""  style="width:100px;border-bottom: 1px solid #555555;">
                     <label for="">年</label>
                 </div>
-                <div class="level_time">
-                    <input type="text" value="">
+                <div class="level_time" style="float: left;" >
+                    <input type="text" value="" style="width:100px;border-bottom: 1px solid #555555;">
                     <label for="">月</label>
                 </div>
-                <div class="level_time">
-                    <input type="text" value="">
+                <div class="level_time" style="float: left;">
+                    <input type="text" value=""  style="width:100px;border-bottom: 1px solid #555555;">
                     <label for="">日</label>
                 </div>
             </div>
