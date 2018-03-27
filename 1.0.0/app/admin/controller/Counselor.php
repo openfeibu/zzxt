@@ -190,7 +190,7 @@ class Counselor extends Base
             ->where($field,$id)
             ->field('w.*,m.member_list_nickname,m.member_list_headpic,'.$user_fields)
             ->find();
-		
+
         if (!empty($apply['awards'])) {
             $apply['awards'] = json_decode($apply['awards'], true);
         }

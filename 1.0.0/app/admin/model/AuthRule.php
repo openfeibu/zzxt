@@ -97,6 +97,7 @@ class AuthRule extends Model
                 $url.='?id='.$id;
             }
         }
+        //var_dump($url);exit;
 		$where['name']=$url;
 		if($status) $where['status']=$status;
         $menu_id = self::where($where)->order('level desc,sort')->value('id,level,sort');//4级或3级(如果4级,status是0,不显示)

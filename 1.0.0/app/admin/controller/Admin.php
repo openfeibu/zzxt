@@ -133,6 +133,26 @@ class Admin extends Base
 			$this->error('管理员删除失败',$_SERVER['HTTP_REFERER']);
 		}
 	}
+	public function admin_counselor_del()
+	{
+		$admin_id=input('admin_id');
+		if (empty($admin_id)){
+			$this->error('用户ID不存在',url('admin/Admin/admin_list'));
+		}
+		//对应会员ID
+		$member_id=Db::name('admin')->where('admin_id',$admin_id)->value('member_id');
+		Db::name('admin')->delete($admin_id);
+		//删除对应会员
+		if($member_id){
+			Db::name('member_list')->delete($member_id);
+		}
+		$rst=Db::name('auth_group_access')->where('uid',$admin_id)->delete();
+		if($rst!==false){
+			$this->success('管理员删除成功',$_SERVER['HTTP_REFERER']);
+		}else{
+			$this->error('管理员删除失败',$_SERVER['HTTP_REFERER']);
+		}
+	}
 
 	public function counselor_admin_list()
 	{
@@ -537,7 +557,7 @@ class Admin extends Base
 		$dataclass = new \app\admin\model\Data();
 		$result = $dataclass->getUserByIdCard('440514199411193010');
 		var_dump($result);exit;
-		$user_fields = config('user_fields'); 
+		$user_fields = config('user_fields');
 		$user = array();
 		foreach($user_fields as $key => $val)
 		{
