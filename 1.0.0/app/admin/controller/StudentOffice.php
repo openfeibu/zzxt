@@ -39,7 +39,7 @@ class StudentOffice extends Base
     }
     public function showApplicantList()
     {
-        return $this->showApplicantListHandle(3);
+        return $this->showApplicantListHandle(1);
     }
     public function showApplicantList2()
     {
@@ -47,7 +47,7 @@ class StudentOffice extends Base
     }
     public function showApplicantList3()
     {
-        return $this->showApplicantListHandle(1);
+        return $this->showApplicantListHandle(3);
     }
     public function showApplicantListHandle($id)
     {
@@ -105,6 +105,8 @@ class StudentOffice extends Base
         $this->assign('faculty', $faculty_profession);
         $this->assign('user', $data);
         $this->assign('page', $show);
+        $detail_url = url('admin/StudentOffice/showMaterial'.$id,['type_id'=>$id]);
+        $this->assign('detail_url',$detail_url);
         if(request()->isAjax()){
 			return $this->fetch('ajax_showApplicationList');
 		}else{
@@ -150,11 +152,25 @@ class StudentOffice extends Base
         $table = config('application_type.'.$id).date('YmdHis');
         export_excel($data,$table,$field_titles,$fields);
     }
+    public function showMaterial1($type_id)
+    {
+        return $this->showMaterialHandle($type_id);
+    }
+    public function showMaterial2($type_id)
+    {
+        return $this->showMaterialHandle($type_id);
+    }
+    public function showMaterial3($type_id)
+    {
+
+        return $this->showMaterialHandle($type_id);
+    }
     /**
      * 查看学生申请资料
      */
-    public function showMaterial($id,$type_id)
+    public function showMaterialHandle($type_id)
     {
+        $id = input('id');
         $apply_id = $id;
         $data = Db::table('yf_apply_scholarships_status')
             ->where('status_id', $id)
@@ -170,7 +186,7 @@ class StudentOffice extends Base
             $apply = Db::table($type)
                 ->alias('w')
                 ->join('yf_user u', 'u.studentid = w.user_id', 'left')
-                ->where($field,$id)
+                ->where($field,$data['application_id'])
                 ->find();
             if (!empty($apply['awards'])) {
                 $apply['awards'] = json_decode($apply['awards'], true);
@@ -179,16 +195,6 @@ class StudentOffice extends Base
                 $apply['awards'][0]['name'] = '';
                 $apply['awards'][0]['unit'] = '';
             }
-            if (empty($apply['group_opinion'])) {
-                return $this->error("小组未审核该同学");
-            } else {
-                $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-            }
-            if (!empty($apply['faculty_opinion'])) {
-                $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
-            } else {
-                return $this->error("院系小组未审核该同学");
-            }
             if (!empty($apply['schoole_opinion'])) {
                 $apply['schoole_opinion'] = json_decode($apply['schoole_opinion'], true);
             } else {
@@ -196,10 +202,7 @@ class StudentOffice extends Base
                 $apply['schoole_opinion']['text'] = '';
                 $apply['schoole_opinion']['name'] = '';
             }
-            $this->assign('type_id', $type_id);
-            $this->assign('id', $apply_id);
-            $this->assign('user', $apply);
-            return $this->view->fetch('scholarship_team/manage_add_review');
+            $apply = handleApply($apply);
         } else {
             $type = "yf_multiple_scholarship";
             $field = "multiple_id";
@@ -207,7 +210,7 @@ class StudentOffice extends Base
             $apply = Db::table($type)
                 ->alias('w')
                 ->join('yf_user u', 'u.studentid = w.user_id', 'left')
-                ->where($field,$id)
+                ->where($field,$data['application_id'])
                 ->find();
             if (!empty($apply['members'])) {
                 $apply['members'] = json_decode($apply['members'], true);
@@ -217,16 +220,7 @@ class StudentOffice extends Base
                 $apply['members'][0]['relation'] = '';
                 $apply['members'][0]['unit'] = '';
             }
-            if (empty($apply['group_opinion'])) {
-                return $this->error("小组未审核该同学");
-            } else {
-                $apply['group_opinion'] = json_decode($apply['group_opinion'], true);
-            }
-            if (!empty($apply['faculty_opinion'])) {
-                $apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
-            } else {
-                return $this->error("院系小组未审核该同学");
-            }
+
             if (!empty($apply['schoole_opinion'])) {
                 $apply['schoole_opinion'] = json_decode($apply['schoole_opinion'], true);
             } else {
@@ -234,11 +228,13 @@ class StudentOffice extends Base
                 $apply['schoole_opinion']['text'] = '';
                 $apply['schoole_opinion']['name'] = '';
             }
-            $this->assign('type_id', $type_id);
-            $this->assign('id', $apply_id);
-            $this->assign('user', $apply);
-            return $this->view->fetch();
+            $apply = handleApply($apply);
+
         }
+        $this->assign('type_id', $type_id);
+        $this->assign('id', $apply_id);
+        $this->assign('user', $apply);
+        return $this->view->fetch('showMaterial');
     }
 
     /**

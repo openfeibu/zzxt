@@ -7,7 +7,7 @@
             您当前操作
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
-                <a href="">国家奖学金院系审核</a>
+                <a href="">国家{php}echo config('application_type.'.$type_id);{/php}全院审核</a>
             </small>
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
@@ -41,7 +41,7 @@
                         <td class="tab_title">专业</td>
                         <td class="tab_content">{$user.profession}</td>
                         <td class="tab_title">学制</td>
-                        <td class="tab_content">{$user.school_system}年</td>
+                        <td class="tab_content">3年</td>
                         <td class="tab_title">联系电话</td>
                         <td colspan="2" class="tab_content">{$user.tel}</td>
                     </tr>

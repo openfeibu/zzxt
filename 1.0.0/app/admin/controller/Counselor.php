@@ -41,7 +41,7 @@ class Counselor extends Base
     }
     public function showApplicantList()
     {
-        return $this->showApplicantListHandle(3);
+        return $this->showApplicantListHandle(1);
     }
     public function showApplicantList2()
     {
@@ -49,7 +49,7 @@ class Counselor extends Base
     }
     public function showApplicantList3()
     {
-        return $this->showApplicantListHandle(1);
+        return $this->showApplicantListHandle(3);
     }
     public function showApplicantListHandle($id)
     {
@@ -114,54 +114,33 @@ class Counselor extends Base
         $this->assign('faculty', $faculty_profession);
         $this->assign('user', $data_arr);
         $this->assign('page', $show);
+        $detail_url = url('admin/Counselor/showMaterial'.$id,['type_id'=>$id]);
+        $this->assign('detail_url',$detail_url);
         if(request()->isAjax()){
 			return $this->fetch('scholarship_team/counselor_ajax_review');
 		}else{
 			return $this->fetch('scholarship_team/counselor_review');
 		}
     }
-    /**
-     * 获取申请学生列表(国家奖学金)
-     */
-    public function showNationalList() {
-        $class_number = input('class_number',0);
-        $studentname = input('studentname','');
-        $status = input('status','');
-        $where = ' 1 = 1 ';
-        if($class_number)
-        {
-            $where .= " AND u.class_number = '".$class_number."'";
-        }else{
-            $where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
-        }
-        if($status)
-        {
-            $where .= " AND status = '".$status."'";
-        }
-        if($studentname)
-        {
-            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
-        }
-        $data = NationalScholarship::getNationalList($where);
-        $show=$data->render();
-        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
-		$faculty_pass = 0;
-		$faculty_not_pass = 0;
-		$this->assign('faculty_pass', $faculty_pass);
-		$this->assign('faculty_not_pass', $faculty_not_pass);
-        $this->assign('user', $data);
-        $this->assign('page', $show);
-        if(request()->isAjax()){
-			return $this->fetch('scholarship_team/counselor_ajax_review');
-		}else{
-			return $this->fetch('scholarship_team/counselor_review');
-		}
+    public function showMaterial1($type_id)
+    {
+        return $this->showMaterialHandle($type_id);
     }
+    public function showMaterial2($type_id)
+    {
+        return $this->showMaterialHandle($type_id);
+    }
+    public function showMaterial3($type_id)
+    {
 
+        return $this->showMaterialHandle($type_id);
+    }
     /**
      * 查看学生申请资料
      */
-    public function showMaterial($id,$type_id) {
+    public function showMaterialHandle($type_id)
+    {
+        $id = input('id');
         $apply_id = $id;
         $data = Db::table('yf_apply_scholarships_status')
             ->where('fund_type', $type_id)
@@ -174,11 +153,11 @@ class Counselor extends Base
         if ($data['fund_type'] == 1) {
             $type = "yf_national_scholarship";
             $field = "national_id";
-            $id = $data['national_id'];
+            $id = $data['application_id'];
         } else {
             $type = "yf_multiple_scholarship";
             $field = "multiple_id";
-            $id = $data['multiple_id'];
+            $id = $data['application_id'];
         }
         $user_model = new UserModel();
         $user_fields = UserModel::getUserFields('u');

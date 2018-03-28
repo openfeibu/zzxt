@@ -65,8 +65,7 @@ class EvaluationGroup extends Base
             ->join('yf_user u', 'u.id_number = m.id_number', 'left')
 			->where("u.class_number = '".$this->class_number."'")
             ->where("CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->where('ass.status','<>',2)
-            ->where('ass.status',2)
+            ->where('ass.status','<',3)
             ->count();
         if (empty($no_count)) {
             $no_count = 0;
@@ -77,7 +76,7 @@ class EvaluationGroup extends Base
             ->join('yf_user u', 'u.id_number = m.id_number', 'left')
 			->where("u.class_number = '".$this->class_number."'")
             ->where("CONVERT(VARCHAR(4),DATEADD(S,ass.create_at + 8 * 3600,'1970-01-01 00:00:00'),20)=$this->time")
-            ->where('ass.status',2)
+            ->where('ass.status','>=',3)
             ->count();
         if (empty($yes_count)) {
             $yes_count = 0;

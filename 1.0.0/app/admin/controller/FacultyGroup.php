@@ -39,7 +39,7 @@ class FacultyGroup extends Base
     }
     public function showApplicantList()
     {
-        return $this->showApplicantListHandle(3);
+        return $this->showApplicantListHandle(1);
     }
     public function showApplicantList2()
     {
@@ -47,7 +47,7 @@ class FacultyGroup extends Base
     }
     public function showApplicantList3()
     {
-        return $this->showApplicantListHandle(1);
+        return $this->showApplicantListHandle(3);
     }
     public function showApplicantListHandle($id)
     {
@@ -116,17 +116,34 @@ class FacultyGroup extends Base
         $this->assign('profession', $faculty_profession);
         $this->assign('user', $data_arr);
         $this->assign('page', $show);
+
+        $detail_url = url('admin/FacultyGroup/showMaterial'.$id,['type_id'=>$id]);
+        $this->assign('detail_url',$detail_url);
         if(request()->isAjax()){
 			return $this->fetch('ajax_showApplicationList');
 		}else{
 			return $this->fetch('showApplicantList');
 		}
     }
+    public function showMaterial1($type_id)
+    {
+        return $this->showMaterialHandle($type_id);
+    }
+    public function showMaterial2($type_id)
+    {
+        return $this->showMaterialHandle($type_id);
+    }
+    public function showMaterial3($type_id)
+    {
+
+        return $this->showMaterialHandle($type_id);
+    }
     /**
      * 查看学生申请资料
      */
-    public function showMaterial($id,$type_id)
+    public function showMaterialHandle($type_id)
     {
+        $id = input('id');
         $apply_id = $id;
         $data = Db::table('yf_apply_scholarships_status')
             ->where('status_id', $id)
@@ -142,7 +159,7 @@ class FacultyGroup extends Base
             $apply = Db::table($type)
                 ->alias('w')
                 ->join('yf_user u', 'u.studentid = w.user_id', 'left')
-                ->where($field,$id)
+                ->where($field,$data['application_id'])
                 ->find();
             if (!empty($apply['awards'])) {
                 $apply['awards'] = json_decode($apply['awards'], true);
@@ -156,10 +173,7 @@ class FacultyGroup extends Base
             }
 
             $apply = handleApply($apply);
-            $this->assign('type_id', $type_id);
-            $this->assign('id', $apply_id);
-            $this->assign('user', $apply);
-            return $this->view->fetch();
+
         } else {
             $type = "yf_multiple_scholarship";
             $field = "multiple_id";
@@ -167,7 +181,7 @@ class FacultyGroup extends Base
             $apply = Db::table($type)
                 ->alias('w')
                 ->join('yf_user u', 'u.studentid = w.user_id', 'left')
-                ->where($field,$id)
+                ->where($field,$data['application_id'])
                 ->find();
             if (!empty($apply['members'])) {
                 $apply['members'] = json_decode($apply['members'], true);
@@ -177,13 +191,12 @@ class FacultyGroup extends Base
                 $apply['members'][0]['relation'] = '';
                 $apply['members'][0]['unit'] = '';
             }
-
             $apply = handleApply($apply);
-            $this->assign('type_id', $type_id);
-            $this->assign('id', $apply_id);
-            $this->assign('user', $apply);
-            return $this->view->fetch();
         }
+        $this->assign('type_id', $type_id);
+        $this->assign('id', $apply_id);
+        $this->assign('user', $apply);
+        return $this->view->fetch('showMaterial');
     }
 
     /**

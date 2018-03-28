@@ -69,7 +69,7 @@ class ScholarshipsGroup extends Base
     }
     public function showReviewList()
     {
-        return $this->showReviewListHandle(3);
+        return $this->showReviewListHandle(1);
     }
     public function showReviewList2()
     {
@@ -77,7 +77,7 @@ class ScholarshipsGroup extends Base
     }
     public function showReviewList3()
     {
-        return $this->showReviewListHandle(1);
+        return $this->showReviewListHandle(3);
     }
     public function showReviewListHandle($id)
     {
@@ -124,21 +124,37 @@ class ScholarshipsGroup extends Base
         }
         $this->assign('no_count',$no_count);
         $this->assign('yes_count',$yes_count);
-        $this->assign('id', $id);
+        $this->assign('type_id', $id);
         $this->assign('user', $data);
         $this->assign('list', $data);
         $this->assign('page', $show);
+        $detail_url = url('admin/ScholarshipsGroup/showMaterial'.$id,['type_id'=>$id]);
+        $this->assign('detail_url',$detail_url);
         if(request()->isAjax()){
 			return $this->fetch('ajax_showReviewList');
 		}else{
 			return $this->fetch('showReviewList');
 		}
     }
-    /**
-     * 小组查看学生申请资料(助学金+励志)
-     */
-    public function showMaterial($id,$type_id)
+    public function showMaterial1($type_id)
     {
+        return $this->showMaterialHandle($type_id);
+    }
+    public function showMaterial2($type_id)
+    {
+        return $this->showMaterialHandle($type_id);
+    }
+    public function showMaterial3($type_id)
+    {
+
+        return $this->showMaterialHandle($type_id);
+    }
+    /**
+     * 查看学生申请资料
+     */
+    public function showMaterialHandle($type_id)
+    {
+        $id = input('id');
         $apply_id = $id;
         $data = Db::table('yf_apply_scholarships_status')
             ->where('fund_type', $type_id)
@@ -164,7 +180,7 @@ class ScholarshipsGroup extends Base
             ->alias('w')
             ->join('yf_member_list m', 'm.member_list_id = w.member_list_id')
             ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-            ->where($field,$id)
+            ->where($field,$data['application_id'])
             ->field('w.*,m.member_list_nickname,m.member_list_headpic,'.$user_fields)
             ->find();
 //        $apply['photo'] =
@@ -186,7 +202,7 @@ class ScholarshipsGroup extends Base
         $this->assign('type_id', $type_id);
         $this->assign('id', $apply_id);
         $this->assign('user', $apply);
-        return $this->view->fetch();
+        return $this->view->fetch('showMaterial');
     }
 
     /**
@@ -237,37 +253,4 @@ class ScholarshipsGroup extends Base
         }
     }
 
-    /**
-     * 获取申请学生列表(国家奖学金)
-     */
-    public function showNationalList() {
-
-        $data = NationalScholarship::getNationalList();
-        $show=$data->render();
-        $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
-
-        $this->assign('user', $data);
-        $this->assign('page', $show);
-        return $this->view->fetch('showNationalList');
-    }
-
-    /**
-     * 国家奖学金审核列表
-     * @return string
-     */
-    public function showNationalReviewList() {
-        $data = Db::table('yf_apply_scholarships_status')
-            ->where('fund_type',1)
-//            ->where('status', 1)
-            ->paginate(20);
-        foreach ($data->getCollection() as $k => $vo) {
-            $user = Db::table('yf_user')
-                ->where('studentid', $vo['user_id'])
-                ->find();
-            $data->data[$k] = array_merge($data->items()[$k],$user);
-        }
-        $this->assign('user', $data->data);
-        $this->assign('list', $data);
-        return $this->view->fetch();
-    }
 }

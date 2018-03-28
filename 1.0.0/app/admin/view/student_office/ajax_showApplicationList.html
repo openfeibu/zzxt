@@ -21,7 +21,7 @@
                 <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if $row.check_status != 4}disabled{/if} value="1">不通过</button>
             </div>
             <div class="audit_opera">
-                <a href="{:url('admin/StudentOffice/showMaterial',['id'=>$row.status_id,'type_id'=>$type_id])}" class="btn btn-info btn-sm">查看</a>
+                <a href="{$detail_url}&id={$row.status_id}" class="btn btn-info btn-sm">查看</a>
             </div>
         </div>
     </td>
