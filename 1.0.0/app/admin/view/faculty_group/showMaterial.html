@@ -163,7 +163,15 @@
                         </tr>
                         <tr>
                             <td colspan="3" class="tab_content">
-                                <textarea name="faculty_opinion[text]" id="" class="tab_opinion">{$user.faculty_opinion.text}</textarea>
+                                {if (!in_array($user.check_status,[2]) && $type_id !=1) || (!in_array($user.check_status,[3]) && $type_id ==1)}
+                                <textarea name="faculty_opinion[text]" class="tab_opinion">{$user.faculty_opinion.text}</textarea>
+                                {else}
+                                <select class="form-control tab_select text" name="faculty_opinion[text]">
+                                    {foreach $Think.config.scholarships_opinion as $k => $v}
+                                    <option value="{$v}">{$v}</option>
+                                    {/foreach}
+                                </select>
+                                {/if}
                                 <!-- <div class="tab_sign">
                                     <label for="">院系小组负责人签名：</label>
                                     <input type="text" name="faculty_opinion[name]" value="{$user.faculty_opinion.name}">

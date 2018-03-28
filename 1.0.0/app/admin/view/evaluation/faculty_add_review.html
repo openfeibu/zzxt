@@ -55,7 +55,7 @@
                     </tr>
                     {/if}
                 </table>
-                <form action="{:url('admin/EvaluationHandle/fillEvaluationOpinion')}" method="post" id="passingForm" class="passingForm">
+                <form action="{:url('admin/EvaluationHandle/faculty')}" method="post" id="passingForm" class="passingForm">
                 <table class="w800">
                      <tr>
                         <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">院系小组添加评语：</p></td>
@@ -63,7 +63,15 @@
                     </tr>
                     <tr>
                         <td colspan="3" class="tab_content">
+                            {if !in_array($user.evaluation_status,[3,9])}
                             <textarea name="faculty_opinion[text]" class="tab_opinion">{$user.faculty_opinion.text}</textarea>
+                            {else}
+                            <select class="form-control tab_select" name="faculty_opinion[text]">
+                                {foreach $Think.config.eval_opinion2 as $k => $v}
+                                <option value="{$v}">{$v}</option>
+                                {/foreach}
+                            </select>
+                            {/if}
                             <!--
                             <div class="modify pull-left">
                                 <p>院系小组修改评分：</p>

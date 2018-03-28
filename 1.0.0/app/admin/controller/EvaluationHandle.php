@@ -50,6 +50,11 @@ class EvaluationHandle extends Base
         } else {
             $evdata['evaluation_status'] = $status = 4;
         }
+        //构造评语什么的
+        $array['text'] = $data['faculty_opinion']['text'];
+        $array['name'] = '';
+        $array['time'] = time();
+        $evdata['faculty_opinion'] = json_encode($array);
         //var_dump($evdata);exit;
         $data['publicity_begin'] = time();
         //5天

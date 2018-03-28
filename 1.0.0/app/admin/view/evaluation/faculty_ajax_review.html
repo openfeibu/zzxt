@@ -3,7 +3,15 @@
     <td>{$row.evaluation_id}</td>
     {include file="common\evaluation_val"}
     <td>
-        <textarea name="faculty_opinion[text]" class="tab_opinion text" style="height:60px;" {if !in_array($row.evaluation_status,[3,9])}disabled{/if}>{$row.faculty_opinion.text}</textarea>
+        {if !in_array($row.evaluation_status,[3,9])}
+        {$row.faculty_opinion.text}
+        {else}
+        <select class="form-control tab_select text" name="faculty_opinion[text]">
+            {foreach $Think.config.eval_opinion2 as $k => $v}
+            <option value="{$v}">{$v}</option>
+            {/foreach}
+        </select>
+        {/if}
     </td>
     <td class="tab_content">
         <form action="{:url('admin/EvaluationHandle/faculty')}" class="passingForm2" method="post">

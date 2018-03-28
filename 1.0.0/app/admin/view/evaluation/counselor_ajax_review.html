@@ -17,9 +17,9 @@
         {if !in_array($row.evaluation_status,[1,2])}
         {$row.group_opinion.text}
         {else}
-        <select class="form-control tab_select" name="group_opinion[text]">
+        <select class="form-control tab_select text" name="group_opinion[text]">
             {foreach $Think.config.eval_opinion as $k => $v}
-            <option value="{$k}">{$v}</option>
+            <option value="{$v}">{$v}</option>
             {/foreach}
         </select>
         {/if}

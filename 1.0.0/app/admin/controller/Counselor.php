@@ -117,9 +117,9 @@ class Counselor extends Base
         $detail_url = url('admin/Counselor/showMaterial'.$id,['type_id'=>$id]);
         $this->assign('detail_url',$detail_url);
         if(request()->isAjax()){
-			return $this->fetch('scholarship_team/counselor_ajax_review');
+			return $this->fetch('counselor_ajax_review');
 		}else{
-			return $this->fetch('scholarship_team/counselor_review');
+			return $this->fetch('counselor_review');
 		}
     }
     public function showMaterial1($type_id)
@@ -183,7 +183,7 @@ class Counselor extends Base
 		$this->assign('type_id', $type_id);
         $this->assign('id', $id);
         $this->assign('user', $apply);
-        return $this->view->fetch('scholarship_team/counselor_add_review');
+        return $this->view->fetch('counselor_add_review');
     }
 
     /**
