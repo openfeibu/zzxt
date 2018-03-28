@@ -51,12 +51,15 @@
                         </tr>
                         <tr>
                             <td colspan="3" class="tab_content">
+                                {if !in_array($user.evaluation_status,[1,2])}
                                 <textarea name="group_opinion[text]" class="tab_opinion">{$user.group_opinion.text}</textarea>
+                                {else}
                                 <select class="form-control tab_select" name="group_opinion[text]">
                                     {foreach $Think.config.eval_opinion as $k => $v}
                                     <option value="{$k}">{$v}</option>
                                     {/foreach}
                                 </select>
+                                {/if}
                                 <div class="modify pull-left">
                                     <p>修改评分：</p>
                                     <div class="modify_score">
