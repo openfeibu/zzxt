@@ -41,7 +41,7 @@
                         </tr>
                         <tr>
                             <td colspan="3" class="tab_content">
-                                {if !in_array($row.check_status,[2])}
+                                {if !in_array($user.check_status,[2])}
                                 <textarea name="group_opinion[text]" class="tab_opinion">{$user.group_opinion.text}</textarea>
                                 {else}
                                 <select class="form-control tab_select text" name="group_opinion[text]">
@@ -50,7 +50,7 @@
                                     {/foreach}
                                 </select>
                                 {/if}
-                        
+
                                 <div class="tab_sign">
                                     <label for="">推荐人（辅导员或班主任）签名：</label>
                                     <input type="text" name="group_opinion[name]" value="{$user.group_opinion.name}">
