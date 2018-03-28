@@ -14,7 +14,11 @@
     </td>
 
     <td>
-        <textarea name="group_opinion[text]" class="tab_opinion text" style="height:60px;" {if !in_array($row.evaluation_status,[1,2])}disabled{/if}>{$row.group_opinion.text}</textarea>
+        <select class="form-control tab_select" name="group_opinion[text]" {if !in_array($row.evaluation_status,[1,2])}disabled{/if}>
+            {foreach $Think.config.eval_opinion as $k => $v}
+            <option value="{$k}">{$v}</option>
+            {/foreach}
+        </select>
     </td>
     <td class="tab_content">
         <form action="{:url('admin/EvaluationHandle/counselor')}" method="post" class="passingForm2">
