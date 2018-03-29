@@ -400,14 +400,18 @@ function CheckAll(form) {
         }
     }
 }
-function CheckAll(table) {
-    for (var i = 0; i < table.elements.length; i++) {
-        var e = table.elements[i];
-        if (e.Name != 'chkAll' && e.disabled == false) {
-            e.checked = table.chkAll.checked;
-        }
-    }
-}
+//实现全选反选
+$("#chkAll2").on('click', function() {
+   $("tbody input:checkbox").prop("checked", $(this).prop('checked'));
+})
+$("tbody input:checkbox").on('click', function() {
+   //当选中的长度等于checkbox的长度的时候,就让控制全选反选的checkbox设置为选中,否则就为未选中
+   if($("tbody input:checkbox").length === $("tbody input:checked").length) {
+	   $("#chkAll2").prop("checked", true);
+   } else {
+	   $("#chkAll2").prop("checked", false);
+   }
+})
 /* 日期选择器 */
 var dateInput = $("input.js-date")
 if (dateInput.length) {
