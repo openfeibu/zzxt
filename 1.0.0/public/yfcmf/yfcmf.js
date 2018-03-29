@@ -1287,6 +1287,8 @@ $('body').on('click','.passingDiv2 button',function () {
 		fail = 1;
 	}
 	//console.log(status_id);return false;
+	text = $(this).closest("tr").find(".text").val();
+	textname = $(this).closest("tr").find(".text").attr('name');
 	data = {'status_id':status_id,'fail':fail};
 	data[textname] = text;
 	$.ajax({

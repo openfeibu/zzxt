@@ -81,12 +81,12 @@
     </div>
 </div>
 <script type="text/javascript">
-	$('body').on('click','#passSubmit',function(){
+	$('body').on('click','#passSubmit2',function(){
 		url = "{:url('admin/EvaluationHandle/studentOfficeAll')}";
 		$(".ajaxForm").attr('action',url);
 		return true;
 	});
-    $('body').on('click','#failSubmit',function(){
+    $('body').on('click','#failSubmit2',function(){
 		url = "{:url('admin/EvaluationHandle/studentOfficeAll',array('fail'=>1))}";
 		$(".ajaxForm").attr('action',url);
 		return true;

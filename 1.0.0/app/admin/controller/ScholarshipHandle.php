@@ -52,6 +52,37 @@ class ScholarshipHandle extends Base
         //}
         return $this->multipleFill($app_status_data,$update_app_data);
     }
+    public function MultipleCounselorAllFill()
+    {
+        $ids = input('n_ids/a');
+        $group_opinions = input('opinions/a');
+        $update_app_data = [];
+        if (input('fail') !== null and !empty(input('fail'))) {
+            $update_app_data['check_status'] = $status = 7;
+        } else {
+            $update_app_data['check_status'] = $status = 3;
+        }
+        if(empty($ids)){
+            $this -> error("请选择数据");
+        }
+        if(is_array($ids)){//判断获取文章ID的形式是否数组
+            $where = 'status_id in('.implode(',',$ids).')';
+        }else{
+            $where = 'status_id='.$ids;
+        }
+        $data = Db::name('apply_scholarships_status')->where($where)->select();
+        foreach($data as $key => $val)
+        {
+            $k = array_search($val['application_id'], $ids);
+            $array['text'] = $group_opinions[$k];
+            $array['name'] = '';
+            $array['time'] = time();
+            $update_app_data['group_opinion'] = json_encode($array);
+            $this->multipleFill($val,$update_app_data);
+        }
+        $this->success("操作成功");
+
+    }
     public function MultipleCounselorFill(Request $request)
     {
         $data = $request->post();
@@ -73,13 +104,50 @@ class ScholarshipHandle extends Base
 
         return $this->multipleFill($app_status_data,$update_app_data);
     }
+    public function MultipleFacultyAllFill()
+    {
+        $ids = input('n_ids/a');
+        $faculty_opinions = input('opinions/a');
+        $update_app_data = [];
+        if (input('fail') !== null and !empty(input('fail'))) {
+            $update_app_data['check_status'] = $status = 8;
+        } else {
+            $update_app_data['check_status'] = $status = 4;
+        }
+        if(empty($ids)){
+            $this -> error("请选择数据");
+        }
+        if(is_array($ids)){//判断获取文章ID的形式是否数组
+            $where = 'status_id in('.implode(',',$ids).')';
+        }else{
+            $where = 'status_id='.$ids;
+        }
+        $data = Db::name('apply_scholarships_status')->where($where)->select();
+        foreach($data as $key => $val)
+        {
+            //设置公示时间
+            if ($status == 4) {
+                $update_app_data['publicity_begin'] = time();
+                //5天
+                $update_app_data['publicity_end'] = time() + 60*60*24*5;
+            }
+            $k = array_search($val['application_id'], $ids);
+            $array['text'] = $faculty_opinions[$k];
+            $array['name'] = '';
+            $array['time'] = time();
+            $update_app_data['faculty_opinion'] = json_encode($array);
+            $this->multipleFill($val,$update_app_data);
+        }
+        $this->success("操作成功");
+
+    }
     public function MultipleFacultyFill(Request $request)
     {
         $data = $request->post();
         if (isset($data['fail']) and !empty($data['fail'])) {
-            $update_app_data['check_status'] = $status = 7;
+            $update_app_data['check_status'] = $status = 8;
         } else {
-            $update_app_data['check_status'] = $status = 3;
+            $update_app_data['check_status'] = $status = 4;
         }
         //状态表id
         $status_id = $data['status_id'];
