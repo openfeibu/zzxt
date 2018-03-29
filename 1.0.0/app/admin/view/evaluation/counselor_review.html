@@ -52,7 +52,13 @@
                 <table  id="simple-table"  class="table table-striped table-bordered table-hover tab_center">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>
+                                <label class="pos-rel">
+    								<input type="checkbox" class="ace" id="chkAll" onclick="CheckAll(this.form)" value="全选">
+    								<span class="lbl"></span>
+    							</label>
+                                ID
+                            </th>
                             {include file="common\evaluation_key"}
                             <th style="width:160px;">小组评议</th>
                             <th>操作</th>

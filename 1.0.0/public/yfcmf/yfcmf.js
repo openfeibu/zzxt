@@ -1327,6 +1327,7 @@ $('body').on('click','#passSubmit',function () {
 
 	$.ajax({
 		url: href,
+		type:'POST',
 		data:{'n_ids':n_ids,'opinions':opinions,'change_fractions':change_fractions},
 		success: function(data){
 			if (data.code == 200) {
@@ -1355,6 +1356,7 @@ $('body').on('click','#failSubmit',function () {
 
 	$.ajax({
 		url: href+'?fail=1',
+		type:'POST',
 		data:{'n_ids':n_ids,'opinions':opinions,'change_fractions':change_fractions},
 		success: function(data){
 			if (data.code == 200) {
