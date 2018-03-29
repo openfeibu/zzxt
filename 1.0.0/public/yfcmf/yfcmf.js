@@ -1332,7 +1332,7 @@ $('body').on('click','#passSubmit',function () {
 		success: function(data){
 			if (data.code == 200) {
                 layer.msg(data.msg,{icon: 6});
-				window.reload();
+				window.loction.reload();
             }else{
                 layer.msg(data.msg,{icon: 5});
             }
@@ -1362,7 +1362,7 @@ $('body').on('click','#failSubmit',function () {
 		success: function(data){
 			if (data.code == 1) {
                 layer.msg(data.msg,{icon: 6});
-				window.reload();
+				window.loction.reload();
             }else{
                 layer.msg(data.msg,{icon: 5});
             }
