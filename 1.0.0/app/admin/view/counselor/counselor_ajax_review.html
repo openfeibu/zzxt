@@ -1,10 +1,19 @@
 {foreach name="user" item="row" key="k" }
 <tr>
-    <td>{$row.status_id}</td>
+    <td>
+        {if !in_array($row.check_status,[1,2])}
+        {$row.status_id}
+        {else}
+        <label class="pos-rel">
+            <input name="n_id[]" id="navid" class="ace" type="checkbox" value="{$row.status_id}">
+            <span class="lbl">{$row.status_id}</span>
+        </label>
+        {/if}
+    </td>
 
     {include file="common\group_application_val"}
     <td>
-        {if !in_array($row.check_status,[2])}
+        {if !in_array($row.check_status,[1,2])}
         {$row.group_opinion.text}
         {else}
         <select class="form-control tab_select text" name="group_opinion[text]">
