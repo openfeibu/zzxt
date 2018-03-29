@@ -400,6 +400,14 @@ function CheckAll(form) {
         }
     }
 }
+function CheckAll(table) {
+    for (var i = 0; i < table.elements.length; i++) {
+        var e = table.elements[i];
+        if (e.Name != 'chkAll' && e.disabled == false) {
+            e.checked = table.chkAll.checked;
+        }
+    }
+}
 /* 日期选择器 */
 var dateInput = $("input.js-date")
 if (dateInput.length) {
