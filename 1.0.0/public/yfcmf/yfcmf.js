@@ -1346,6 +1346,7 @@ $('body').on('click','#failSubmit',function () {
 	var n_id = $('input[name="n_id[]"]:checked');
 	var n_ids = [];
 	var opinions = [];
+	var change_fractions = [];
 	$.each(n_id,function(i,obj){
 		n_ids.push($(this).val());
 		var opinion = $(this).parents('tr').find('.text').find('option:selected').val();
