@@ -1359,7 +1359,7 @@ $('body').on('click','#failSubmit',function () {
 		type:'POST',
 		data:{'n_ids':n_ids,'opinions':opinions,'change_fractions':change_fractions},
 		success: function(data){
-			if (data.code == 200) {
+			if (data.code == 1) {
                 layer.msg(data.msg,{icon: 6});
 				window.reload();
             }else{
