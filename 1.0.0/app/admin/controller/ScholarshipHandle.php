@@ -183,15 +183,6 @@ class ScholarshipHandle extends Base
         }
         $status_id = $data['status_id'];
         $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type')->find();
-        //构造json
-        if(isset($data['faculty_opinion']))
-        {
-            $array['text'] = $data['faculty_opinion']['text'];
-            //$array['name'] = $data['faculty_opinion']['name'];
-            $array['name'] = '';
-            $array['time'] = time();
-        }
-
         $update_app_data['update_at'] = time();
         //设置公示时间
         if ($status == 5) {
@@ -206,7 +197,7 @@ class ScholarshipHandle extends Base
         $p = input('p');
         $ids = input('n_id/a');
         if(empty($ids)){
-            $this -> error("请选择数据",url('admin/StudentOffice/showapplicantlist',array('p'=>$p)));
+            $this -> error("请选择数据");
         }
         if(is_array($ids)){//判断获取文章ID的形式是否数组
             $where = 'status_id in('.implode(',',$ids).')';
@@ -227,7 +218,7 @@ class ScholarshipHandle extends Base
             }
             $this->multipleFill($val,$update_app_data);
         }
-        $this->success("操作成功",url('admin/StudentOffice/showapplicantlist',array('p'=>$p)));
+        $this->success("操作成功");
     }
     public function multipleFill($app_status_data,$update_app_data)
     {
