@@ -78,7 +78,7 @@
     <div class="fb-portlet">
         <div class="fb-portlet-title">
             <span>资助新闻</span>
-            <a href="{:url('/news')}" class="fb-portlet-more fb-transition">更多</a>
+            <a href="/home/Listn/showList/3.html" class="fb-portlet-more fb-transition">更多</a>
         </div>
         <ul>
             {yf:news name="policy" cid="3" field="n_id,news_title,news_content" order="news_time desc" limit="6" /}
@@ -158,7 +158,7 @@
     <div class="fb-portlet">
         <div class="fb-portlet-title">
             <span>资助政策</span>
-            <a href="{:url('/policy')}" class="fb-portlet-more fb-transition">更多</a>
+            <a href="{:url('/policy',['id' => '6'])}" class="fb-portlet-more fb-transition">更多</a>
         </div>
         <ul>
             {yf:news name="policy" cid="6" field="n_id,news_title,news_content" order="news_time desc" limit="6" /}
@@ -184,7 +184,7 @@
     <div class="fb-portlet" style="margin-left: 15px;">
         <div class="fb-portlet-title">
             <span>通知公告</span>
-            <a href="{:url('/notice')}" class="fb-portlet-more fb-transition">更多</a>
+            <a href="{:url('/notice',['id' => '5'])}" class="fb-portlet-more fb-transition">更多</a>
         </div>
         <ul>
             {yf:news name="notice" cid="5" field="n_id,news_title,news_content" order="news_time desc" limit="6" /}

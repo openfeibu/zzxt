@@ -17,8 +17,8 @@ return [
     //    前端
     'index_front'=>'home/show/index_front',//学生端首页
     'notice'=>'home/Listn/showlist',//通告页
-    'news'=>'home/show/fund_news',//新闻页
-    'policy'=>'home/show/fund_policy',//政策页
+    'news'=>'home/Listn/showlist',//新闻页
+    'policy'=>'home/Listn/showlist',//政策页
     'notice_details'=>'home/show/notice_details',//通告内容页
     'news_details'=>'home/show/news_details',//新闻内容页
     'policy_details'=>'home/show/policy_details',//政策内容页
