@@ -62,17 +62,19 @@ class EvaluationHandle extends Base
         } else {
             $evdata['evaluation_status'] = $status = 3;
         }
+		$evaluation_model = new Evaluation();
         foreach($esdata as $key => $val)
         {
+			$eval_app = $evaluation_model->getEvaluation($val['evaluation_id']);
             $k = array_search($val['evaluation_id'], $ids);
             $data['status_id'] = $val['status_id'];
             //构造评语什么的
-            $array['text'] = $group_opinions[$key];
+            $array['text'] = $group_opinions[$k];
             $array['name'] = '';
             $array['time'] = time();
             $evdata['group_opinion'] = json_encode($array);
-            $evdata['score'] = intval($val['assess_fraction']) + intval($change_fractions[$key]) ;
-            $evdata['change_fraction'] = intval($change_fractions[$key]);
+            $evdata['score'] = intval($eval_app['assess_fraction']) + intval($change_fractions[$k]) ;
+            $evdata['change_fraction'] = intval($change_fractions[$k]);
             $this->fill($data,$evdata,$status);
         }
         $this->success("操作成功");
@@ -121,7 +123,7 @@ class EvaluationHandle extends Base
             $k = array_search($val['evaluation_id'], $ids);
             $data['status_id'] = $val['status_id'];
             //构造评语什么的
-            $array['text'] = $faculty_opinions[$key];
+            $array['text'] = $faculty_opinions[$k];
             $array['name'] = '';
             $array['time'] = time();
             $evdata['faculty_opinion'] = json_encode($array);
