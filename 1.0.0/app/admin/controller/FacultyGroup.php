@@ -445,6 +445,7 @@ class FacultyGroup extends Base
 
         $data_arr = $data->all();
         $data_arr = Evaluation::handleEvaluationList($data_arr);
+        //var_dump($data_arr);exit;
         //查院
         $faculty_profession = Db::table('yf_user')
             ->field("DISTINCT profession ,profession_number")

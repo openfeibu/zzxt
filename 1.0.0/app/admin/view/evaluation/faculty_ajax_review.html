@@ -1,6 +1,14 @@
 {foreach $user as $num => $row}
 <tr>
-    <td>{$row.evaluation_id}</td>
+    <td>
+        {if in_array($row.evaluation_status,[3,9])}
+        <label class="pos-rel">
+            <input name="n_id[]" id="navid" class="ace" type="checkbox" value="{$row.evaluation_id}">
+            <span class="lbl"></span>
+        </label>
+        {/if}
+        {$row.evaluation_id}
+    </td>
     {include file="common\evaluation_val"}
     <td>
         {if !in_array($row.evaluation_status,[3,9])}
@@ -33,5 +41,9 @@
 </tr>
 {/foreach}
 <tr>
+    <td align="left" class="hidden-xs center" href="{:url('admin/EvaluationHandle/facultyAll')}">
+        <button id="passSubmit" class="btn btn-purple btn-sm hidden-xs" name="pass">通过&nbsp;</button>
+        <button id="failSubmit" class="btn btn-danger  btn-sm hidden-xs" name="fail">不通过</button>
+    </td>
     <td height="50" colspan="12" align="left">{$page}</td>
 </tr>

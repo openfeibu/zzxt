@@ -42,6 +42,41 @@ class EvaluationHandle extends Base
         $evdata['change_fraction'] = intval($data['change_fraction']);
         return $this->fill($data,$evdata,$status);
     }
+    public function counselorAll()
+    {
+        $p = input('p');
+        $ids = input('n_ids/a');
+        $change_fractions = input('change_fractions/a');
+        $group_opinions = input('opinions/a');
+        if(empty($ids)){
+            $this -> error("请选择数据");
+        }
+        if(is_array($ids)){//判断获取文章ID的形式是否数组
+            $where = 'evaluation_id in('.implode(',',$ids).')';
+        }else{
+            $where = 'evaluation_id='.$ids;
+        }
+        $esdata = Db::name('evaluation_status')->where($where)->select();
+        if (input('fail') !== null and !empty(input('fail'))) {
+            $evdata['evaluation_status'] = $status = 7;
+        } else {
+            $evdata['evaluation_status'] = $status = 3;
+        }
+        foreach($esdata as $key => $val)
+        {
+            $k = array_search($val['evaluation_id'], $ids);
+            $data['status_id'] = $val['status_id'];
+            //构造评语什么的
+            $array['text'] = $group_opinions[$key];
+            $array['name'] = '';
+            $array['time'] = time();
+            $evdata['group_opinion'] = json_encode($array);
+            $evdata['score'] = intval($val['assess_fraction']) + intval($change_fractions[$key]) ;
+            $evdata['change_fraction'] = intval($change_fractions[$key]);
+            $this->fill($data,$evdata,$status);
+        }
+        $this->success("操作成功");
+    }
     public function faculty(Request $request)
     {
         $data = $request->post();
@@ -61,6 +96,42 @@ class EvaluationHandle extends Base
         $data['publicity_end'] = time() + 60*60*24*5;
         return $this->fill($data,$evdata,$status);
     }
+
+    public function facultyAll()
+    {
+        $p = input('p');
+        $ids = input('n_ids/a');
+        $faculty_opinions = input('opinions/a');
+        if(empty($ids)){
+            $this -> error("请选择数据",url('admin/StudentOffice/showEvaluationList',array('p'=>$p)));
+        }
+        if(is_array($ids)){//判断获取文章ID的形式是否数组
+            $where = 'evaluation_id in('.implode(',',$ids).')';
+        }else{
+            $where = 'evaluation_id='.$ids;
+        }
+        $esdata = Db::name('evaluation_status')->where($where)->select();
+        if (input('fail') !== null and !empty(input('fail'))) {
+            $evdata['evaluation_status'] = $status = 8;
+        } else {
+            $evdata['evaluation_status'] = $status = 4;
+        }
+        foreach($esdata as $key => $val)
+        {
+            $k = array_search($val['evaluation_id'], $ids);
+            $data['status_id'] = $val['status_id'];
+            //构造评语什么的
+            $array['text'] = $faculty_opinions[$key];
+            $array['name'] = '';
+            $array['time'] = time();
+            $evdata['faculty_opinion'] = json_encode($array);
+            $data['publicity_begin'] = time();
+            //5天
+            $data['publicity_end'] = time() + 60*60*24*5;
+            $this->fill($data,$evdata,$status);
+        }
+        $this->success("操作成功");
+    }
     public function studentOffice(Request $request)
     {
         $data = $request->post();
@@ -69,7 +140,7 @@ class EvaluationHandle extends Base
         } else {
             $evdata['evaluation_status'] = $status = 5;
         }
-        return $this->fill($data,$evdata,$status);
+        $this->success("操作成功",url('admin/StudentOffice/showEvaluationList',array('p'=>$p)));
     }
     public function studentOfficeAll()
     {

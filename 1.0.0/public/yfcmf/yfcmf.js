@@ -1311,3 +1311,61 @@ $('body').on('change','.faculty_more',function () {
 		}
 	});
 });
+$('body').on('click','#passSubmit',function () {
+	var href = $(this).parent().attr('href');
+	var n_id = $('input[name="n_id[]"]:checked');
+	var n_ids = [];
+	var opinions = [];
+	var change_fractions = [];
+	$.each(n_id,function(i,obj){
+		n_ids.push($(this).val());
+		var opinion = $(this).parents('tr').find('.text').find('option:selected').val();
+		var change_fraction = $(this).parents('tr').find('.change_fraction').val();
+		opinions.push(opinion);
+		change_fractions.push(change_fraction);
+	});
+
+	$.ajax({
+		url: href,
+		data:{'n_ids':n_ids,'opinions':opinions,'change_fractions':change_fractions},
+		success: function(data){
+			if (data.code == 200) {
+                layer.msg(data.msg,{icon: 6});
+				window.reload();
+            }else{
+                layer.msg(data.msg,{icon: 5});
+            }
+			return false;
+		}
+	});
+	return false;
+});
+$('body').on('click','#failSubmit',function () {
+	var href = $(this).parent().attr('href');
+	var n_id = $('input[name="n_id[]"]:checked');
+	var n_ids = [];
+	var opinions = [];
+	$.each(n_id,function(i,obj){
+		n_ids.push($(this).val());
+		var opinion = $(this).parents('tr').find('.text').find('option:selected').val();
+		var change_fraction = $(this).parents('tr').find('.change_fraction').val();
+		opinions.push(opinion);
+		change_fractions.push(change_fraction);
+	});
+
+	$.ajax({
+		url: href+'?fail=1',
+		data:{'n_ids':n_ids,'opinions':opinions,'change_fractions':change_fractions},
+		success: function(data){
+			if (data.code == 200) {
+                layer.msg(data.msg,{icon: 6});
+				window.reload();
+            }else{
+                layer.msg(data.msg,{icon: 5});
+            }
+			window.reload();
+			return false;
+		}
+	});
+	return false;
+});

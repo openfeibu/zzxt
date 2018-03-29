@@ -1,7 +1,15 @@
 {foreach $user as $num => $row}
 
 <tr>
-    <td>{$row.evaluation_id}</td>
+    <td>
+        {if in_array($row.evaluation_status,[1,2])}
+        <label class="pos-rel">
+            <input name="n_id[]" id="navid" class="ace" type="checkbox" value="{$row.evaluation_id}">
+            <span class="lbl"></span>
+        </label>
+        {/if}
+        {$row.evaluation_id}
+    </td>
     <td>{$row.studentname}</td>
     <td>{$row.studentid}</td>
     <td>{$row.profession}</td>
@@ -13,11 +21,11 @@
         {php}echo config('evaluation_status.'.$row['status']);{/php}
     </td>
 
-    <td>
+    <td >
         {if !in_array($row.evaluation_status,[1,2])}
         {$row.group_opinion.text}
         {else}
-        <select class="form-control tab_select text" name="group_opinion[text]">
+        <select class="form-control tab_select text" name="group_opinion[text]" style="width:160px;">
             {foreach $Think.config.eval_opinion as $k => $v}
             <option value="{$v}">{$v}</option>
             {/foreach}
@@ -44,5 +52,9 @@
 
 {/foreach}
 <tr>
+    <td align="left" class="hidden-xs center" href="{:url('admin/EvaluationHandle/counselorAll')}">
+        <button id="passSubmit" class="btn btn-purple btn-sm hidden-xs" name="pass">通过&nbsp;</button>
+        <button id="failSubmit" class="btn btn-danger  btn-sm hidden-xs" name="fail">不通过</button>
+    </td>
     <td height="50" colspan="12" align="left">{$page}</td>
 </tr>
