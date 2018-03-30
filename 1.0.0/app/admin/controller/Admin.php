@@ -187,9 +187,11 @@ class Admin extends Base
         $classCode = new ClassCodeModel();
 		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
 		$this->assign('admin_list',$admin_list);
-		$admin_professiones = session('admin_professiones');
-		$classes = $classCode->getCounselorClasses($admin_professiones);
-		$class_number = array_column($classes, 'class_number');
+		// $admin_professiones = session('admin_professiones');
+		// $classes = $classCode->getCounselorClasses($admin_professiones);
+		// $class_number = array_column($classes, 'class_number');
+		$class_number = session('admin_auth.class_number');
+		$classes = $classCode->getCounselorClasses($class_number);
 		$this->assign('classes', $classes);
 		$this->assign('auth_group',$auth_group);
 		$this->assign('auth_group_access',$auth_group_access);
@@ -212,10 +214,13 @@ class Admin extends Base
 		$auth_group=Db::name('auth_group')->where('id in (21,25)')->select();
 		$classCode = new ClassCodeModel();
 		$this->assign('auth_group',$auth_group);
-		$admin_professiones = session('admin_professiones');
-		$classes = $classCode->getCounselorClasses($admin_professiones);
-		$class_number = array_column($classes, 'class_number');
+		// $admin_professiones = session('admin_professiones');
+		// $classes = $classCode->getCounselorClasses($admin_professiones);
+		// $class_number = array_column($classes, 'class_number');
+		$class_number = session('admin_auth.class_number');
+		$classes = $classCode->getCounselorClasses($class_number);
 		$this->assign('classes', $classes);
+		
 		return $this->fetch();
 	}
 	public function counselor_admin_runadd()
@@ -277,11 +282,11 @@ class Admin extends Base
 		$classCode = new ClassCodeModel();
 		$faculties = $classCode->getFaculties();
 		$this->assign('faculty_number',session('admin_auth.faculty_number'));
-		$class = $classCode->getClass(session('admin_auth.faculty_number'));
-		$professiones = $classCode->getProfessiones(session('admin_auth.faculty_number'));
-		$this->assign('professiones', $professiones);
+		$classes = $classCode->getFacultyClasses(session('admin_auth.faculty_number'));
+		// $professiones = $classCode->getProfessiones(session('admin_auth.faculty_number'));
+		// $this->assign('professiones', $professiones);
 		$this->assign('auth_group',$auth_group);
-		$this->assign('class', $class);
+		$this->assign('classes', $classes);
 		$this->assign('faculties', $faculties);
 		return $this->fetch();
 	}
@@ -291,16 +296,21 @@ class Admin extends Base
 		$admin_list=Db::name('admin')->find(input('admin_id'));
         $classCode = new ClassCodeModel();
 		$faculties = $classCode->getFaculties();
+		$classes = $classCode->getFacultyClasses(session('admin_auth.faculty_number'));
 		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
 
-		$professiones = $classCode->getProfessiones(session('admin_auth.faculty_number'));
+		// $professiones = $classCode->getProfessiones(session('admin_auth.faculty_number'));
 
-		$admin_professiones = AdminModel::getAdminProfessiones($admin_list['admin_id']);
-		$profession_numbers = $classCode->handleAdminProfessiones($admin_professiones);
+		// $admin_professiones = AdminModel::getAdminProfessiones($admin_list['admin_id']);
+		// $profession_numbers = $classCode->handleAdminProfessiones($admin_professiones);
 
-		$this->assign('professiones', $professiones);
-		$this->assign('profession_numbers', $profession_numbers);
+		// $this->assign('professiones', $professiones);
+		// $this->assign('profession_numbers', $profession_numbers);
+		$class_number = $admin_list['class_number'];
+		$class_numbers = $class_number ? explode(',',$class_number) : [];
+		$this->assign('class_numbers',$class_numbers);
 		$this->assign('faculty_number',session('admin_auth.faculty_number'));
+		$this->assign('classes', $classes);
 		$this->assign('admin_list',$admin_list);
         $this->assign('faculties', $faculties);
 		$this->assign('auth_group',$auth_group);
@@ -314,20 +324,25 @@ class Admin extends Base
 	{
 		$data=input('post.');
 		$aid = $data['admin_id'];
-		$year_profession_numbers = $data['profession_number'] ;
-		foreach($year_profession_numbers as $key  => $val)
-		{
-			$year_profession_number = explode('_',$val);
-			$pdata['admin_id'] = $aid;
-			$pdata['current_grade'] = $year_profession_number[0];
-			$pdata['profession_number'] = $year_profession_number[1];
-			$pdatas[] = $pdata;
-		}
+		// $year_profession_numbers = $data['profession_number'] ;
+		// foreach($year_profession_numbers as $key  => $val)
+		// {
+			// $year_profession_number = explode('_',$val);
+			// $pdata['admin_id'] = $aid;
+			// $pdata['current_grade'] = $year_profession_number[0];
+			// $pdata['profession_number'] = $year_profession_number[1];
+			// $pdatas[] = $pdata;
+		// }
+		
+		$class_number = input('class_number/a');
+		$class_number = $class_number ? implode(',',$class_number) : '';
+		$data['class_number'] = $class_number;
+		$data['admin_id'] = $aid;
 		$data['faculty_number'] = session('admin_auth.faculty_number');
 		$rst=AdminModel::edit($data);
 		if($rst!==false){
-			Db::name('admin_profession')->where('admin_id',$aid)->delete();
-			Db::name('admin_profession')->insertAll($pdatas);
+			// Db::name('admin_profession')->where('admin_id',$aid)->delete();
+			// Db::name('admin_profession')->insertAll($pdatas);
 			$this->success('管理员修改成功',url('admin/Admin/faculty_admin_list'));
 		}else{
 			$this->error('管理员修改失败',url('admin/Admin/faculty_admin_list'));
@@ -336,20 +351,22 @@ class Admin extends Base
 	public function faculty_admin_runadd()
 	{
         $aid = session('admin_auth.aid');
+		$class_number = input('class_number/a');
+		$class_number = $class_number ? implode(',',$class_number) : '';
 
-		$admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),'');
+		$admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),$class_number );
 		if($admin_id){
-			$year_profession_numbers = $_POST['profession_number'] ;
-			foreach($year_profession_numbers as $key  => $val)
-			{
-				$year_profession_number = explode('_',$val);
-				$pdata['admin_id'] = $admin_id;
-				$pdata['current_grade'] = $year_profession_number[0];
-				$pdata['profession_number'] = $year_profession_number[1];
-				$pdatas[] = $pdata;
-			}
-			Db::name('admin_profession')->where('admin_id',$admin_id)->delete();
-			Db::name('admin_profession')->insertAll($pdatas);
+			// $year_profession_numbers = $_POST['profession_number'] ;
+			// foreach($year_profession_numbers as $key  => $val)
+			// {
+				// $year_profession_number = explode('_',$val);
+				// $pdata['admin_id'] = $admin_id;
+				// $pdata['current_grade'] = $year_profession_number[0];
+				// $pdata['profession_number'] = $year_profession_number[1];
+				// $pdatas[] = $pdata;
+			// }
+			// Db::name('admin_profession')->where('admin_id',$admin_id)->delete();
+			// Db::name('admin_profession')->insertAll($pdatas);
 			$this->success('管理员添加成功',url('admin/Admin/faculty_admin_list'));
 		}else{
 			$this->error('管理员添加失败',url('admin/Admin/faculty_admin_list'));

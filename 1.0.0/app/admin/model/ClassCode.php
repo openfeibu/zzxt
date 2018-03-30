@@ -63,17 +63,28 @@ class ClassCode extends Model
 
 		return $class;
 	}
-	public function getCounselorClasses($admin_professiones)
+	// public function getCounselorClasses($admin_professiones)
+	// {
+		// $dataHandleClass = new DataHandle();
+		// $arr = array();
+		// foreach($admin_professiones as $key => $val)
+		// {
+			// $where = " WHERE 专业代码 = '".$val['profession_number']."' AND 当前所在级 = '".$val['current_grade']."'";
+			// $classes = $dataHandleClass->getClasses($where);
+			// $arr = array_merge($arr,$classes);
+		// }
+		// return $arr;
+	// }
+	public function getCounselorClasses($class_number)
 	{
 		$dataHandleClass = new DataHandle();
-		$arr = array();
-		foreach($admin_professiones as $key => $val)
-		{
-			$where = " WHERE 专业代码 = '".$val['profession_number']."' AND 当前所在级 = '".$val['current_grade']."'";
+		$classes = array();
+		if($class_number)
+		{	
+			$where = " WHERE 班级代码 in (".$class_number.") ";
 			$classes = $dataHandleClass->getClasses($where);
-			$arr = array_merge($arr,$classes);
 		}
-		return $arr;
+		return $classes;
 	}
 	public function handleAdminProfessiones($admin_professiones)
 	{

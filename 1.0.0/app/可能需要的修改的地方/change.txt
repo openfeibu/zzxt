@@ -1,0 +1,23 @@
+faculty_admin_add.html
+
+<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 管理专业：  </label>
+	<div class="col-sm-10">
+		{foreach $professiones as $row}
+		<label>	<input type="checkbox" name="profession_number[]" value="{$row.current_grade}_{$row.profession_number}"> {$row.current_grade}{$row.profession_name} </label>
+		{/foreach}
+	</div>
+</div>
+	
+faculty_admin_edit.html
+	
+<div class="form-group">
+	<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 管理班级：  </label>
+	<div class="col-sm-10">
+		{foreach $professiones as $row}
+		<label>	<input type="checkbox" name="profession_number[]" value="{$row.current_grade}_{$row.profession_number}" {if in_array($row.current_grade.'_'.$row['profession_number'],$profession_numbers)}checked{/if}> {$row.current_grade}{$row.profession_name} </label>
+		{/foreach}
+	</div>
+</div>			
+					
+					

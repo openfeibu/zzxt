@@ -34,9 +34,12 @@ class Counselor extends Base
         $this->time = date("Y",time());
         $this->faculty = session('admin_auth.faculty_number');
         $this->classCode = new ClassCodeModel();
-		$admin_professiones = session('admin_professiones');
-		$classes = $this->classCode->getCounselorClasses($admin_professiones);
-		$this->class_number = array_column($classes, 'class_number');
+		// $admin_professiones = session('admin_professiones');
+		// $classes = $this->classCode->getCounselorClasses($admin_professiones);
+		// $this->class_number = array_column($classes, 'class_number');
+		$class_number = session('admin_auth.class_number');
+		$this->class_number = $class_number ? explode(',',$class_number) : [];
+		$classes = $this->classCode->getCounselorClasses($class_number);
 		$this->assign('classes', $classes);
     }
     public function showApplicantList()
