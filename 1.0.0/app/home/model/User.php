@@ -17,7 +17,7 @@ class User extends Model
 	protected $field = ['id', 'studentid', 'studentname',
         'id_number', 'gender', 'birthday', 'political', 'nation',
         'grade', 'class', 'profession',
-        'admission_date', 'department_name', 'is_rural_student','current_grade'];
+        'admission_date', 'department_name', 'is_rural_student','current_grade','class_name'];
     protected $resultSetType = 'array';
 
     public function getAll($uid)
