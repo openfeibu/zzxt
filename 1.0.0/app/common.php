@@ -1794,3 +1794,13 @@ function getYears()
 	$years = implode(',',$years);
 	return $years;
 }
+function getGrade($current_grade)
+{
+	$year = date('Y');
+	$month = date('m');
+	$grade = $year - $current_grade;
+	if($month > 9){
+		$grade += 1;
+	}
+	return $grade;
+}

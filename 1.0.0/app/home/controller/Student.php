@@ -40,16 +40,12 @@ class Student extends Base
     public function chooseType()
     {
         $type = input('choose_type');
-//        $type = $id;
+        $grade = getGrade($this->user['current_grade']);
         switch ($type) {
             //国家奖学金
             case 1 :
-                $grade = Db::table('yf_user')
-                ->where('studentid', $this->user_id)
-                ->field('grade')
-                ->find();
                 //判断是否大二
-                if($grade['grade'] == 2 || $grade['grade'] == 3) {
+                if($grade == 2 || $grade == 3) {
                     //判断是否申请过励志奖学金
                     if (MultipleScholarship::isHaveApply($this->user['member_list_id'], $type)) {
                         $res = ScholarshipsApplyStatus::where('user_id', $this->user_id)
@@ -74,18 +70,19 @@ class Student extends Base
                     ->field('grade')
                     ->find();
                 //判断是否大二
-                if($grade['grade'] == 2) {
+                if($grade == 2) {
                     //判断是否贫困生
                     //判断是否申请过国家奖学金
-                    // if ($this->applyStatus->isHaveApply($this->user_id, $type)) {
-                    //     $res = ScholarshipsApplyStatus::where('user_id', $this->user_id)
-                    //         ->where('fund_type', $type)
-                    //         ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
-                    //         ->find();
-                    //     //跳转申请界面
+                    if ($this->applyStatus->isHaveApply($this->user_id, $type)) {
+                        $res = ScholarshipsApplyStatus::where('user_id', $this->user_id)
+                            ->where('fund_type', $type)
+                            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
+                            ->find();
+                        if ($res) {
+                            $this->error("抱歉，你已申请奖学金，不能申请励志奖学金");
+                        }
                         $this->success('成功',url('/home/inspirational'));
-                    //}
-                    $this->error("抱歉，大二学生才能申请励志奖学金");
+                    }
                 }
                 $this->error("抱歉，大二学生才能申请励志奖学金");
                 break;
@@ -421,11 +418,8 @@ class Student extends Base
 //        }
 
         //判断是否大二
-        $grade = Db::table('yf_user')
-            ->where('studentid', $this->user_id)
-            ->field('grade')
-            ->find();
-        if($grade['grade'] == 2) {
+        $grade = getGrade($this->user['current_grade']);
+        if($grade == 2) {
             //判断是否申请过励志奖学金
             if ($this->applyStatus->isHaveApply($this->user_id, 1)) {
                 $user_status = ScholarshipsApplyStatus::where('user_id', $this->user_id)
