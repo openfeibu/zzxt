@@ -27,7 +27,7 @@ class DataHandle extends Model
 		$result = $this->dataClass->getProfessiones($where);
 		return $result;
 	}
-	//获取专业的班级列表
+	//获取班级列表
 	public function getClasses($where)
 	{
 		$result = $this->dataClass->getClasses($where);
@@ -39,9 +39,9 @@ class DataHandle extends Model
 		return $result;
 	}
 	//获取系的班级列表
-	public function getFacultyClasses($where,$fields)
-	{
-		$result = $this->dataClass->getFacultyClasses($where,$fields);
-		return $result;
-	}
+	// public function getFacultyClasses($where,$fields)
+	// {
+		// $result = $this->dataClass->getFacultyClasses($where,$fields);
+		// return $result;
+	// }
 }

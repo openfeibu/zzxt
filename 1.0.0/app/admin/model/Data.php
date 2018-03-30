@@ -53,6 +53,10 @@ class Data extends Model
 		$result = $this->handleFetchRow($rs);
 		return $result;
 	}
+	// protected function getFacultyClasses($where = '',$fields)
+	// {
+			
+	// }
 	protected function getStudents($where,$fields)
 	{
 		$sql="SELECT ".$fields." FROM V学生信息表 ".$where;

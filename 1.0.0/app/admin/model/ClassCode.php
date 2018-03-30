@@ -22,12 +22,12 @@ class ClassCode extends Model
 
     public function getFaculties()
     {
-		$faculties = DB::name('class_code')->distinct(true)->field('系所代码 as faculty_number,系所名称 as faculty_name')->order('faculty_number asc')->select();
+		$faculties = DB::name('faculty')->field('*')->order('faculty_number asc')->select();
 		return $faculties;
 	}
 	public function getFaculty($faculty_number)
     {
-		$faculty = DB::name('class_code')->field('系所代码 as faculty_number,系所名称 as faculty_name')->order('faculty_number asc')->where('faculty_number',$faculty_number)->find();
+		$faculty = DB::name('faculty')->field('*')->where('faculty_number',$faculty_number)->find();
 		return $faculty;
 	}
 
@@ -42,8 +42,8 @@ class ClassCode extends Model
         $years = getYears();
 		$dataHandleClass = new DataHandle();
 		$where = " WHERE 系所代码 = '".$faculty_number."' AND 当前所在级 in(".$years.")";
-		$professiones = $dataHandleClass->getFacultyClasses($where);
-		return $professiones;
+		$classes = $dataHandleClass->getClasses($where);
+		return $classes;
     }
 
 	public function getProfessiones($faculty_number)

@@ -34,7 +34,7 @@ class FacultyGroup extends Base
         $this->multiple = new MultipleScholarship();
         $this->national = new NationalScholarship();
         $this->applyStatus = new ScholarshipsApplyStatus();
-        $classes = $this->classCode->getClass($this->faculty);
+        $classes = $this->classCode->getFacultyClasses($this->faculty);
         $this->assign('classes', $classes);
     }
     public function showApplicantList()

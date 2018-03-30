@@ -24,7 +24,7 @@ class ClassCode extends Common
     public function getClasses()
     {
         $faculty_number = input('faculty_number','');
-        $faculties = $this->classCode->getClass($faculty_number);
+        $faculties = $this->classCode->getFacultyClasses($faculty_number);
         $html = '<option value="">请选择专业</option>';
 		foreach($faculties as $key => $faculty)
 		{
