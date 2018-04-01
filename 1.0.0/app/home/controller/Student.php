@@ -41,6 +41,11 @@ class Student extends Base
     {
         $type = input('choose_type');
         $grade = getGrade($this->user['current_grade']);
+
+		if($grade > 3) {
+			 $this->error("抱歉，你不是在校生");
+		}
+		
         switch ($type) {
             //国家奖学金
             case 1 :

@@ -97,6 +97,7 @@ class Login extends Base
 				if(isset($school_user['admission_date']) && !empty($school_user['admission_date'])){
 					$school_user['admission_date'] = date('Ymd',strtotime($school_user['admission_date']));
 				}
+				
 				$password = substr($member_list_username,-6);
 				$member_list_salt=random(10);
 				
@@ -137,6 +138,7 @@ class Login extends Base
 		if (!$member||encrypt_password($member_list_pwd,$member['member_list_salt'])!==$member['member_list_pwd']){
             $this->error(lang('username or pwd incorrect'));//账号密码不正确
 		}else{
+			
 			//更新字段
 			$data = array(
 				'last_login_time' => time(),
