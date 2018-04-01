@@ -80,7 +80,7 @@ class ClassCode extends Model
 		$dataHandleClass = new DataHandle();
 		$classes = array();
 		if($class_number)
-		{	
+		{
 			$where = " WHERE 班级代码 in (".$class_number.") ";
 			$classes = $dataHandleClass->getClasses($where);
 		}
