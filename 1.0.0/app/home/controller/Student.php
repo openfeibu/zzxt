@@ -70,6 +70,11 @@ class Student extends Base
 
             //励志奖学金
             case 2 :
+				$is_eval_app_pass = EvaluationModle::isExistMemberEvaluationPass($this->user['member_list_id']);
+                if(!$is_eval_app_pass)
+                {
+                    $this->error('抱歉，通过家庭困难认定后才能申请');
+                }
                 $grade = Db::table('yf_user')
                     ->where('studentid', $this->user_id)
                     ->field('grade')
