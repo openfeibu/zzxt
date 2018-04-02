@@ -44,9 +44,7 @@
             <li  role="presentation" >
                 <a href="{:url('/index_front')}" >首页</a>
             </li>
-            <li role="presentation" {if condition="'showSurvey' eq $Think.const.ACTION_NAME"}class="active"{/if}>
-                <a href="{:url('/questionnaire')}">调查问卷</a>
-            </li>
+
             <li role="presentation" {if condition="'examineStatus' eq $Think.const.ACTION_NAME"}class="active"{/if}>
                 <a href="{:url('Student/examineStatus')}">个人中心</a>
             </li>
@@ -95,7 +93,7 @@
                     }
                 </script>
             </li>
-            <li role="presentation"
+            <!-- <li role="presentation"
                  {if condition="'index' eq $Think.const.ACTION_NAME"}class="dropdown active"
                  {elseif condition="'workStudyList' eq $Think.const.ACTION_NAME"} class=" dropdown active"
                  {else}class="dropdown"
@@ -105,7 +103,7 @@
                     <li><a href="{:url('home/workstudy/resume')}">个人简历</a></li>
                     <li><a href="{:url('home/workstudy/list')}">岗位申报</a></li>
                 </ul>
-            </li>
+            </li> -->
 
             <li role="presentation"
                 {if condition="'grantsPublicity' eq $Think.const.ACTION_NAME"} class="dropdown active"
@@ -134,16 +132,19 @@
                     </li>
                 </ul>
             </li>
+            <li role="presentation" {if condition="'showSurvey' eq $Think.const.ACTION_NAME"}class="active"{/if}>
+                <a href="{:url('/questionnaire')}">调查问卷</a>
+            </li>
         </ul>
     </nav>
 </div>
 </body>
 <script>
-$("body").on("mouseover mouseout",".nav-tabs li.dropdown",function(event){  if(event.type == "mouseover"){   
-//鼠标悬浮 
+$("body").on("mouseover mouseout",".nav-tabs li.dropdown",function(event){  if(event.type == "mouseover"){
+//鼠标悬浮
 $(this).find(".dropdown-menu").stop().fadeIn(200)
-}else if(event.type == "mouseout"){ 
-  //鼠标离开 
+}else if(event.type == "mouseout"){
+  //鼠标离开
   $(this).find(".dropdown-menu").stop().fadeOut(200)
   } })
 

@@ -45,7 +45,7 @@ class Student extends Base
 		if($grade > 3) {
 			 $this->error("抱歉，你不是在校生");
 		}
-		
+
         switch ($type) {
             //国家奖学金
             case 1 :

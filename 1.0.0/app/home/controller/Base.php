@@ -95,6 +95,7 @@ class Base extends Common
 			if($admin){
 				$is_admin=true;
 			}
+			$this->user['current_grade'] = ;
 		}
 		$this->user['address']=$address;
 		$this->assign("user",$this->user);
