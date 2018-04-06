@@ -1185,7 +1185,7 @@ $('body').on('click',".passingForm button[type='submit']",function () {
 		success: function(data) {
 			$this.closest("form").find("button[name='pass']").attr('disabled',true);
 			$this.closest("form").find("button[name='fail']").attr('disabled',true);
-			if (data.code == 200) {
+			if (data.code == 1 || data.code == 200) {
                 layer.msg(data.msg,{icon: 6});
             }else{
                 layer.msg(data.msg,{icon: 5});
@@ -1223,7 +1223,7 @@ $('body').on('click',".passingForm2 button[type='submit']",function () {
 		success: function(data) {
 			$this.closest("form").find("button[name='pass']").attr('disabled',true);
 			$this.closest("form").find("button[name='fail']").attr('disabled',true);
-			if (data.code == 200) {
+			if (data.code == 1 || data.code == 200) {
 				$this.closest("tr").find(".text").attr("disabled",true);
 				$this.closest("tr").find(".change_fraction").attr("disabled",true);
 				$this.closest("tr").find(".score").text(data.score);
@@ -1266,7 +1266,7 @@ $('body').on('click','.passingDiv button',function () {
 		success: function(data) {
 			$this.closest(".passingDiv").find("button[name='pass']").attr('disabled',true);
 			$this.closest(".passingDiv").find("button[name='fail']").attr('disabled',true);
-			if (data.code == 200) {
+			if (data.code == 1 || data.code == 200) {
                 layer.msg(data.msg,{icon: 6});
             }else{
                 layer.msg(data.msg,{icon: 5});
@@ -1304,7 +1304,7 @@ $('body').on('click','.passingDiv2 button',function () {
 		success: function(data) {
 			$this.closest(".passingDiv2").find("button[name='pass']").attr('disabled',true);
 			$this.closest(".passingDiv2").find("button[name='fail']").attr('disabled',true);
-			if (data.code == 200) {
+			if (data.code == 1 || data.code == 200) {
                 layer.msg(data.msg,{icon: 6});
             }else{
                 layer.msg(data.msg,{icon: 5});

@@ -13,6 +13,7 @@ use app\home\model\MultipleScholarship;
 use app\home\model\NationalScholarship;
 use app\admin\model\ClassCode as ClassCodeModel;
 use app\admin\model\Evaluation;
+use app\admin\model\User as UserModel;
 use think\Db;
 use think\Config;
 use think\Request;
@@ -178,16 +179,21 @@ class StudentOffice extends Base
         if (!$data) {
             return $this->error("该学生没有填写申请表");
         }
+		$user_model = new UserModel();
+        $user_fields = UserModel::getUserFields('u');
+        $user_fields = implode(',',$user_fields);
         //判断类型
         if ($data['fund_type'] == 1) {
             $type = "yf_national_scholarship";
             $field = "national_id";
-            $id = $data['national_id'];
+            $id = $data['application_id'];
             $apply = Db::table($type)
-                ->alias('w')
-                ->join('yf_user u', 'u.studentid = w.user_id', 'left')
-                ->where($field,$data['application_id'])
-                ->find();
+               ->alias('w')
+				->join('yf_member_list m', 'm.member_list_id = w.member_list_id')
+				->join('yf_user u', 'u.id_number = m.id_number', 'left')
+				->where($field,$id)
+				->field('w.*,m.member_list_nickname,m.member_list_headpic,'.$user_fields)
+				->find();
             if (!empty($apply['awards'])) {
                 $apply['awards'] = json_decode($apply['awards'], true);
             } else {
@@ -206,12 +212,14 @@ class StudentOffice extends Base
         } else {
             $type = "yf_multiple_scholarship";
             $field = "multiple_id";
-            $id = $data['multiple_id'];
+            $id = $data['application_id'];
             $apply = Db::table($type)
                 ->alias('w')
-                ->join('yf_user u', 'u.studentid = w.user_id', 'left')
-                ->where($field,$data['application_id'])
-                ->find();
+				->join('yf_member_list m', 'm.member_list_id = w.member_list_id')
+				->join('yf_user u', 'u.id_number = m.id_number', 'left')
+				->where($field,$id)
+				->field('w.*,m.member_list_nickname,m.member_list_headpic,'.$user_fields)
+				->find();
             if (!empty($apply['members'])) {
                 $apply['members'] = json_decode($apply['members'], true);
             } else {
@@ -231,6 +239,7 @@ class StudentOffice extends Base
             $apply = handleApply($apply);
 
         }
+	
         $this->assign('type_id', $type_id);
         $this->assign('id', $apply_id);
         $this->assign('user', $apply);

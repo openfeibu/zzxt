@@ -25,6 +25,11 @@ class Scholarship extends Base
                 $data['create_at'] = time();
                 $data['update_at'] = $data['create_at'];
                 $data['user_id'] = $this->user_id;
+				$subsidy = Db::table('yf_set_subsidy')
+                ->where('id', 1)
+                ->find();
+				$begintime = $subsidy['begin_time'];
+				$data['times'] = $begintime;
                 $bool = NationalScholarship::create($data);
                 return $this->redirect();
             }
@@ -57,6 +62,11 @@ class Scholarship extends Base
             $type = 1;
             $model = new MultipleScholarship();
             if ($model->check($type, $this->user_id, $this->time)) {
+				$subsidy = Db::table('yf_set_subsidy')
+                ->where('id', $type)
+                ->find();
+				$begintime = $subsidy['begin_time'];
+				$data['times'] = $begintime;
                 $bool = $model->updateData($this->user_id, $type, $this->time, $data);
                 if (!$bool) {
                     return $this->error("更新失败");

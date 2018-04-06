@@ -75,10 +75,7 @@ class Student extends Base
                 {
                     $this->error('抱歉，通过家庭困难认定后才能申请');
                 }
-                $grade = Db::table('yf_user')
-                    ->where('studentid', $this->user_id)
-                    ->field('grade')
-                    ->find();
+
                 //判断是否大二
                 if($grade == 2) {
                     //判断是否贫困生
@@ -93,6 +90,8 @@ class Student extends Base
                         }
                         $this->success('成功',url('/home/inspirational'));
                     }
+					
+					
                 }
                 $this->error("抱歉，大二学生才能申请励志奖学金");
                 break;
@@ -159,7 +158,11 @@ class Student extends Base
             //按新增处理
             $data['create_at'] = time();
             $data['update_at'] = $data['create_at'];
-
+			$subsidy = Db::table('yf_set_subsidy')
+                ->where('id', 3)
+                ->find();
+				$begintime = $subsidy['begin_time'];
+				$data['times'] = $begintime;
             $insert = MultipleScholarship::create($data);
             if (!$insert) {
                 return $this->error("提交失败");
@@ -239,6 +242,11 @@ class Student extends Base
             //按新增处理
             $data['create_at'] = time();
             $data['update_at'] = $data['create_at'];
+			$subsidy = Db::table('yf_set_subsidy')
+                ->where('id', 2)
+                ->find();
+				$begintime = $subsidy['begin_time'];
+				$data['times'] = $begintime;
             $insert = MultipleScholarship::create($data);
             if (!$insert) {
                 return $this->error("提交失败，请重新提交");
@@ -313,6 +321,11 @@ class Student extends Base
             //没提交过，按新增处理
             $data['create_at'] = time();
             $data['update_at'] = $data['create_at'];
+			$subsidy = Db::table('yf_set_subsidy')
+                ->where('id', 1)
+                ->find();
+				$begintime = $subsidy['begin_time'];
+				$data['times'] = $begintime;
             $bool = NationalScholarship::create($data);
             if (!$bool) {
                 return $this->error("提交失败");
@@ -501,7 +514,15 @@ class Student extends Base
             $u_status = '未申请';
             $u_class = 'review-error';
         }
-
+		
+		$e_status_name = isset(config('status_stu')[$e_status]) ? config('status_stu')[$e_status] : $e_status;
+		$u_status_name = isset(config('status_stu')[$u_status]) ? config('status_stu')[$u_status] : $u_status;
+		$m_status_name = isset(config('status_stu')[$m_status]) ? config('status_stu')[$m_status] : $m_status;
+		$n_status_name = isset(config('status_stu')[$n_status]) ? config('status_stu')[$n_status] : $n_status;
+		$this->assign('e_status_name',$e_status_name);
+		$this->assign('u_status_name',$u_status_name);
+		$this->assign('m_status_name',$m_status_name);
+		$this->assign('n_status_name',$n_status_name);
         $this->assign('e_status',$e_status);
         $this->assign('e_class',$e_class);
         $this->assign('w_status',$w_status);

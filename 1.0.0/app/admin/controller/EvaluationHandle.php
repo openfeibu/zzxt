@@ -142,7 +142,7 @@ class EvaluationHandle extends Base
         } else {
             $evdata['evaluation_status'] = $status = 5;
         }
-        $this->success("操作成功",url('admin/StudentOffice/showEvaluationList',array('p'=>$p)));
+        $this->success("操作成功",url('admin/StudentOffice/showEvaluationList'));
     }
     public function studentOfficeAll()
     {

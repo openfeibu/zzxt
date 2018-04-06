@@ -34,6 +34,7 @@ class MultipleScholarship extends Model
         $data['update_at'] = $data['create_at'];
         $data['user_id'] = $uid;
         $data['application_type'] = $type;
+		
         $boole = $this->create($data);
         return $boole;
     }

@@ -30,99 +30,11 @@
                     </tr>
                 </table>
                 <table class="table table-bordered tab_center">
-                    <!--基本情况-->
-                    <tr>
-                        <td rowspan="4" class="tab_title tab_40px">基本情况</td>
-                        <td class="tab_title tab_80px">姓名</td>
-                        <td class="tab_content tab_100px">{$user.studentname}</td>
-                        <td class="tab_title">性别</td>
-                        <td class="tab_content">{$user.gender}</td>
-                        <td class="tab_title">出生年月</td>
-                        <td colspan="2" class="tab_content tab_140px">{$user.birthday}</td>
-                    </tr>
-                    <tr>
-                        <td class="tab_title">政治面貌</td>
-                        <td class="tab_content">{$user.political}</td>
-                        <td class="tab_title">民族</td>
-                        <td class="tab_content">{$user.nation}</td>
-                        <td class="tab_title">入学时间</td>
-                        <td colspan="2" class="tab_content">{$user.admission_date}</td>
-                    </tr>
-                    <tr>
-                        <td class="tab_title">专业</td>
-                        <td class="tab_content">{$user.profession}</td>
-                        <td class="tab_title">学制</td>
-                        <td class="tab_content">{$user.school_system}年</td>
-                        <td class="tab_title">联系电话</td>
-                        <td colspan="2" class="tab_content">{$user.tel}</td>
-                    </tr>
-                    <tr>
-                        <td class="tab_title">身份证号</td>
-                        <td colspan="6" class="tab_content">{$user.id_number}</td>
-                    </tr>
-                    <!--学习情况-->
-                    <tr>
-                        <td rowspan="2" class="tab_title">学习情况</td>
-                        <td colspan="4" class="tab_content">
-                            成绩排名：
-                            <input type="text" class="input_border_bottom" style="width: 15%;" value="{$user.course_ranking}" disabled>/
-                            <input type="text" class="input_border_bottom" style="width: 15%;" value="{$user.course_total_people}" disabled>(名次/总人数)
-                        </td>
-                        <td colspan="3" class="tab_content">
-                            实行综合考评排名：
-                            <div style="display:inline-block;margin-right: 20px;">
-                                <label>
-                                    是<input {if condition="$user.is_assessment==1"} checked {/if} disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>
-                                </label>
-                            </div>
-                            <div style="display:inline-block;">
-                                <label>
-                                    否<input {if condition="$user.is_assessment==0"} checked {/if} disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" class="tab_content">
-                            必修课 <input type="text" class="input_border_bottom" style="width: 15%;" value="{$user.compulsory_course}" disabled>门 ，
-                            其中及格及以上 <input type="text" class="input_border_bottom" style="width: 15%;" value="{$user.pass_count}" disabled>门
-                        </td>
-                        <td colspan="3" class="tab_content">
-                            如是，排名 <input type="text" class="input_border_bottom" style="width: 10%;" value="{$user.assessment_ranking}" disabled>/
-                            <input type="text" class="input_border_bottom" style="width: 10%;" value="{$user.assessment_total_people}" disabled>（名次/总人数）
-                        </td>
-                    </tr>
-                    <!--大学期间主要获奖情况-->
-                    <tr><!--自行替换为要循环出来的数量+1-->
-                        <td rowspan="5"  class="tab_title">大学期间主要获奖情况</td>
-                        <td colspan="2" class="tab_title">日期</td>
-                        <td colspan="3" class="tab_title">奖项名称</td>
-                        <td colspan="3" class="tab_title">颁奖单位</td>
-                    </tr>
-                    {foreach $user.awards as $r}
-                    <tr>
-                        <td colspan="2" class="tab_content">{$r.date}</td>
-                        <td colspan="3" class="tab_content">{$r.name}</td>
-                        <td colspan="3" class="tab_content">{$r.unit}</td>
-                    </tr>
-                    {/foreach}
-                    <!--申请理由-->
-                    <tr>
-                        <td class="tab_title">申请理由（200字）</td>
-                        <td colspan="7" class="tab_content">
-                            <textarea name="" id="" class="tab_opinion" disabled>{$user.reason}</textarea>
-                            <div class="tab_sign">
-                                <label for="">申请人签名：</label>
-                                <input type="text" value="{$user.studentname}" disabled>
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="tab_time">
-                                <input type="text" value="{$user.create_at|date='Y',###}" disabled>年
-                                <input type="text" value="{$user.create_at|date='n',###}" disabled>月
-                                <input type="text" value="{$user.create_at|date='d',###}" disabled>日
-                            </div>
-                        </td>
-                    </tr>
+                    {if $type_id == 1}
+                    {include file="common/scholar" /}
+                    {else}
+                    {include file="common/grants_inspirational" /}
+                    {/if}
                     <!--推荐人理由-->
                     <tr>
                         <td class="tab_title">辅导员推荐理由（100字）</td>

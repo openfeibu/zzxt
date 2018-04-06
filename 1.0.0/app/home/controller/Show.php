@@ -186,6 +186,11 @@ class Show extends Base
                 'update_at' => time(),
             ]);
         } else {
+			$subsidy = Db::table('yf_set_subsidy')
+                ->where('id', 5)
+                ->find();
+			$begintime = $subsidy['begin_time'];
+			$data['times'] = $begintime;
             $eva_app = DB::name('evaluation_application')->insert($data);
             $evaluation_id = Db::name('evaluation_application')->getLastInsID();
             DB::name('evaluation_status')->insert([

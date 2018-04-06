@@ -91,6 +91,7 @@ class Counselor extends Base
         {
             $data_arr[$key] = handleApply($value);
         }
+	
         $faculty_profession = $this->classCode->getFaculties();
         //绝笔要撕逼(未通过的)
         $faculty_count = Db::table('yf_apply_scholarships_status')
@@ -182,6 +183,14 @@ class Counselor extends Base
             $apply['awards'][0]['name'] = '';
             $apply['awards'][0]['unit'] = '';
         }
+		if (!empty($apply['members'])) {
+			$apply['members'] = json_decode($apply['members'], true);
+		} else {
+			$apply['members'][0]['name'] = '';
+			$apply['members'][0]['age'] = '';
+			$apply['members'][0]['relation'] = '';
+			$apply['members'][0]['unit'] = '';
+		}
         $apply = handleApply($apply);
 		$this->assign('type_id', $type_id);
         $this->assign('id', $id);

@@ -76,8 +76,10 @@ class Base extends Common
 				session('user',null);
 				cookie('yf_logged_user',null);
 				$this->redirect(__ROOT__."/");
+				
 			}
-			$this->user=Db::name('member_list')->alias('m')->join('yf_user u','u.id_number = m.id_number')->field('u.*,m.member_list_id,m.member_list_username,m.member_list_province,m.member_list_city,m.member_list_town,m.member_list_nickname,m.member_list_headpic')->find(session('hid'));
+			
+			$this->user=Db::name('member_list')->alias('m')->join('yf_user u','u.id_number = m.id_number')->where('m.member_list_id',session('hid'))->field('u.*,m.member_list_id,m.member_list_username,m.member_list_province,m.member_list_city,m.member_list_town,m.member_list_nickname,m.member_list_headpic')->find();
 			if(!empty($this->user['member_list_province'])){
 				$rst=Db::name('region')->field('name')->find($this->user['member_list_province']);
 				$address.=$rst?$rst['name'].lang('province'):'';

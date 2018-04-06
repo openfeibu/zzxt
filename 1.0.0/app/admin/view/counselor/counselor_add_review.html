@@ -30,8 +30,11 @@
                     </tr>
                 </table>
                 <table class="table table-bordered tab_center">
-                    <!--基本情况-->
+                    {if $type_id == 1}
                     {include file="common/scholar" /}
+                    {else}
+                    {include file="common/grants_inspirational" /}
+                    {/if}
                 </table>
                 <form action="{:url('admin/ScholarshipHandle/MultipleCounselorFill')}" method="post" id="passingForm" class="passingForm">
                     <table class="w800">
@@ -41,7 +44,7 @@
                         </tr>
                         <tr>
                             <td colspan="3" class="tab_content">
-                                {if !in_array($user.check_status,[2])}
+                                {if !in_array($user.check_status,[1,2])}
                                 <textarea name="group_opinion[text]" class="tab_opinion">{$user.group_opinion.text}</textarea>
                                 {else}
                                 <select class="form-control tab_select text" name="group_opinion[text]">
@@ -82,7 +85,7 @@
         </div>
     </div>
 </div>
-{if !in_array($user.check_status,[2])}
+{if !in_array($user.check_status,[1,2])}
 <script>
 $(".passingForm").find("textarea").attr('disabled',true);
 $(".passingForm").find("input").attr('disabled',true);
