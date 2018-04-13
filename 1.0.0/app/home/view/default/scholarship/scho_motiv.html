@@ -178,7 +178,9 @@
         </table>
     </div>
     <!--endprint3-->
-    <button type="submit" class="print printHide">提交</button>
+    {if !$is_data}
+	<button class="print printHide" type="submit" >提交</button>
+	{/if}
     <button class="print printHide" onclick="preview(3)">打印</button>
     </form>
 </div>

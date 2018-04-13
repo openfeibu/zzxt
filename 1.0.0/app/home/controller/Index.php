@@ -79,4 +79,16 @@ class Index extends Base
 			}
 		}
 	}
+	public function test()
+	{
+		$active_options=get_active_options();
+		$activekey = '1234';
+		$member_list_email = '1270864834@qq.com';
+		//生成激活链接
+		$url = url('home/Register/active',array("hash"=>$activekey), "", true);
+		$template = $active_options['email_tpl'];
+		$content = str_replace(array('http://#link#','#username#'), array($url,'123'),$template);
+		$send_result=sendMail($member_list_email, $active_options['email_title'], $content);
+		var_dump($send_result);exit;
+	}
 }

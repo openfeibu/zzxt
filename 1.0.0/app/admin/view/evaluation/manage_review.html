@@ -20,14 +20,13 @@
             <div>
                 <div class="personal_num">
                     <div class="passed">
-                        <p class="success_bg"><span></span><span>全院</span><span></span><span>已评定人数</span>：</p>
-                        <p class="default_bg"><span>{$faculty_pass}</span>人</p>
+                        <p class="danger_bg"><span></span>待操作：</p>
+                        <p class="default_bg"><span>{$doingcount}</span>人</p>
                     </div>
                     <div class="passed pull-right">
-                        <p class="danger_bg"><span></span><span>全院</span><span></span><span>未评定人数</span>：</p>
-                        <p class="default_bg"><span>{$faculty_not_pass}</span>人</p>
+                        <p class="success_bg"><span></span>全部：</p>
+                        <p class="default_bg"><span>{$allcount}</span>人</p>
                     </div>
-                    <div class="clearfix"></div>
                 </div>
                 <form class="tab_inquire" method="post" action="{:url('admin/StudentOffice/showEvaluationList')}">
                     <select class="form-control tab_select counselor_sub ajax_change faculty_more" name="faculty_number" href="{:url('admin/ClassCode/getClasses')}">

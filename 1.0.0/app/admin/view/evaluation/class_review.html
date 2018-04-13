@@ -20,14 +20,13 @@
             <div>
                 <div class="personal_num">
                     <div class="passed">
-                        <p class="success_bg">已操作：</p>
-                        <p class="default_bg"><span>{$yes_count}</span>人</p>
+                        <p class="danger_bg"><span></span>待操作：</p>
+                        <p class="default_bg"><span>{$doingcount}</span>人</p>
                     </div>
                     <div class="passed pull-right">
-                        <p class="danger_bg">未操作：</p>
-                        <p class="default_bg"><span>{$no_count}</span>人</p>
+                        <p class="success_bg"><span></span>全部：</p>
+                        <p class="default_bg"><span>{$allcount}</span>人</p>
                     </div>
-                    <div class="clearfix"></div>
                 </div>
                 <form class="tab_inquire" method="post"  class="" action="{:url('admin/EvaluationGroup/showEvaluationList')}">
                     <p>筛选：</p>

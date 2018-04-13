@@ -16,10 +16,16 @@ use app\admin\model\EvaluationMaterialConfig;
 
 class Evaluation extends Model
 {
-
+	public function __construct()
+	{
+		parent::__construct();
+		$this->subsidy = Db::name('set_subsidy')
+                ->where('id', 5)
+                ->find();
+	}
     public function getEvaluation($id)
     {
-		return Db::table('yf_evaluation_application')
+		return Db::name('evaluation_application')
 				->alias('app')
                 ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
 				->join('yf_user u', 'u.id_number = m.id_number', 'left')
@@ -79,27 +85,29 @@ class Evaluation extends Model
         }
         return $grade_config ? $grade_config['name'] : $grade;
     }
-    public static function getEvaluationList($where,$order = '')
+    public function getEvaluationList($where,$order = '')
     {
-        return Db::table('yf_evaluation_status')
+        return Db::name('evaluation_status')
                     ->alias('ass')
                     ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
                     ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
                     ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                     ->where($where)
+					->where('app.times',$this->subsidy['begin_time'])
                     ->order($order)
                     ->field('ass.*,m.member_list_username,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,app.group_opinion,app.faculty_opinion,u.*')
-                    ->paginate(20);
+                    ->paginate(40);
     }
-    public static function getAllEvaluationList($where)
+    public function getAllEvaluationList($where)
     {
-        return Db::table('yf_evaluation_status')
+        return Db::name('evaluation_status')
                     ->alias('ass')
                     ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
                     ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
                     ->join('yf_user u', 'u.id_number = m.id_number', 'left')
         			->order('score desc')
         			->where($where)
+					->where('app.times',$this->subsidy['begin_time'])
                     ->field('ass.*,m.member_list_username,m.member_list_nickname,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,app.group_opinion,app.faculty_opinion,u.*')
                     ->select();
     }
@@ -112,21 +120,43 @@ class Evaluation extends Model
         }
         return $data;
     }
-    public static function isExistMemberEvaluation($member_list_id)
+    public function isExistMemberEvaluation($member_list_id)
     {
-        $eval_app = Db::table('yf_evaluation_application')
+        $eval_app = Db::name('evaluation_application')
 				->where('member_list_id',$member_list_id)
+				->where('times',$this->subsidy['begin_time'])
                 ->field('evaluation_id')
 				->find();
         return $eval_app ? $eval_app['evaluation_id'] : 0;
     }
-    public static function isExistMemberEvaluationPass($member_list_id)
+    public function isExistMemberEvaluationPass($member_list_id)
     {
-        $eval_app = Db::table('yf_evaluation_application')
+        $eval_app = Db::name('evaluation_application')
 				->where('member_list_id',$member_list_id)
                 ->where(['evaluation_status' => ['in','4,5']])
+				->where('times',$this->subsidy['begin_time'])
                 ->field('evaluation_id')
 				->find();
         return $eval_app ? $eval_app['evaluation_id'] : 0;
+    }
+	public function getMemberEvaluation($member_list_id)
+	{
+		$eval_app = DB::name('evaluation_application')->where('member_list_id',$member_list_id)->where('times',$this->subsidy['begin_time'])->find();
+		return $eval_app;
+	}
+	public function getCount($where = '')
+    {
+        $count = Db::name('evaluation_application')
+                    ->alias('app')
+                    ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
+                    ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+					->where('times',$this->subsidy['begin_time']);
+		if($where)		
+		{
+			$count = $count->where($where);
+		}
+                    
+        $count = $count->count();
+		return $count;
     }
 }

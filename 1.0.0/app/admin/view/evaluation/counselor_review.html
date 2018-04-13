@@ -20,14 +20,13 @@
             <!--<div class="w1000">-->
                 <div class="personal_num">
                     <div class="passed">
-                        <p class="success_bg"><span>所有专业</span>通过人数：</p>
-                        <p class="default_bg"><span>{$faculty_pass}</span>人</p>
+                        <p class="danger_bg"><span></span>待操作：</p>
+                        <p class="default_bg"><span>{$doingcount}</span>人</p>
                     </div>
                     <div class="passed pull-right">
-                        <p class="danger_bg"><span>所有专业</span>未通过人数：</p>
-                        <p class="default_bg"><span>{$faculty_not_pass}</span>人</p>
+                        <p class="success_bg"><span></span>全部：</p>
+                        <p class="default_bg"><span>{$allcount}</span>人</p>
                     </div>
-                    <div class="clearfix"></div>
                 </div>
                 <form class="tab_inquire" method="post" action="{:url('admin/Counselor/showEvaluationList')}">
                     <p>筛选：</p>

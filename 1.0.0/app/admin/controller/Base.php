@@ -41,7 +41,6 @@ class Base extends Common
 		$this->admin = $admin;
 		$this->assign('admin', $admin);
 		$this->assign('admin_avatar',session('admin_auth.admin_avatar'));
-		$this->admin=Db::name('admin')->find(session('admin_auth.aid'));
 	}
 	public function export_excel($data,$table,$field_titles,$fields)
 	{

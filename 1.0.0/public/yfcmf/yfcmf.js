@@ -256,6 +256,12 @@ $(function () {
         dataType: 'json'
     });
 });
+$(function () {
+    $('.ajaxForm4').ajaxForm({
+        success: complete4, // 这是提交后的方法
+        dataType: 'json'
+    });
+});
 /* 会员增加编辑表单，带检查 */
 $(function () {
     $('.memberform').ajaxForm({
@@ -316,6 +322,17 @@ function complete3(data) {
         $("#verify").val('');
         $("#verify_img").click();
         layer.alert(data.msg, {icon: 5});
+    }
+}
+function complete4(data) {
+    if (data.code == 1) {
+        layer.alert(data.msg, {icon: 6}, function (index) {
+            layer.close(index);
+        });
+    } else {
+        layer.alert(data.msg, {icon: 5}, function (index) {
+            layer.close(index);
+        });
     }
 }
 //admin表单检查

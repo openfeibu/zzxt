@@ -29,10 +29,62 @@ class Publicity extends Base
         $this->faculty = 5;
         $this->multiple = new MultipleScholarship();
         $this->national = new NationalScholarship();
+		$this->evaluation = new Evaluation();
         $this->applyStatus = new ScholarshipsApplyStatus();
         $this->classCode = new ClassCodeModel();
-        $faculties = $this->classCode->getFaculties();
-        $this->assign('faculties',$faculties);
+		
+		$class_number = $this->admin['class_number'];	
+		$this->faculty_number = $this->admin['faculty_number'];
+		switch($this->admin['group_id'])
+		{
+			//班级辅导员
+			case '20':	
+				$classes = $this->classCode->getCounselorClasses($class_number);
+				$class_number = $class_number ? explode(',',$class_number) : [];
+				$this->assign('classes', $classes);
+				$this->folder = 'counselors';
+				break;
+			//班级经济评议小组
+			case '21':
+				$this->class_number = $class_number; 
+				$this->folder = 'class';
+				break;
+			//学院综合评议小组
+			case '22':
+				$classes = $this->classCode->getFacultyClasses($this->faculty_number);
+				$this->assign('classes', $classes);
+				$this->folder = 'faculty';
+				break;
+			//学生资助管理中心	
+			case '23':
+				$faculties = $this->classCode->getFaculties();
+				$this->assign('faculties', $faculties);
+				$this->folder = 'studentoffice';
+				break;
+			//班级三金评议小组
+			case '25':
+				$this->class_number = $class_number; 
+				$this->folder = 'class';
+				break;
+			//班级综合评议小组
+			case '26':
+				$this->class_number = $class_number; 
+				$this->folder = 'class';
+				break;
+			
+		}
+		$p_faculty_number = input('faculty_number',0);
+        $p_class_number = input('class_number',0);
+        $this->common_where = ' 1 = 1';
+        if($p_class_number)
+        {
+            $this->common_where .= " AND u.class_number = '".$p_class_number."'";
+        }else if($p_faculty_number){
+			$this->common_where .= " AND u.faculty_number = '".$p_faculty_number."'";
+        }else if(isset($this->class_number) && $this->class_number){
+			$this->common_where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
+		}
+		$this->common_where .= " AND ass.status = 4";
     }
 
     /**
@@ -41,38 +93,33 @@ class Publicity extends Base
      * @param $type_id
      * @return mixed
      */
-    public function grantsPublicity($id,$type_id) {
-        $faculty_number = input('faculty_number',0);
-        $class_number = input('class_number',0);
-        $where = ' 1 = 1';
-        if($class_number)
-        {
-            $where .= " AND u.class_number = '".$class_number."'";
-        }else{
-            if($faculty_number)
-            {
-                $where .= " AND u.faculty_number = '".$faculty_number."'";
-            }
-        }
+    public function grantsPublicity() {
+		$type_id = 3;
+		$where = $this->common_where;
         $where .= " AND ms.application_type = '".$type_id."'";
-        $where .= " AND ass.status = 4";
-        $open_time = Db::table('yf_set_subsidy')
-            ->where('id', 6)
+        $subsidy = Db::table('yf_set_subsidy')
+            ->where('id', $type_id)
             ->find();
-        $this->assign('open_time',$open_time);
-        if ($open_time['begin_time'] < time() && $open_time['end_time'] > time()) {
-            $data = MultipleScholarship::getMultipleList($where);
-            $show=$data->render();
-            $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
-            $this->assign('list', $data);
-            $this->assign('page', $show);
+        $this->assign('subsidy',$subsidy);
+		$public_type = input('public_type','ypublic');
+		$begin_time = $subsidy[$public_type.'_begin_time'];
+		$end_time = $subsidy[$public_type.'_end_time'];
+		$this->assign('begin_time',$begin_time);
+		$this->assign('end_time',$end_time);
+		$this->assign('public_type',$public_type);
+		if($begin_time <= time() && $end_time >= time())
+		{
+			$data = $this->multiple->getMultipleList($type_id,$where);
+			$show=$data->render();
+			$show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+			$this->assign('list', $data);
+			$this->assign('page', $show);
         }
         if(request()->isAjax()){
-			return $this->fetch(':notice_front/grants_ajax_notice');
+			return $this->view->fetch(':publicity/common');
 		}else{
-			return $this->fetch(':notice_front/grants_notice');
+			return $this->view->fetch(':publicity/grants');
 		}
-        return $this->view->fetch(':notice_front/grants_notice');
     }
 
     /**
@@ -81,36 +128,32 @@ class Publicity extends Base
      * @param $type_id
      * @return mixed
      */
-    public function motivPublicity($id,$type_id) {
-        $faculty_number = input('faculty_number',0);
-        $class_number = input('class_number',0);
-        $where = ' 1 = 1';
-        if($class_number)
-        {
-            $where .= " AND u.class_number = '".$class_number."'";
-        }else{
-            if($faculty_number)
-            {
-                $where .= " AND u.faculty_number = '".$faculty_number."'";
-            }
-        }
+    public function motivPublicity() {
+        $type_id = 2;
+		$where = $this->common_where;
         $where .= " AND ms.application_type = '".$type_id."'";
-        $where .= " AND ass.status = 4";
-        $open_time = Db::table('yf_set_subsidy')
-            ->where('id', 6)
+        $subsidy = Db::table('yf_set_subsidy')
+            ->where('id', $type_id)
             ->find();
-        $this->assign('open_time',$open_time);
-        if ($open_time['begin_time'] < time() && $open_time['end_time'] > time()) {
-            $data = MultipleScholarship::getMultipleList($where);
-            $show=$data->render();
-            $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
-            $this->assign('list', $data);
-            $this->assign('page', $show);
+        $this->assign('subsidy',$subsidy);
+		$public_type = input('public_type','ypublic');
+		$begin_time = $subsidy[$public_type.'_begin_time'];
+		$end_time = $subsidy[$public_type.'_end_time'];
+		$this->assign('begin_time',$begin_time);
+		$this->assign('end_time',$end_time);
+		$this->assign('public_type',$public_type);
+		if($begin_time <= time() && $end_time >= time())
+		{
+			$data = $this->multiple->getMultipleList($type_id,$where);
+			$show=$data->render();
+			$show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+			$this->assign('list', $data);
+			$this->assign('page', $show);
         }
         if(request()->isAjax()){
-			return $this->fetch(':notice_front/motivational_ajax_notice');
+			return $this->view->fetch(':publicity/common');
 		}else{
-			return $this->fetch(':notice_front/motivational_notice');
+			return $this->view->fetch(':publicity/motiv');
 		}
     }
 
@@ -120,39 +163,33 @@ class Publicity extends Base
      * @param $type_id
      * @return mixed
      */
-    public function scholarPublicity($id,$type_id) {
-        //全系
-        $faculty_number = input('faculty_number',0);
-        $class_number = input('class_number',0);
-        $where = '1 = 1';
-        if($class_number)
-        {
-            $where .= " AND u.class_number = '".$class_number."'";
-        }else{
-            if($faculty_number)
-            {
-                $where .= " AND u.faculty_number = '".$faculty_number."'";
-            }
-        }
-        $where .= " AND ass.fund_type = '".$type_id."'";
-        $where .= " AND ass.status = 4";
-        $open_time = Db::table('yf_set_subsidy')
-            ->where('id', 6)
+    public function scholarPublicity() {
+       
+		$type_id = 1;
+		$where = $this->common_where;
+        $subsidy = Db::table('yf_set_subsidy')
+            ->where('id', $type_id)
             ->find();
-        $this->assign('open_time',$open_time);
-        if ($open_time['begin_time'] < time() && $open_time['end_time'] > time()) {
-            $data = NationalScholarship::getNationalList($where);
-            $show=$data->render();
-            $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
-            $this->assign('list', $data);
-            $this->assign('page', $show);
+        $this->assign('subsidy',$subsidy);
+		$public_type = input('public_type','ypublic');
+		$begin_time = $subsidy[$public_type.'_begin_time'];
+		$end_time = $subsidy[$public_type.'_end_time'];
+		$this->assign('begin_time',$begin_time);
+		$this->assign('end_time',$end_time);
+		$this->assign('public_type',$public_type);
+		if($begin_time <= time() && $end_time >= time())
+		{
+			$data = $this->national->getNationalList($where);
+			$show=$data->render();
+			$show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+			$this->assign('list', $data);
+			$this->assign('page', $show);
         }
         if(request()->isAjax()){
-			return $this->fetch(':notice_front/scholarship_ajax_notice');
+			return $this->view->fetch(':publicity/common');
 		}else{
-			return $this->fetch(':notice_front/scholarship_notice');
+			return $this->view->fetch(':publicity/scholar');
 		}
-        return $this->view->fetch(':notice_front/scholarship_notice');
     }
 
     /**
@@ -160,26 +197,21 @@ class Publicity extends Base
      * @return string
      */
     public function evaluPublicity() {
-        $faculty_number = input('faculty_number',0);
-        $class_number = input('class_number',0);
-        $where = ' 1 = 1 ';
-        if($class_number)
-        {
-            $where .= " AND u.class_number = '".$class_number."'";
-        }else{
-            if($faculty_number)
-            {
-                $where .= " AND u.faculty_number = '".$faculty_number."'";
-            }
-        }
-        $where .= " AND ass.status = 4";
-        $open_time = Db::table('yf_set_subsidy')
-            ->where('id', 6)
+		$where = $this->common_where;
+        $subsidy = Db::table('yf_set_subsidy')
+            ->where('id', 5)
             ->find();
-        $this->assign('open_time',$open_time);
-        if ($open_time['begin_time'] < time() && $open_time['end_time'] > time()) {
-            $data = Evaluation::getEvaluationList($where);
-            $show=$data->render();
+        $this->assign('subsidy',$subsidy);
+		$public_type = input('public_type','ypublic');
+		$begin_time = $subsidy[$public_type.'_begin_time'];
+		$end_time = $subsidy[$public_type.'_end_time'];
+		$this->assign('begin_time',$begin_time);
+		$this->assign('end_time',$end_time);
+		$this->assign('public_type',$public_type);
+		if($begin_time <= time() && $end_time >= time())
+		{
+			$data = $this->evaluation->getEvaluationList($where);
+			$show=$data->render();
             $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 
             $data_arr = $data->all();
@@ -188,10 +220,9 @@ class Publicity extends Base
             $this->assign('list', $data_arr);
         }
         if(request()->isAjax()){
-			return $this->fetch('notice_front/evaluation_ajax_notice');
+			return $this->view->fetch(':publicity/common');
 		}else{
-			return $this->fetch(':notice_front/evaluation_notice');
+			return $this->view->fetch(':publicity/evaluation');
 		}
-
     }
 }

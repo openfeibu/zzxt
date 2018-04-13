@@ -58,8 +58,8 @@ class News extends Base
 		}
 		$where=$diyflag?"FIND_IN_SET('$diyflag',news_flag)":'';
 		$news_model=new NewsModel;
-		$news=$news_model->alias("a")->field('a.*,b.*,c.menu_name')
-				->join(config('database.prefix').'member_list b','a.news_auto =b.member_list_id')
+		$news=$news_model->alias("a")->field('a.*,c.menu_name')
+				
 				->join(config('database.prefix').'menu c','a.news_columnid =c.id')
 				->where($map)->where($where)->order('news_time desc')->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 

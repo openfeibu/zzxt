@@ -20,6 +20,7 @@ class Show extends Base
     {
 		parent::_initialize();
 		$this->check_login();
+		$this->evaluation = new EvaluationModel();
 	}
 //    首页方法
     public function index_front()
@@ -126,8 +127,12 @@ class Show extends Base
 	{
 		$user_model = new User();
 		$user_info = $user_model->get_user($this->user['id_number']);
-		$eval_app = DB::name('evaluation_application')->where('member_list_id',$this->user['member_list_id'])->find();
-        $pass_status = DB::name('evaluation_status')->where('member_list_id',$this->user['member_list_id'])->find();
+		$subsidy = Db::table('yf_set_subsidy')
+                ->where('id', 5)
+                ->find();
+		$begintime = $subsidy['begin_time'];
+		$eval_app = $this->evaluation->getMemberEvaluation($this->user['member_list_id']);
+        $pass_status = DB::name('evaluation_status')->where('evaluation_id',$eval_app['evaluation_id'])->find();
 //		if($eval_app)
 //		{
 //			return [
@@ -186,10 +191,7 @@ class Show extends Base
                 'update_at' => time(),
             ]);
         } else {
-			$subsidy = Db::table('yf_set_subsidy')
-                ->where('id', 5)
-                ->find();
-			$begintime = $subsidy['begin_time'];
+			
 			$data['times'] = $begintime;
             $eva_app = DB::name('evaluation_application')->insert($data);
             $evaluation_id = Db::name('evaluation_application')->getLastInsID();

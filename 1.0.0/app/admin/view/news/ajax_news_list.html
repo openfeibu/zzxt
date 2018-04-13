@@ -8,7 +8,7 @@
 		</td>
 		<td class="hidden-xs center"><input name="{$v.n_id}" value="{$v.listorder|default=50}" class="list_order news_order"/></td>
 		<td class="hidden-xs" align="center">{$v.n_id}</td>
-		<td><a href="{:url('admin/News/news_edit',array('n_id'=>$v['n_id']))}" title="{$v.news_title}">{$v.news_title|subtext=25}</a>【{$v['member_list_nickname']|default=$v['member_list_username']}】</td>
+		<td><a href="{:url('admin/News/news_edit',array('n_id'=>$v['n_id']))}" title="{$v.news_title}">{$v.news_title|subtext=25}</a></td>
 		<td class="hidden-xs hidden-sm">
 			<select name="news_columnid" class="ajax_change_news_columnid">
 			{foreach name="menu" item="vo"}

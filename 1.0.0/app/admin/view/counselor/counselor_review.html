@@ -20,18 +20,18 @@
             <div >
                 <div class="personal_num">
                     <div class="passed">
-                        <p class="success_bg"><span></span><span>全系</span>已评定人数：</p>
-                        <p class="default_bg"><span>{$faculty_pass}</span>人</p>
+                        <p class="danger_bg"><span></span>待操作：</p>
+                        <p class="default_bg"><span>{$doingcount}</span>人</p>
                     </div>
                     <div class="passed pull-right">
-                        <p class="danger_bg"><span></span><span>全系</span>未评定人数：</p>
-                        <p class="default_bg"><span>{$faculty_not_pass}</span>人</p>
+                        <p class="success_bg"><span></span>全部：</p>
+                        <p class="default_bg"><span>{$allcount}</span>人</p>
                     </div>
                 </div>
                 <div class="clearfix"></div>
                 <form class="tab_inquire" method="post" action="">
                     <p>筛选：</p>
-                    <select class="form-control tab_select counselor_sub ajax_change" name="class_number">-->
+                    <select class="form-control tab_select counselor_sub ajax_change" name="class_number">
                         <option value="0">所有专业</option>
                         {foreach $classes as $row}
                         <option value="{$row.class_number}">{$row.current_grade}{$row.class_name}</option>

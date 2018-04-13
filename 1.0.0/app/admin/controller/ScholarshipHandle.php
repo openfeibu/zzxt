@@ -40,16 +40,8 @@ class ScholarshipHandle extends Base
         $update_app_data['group_opinion'] = json_encode($array);
         //状态表的id
         $status_id = $data['status_id'];
-        $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type')->find();
+        $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type,status_id')->find();
 
-        // //更新
-        // $res = $this->multiple->updateClassOpinion($app_status_data['application_id'], $status_data, date('Y',time()));
-        // if (!$res) {
-        //     return [
-        //         'code' => '201',
-        //         'msg' => '操作失败，请联系技术人员'
-        //     ];
-        //}
         return $this->multipleFill($app_status_data,$update_app_data);
     }
     public function MultipleCounselorAllFill()
@@ -100,7 +92,7 @@ class ScholarshipHandle extends Base
 
         //状态表的id
         $status_id = $data['status_id'];
-        $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type')->find();
+        $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type,status_id')->find();
 
         return $this->multipleFill($app_status_data,$update_app_data);
     }
@@ -152,7 +144,7 @@ class ScholarshipHandle extends Base
         //状态表id
         $status_id = $data['status_id'];
         //获取multiple_id
-        $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type')->find();
+        $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type,status_id')->find();
         //构造json
         if(isset($data['faculty_opinion']))
         {
@@ -182,7 +174,7 @@ class ScholarshipHandle extends Base
             $update_app_data['check_status'] = $status = 5;
         }
         $status_id = $data['status_id'];
-        $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type')->find();
+        $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type,status_id')->find();
         $update_app_data['update_at'] = time();
         //设置公示时间
         if ($status == 5) {
@@ -224,8 +216,7 @@ class ScholarshipHandle extends Base
     {
         //更新申请状态
         $res = Db::name('apply_scholarships_status')
-            ->where("CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = $this->time")
-            ->where('application_id', $app_status_data['application_id'])
+            ->where('status_id', $app_status_data['status_id'])
             ->update([
                 'update_at' => time(),
                 'status' => $update_app_data['check_status']

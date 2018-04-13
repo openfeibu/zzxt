@@ -11,6 +11,7 @@ use think\Config;
 use think\Request;
 use think\Response;
 use app\admin\controller\Auth;
+use app\home\service\SendMail;
 use think\Lang;
 // 应用公共文件
 /**
@@ -851,7 +852,7 @@ function get_news($tag,$ispage=false,$pagesize=10,$type=null,$v=null,$where=arra
         //使用分页
         $pagesize=$pagesize?$pagesize:config('paginate.list_rows');
         $count=Db::name("news")->field($field)->where($where_str)->where($where)->count();
-        $news=Db::name("news")->alias("a")->join(config('database.prefix').'member_list b','a.news_auto =b.member_list_id')->field($field)->where($where_str)->where($where)->order($order)->paginate($pagesize,false,$config);
+        $news=Db::name("news")->alias("a")->field($field)->where($where_str)->where($where)->order($order)->paginate($pagesize,false,$config);
         $show=$news->render();
         $content['page']=$show;
         $content['news']=$news;
@@ -859,7 +860,7 @@ function get_news($tag,$ispage=false,$pagesize=10,$type=null,$v=null,$where=arra
         return $content;
     }else{
         //不使用分页
-        $news=Db::name("news")->alias("a")->join(config('database.prefix').'member_list b','a.news_auto =b.member_list_id')->field($field.',news_time')->where($where_str)->where($where)->order($order)->limit($limit)->select();
+        $news=Db::name("news")->alias("a")->field($field.',news_time')->where($where_str)->where($where)->order($order)->limit($limit)->select();
         return $news;
     }
 }
