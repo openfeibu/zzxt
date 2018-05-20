@@ -1,0 +1,16 @@
+{if isset($list) && count($list)}
+{foreach $list as $row}
+<tr class="line-table-height">
+    <td class="k-s-content content">{$row.member_list_nickname}</td>
+    <td class="k-s-content content">{$row.id_number}</td>
+    <td class="k-s-content content">{$row.class_name}</td>
+</tr>
+{/foreach}
+<tr>
+    <td max-height="50" colspan="12" align="left">{$page}</td>
+</tr>
+{else}
+<tr>
+    <td max-height="50" colspan="12" align="center">暂无数据</td>
+</tr>
+{/if}

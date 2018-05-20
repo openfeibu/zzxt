@@ -1,0 +1,45 @@
+{include file="public/header/nav_membership_header"}
+
+<!-- 导航 -->
+<!-- 主体内容 S -->
+<div class="main w1000">
+    <div class="fb-source">
+        <ul>
+            <li>
+                <a href="{:url('/')}">首页</a>
+                <span >-></span>
+            </li>
+            <li>
+                <a>学生家庭经济情况评估公示结果</a>
+                <span >-></span>
+            </li>
+        </ul>
+    </div>
+
+    <form action="" method="post">
+        <div class="notice_select">
+            <button class="btn btn-sm ajax-search-form" style="margin-bottom: 12px;" name="public_type" value="ypublic">查看本院通过公示</button>
+            <button class="btn btn-sm ajax-search-form" style="margin-bottom: 12px;" name="public_type" value="xpublic">查看全校通过公示</button>
+        </div>
+    </form>
+
+    {if !isset($list)}
+    公示时间为：{$open_time.begin_time|date='Y-n-d',###} —— {$open_time.end_time|date='Y-n-d',###}
+    {else}
+    <table width="756px" class="k-w-table line_table" style="margin: 10px auto 20px auto;">
+        <thead>
+        <th class="info_bg k-s-content title">姓名</th>
+        <th class="info_bg k-s-content title">身份证</th>
+        <th class="info_bg k-s-content title">班级</th>
+        <th class="info_bg k-s-content title">评议分数</th>
+        <th class="info_bg k-s-content title">评议等级</th>
+        </thead>
+        <tbody>
+        {include file="student_notice\evalu_ajax_notice"}
+        </tbody>
+    </table>
+    {/if}
+</div>
+<!-- 主体内容 E -->
+
+{include file="public/footer"}

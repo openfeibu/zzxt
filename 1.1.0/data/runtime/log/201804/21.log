@@ -1,0 +1,82 @@
+---------------------------------------------------------------
+[ 2018-04-21T11:23:07+08:00 ] 211.66.88.159 113.103.92.239 POST /admin/sys/clear.html
+[ info ] zzxt.gdngs.cn/admin/sys/clear.html [运行时间：0.981059s][吞吐率：1.02req/s] [内存消耗：8,477.59kb] [文件加载：120]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'sys',
+    2 => 'clear',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/admin/sys/clear.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; PHPSESSID=1r0ptpisj25lraj147h311o281; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/admin/admin/admin_list.html?page=5',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zzxt.gdngs.cn',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.399627s ]
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.003429s ]
+[ info ] [ RUN ] app\admin\controller\Sys->clear[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\admin\controller\Sys.php ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003218s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.137746s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_web_log' [ RunTime:0.065642s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_web_log' [ RunTime:0.081097s ]
+[ sql ] [ SQL ] INSERT INTO [yf_web_log] ([uid] , [ip] , [location] , [os] , [browser] , [url] , [module] , [controller] , [action] , [method] , [data] , [otime]) VALUES (0 , '113.103.92.239' , '中国 广东 广州 ' , 'Mac' , 'Chrome(65.0.3325.181)' , '/admin/sys/clear.html' , 'admin' , 'Sys' , 'clear' , 'Ajax' , 'a:0:{}' , 1524280986) [ RunTime:0.020553s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_auth_rule' [ RunTime:0.034630s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_auth_rule' [ RunTime:0.078013s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY level desc,sort) AS ROW_NUMBER FROM (SELECT  [id],[pid],[level],[sort] FROM [yf_auth_rule]) AS thinkphp) AS T1 [ RunTime:0.010751s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [pid] FROM [yf_auth_rule] WHERE  [id] = -1) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.009497s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY [sort]) AS ROW_NUMBER FROM (SELECT  * FROM [yf_auth_rule] WHERE  [status] = 1  AND [pid] = null) AS thinkphp) AS T1 [ RunTime:0.008845s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.029986s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.062329s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] [a] INNER JOIN [yf_auth_group_access] [b] ON [a].[admin_id]=[b].[uid] INNER JOIN [yf_auth_group] [c] ON [b].[group_id]=[c].[id] WHERE  [a].[admin_id] = '27') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.023900s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_news' [ RunTime:0.031441s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_news' [ RunTime:0.082215s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  COUNT(*) AS tp_count FROM [yf_news] WHERE  [news_auto] = '8806') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.033083s ]

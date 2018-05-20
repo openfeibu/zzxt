@@ -1,0 +1,205 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="check_main">
+                <form action="" method="post">
+                    <input type="hidden" name="department_job_id" value="{$list.department_job_id}">
+                <table class="table_heading">
+                    <tr>
+                        <td colspan="2"></td>
+                        <td style="text-align: right"><span style="font-size: 13px;color:grey;">广东农工商职业技术学院</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
+                            {$time|date='Y',###}年{$time|date='n',###}月勤工助学岗位考核表
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="">用工单位：</label>
+                            <input type="text" style="width:60%;border-bottom:1px solid #555555;" value="{$list.department}" name="department">
+                        </td>
+                        <td></td>
+                        <td>
+                            填表日期：
+                            <input type="text" style="width:15%;border-bottom:1px solid #555555;" value="{$time|date='Y',###}">年
+                            <input type="text" style="width:15%;border-bottom:1px solid #555555;" value="{$time|date='n',###}">月
+                            <input type="text" style="width:15%;border-bottom:1px solid #555555;" value="{$time|date='d',###}">日
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered check_tab_body">
+                    <tr>
+                        <td class="tab_title tab_120px">学生姓名</td>
+                        <td class="tab_title tab_120px">学号</td>
+                        <td class="tab_title tab_120px">专业、班级</td>
+                        <td class="tab_title tab_80px">津贴标准（元）</td>
+                        <td class="tab_title tab_50px">工作小时</td>
+                        <td class="tab_title tab_50px">考核情况（优、良、中、差）</td>
+                        <td class="tab_title tab_80px">实发金额（元）</td>
+                        <td colspan="2" class="tab_title">工作地点和内容</td>
+                    </tr>
+                    <?php $n=0;?>
+                    {foreach $list.students as $row}
+                    <tr>
+                        <td><input type="text" value="{$row.studentname}" name="students[{$n}][studentname]" ></td>
+                        <td><input type="text" value="{$row.studentid}" name="students[{$n}][studentid]"></td>
+                        <td><input type="text"value="{$row.class}" name="students[{$n}][class]"></td>
+                        <td><input type="text" name="students[{$n}][standard]" value="{$row.standard}"></td>
+                        <td><input type="text" name="students[{$n}][time]" value="{$row.time}"></td>
+                        <td><input type="text" name="students[{$n}][status]" value="{$row.status}"></td>
+                        <td><input type="text" name="students[{$n}][money]" value="{$row.money}"></td>
+                        <td colspan="2"><input type="text" name="students[{$n}][content]" value="{$row.money}"></td>
+                    </tr>
+                    <?php $n++;?>
+                    {/foreach}
+                    <!--其他事宜-->
+                    <tr>
+                        <td class="tab_title">津贴合计</td>
+                        <td colspan="8" class="tab_content"><input type="text" style="width:10%;border-bottom:1px solid #555555;" name="total_money" value="{$list.total_money}">元</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">用工部门审核意见</td>
+                        <td colspan="8" class="tab_content">
+                            <textarea name="department_opinion" id="" class="tab_opinion">{$list.department_opinion}</textarea>
+                            <div class="tab_sign">
+                                <label for="">考核人签名：</label>
+                                <input type="text" name="principal" value="{$list.principal}">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="tab_time">
+                                <input type="text" value="{$time|date='Y',###}">年
+                                <input type="text"  value="{$time|date='n',###}">月
+                                <input type="text"  value="{$time|date='d',###}">日
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="9" style="padding: 10px;text-align: left;">
+                            <p>备注：</p>
+                            <ul>
+                                <li>
+                                    <p>1.各用人单位应对在岗勤工助学学生进行考核，对不能胜任工作或不服从管理的学生，用工部门可报学生工作处，经核实后，将终止其参加勤工助学活动。</p>
+                                </li>
+                                <li>
+                                    <p>2.津贴标准请根据学院审批的各用工岗位津贴标准填写。</p>
+                                </li>
+                                <li>
+                                    <p>3.考核情况为“优”、“良”者，全额发放酬金；考核为“中”，按80%发放，考核为“差”，按70%发放。</p>
+                                </li>
+                                <li>
+                                    <p>4.各用工部门于每月20日前填写该表，交学生工作处。</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                <div class="btn_center" style="margin-left: -60px;">
+                    <button type="submit" class="btn btn-info" >提交</button>
+                    <button class="btn btn-danger" onclick="preview(1)">打印</button>
+                </div>
+                </form>
+            </div>
+        </div><!--column/12-->
+    </div><!--row-->
+</div><!--page-content-->
+<script>
+    var biaozhun;
+    var time;
+    var status;
+    var xkbiaozhun;
+    var xktime;
+    var xkstatus;
+    var total_momey = 0;
+    $('td').change(function(){
+        //第一行
+        var table = $(this).parents(".check_tab_body");
+        var tr_length = $(this).parents(".check_tab_body").find("tr").length -4;
+        var qq;
+        var te =$(this).children("input").val();
+
+        //如果不是第一行
+        if ($(this).parents("tr").index() != 1) {
+            if ($(this).index()==3){
+                xkbiaozhun = $(this).children("input").val();
+                xktime = $(this).parent("tr").find("td:eq(4)").children("input").val()
+                xkstatus = $(this).parent("tr").find("td:eq(5)").children("input").val()
+            }
+            if ($(this).index()==4){
+                xkbiaozhun = $(this).parent("tr").find("td:eq(3)").children("input").val()
+                xktime = $(this).children("input").val();
+                xkstatus = $(this).parent("tr").find("td:eq(5)").children("input").val()
+            }
+            if ($(this).index()==5){
+                xkbiaozhun = $(this).parent("tr").find("td:eq(3)").children("input").val()
+                xktime = $(this).parent("tr").find("td:eq(4)").children("input").val()
+                xkstatus = $(this).children("input").val();
+            }
+            if ($(this).index() == 4 ||$(this).index() ==5 || $(this).index() ==6 || $(this).index() ==3){
+
+
+//            if (xkbiaozhun != biaozhun || xktime != time || xkstatus != status) {
+                var money;
+                money = xkbiaozhun*xktime;
+                if (xkstatus == '中') {
+                    money = xkbiaozhun*xktime*0.8;
+                }
+                if (xkstatus == '差') {
+                    money = xkbiaozhun*xktime*0.7;
+                }
+                //填充同一行的钱
+                $(this).parent("tr").find("td:eq(6)").children("input").val(money.toFixed(2))
+                total_momey = 0;
+                for (var i = 1; i<=tr_length;i++) {
+                    total_momey += table.find("tr:eq("+i+") td:eq(6)").find("input").val()*1;
+                }
+                //那个input
+                table.find("tr").eq(tr_length+1).children("td:eq(1)").find("input").val(total_momey.toFixed(2))
+//            }
+            }
+            return;
+        }
+
+        //标准
+        if ($(this).index() == 3 && $(this).parents("tr").index() == 1) {
+            biaozhun = $(this).children("input").val();
+        }
+        //时间
+        if ($(this).index() == 4 && $(this).parents("tr").index() == 1) {
+            time = $(this).children("input").val();
+        }
+        //情况
+        if ($(this).index() == 5 && $(this).parents("tr").index() == 1) {
+            status = $(this).children("input").val();
+        }
+
+        if ($(this).index() == 4 ||$(this).index() ==5 || $(this).index() ==6 || $(this).index() ==3){
+            total_momey = 0;
+            if (biaozhun != '' && time != '' && status != ''  ) {
+                var money;
+                money = biaozhun * time;
+                if (status == '中') {
+                    money = biaozhun*time*0.8;
+                }
+                if (status == '差') {
+                    money = biaozhun*time*0.7;
+                }
+                //循环填充同一列的值。钱
+                for (var i = 1; i<=tr_length;i++) {
+                    table.find("tr:eq("+i+") td:eq(6)").find("input").val(money.toFixed(2));
+                    total_momey += table.find("tr:eq("+i+") td:eq(6)").find("input").val()*1;
+                    table.find("tr").eq(tr_length+1).children("td:eq(1)").find("input").val(total_momey.toFixed(2))
+                }
+            }
+        }
+        //循环填充同一列的
+        for (var i = 1; i<=tr_length;i++) {
+            qq = table.find("tr:eq("+i+") td:eq("+$(this).index()+")").find("input").val(te);
+        }
+    })
+
+
+</script>
+{/block}

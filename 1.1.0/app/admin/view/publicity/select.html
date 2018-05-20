@@ -1,0 +1,21 @@
+<form class="tab_inquire" method="post">
+	{if isset($faculties)}
+	<select class="form-control tab_select counselor_sub ajax_change faculty_more" name="faculty_number" href="{:url('admin/ClassCode/getClasses')}">
+		<option value="0">所有系</option>
+		{foreach $faculties as $row}
+		<option value="{$row.faculty_number}">{$row.faculty_name}</option>
+		{/foreach}
+	</select>
+	<select class="form-control tab_select counselor_sub ajax_change class_more" name="class_number" >
+		<option value="0">所有专业</option>
+	</select>
+	{elseif isset($classes)}
+	<select class="form-control tab_select counselor_sub ajax_change" name="class_number">
+		<option value="0">所有专业</option>
+		{foreach $classes as $row}
+		<option value="{$row.class_number}">{$row.current_grade}{$row.class_name}</option>
+		{/foreach}
+	</select>
+	{/if}
+	
+</form>

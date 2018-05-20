@@ -1,0 +1,76 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>学生家庭经济困难认定
+            </small>
+            <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            院系审核
+            </small>
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <!--<div class="w1000">-->
+            <div>
+                <div class="personal_num">
+                    <div class="passed">
+                        <p class="danger_bg"><span></span>待操作：</p>
+                        <p class="default_bg"><span>{$doingcount}</span>人</p>
+                    </div>
+                    <div class="passed pull-right">
+                        <p class="success_bg"><span></span>全部：</p>
+                        <p class="default_bg"><span>{$allcount}</span>人</p>
+                    </div>
+                </div>
+                <form class="tab_inquire" method="post" action="{:url('admin/FacultyGroup/showEvaluationList')}">
+
+                    <select class="form-control tab_select counselor_sub ajax_change" name="class_number">
+                        <option value="0">所有专业</option>
+                        {foreach $classes as $row}
+                        <option value="{$row.class_number}">{$row.current_grade}{$row.class_name}</option>
+                        {/foreach}
+                    </select>
+
+                    <select class="form-control tab_select class_select ajax_change" name="status">
+                        <option value="0">全部状态</option>
+                        {foreach $Think.config.evaluation_status as $k => $v}
+                        <option value="{$k}">{$v}</option>
+                        {/foreach}
+                    </select>
+                    <div class="tab_search">
+                        <input type="text" placeholder="学号/姓名" name="studentname">
+                        <button class="btn btn-info btn-sm ajax-search-form" type="submit">查询</button>
+                    </div>
+                </form>
+                <table  id="simple-table"  class="table table-striped table-bordered table-hover tab_center">
+                    <thead>
+                    <tr>
+                        <th>
+                            <label class="pos-rel">
+                                <input type="checkbox" class="ace" id="chkAll2" value="全选">
+                                <span class="lbl"></span>
+                            </label>
+                            ID
+                        </th>
+                        {include file="common\evaluation_key"}
+                        <th>院系小组意见</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="ajax-data">
+                    {include file="evaluation\faculty_ajax_review"}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{/block}

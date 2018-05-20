@@ -1,0 +1,43 @@
+<div class="nav printHide">
+        <ul class="w1000">
+            <li>
+                <a href="{:url('/personal')}">首页</a>
+            </li>
+            <li {if condition="'examineStatus' eq $Think.const.ACTION_NAME"}class="active"{/if}>
+                <a href="{:url('/home/examineStatus')}">审核状态</a>
+            </li>
+            <li  {if condition="'getGrants' eq $Think.const.ACTION_NAME"}class="active"{/if} >
+                <a href="javascript:;" onclick="choose_type('3')">国家助学金</a>
+            </li>
+            <li {if condition="'getNationalScholarship' eq $Think.const.ACTION_NAME"}class="active"{/if} id="type1">
+                <a href="javascript:;" onclick="choose_type('1')">国家奖学金</a>
+            </li>
+            <li {if condition="'getInspirational' eq $Think.const.ACTION_NAME"}class="active"{/if} id="type2">
+                <a href="javascript:;" onclick="choose_type('2')">国家励志奖学金</a>
+            </li>
+            <li {if condition="'' eq $Think.const.ACTION_NAME"}class="active"{/if} id="type1">
+                <a href="{:url('/notice')}">系统通告</a>
+            </li>
+        </ul>
+    <script>
+        function choose_type(value) {
+            var url = "{:url('/home/Scholarship/chooseType')}";
+            var choose_type = value;
+            $.ajax({
+                url:url,
+                type:'post',
+                data:{'choose_type':choose_type},
+                success:function (data) {
+                    if (data.code == 1) {
+                        window.location.href = data.url;
+                    } else {
+                        layer.alert(data.msg, {icon: 5}, function (index) {
+                            layer.close(index);
+                        });
+                        return false;
+                    }
+                }
+            })
+        }
+    </script>
+</div>

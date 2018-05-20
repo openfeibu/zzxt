@@ -1,0 +1,216 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="{:url('admin/MotivFront/M_manage_review')}">国家励志奖学金学院审核</a>
+            </small>
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                添加评语
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <form class="w800" method="post">
+                <table class="table_heading" style="width:100%">
+                    <tr>
+                        <td colspan="2"></td>
+                        <td style="text-align: right"><span style="font-size: 13px;color:grey;">广东农工商职业技术学院</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
+                            普通本科高校、高等职业学校国家励志奖学金申请表
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered tab_center">
+                    <!--本人情况-->
+                    <tr>
+                        <td rowspan="4" class="tab_title tab_40px">本人情况</td>
+                        <td class="tab_title tab_80px">姓名</td>
+                        <td class="tab_content tab_100px">韦发炫</td>
+                        <td class="tab_title">性别</td>
+                        <td class="tab_content">男</td>
+                        <td class="tab_title">出生年月</td>
+                        <td class="tab_content tab_140px">1997-11-28</td>
+                        <td colspan="2" rowspan="4" class="tab_content tab_126px">
+                            <img src="__PUBLIC__/img/defaultGraph.jpg" style="width: 125px; height: 175px;" alt="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">民族</td>
+                        <td class="tab_content">汉族</td>
+                        <td class="tab_title">政治面貌</td>
+                        <td class="tab_content">入党积极分子</td>
+                        <td class="tab_title">学号</td>
+                        <td class="tab_content">20153328110</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">身份证号</td>
+                        <td colspan="3" class="tab_content">440521199711287687</td>
+                        <td class="tab_title">联系电话</td>
+                        <td class="tab_content">13011291209</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">学院、院系、班级</td>
+                        <td colspan="5" class="tab_content">广东农工商职业技术学院机电系物联网应用技术一班</td>
+                    </tr>
+                    <!--家庭经济情况-->
+                    <tr>
+                        <td rowspan="3" class="tab_title">家庭经济情况</td>
+                        <td class="tab_title">家庭户口</td>
+                        <td colspan="5" class="tab_content">
+                            <div style="display:inline-block;margin-right: 20px;">
+                                <label>
+                                    <input disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>城镇
+                                </label>
+                            </div>
+                            <div style="display:inline-block;">
+                                <label>
+                                    <input checked disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>农村
+                                </label>
+                            </div>
+                        </td>
+                        <td class="tab_title">家庭总人口数</td>
+                        <td class="tab_content">22</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">家庭月总收入</td>
+                        <td class="tab_content">1.00000001</td>
+                        <td class="tab_title">人均月收入</td>
+                        <td class="tab_content">0.100000001</td>
+                        <td class="tab_title">收入来源</td>
+                        <td colspan="3" class="tab_content">工资、奖金、津贴、补贴和其他劳动收入</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_title">家庭住址</td>
+                        <td colspan="5" class="tab_content">广东省茂名市信宜县高州镇电白村化州队122号</td>
+                        <td class="tab_title">邮政编码</td>
+                        <td class="tab_content">325656</td>
+                    </tr>
+                    <!--家庭成员情况-->
+                    <tr><!--自行替换为要循环出来的数量+1-->
+                        <td rowspan="3"  class="tab_title">家庭成员情况</td>
+                        <td class="tab_title">姓名</td>
+                        <td class="tab_title">年龄</td>
+                        <td class="tab_title">与本人关系</td>
+                        <td colspan="5" class="tab_title">工作或学习单位</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_content">风华谷</td>
+                        <td class="tab_content">43</td>
+                        <td class="tab_content">父子</td>
+                        <td colspan="5" class="tab_content">曜日莫奈窗帘科技迷途知返高能预警</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_content">驼绒蒿</td>
+                        <td class="tab_content">39</td>
+                        <td class="tab_content">母子</td>
+                        <td colspan="5" class="tab_content">曜日莫奈窗帘科技迷途知返高能预警</td>
+                    </tr>
+                    <!--学习成绩-->
+                    <tr>
+                        <td colspan="9" class="tab_content">
+                            <p class="tab_left">学习成绩：</p>
+                            <textarea name="" id="" class="tab_opinion" disabled>黑科技阿萨达是发给你们这些破情人坡马老师的可能发挥科技</textarea>
+                        </td>
+                    </tr>
+                    <!--申请理由-->
+                    <tr>
+                        <td colspan="9" class="tab_content">
+                            <p class="tab_left">申请理由</p>
+                            <textarea name="" id="" class="tab_opinion" disabled>黑科技阿萨达是发给你们这些破情人坡马老师的可能发挥科技</textarea>
+                            <div class="tab_sign">
+                                <label for="">申请人签名：</label>
+                                <input type="text" value="韦发炫" disabled>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="tab_time">
+                                <input type="text" value="2017" disabled>年
+                                <input type="text" value="11" disabled>月
+                                <input type="text" value="1" disabled>日
+                            </div>
+                        </td>
+                    </tr>
+                    <!--班级小组评语-->
+                    <tr>
+                        <td colspan="9" class="tab_content">
+                            <p class="tab_left">班级评定小组意见</p>
+                            <textarea name="" id="" class="tab_opinion" disabled>黑科技阿萨达是发给你们这些破情人坡马老师的可能发挥科技</textarea>
+                            <div class="tab_sign">
+                                <label for="">组长签名：</label>
+                                <input type="text" value="吕海强" disabled>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="tab_time">
+                                <input type="text" value="2017" disabled>年
+                                <input type="text" value="11" disabled>月
+                                <input type="text" value="1" disabled>日
+                            </div>
+                        </td>
+                    </tr>
+                    <!--院系小组评语-->
+                    <tr>
+                        <td colspan="9" class="tab_content">
+                            <p class="tab_left">院系评定小组意见</p>
+                            <textarea name="" id="" class="tab_opinion" disabled>黑科技阿萨达是发给你们这些破情人坡马老师的可能发挥科技</textarea>
+                            <div class="tab_sign">
+                                <label for="">组长签名：</label>
+                                <input type="text" value="吕海强" disabled>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="tab_time">
+                                <input type="text" value="2017" disabled>年
+                                <input type="text" value="11" disabled>月
+                                <input type="text" value="1" disabled>日
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table class="w800">
+                    <tr>
+                        <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">院系小组添加评语：</p></td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="tab_content">
+                            <textarea name="" id="" class="tab_opinion"></textarea>
+                            <div class="tab_sign">
+                                <label for="">学校小组负责人签名：</label>
+                                <input type="text">
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="tab_time">
+                                <input type="text">年
+                                <input type="text">月
+                                <input type="text">日
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="height: 30px;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 266px;"></td>
+                        <td class="tab_content" style="width: 266px;">
+                            <button type="submit" class="btn btn-success">通过</button>
+                            <button type="submit" class="btn btn-danger">不通过</button>
+                        </td>
+                        <td style="width: 266px;"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,198 @@
+{include file="public/header/nav_membership_header"}
+<div class="main w1000" style="background:#fff;">
+    <div class="fb-source source_none" >
+        <ul>
+            <li>
+                <a href="{:url('/')}">首页</a>
+                <span >-></span>
+            </li>
+            <li>
+                <a>国家奖学金申请审批表</a>
+                <span >-></span>
+            </li>
+        </ul>
+    </div>
+    <!--startprint4-->
+    <form action="" method="post" enctype="multipart/form-data" id="schoForm">
+    <div class="personal_table">
+        <table width="756px">
+            <tbody>
+            <tr style="height:30px;">
+                <td colspan="2">
+
+                </td>
+                <td colspan="1" style="text-align: right;">
+                    <span style="font-size: 13px;color: grey;">广东农工商职业技术学院</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center;font-size: 25px;font-weight: bold;border-top:1px solid #000000;line-height:48px;">
+                    国家奖学金申请审批表
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <table width="756px" class="k-w-table line_table">
+            <tbody>
+            <tr class="line-table-height scholar_tab">
+                <td rowspan="4" class="k-s-content title" style="width: 40px;">基本情况</td>
+                <td class="k-s-content title" style="text-align: center;">姓名</td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.studentname}"/></td>
+                <td class="k-s-content title">性别</td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.gender}"/></td>
+                <td class="k-s-content title">出生年月</td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="" value="{$user_info.birthday}"/></td>
+            </tr>
+            <tr class="line-table-height tab_style">
+                <td class="k-s-content title" style="text-align: center;">政治面貌</td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.political}"/></td>
+                <td class="k-s-content title">民族</td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.nation}"/></td>
+                <td class="k-s-content title">入学时间</td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="" value="{$user_info.admission_date}"/></td>
+            </tr>
+            <tr class="line-table-height tab_style">
+                <td class="k-s-content title" style="text-align: center;">专业</td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.profession}"/></td>
+                <td class="k-s-content title">学制</td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.school_system}"/></td>
+                <td class="k-s-content title">联系电话</td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="tel" /></td>
+            </tr>
+            <tr class="line-table-height tab_style">
+                <td class="k-s-content title" style="text-align: center;">身份证号</td>
+                <td colspan="6" class="k-s-content content"><input type="text" name="" value="{$user_info.id_number}"/></td>
+            </tr>
+            <!--学习情况-->
+            <tr class="line-table-height scholar_tab">
+                <td rowspan="2" class="k-s-content title" style="width: 40px;">学习情况</td>
+                <td colspan="3" class="k-s-content title" style="text-align: center;">
+                    <div class="ranking">
+                        成绩排名：
+                        <input type="text" name="course_ranking" value="{if isset($list.course_ranking)}{$list.course_ranking}{/if}">
+                        /
+                        <input type="text" name="course_total_people" value="{if isset($list.course_total_people)}{$list.course_total_people}{/if}">
+                        （名次/总人数）
+                    </div>
+                </td>
+                <td colspan="4" class="k-s-content title">
+                    实行综合考评排名：
+                    <div style="display:inline-block;">
+                        <label>
+                            是<input type="radio" name="is_assessment" value="1" style="height:auto;width: auto;margin-right: 5px;" {if condition="isset($list.is_assessment) && $list.is_assessment=='1'"} checked {/if} />
+                        </label>
+                    </div>
+                    <div style="display:inline-block;">
+                        <label>
+                            否<input type="radio" name="is_assessment" value="0" style="height:auto;width: auto;margin-right: 5px;" {if condition="isset($list.is_assessment) && $list.is_assessment=='0'"} checked {/if}/>
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr class="line-table-height scholar_tab">
+                <td colspan="3" class="k-s-content title">
+                    必修课
+                    <input type="text" style="width:10%;border-bottom: 1px solid #555555;" name="compulsory_course" value="{if  isset($list.compulsory_course)}{$list.compulsory_course}{/if}" >门，
+                    其中及格以上
+                    <input type="text" style="width:10%;border-bottom: 1px solid #555555;" name="pass_count" value="{if isset($list.pass_count)}{$list.pass_count}{/if}">门
+                </td>
+                <td colspan="4" class="k-s-content title" style="text-align: center;">
+                    <div class="ranking">
+                        如是，排名：
+                        <input type="text" name="assessment_ranking" value="{if isset($list.assessment_ranking)}{$list.assessment_ranking}{/if}">
+                        /
+                        <input type="text" name="assessment_total_people" value="{if isset($list.assessment_total_people)}{$list.assessment_total_people}{/if}">
+                        （名次/总人数）
+                    </div>
+                </td>
+            </tr>
+            <!--大学期间主要获奖情况-->
+            <tr class="line-table-height">
+                <td rowspan="5" class="k-s-content title">大学期间主要获奖情况</td>
+                <td class="k-s-content title">日期</td>
+                <td colspan="3" class="k-s-content title">奖项名称</td>
+                <td colspan="3" class="k-s-content title">颁奖单位</td>
+            </tr>
+			{if $is_data}
+            {foreach $list.awards as $r}
+			<tr class="line-table-height">
+				<td class="k-s-content content">{$r.date}</td>
+				<td class="k-s-content content" colspan="3">{$r.name}</td>
+				<td class="k-s-content content" colspan="3">{$r.unit}</td>
+            </tr>
+			{/foreach}
+			{else}
+            <tr class="line-table-height">
+                <td class="k-s-content content"><input type="text" name="awards[0][date]" /></td>
+                <td colspan="3" class="k-s-content content"><input type="text" name="awards[0][name]" /></td>
+                <td colspan="3" class="k-s-content content"><input type="text" name="awards[0][unit]" /></td>
+            </tr>
+            <tr class="line-table-height">
+                <td class="k-s-content content"><input type="text" name="awards[1][date]" /></td>
+                <td colspan="3" class="k-s-content content"><input type="text" name="awards[1][name]" /></td>
+                <td colspan="3" class="k-s-content content"><input type="text" name="awards[1][unit]" /></td>
+            </tr>
+            <tr class="line-table-height">
+                <td class="k-s-content content"><input type="text" name="awards[2][date]" /></td>
+                <td colspan="3" class="k-s-content content"><input type="text" name="awards[2][name]" /></td>
+                <td colspan="3" class="k-s-content content"><input type="text" name="awards[2][unit]" /></td>
+            </tr>
+            <tr class="line-table-height">
+                <td class="k-s-content content"><input type="text" name="awards[3][date]" /></td>
+                <td colspan="3" class="k-s-content content"><input type="text" name="awards[3][name]" /></td>
+                <td colspan="3" class="k-s-content content"><input type="text" name="awards[3][unit]" /></td>
+            </tr>
+			{/if}
+            <!--申请理由-->
+            <tr class="line-table-height">
+                <td class="k-s-content title">申请理由(200字)</td>
+                <td colspan="7" class="k-s-content content" style="text-align: left;">
+                    <textarea name="reason" id="" class="longtext">{if isset($list.reason)}{$list.reason}{/if}</textarea>
+                    <div style="float: right;">
+                        <div class="level_form">
+                            <div class="signature">
+                                <label for="">申请人签名（手签）：</label>
+                                <input type="text" value="{$user_info.studentname}">
+                            </div>
+                        </div>
+                        <div class="level_form">
+                            <div class="level_time">
+                                <input type="text" value="{$list.time|date='Y',###}">
+                                <label for="">年</label>
+                            </div>
+                            <div class="level_time">
+                                <input type="text" value="{$list.time|date='m',###}">
+                                <label for="">月</label>
+                            </div>
+                            <div class="level_time">
+                                <input type="text" value="{$list.time|date='d',###}">
+                                <label for="">日</label>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--endprint4-->
+    <div style="width: 756px;margin:0 auto;">
+        <p style="font-size: 16px;font-weight: 600;">《国家奖学金申请审批表》填写说明</p>
+        <ul>
+            <li>1.表格为一页，正反两面，不得随意增加页数。表格填写应当字迹清晰、信息完整，不得涂改数据或出现空白项。</li>
+            <li>2.表格中学习成绩、综合考评成绩排名的范围由各院系自行确定，院系、年级、专业排名均可，但必须注明评选范围的总人数。</li>
+            <li>3.表格中“申请理由”栏的填写应当全面详实，能够如实反映学生学习成绩优异、社会实践、创新能力、综合素质等方面特别突出。字数控制在200字左右。</li>
+            <li>4.表格上报一律使用原件，不得使用复印件。学生成绩单、获奖证书复印件等证明材料随表报送。</li>
+        </ul>
+    </div>
+
+
+    {if !$is_data}
+	<button class="print printHide" type="submit" id="schosubmit">提交</button>
+	{/if}
+    <button class="print printHide" onclick="preview(4)">打印</button>
+    </form>
+</div>
+
+{include file="public/footer"}

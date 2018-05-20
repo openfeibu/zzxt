@@ -1,0 +1,87 @@
+{include file="public/header/nav_membership_header"}
+<!-- 主体内容 S -->
+<div class="main w1000" style="background:#fff;">
+    <div class="fb-source source_none" >
+        <ul>
+            <li>
+                <a href="{:url('/')}">首页</a>
+                <span >-></span>
+            </li>
+            <li>
+                <a>经济困难认定</a>
+                <span >-></span>
+            </li>
+            <li>
+                <a>信息管理</a>
+                <span >-></span>
+            </li>
+        </ul>
+    </div>
+    <!--startprint1-->
+    <div class="personal_table">
+		<form name="evau_form" action="" id="evalu_form"/>
+
+		    {include file="evaluation/evaluation_info_table"}
+
+		</form>
+    </div>
+    <!--endprint1-->
+
+    <div style="width: 756px;margin:0 auto;">
+        注：
+        <ul>
+            <li>1.本表供学生根据需要申请家庭经济困难认定用，可复印。请如实填写，到户籍所在地村委会（居委会）、乡（镇）或街道核实、盖章后，连同相关证明材料交到学校。</li>
+            <li>2.家庭成员健康状况主要填写是否患重大疾病，是否残疾及等级。</li>
+            <li>3.选择性项目必须填写。</li>
+            <li>4.斜体字在填写时请删除。</li>
+            <li>5.涂改无效。</li>
+        </ul>
+    </div>
+
+
+    {if $is_eval_app != 1}
+	<button type="submit" class="print printHide evalu_btn">提交</button>
+	{else}
+    <button class="print printHide" onclick="preview(1)">打印</button>
+	{/if}
+</div>
+<!-- 主体内容 E -->
+<script>
+$(".evalu_btn").click(function(){
+	 if(confirm("提交后将不能修改！确定无误提交吗？"))
+	{
+		$.ajax({
+			type: 'post',
+			url: "{:url('home/show/evaluation_application')}",
+			data: $("#evalu_form").serialize(),
+			success: function(data) {
+				if(data.code == 200)
+				{
+					window.location.href="{:url('home/show/material')}";
+				}else{
+					alert(data.message);
+				}
+			}
+		});
+	}
+});
+$('.number').keyup(function(){
+    var val = $(this).val();
+    if(val.length==1){
+        $(this).val(val.replace(/[^1-9]/g,''));
+    }else{
+        $(this).val(val.replace(/\D/g,''));
+    }
+});
+</script>
+{if $is_eval_app == 1 && $pass_status != 9}
+<script>
+	$("#evalu_form").find("input").attr('disabled',true);
+	$("#evalu_form").find("select").attr('disabled',true);
+	$("#evalu_form").find("textarea").attr('disabled',true);
+</script>
+{/if}
+
+
+
+{include file="public/footer"}

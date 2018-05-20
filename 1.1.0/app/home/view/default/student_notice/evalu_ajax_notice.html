@@ -1,0 +1,18 @@
+{if count($list)}
+{foreach $list as $row}
+<tr class="line-table-height {if $row.member_list_id == $user.member_list_id}tr_active{/if}" >
+    <td class="k-s-content content">{$row.member_list_nickname}</td>
+    <td class="k-s-content content">{$row.id_number}</td>
+    <td class="k-s-content content">{$row.class_name}</td>
+    <td class="k-s-content content">{$row.score}</td>
+    <td class="k-s-content content">{$row.rank}</td>
+</tr>
+{/foreach}
+<tr>
+    <td max-height="50" colspan="12" align="left">{$page}</td>
+</tr>
+{else}
+<tr>
+    <td max-height="50" colspan="12" align="center">暂无数据</td>
+</tr>
+{/if}

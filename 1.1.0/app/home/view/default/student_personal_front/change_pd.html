@@ -1,0 +1,56 @@
+{include file="public/header/nav_membership_header"}
+
+<!--<div class="nav printHide">
+    <ul class="w1000">
+        <li><a href="{:url('/index_front')}">首页</a></li>
+        <li><a href="{:url('/personal')}">经济困难认定</a></li>
+        <li><a href="{:url('/scho_status')}">国家三金申请</a></li>
+        <li><a href="{:url('/work')}">勤工助学金</a></li>
+        <li><a href="{:url('/questionnaire')}">调查问卷</a></li>
+        <li class=" active"><a href="{:url('/changePassword')}">修改密码</a></li>
+        <li><a href="{:url('/home/show/evalu_notice')}">通知公告</a></li>
+    </ul>
+</div>-->
+
+<!-- 主体内容 S -->
+<div class="main w1000" style="background:#fff;">
+    <div class="updatePass">
+        <div class="updatePass-title">修改密码</div>
+        <form action="{:url('home/Center/runchangepwd')}" method="post" class="ajaxForm2">
+            <div class="input-item">
+                <label>旧密码：</label>
+                <input type="password" name="old_password">
+            </div>
+            <div class="input-item">
+                <label for="">新密码：</label>
+                <input type="password" name="password">
+            </div>
+            <div class="input-item">
+                <label for="">确认密码：</label>
+                <input type="password" name="repassword">
+            </div>
+            <input type="submit" value="修改">
+            <div class="login_error"></div>
+        </form>
+        <script>
+            $(function () {
+                $('.ajaxForm2').ajaxForm({
+                    success: complete, // 这是提交后的方法
+                    dataType: 'json'
+                });
+            });
+            function complete(data) {
+                if (data.code == 1) {
+                    $('.login_error').html(data.msg);
+                    window.location.href = data.url;
+                } else {
+                    $('.login_error').html(data.msg);
+                    return false;
+                }
+            }
+        </script>
+    </div>
+</div>
+<!-- 主体内容 E -->
+
+{include file="public/footer"}

@@ -1,0 +1,270 @@
+{include file="public/header/nav_guest_header"}
+<div class="nav-old">
+    <ul class="w1000">
+        <li class="active"><a href="{:url('/')}">首页</a></li>
+        <li class=""><a href="{:url('/home/Listn/showList/5')}">通知公告</a></li>
+        <li class=""><a href="{:url('/home/Listn/showList/3')}">资助新闻</a></li>
+        <li class=""><a href="{:url('/home/Listn/showList/6')}">资助政策</a></li>
+    </ul>
+</div>
+
+<!-- 主体内容 S -->
+<div class="main w1000">
+    <!-- 登录 -->
+    <div class="login">
+        <div class="login-title">资助管理系统登录</div>
+        {if condition="!empty($user['member_list_id'])"}
+        <p class="personal_name">欢迎&nbsp;&nbsp;<span>{$user['member_list_nickname']|default=$user['member_list_username']}</span></p>
+        <div class="personal_link">
+            <a class="btn personal_btn" href="{:url('/home/student/examinestatus')}">个人中心</a>
+            <a class="personal_exit" href="{:url('home/Login/logout')}">退出</a>
+        </div>
+        {else /}
+        <form action="{:url('home/Login/runlogin')}" method="post" class="ajaxForm2">
+            <div class="input-item">
+                <label>身份证：</label>
+                <input type="text" name="member_list_username">
+            </div>
+            <div class="input-item">
+                <label>密码：</label>
+                <input type="password" name="member_list_pwd">
+            </div>
+			<!-- <div class="input-item"> -->
+				<!-- <label></label> -->
+                <!-- <a href="{:url('home/login/forgot_pwd')}">忘记密码？</a> -->
+            <!-- </div> -->
+            <input type="submit" value="登录">
+            <div class="login_error"></div>
+        </form>
+        {/if}
+    </div>
+    <!-- 登录 -->
+    <!-- 轮播图 -->
+    <div class="banner">
+        <ul>
+            <li class="active">
+                <a href="">
+                    <img src="{$yf_theme_path}public/images/upload.jpg" alt="">
+                    <span>校园风光</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="/data/upload/2018-01-07/5a51cf82131d7.jpg" alt="">
+                    <span>校园风光</span>
+                </a>
+            </li>
+        </ul>
+        <ol>
+            <li class="active"></li>
+            <li></li>
+        </ol>
+    </div>
+    <!-- 轮播图 -->
+    <!-- 招生新闻 -->
+    <div class="fb-portlet">
+        <div class="fb-portlet-title">
+            <span>资助新闻</span>
+            <a href="/home/Listn/showList/3.html" class="fb-portlet-more fb-transition">更多</a>
+        </div>
+        <ul>
+            {yf:news name="policy" cid="3" field="n_id,news_title,news_content" order="news_time desc" limit="6" /}
+            {volist name="policy" id="vo"}
+            <li>
+                <a href="{:url('home/News/index',array('id'=>$vo['n_id']))}">
+                    <p>{$vo.news_title}</p>
+                    <span>{$vo.news_time||date="Y-m-d",###}</span>
+                </a>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    <!-- 招生新闻 -->
+    <div class="portlet">
+
+        <!-- 联系我们 -->
+        <div class="fb-portlet-about">
+            <div class="fb-portlet-title">
+                <span>联系我们</span>
+            </div>
+            {yf:news name="contact" cid="21" field="n_id,news_title,news_content" order="news_time desc" limit="8" /}
+            {volist name="contact" id="vo"}
+            {$vo.news_content}
+            {/volist}
+        </div>
+        <!-- 联系我们 -->
+
+        <!-- 相关链接 -->
+        <div class="fb-portlet-url">
+            <div class="fb-portlet-title">
+                <span>相关链接</span>
+            </div>
+            <div class="input-item">
+                <label for="">院系速览：</label>
+                <select onchange="mbar(this)" name="select" style="width:120px;height:27px" >
+                    <option selected="selected">----请选择----</option>
+
+                    <option value="http://www.gdaib.edu.cn">学院主页</option>
+
+                    <option value="http://www.gdaib.edu.cn/templets/zsjy/yxjj07.html">计算机系</option>
+
+                    <option value="http://www.gdaib.edu.cn/templets/zsjy/yxjj03.html">热作系</option>
+
+                    <option value="http://www.gdaib.edu.cn/templets/zsjy/yxjj05.html">外语系</option>
+
+                    <option value="http://www.gdaib.edu.cn/templets/zsjy/yxjj06.html">艺术系</option>
+
+                    <option value="http://www.gdaib.edu.cn/templets/zsjy/yxjj01.html">商务系</option>
+
+                    <option value="http://www.gdaib.edu.cn/templets/zsjy/yxjj02.html">管理系</option>
+
+                    <option value="http://www.gdaib.edu.cn/templets/zsjy/yxjj04.html">财经系</option>
+
+                    <option value="http://www.gdaib.edu.cn/templets/zsjy/yxjj08.html">机电系</option>
+
+                    <option value="http://www.gdaib.edu.cn/templets/zsjy/yxjj09.html">国际交流学院</option>
+                </select>
+            </div>
+            <div class="input-item">
+                <label for="">各省招办：</label>
+                <select onchange="mbar(this)" name="select" style="width:120px;height:27px">
+                    <option selected="selected">----请选择----</option>
+
+                    <option value="http://www.eeagd.edu.cn">广东省教育考试院</option>
+
+                    <option value="http://www.gdhed.edu.cn/">广东省教育厅</option>
+
+                </select>
+            </div>
+        </div>
+        <!-- 相关链接 -->
+
+    </div>
+
+    <!-- 招生政策 -->
+    <div class="fb-portlet">
+        <div class="fb-portlet-title">
+            <span>资助政策</span>
+            <a href="{:url('/policy',['id' => '6'])}" class="fb-portlet-more fb-transition">更多</a>
+        </div>
+        <ul>
+            {yf:news name="policy" cid="6" field="n_id,news_title,news_content" order="news_time desc" limit="6" /}
+            {volist name="policy" id="vo"}
+            <li>
+                <a href="{:url('home/News/index',array('id'=>$vo.n_id))}">
+                    <p>{$vo.news_title}</p>
+                    <span>{$vo.news_time||date="Y-m-d",###}</span>
+                </a>
+            </li>
+            {/volist}
+            <!--<li><a href="{:url('/policy_details')}"><p>广东省家庭经济困难学生认定工作指导意见</p><span>2017-09-05</span></a></li>-->
+            <!--<li><a href="{:url('/policy_details')}"><p>关于印发学生勤工助学管理办法（试行）的通知</p><span>2017-09-05</span></a></li>-->
+            <!--<li><a href="{:url('/policy_details')}"><p>广东省家庭经济困难学生认定工作指导意见</p><span>2017-09-05</span></a></li>-->
+            <!--<li><a href=""><p>关于印发学生勤工助学管理办法（试行）的通知</p><span>2017-09-05</span></a></li>-->
+            <!--<li><a href=""><p>广东省家庭经济困难学生认定工作指导意见</p><span>2017-09-05</span></a></li>-->
+            <!--<li><a href=""><p>关于印发学生勤工助学管理办法（试行）的通知</p><span>2017-09-05</span></a></li>-->
+        </ul>
+    </div>
+    <!-- 招生政策 -->
+
+    <!-- 通知公告 -->
+    <div class="fb-portlet" style="margin-left: 15px;">
+        <div class="fb-portlet-title">
+            <span>通知公告</span>
+            <a href="{:url('/notice',['id' => '5'])}" class="fb-portlet-more fb-transition">更多</a>
+        </div>
+        <ul>
+            {yf:news name="notice" cid="5" field="n_id,news_title,news_content" order="news_time desc" limit="6" /}
+            {volist name="notice" id="vo"}
+            <li>
+                <a href="{:url('home/News/index',array('id'=>$vo['n_id']))}">
+                    <p>{$vo.news_title}</p>
+                    <span>{$vo.news_time||date="Y-m-d",###}</span>
+                </a>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    <!-- 通知公告 -->
+    <div class="clear"></div>
+    <div class="fb-seamless">
+        <div class="fb-seamless-title">
+            <span>校园风光</span>
+        </div>
+        <div class="fb-seamless-con">
+            <ul>
+                {yf:news name="scenery" cid="22" field="n_id,news_title,news_content,news_img" order="news_time desc" limit="6" /}
+                {volist name="scenery" id="vo"}
+                <li><img src="{$vo.news_img}" alt=""></li>
+                <!--<li><img src="{$yf_theme_path}public/images/2.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/3.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/4.jpg" alt=""></li>-->
+                <!--<li><img src="{$yf_theme_path}public/images/5.jpg" alt=""></li>-->
+                {/volist}
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- 主体内容 E -->
+
+<script>
+
+
+
+    $(function(){
+        var time = null,index=0;
+        $(".banner ol li").on("click",function(){
+            var i = $(this).index();
+            $('.banner ul li').eq(i).fadeIn().siblings("li").fadeOut();
+            $(this).addClass("active").siblings("li").removeClass("active");
+            i = index;
+        })
+        run();
+        function run (){
+            time = setInterval(function(){
+                i = ++index > $(".banner ol li").length-1 ? 0 : index;
+                $('.banner ul li').eq(i).fadeIn().siblings("li").fadeOut();
+                $(".banner ol li").eq(i).addClass("active").siblings("li").removeClass("active");
+                i = index;
+            },1000)
+        }
+        $(".banner").hover(function(){
+            clearInterval(time);
+        },function(){
+            run();
+        });
+        var se_i =  $(".fb-seamless-con li").length;
+        var se_t = null;
+        var se_long = 0;
+        $(".fb-seamless-con ul").append($(".fb-seamless-con ul").html());
+        se_run();
+        function se_run(){
+            se_t = setInterval(function(){
+                se_long += 1;
+                $(".fb-seamless-con ul").css("left",-se_long);
+                if(se_long >= se_i*195){
+                    $(".fb-seamless-con ul").css("left",0);
+                    se_long = 0;
+                }
+            },20)
+        }
+        $(".fb-seamless-con").hover(function(){
+            clearInterval(se_t);
+        },function(){
+            se_run();
+        })
+    })
+    function mbar(sobj){
+        var docurl =sobj.options[sobj.selectedIndex].value;
+        if (docurl != "") {
+            open(docurl,'_blank');
+            sobj.selectedIndex=0;
+            sobj.blur();
+        }
+    }
+</script>
+
+{include file='public/footer'}

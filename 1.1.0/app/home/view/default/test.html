@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="__PUBLIC__/others/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/images/webuploader.css">
+
+<!--引入JS-->
+<script src="__PUBLIC__/others/jquery.min-2.2.1.js"></script>
+<script src="__PUBLIC__/others/bootstrap.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/images/webuploader.js"></script>
+<body>
+<!--{foreach $list as $row}-->
+<!--<form action="{:url('/uploads')}" method="post" enctype="multipart/form-data">-->
+    <!--{foreach $row.cailiao as $k => $r}-->
+    <!--<input type="file" name="{$row.field}|{$r}[]" multiple="multiple">-->
+    <!--{/foreach}-->
+    <!--<input type="submit">-->
+<!--</form>-->
+<!--{/foreach}-->
+
+<!-- Button trigger modal -->
+<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick="asasa()">-->
+    <!--Launch demo modal-->
+<!--</button>-->
+
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+<!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+    <!--<div class="modal-dialog" role="document">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div id="uploader-demo">-->
+    <!--&lt;!&ndash;用来存放item&ndash;&gt;-->
+    <!--<div id="fileList" class="uploader-list"></div>-->
+    <!--<div id="filePicker">选择图片</div>-->
+<!--</div>-->
+
+<!--<link href="__PUBLIC__/ppy/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />-->
+<!--<script src="__PUBLIC__/ppy/js/fileinput.js" type="text/javascript"></script>-->
+<!--<script src="__PUBLIC__/ppy/js/fileinput_locale_zh.js" type="text/javascript"></script>-->
+<!--<div class="form-group" id="pic_list">-->
+    <!--<div class="col-sm-10 col-sm-offset-2" style="padding-top:5px;">-->
+        <!--<input id="file-5" name="pic_all[]" type="file"  class="file"  multiple data-preview-file-type="any" data-upload-url="#" data-preview-file-icon=""><br />-->
+    <!--</div>-->
+<!--</div>-->
+<script>
+
+//            var uploader = WebUploader.create({
+//
+//                // 选完文件后，是否自动上传。
+//                auto: true,
+//
+//                // swf文件路径
+//                swf:  '__PUBLIC__/js/Uploader.swf',
+//
+//                // 文件接收服务端。
+//                server: 'uploads',
+//
+//                // 选择文件的按钮。可选。
+//                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+//                pick: '#filePicker',
+//
+//                // 只允许选择图片文件。
+//                accept: {
+//                    title: 'Images',
+//                    extensions: 'gif,jpg,jpeg,bmp,png',
+//                    mimeTypes: 'image/*'
+//                },
+//            });
+//            $list = $("#fileList");
+//            uploader.on( 'fileQueued', function( file ) {
+//                var $li = $(
+//                        '<div id="' + file.id + '" class="file-item thumbnail">' +
+//                        '<div class="info">' + file.name + '</div>' +
+//                        '</div>'
+//                    ),
+//                    $img = $li.find('img');
+//                // $list为容器jQuery实例
+//                $list.append( $li );
+//            });
+//            // 文件上传失败，显示上传出错。
+//            uploader.on( 'uploadError', function( file ) {
+//                var $li = $( '#'+file.id ),
+//                    $error = $li.find('div.error');
+//
+//                // 避免重复创建
+//                if ( !$error.length ) {
+//                    $error = $('<div class="error"></div>').appendTo( $li );
+//                }
+//                $error.text('上传失败');
+//            });
+//
+//
+//
+</script>
+
+<script src="__PUBLIC__/swfupload/swfupload.js"></script>
+
+<script>
+    var swfu = '';
+    function SwapTab2(id) {
+        $("#myform .tabBut").children("li").removeClass("on");
+        $(".tabBut li:eq("+id+")").attr("class", "on");
+        $("#myform .dr_hide").hide();
+        $("#cnt_"+id).show();
+        $("#myform #page").val(id);
+        $("#is_down").attr('checked', false);
+        if (id == 1) {
+            $("#is_down").attr('checked', true);
+        }
+    }
+    $(document).ready(function(){
+        SwapTab2(0);
+        swfu = new SWFUpload({
+            flash_url:"__PUBLIC__/swfupload/swfupload.swf?"+Math.random(),
+            upload_url:"uploads",
+            file_post_name : "Filedata",
+            post_params:{"session":"6931u3nZrn9GUYcPX+vZ3EGRyITEXa8P8BZ6Bt4G", "code":"6a01P1KJJV5+Uf/bS1/su7gpWA+l5LRdpWYry5sbS5EYscDtgQ", "fileid":"", "siteid":"1", "path":""},
+            file_size_limit:"102398976",
+            file_types:"*.*",
+            file_types_description:"All Files",
+            file_upload_limit:"99993",
+            custom_settings : {progressTarget : "fsUploadProgress",cancelButtonId : "btnCancel"},
+
+            button_image_url: "__PUBLIC__/swfupload/images/off.png",
+            button_width: 75,
+            button_height: 28,
+            button_placeholder_id: "buttonPlaceHolder",
+            button_text_style: "",
+            button_text_top_padding: 3,
+            button_text_left_padding: 12,
+            button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+            button_cursor: SWFUpload.CURSOR.HAND,
+
+//            file_dialog_start_handler : fileDialogStart,
+//            file_queued_handler : fileQueued,
+//            file_queue_error_handler:fileQueueError,
+//            file_dialog_complete_handler:fileDialogComplete,
+//            upload_progress_handler:uploadProgress,
+//            upload_error_handler:uploadError,
+//            upload_success_handler:uploadSuccess,
+//            upload_complete_handler:uploadComplete
+        });
+    })
+</script>
+</head>
+<body style=";font-size: 12px;">
+<div class="pad-10">
+    <div class="table-list col-tab" id="myform">
+        <ul class="tabBut cu-li">
+            <li onclick="SwapTab2(0);" class="on">上传文件</li>
+
+        </ul>
+        <div class="content pad-10" style="clear:both">
+            <div id="cnt_0" style="display:block" class="dr_hide">
+                <div>
+                    <div class="addnew" id="addnew">
+                        <span id="buttonPlaceHolder"></span>
+                    </div>
+                    <input type="button" id="btupload" value="开始上传" onClick="swfu.startUpload();" />
+                    <div id="nameTip" class="onShow">最多上传 <font color=red>99993</font> 个文件,单文件最大 <font color=red>99999</font> MB</div>
+                    <div class="bk3"></div>
+                    <div class="lh24">文件格式：*</div>
+                </div>
+                <div class="bk10"></div>
+                <fieldset class="blue pad-10" id="swfupload">
+                    <legend>文件列表</legend>
+                    <ul class="attachment-list" id="fsUploadProgress">
+                    </ul>
+                </fieldset>
+            </div>
+
+        </div>
+        <div id="att-status" class="hidden"></div>
+        <div id="att-status-del" class="hidden"></div>
+        <!-- swf -->
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+//    if ($.browser.mozilla) {
+//        window.onload=function(){
+//            if (location.href.indexOf("&rand=")<0) {
+//                location.href=location.href+"&rand="+Math.random();
+//            }
+//        }
+//    }
+    function imgWrap(obj){
+        $(obj).hasClass('on') ? $(obj).removeClass("on") : $(obj).addClass("on");
+    }
+
+    function addonlinefile(obj) {
+        var strs = $(obj).val() ? '|'+ $(obj).val()+',/statics/admin/images/ext/url.gif' : '';
+        $('#att-status').html(strs);
+    }
+    function dr_delete_file(id) {
+        $.post(memberpath+"index.php?s=member&c=api&m=swfdelete&siteid=1", {id: id}, function(data){
+            $('#notused_'+id).remove();
+        });
+        return;
+    }
+    function change_params(){
+        if($('#watermark_enable').attr('checked')) {
+            swfu.addPostParam('watermark_enable', '1');
+        } else {
+            swfu.removePostParam('watermark_enable');
+        }
+    }
+    function set_iframe(id,src){
+        $("#"+id).attr("src",src);
+    }
+    function album_cancel(id){
+        var obj = $('#a_notused_'+id);
+        var aid = $(obj).children("img").attr("aid");
+        if ($(obj).hasClass('on')){
+            $(obj).attr("class", "off");
+            var imgstr = $("#att-status").html();
+            var length = $("a[class='on']").children("img").length;
+            var strs = '';
+            for (var i=0;i<length;i++){
+                strs += '|'+$("a[class='on']").children("img").eq(i).attr('aid')+','+$("a[class='on']").children("img").eq(i).attr('path')+','+$("a[class='on']").children("img").eq(i).attr('size')+','+$("a[class='on']").children("img").eq(i).attr('title');
+            }
+            $('#att-status').html(strs);
+        } else {
+            var num = $('#att-status').html().split('|').length;
+            var file_upload_limit = '99993';
+            if(num > 99993) {
+                dr_tips("不能选择超过 99993 个文件");
+                return false;
+            }
+            $(obj).attr("class", "on");
+            $('#att-status').append('|'+aid+','+$(obj).children("img").attr("path")+','+$(obj).children("img").attr("size")+','+$(obj).children("img").attr("title"));
+        }
+    }
+    $(function () {
+        $('.loading').each(function () {
+            var src = $(this).attr('load_src');
+            $(this).attr('src', src);
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{include file="public/header/nav_membership_header"}
+
+<!--<div class="nav printHide">
+    <ul class="w1000">
+        <li><a href="{:url('/personal')}">首页</a></li>
+        <li ><a href="{:url('home/workstudy/resume')}">个人信息</a></li>
+        <li><a href="{:url('home/workstudy/list')}">岗位申报</a></li>
+        <li class=" active"><a href="{:url('home/workstudy/showStatusList')}">申报状态</a></li>
+        <li><a href="{:url('/notice')}">公示公告</a></li>
+    </ul>
+</div>-->
+
+<!-- 主体内容 S -->
+<div class="main w1000" style="background:#fff;">
+    <div class="myexam">
+        <table width="800" style="margin:0 auto;border-radio:5px;">
+            <tr class="line-table-height" style="font-size:16px;background:#438EB9;color:#fff;line-height:35px">
+                <td class="k-s-content"  width="40%">申请岗位</td>
+                <td class="k-s-content" >状态</td>
+            </tr>
+            {foreach $list as $row}
+            <tr class="line-table-height">
+                <td class="k-s-content"  width="40%">{$row.job_name}</td>
+                <td class="k-s-content" >{if condition="$row.status==1"}<span class="reviewing">用人部门已通过，学生处待审核!</span>{elseif condition="$row.status==2"}<span class="review-success"><span class="reviewing">学生处已审核。待聘用!</span>{elseif condition="$row.status==3"}<span class="review-success">已聘用!</span>{elseif condition="$row.status==4"}<span class="review-error">未录取，你已被其他部门岗位录取!</span>{else}<span class="review-success">用人部门审核中!</span>{/if}</span></td>
+            </tr>
+            {/foreach}
+        </table>
+    </div>
+
+
+</div>
+<!-- 主体内容 E -->
+
+{include file="public/footer"}

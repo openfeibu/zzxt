@@ -1,0 +1,57 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content">
+<div class="row">
+    <div class="col-xs-12">
+        <div>
+            <form id="leftnav" class="ajaxForm4" name="leftnav" method="post" action="{:url('admin/SetSubsidy/editAll')}" >
+                <!--<input type="hidden" name="checkk" id="checkk" value="1" />&lt;!&ndash;用于判断操作类型&ndash;&gt;-->
+                <table class="table table-bordered table-hover" id="dynamic-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>补助类型</th>
+                            <th>开始时间</th>
+                            <th>结束时间</th>
+							<th>院公示开始时间</th>
+                            <th>院公示结束时间</th>
+							<th>校公示开始时间</th>
+                            <th>校公示结束时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {foreach name="list" item="v"}
+                        <tr>
+                            <td height="28">{$v.id}<input type="hidden" value="{$v.id}" name="id[]"></td>
+                            <td>{$v.subsidy_name}</td>
+                            <td><input type="text" value="{if $v.begin_time}{$v.begin_time|date='Y-m-d',###}{/if}" name="begin_time[]" data-provide="datepicker"></td>
+                            <td><input type="text" value="{if $v.end_time}{$v.end_time|date='Y-m-d',###}{/if}" name="end_time[]" data-provide="datepicker"></td>
+							<td><input type="text" value="{if $v.ypublic_begin_time}{$v.ypublic_begin_time|date='Y-m-d',###}{/if}" name="ypublic_begin_time[]" data-provide="datepicker"></td>
+							<td><input type="text" value="{if $v.ypublic_end_time}{$v.ypublic_end_time|date='Y-m-d',###}{/if}" name="ypublic_end_time[]" data-provide="datepicker"></td>
+							<td><input type="text" value="{if $v.xpublic_begin_time}{$v.xpublic_begin_time|date='Y-m-d',###}{/if}" name="xpublic_begin_time[]" data-provide="datepicker"></td>
+							<td><input type="text" value="{if $v.xpublic_end_time}{$v.xpublic_end_time|date='Y-m-d',###}{/if}" name="xpublic_end_time[]" data-provide="datepicker"></td>
+                        </tr>
+                        {/foreach}
+                        <tr>
+							<td colspan="12" align="center">
+								<button id="submit" type="submit" class="btn btn-purple">修改&nbsp;</button>
+							</td>
+						</tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    function changeTime(obj)
+    {
+        var id = obj.attr('tid');
+        var begin_time = obj.closest('tr').find("input[name='begin_time']").val();
+        var end_time = obj.closest('tr').find("input[name='end_time']").val();
+//        console.log(begin_time)
+        $.post("{:url('/admin/set_subsidy/index')}", {id:id,begin_time:begin_time,end_time:end_time});
+    }
+</script>
+{/block}

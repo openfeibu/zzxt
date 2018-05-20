@@ -1,0 +1,2293 @@
+---------------------------------------------------------------
+[ 2018-04-08T14:56:20+08:00 ] 211.66.88.159 113.103.92.88 GET /
+[ info ] zzxt.gdngs.cn/ [运行时间：0.517346s][吞吐率：1.93req/s] [内存消耗：2,939.02kb] [文件加载：83]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'Index',
+    2 => 'index',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'cookie' => 'PHPSESSID=eg8uch650recit7ip14qhffcd5; yf_logged_user=MehcTfiaYWOpIa3LJ; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/home/Listn/showList/3.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.000651s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002515s ]
+[ info ] [ RUN ] app\home\controller\Index->index[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Index.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home/view/default/home_page\index_front.html [ array (
+  0 => 'lang',
+  1 => 'map_lat',
+  2 => 'map_lng',
+  3 => 'site_name',
+  4 => 'site_host',
+  5 => 'site_tpl',
+  6 => 'site_tpl_m',
+  7 => 'site_logo',
+  8 => 'site_icp',
+  9 => 'site_tongji',
+  10 => 'site_copyright',
+  11 => 'site_co_name',
+  12 => 'site_address',
+  13 => 'site_tel',
+  14 => 'site_admin_email',
+  15 => 'site_qq',
+  16 => 'site_seo_title',
+  17 => 'site_seo_keywords',
+  18 => 'site_seo_description',
+  19 => 'yf_theme_path',
+  20 => 'user',
+  21 => 'is_admin',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.110903s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.052802s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.069882s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] IS NULL) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.019876s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 1) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.011308s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_news' [ RunTime:0.036318s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_news' [ RunTime:0.059939s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (3)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.009522s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (21)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 8) [ RunTime:0.007681s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (6)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.005279s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (5)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.006032s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_img],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (22)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.008343s ]
+[ log ] Cron:clearlog Runat 2018-04-08 14:56:20 Use 0.000432 s
+
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.006035s ]
+---------------------------------------------------------------
+[ 2018-04-08T14:56:31+08:00 ] 211.66.88.159 113.103.92.88 GET /home/student/examinestatus.html
+[ info ] zzxt.gdngs.cn/home/student/examinestatus.html [运行时间：0.651121s][吞吐率：1.54req/s] [内存消耗：3,095.37kb] [文件加载：84]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'Student',
+    2 => 'examineStatus',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/student/examinestatus.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0; yf_logged_user=jwlgHHlXwvBIdJmBywlQJ',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/personal.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.000698s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002935s ]
+[ info ] [ RUN ] app\home\controller\Student->examineStatus[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Student.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home/view/default/student_personal_front\personal_status.html [ array (
+  0 => 'lang',
+  1 => 'map_lat',
+  2 => 'map_lng',
+  3 => 'site_name',
+  4 => 'site_host',
+  5 => 'site_tpl',
+  6 => 'site_tpl_m',
+  7 => 'site_logo',
+  8 => 'site_icp',
+  9 => 'site_tongji',
+  10 => 'site_copyright',
+  11 => 'site_co_name',
+  12 => 'site_address',
+  13 => 'site_tel',
+  14 => 'site_admin_email',
+  15 => 'site_qq',
+  16 => 'site_seo_title',
+  17 => 'site_seo_keywords',
+  18 => 'site_seo_description',
+  19 => 'yf_theme_path',
+  20 => 'user',
+  21 => 'is_admin',
+  22 => 'e_status_name',
+  23 => 'u_status_name',
+  24 => 'm_status_name',
+  25 => 'n_status_name',
+  26 => 'e_status',
+  27 => 'e_class',
+  28 => 'w_status',
+  29 => 'w_class',
+  30 => 'u_status',
+  31 => 'u_class',
+  32 => 'n_status',
+  33 => 'n_class',
+  34 => 'm_status',
+  35 => 'm_class',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003590s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000184s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.006351s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.010926s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.007161s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.007895s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8916') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.014770s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.036511s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.057803s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.010211s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_status' [ RunTime:0.028348s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_status' [ RunTime:0.056336s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [status] FROM [yf_evaluation_status] WHERE  (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )  AND [member_list_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.009822s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_work_status' [ RunTime:0.030758s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_work_status' [ RunTime:0.071019s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [status] FROM [yf_work_status] WHERE  (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )  AND [user_id] = '20166613115') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.009536s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_apply_scholarships_status' [ RunTime:0.027888s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_apply_scholarships_status' [ RunTime:0.067752s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_apply_scholarships_status] WHERE  [user_id] = '20166613115'  AND (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )  AND [fund_type] = '2') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.008755s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_apply_scholarships_status] WHERE  [user_id] = '20166613115'  AND [fund_type] = '1'  AND (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.007778s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_apply_scholarships_status] WHERE  [user_id] = '20166613115'  AND (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )  AND [fund_type] = '1') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004971s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_apply_scholarships_status] WHERE  [user_id] = '20166613115'  AND [fund_type] = '2'  AND (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005716s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_apply_scholarships_status] WHERE  [user_id] = '20166613115'  AND [fund_type] = '3'  AND (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005139s ]
+---------------------------------------------------------------
+[ 2018-04-08T14:56:33+08:00 ] 211.66.88.159 113.103.92.88 GET /personal.html
+[ info ] zzxt.gdngs.cn/personal.html [运行时间：0.409957s][吞吐率：2.44req/s] [内存消耗：3,078.87kb] [文件加载：84]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'personal',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/personal.html',
+  'cookie' => 'PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0; yf_logged_user=jwlgHHlXwvBIdJmBywlQJ',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/home/student/examinestatus.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.000687s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002437s ]
+[ info ] [ RUN ] app\home\controller\Show->personal[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home/view/default/\evaluation\personal_front.html [ array (
+  0 => 'lang',
+  1 => 'map_lat',
+  2 => 'map_lng',
+  3 => 'site_name',
+  4 => 'site_host',
+  5 => 'site_tpl',
+  6 => 'site_tpl_m',
+  7 => 'site_logo',
+  8 => 'site_icp',
+  9 => 'site_tongji',
+  10 => 'site_copyright',
+  11 => 'site_co_name',
+  12 => 'site_address',
+  13 => 'site_tel',
+  14 => 'site_admin_email',
+  15 => 'site_qq',
+  16 => 'site_seo_title',
+  17 => 'site_seo_keywords',
+  18 => 'site_seo_description',
+  19 => 'yf_theme_path',
+  20 => 'user',
+  21 => 'is_admin',
+  22 => 'user_info',
+  23 => 'pass_status',
+  24 => 'is_eval_app',
+  25 => 'eval_app',
+  26 => 'eval_form',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003575s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000084s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.006669s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.011271s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005717s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005267s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8916') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.006370s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.005455s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.012001s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005064s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_user' [ RunTime:0.025880s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_user' [ RunTime:0.052645s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [id],[studentid],[studentname],[id_number],[gender],[birthday],[political],[nation],[grade],[class],[profession],[admission_date],[department_name],[is_rural_student],[current_grade],[class_name] FROM [yf_user] WHERE  [id_number] = '445121199801252043') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.009479s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_application' [ RunTime:0.027891s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_application' [ RunTime:0.061051s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_application] WHERE  [member_list_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.010047s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_status' [ RunTime:0.005495s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_status' [ RunTime:0.011499s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_status] WHERE  [member_list_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.006799s ]
+---------------------------------------------------------------
+[ 2018-04-08T14:56:43+08:00 ] 211.66.88.159 113.103.92.88 GET /home/login/logout.html
+[ info ] zzxt.gdngs.cn/home/login/logout.html [运行时间：0.163330s][吞吐率：6.12req/s] [内存消耗：2,932.91kb] [文件加载：83]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'login',
+    2 => 'logout',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/login/logout.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0; yf_logged_user=jwlgHHlXwvBIdJmBywlQJ',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/personal.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.000707s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002498s ]
+[ info ] [ RUN ] app\home\controller\Login->logout[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Login.php ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003512s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000084s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.005639s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.011447s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005714s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005685s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8916') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005968s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.006285s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.018201s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8916) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005493s ]
+---------------------------------------------------------------
+[ 2018-04-08T14:56:43+08:00 ] 211.66.88.159 113.103.92.88 GET /
+[ info ] zzxt.gdngs.cn/ [运行时间：0.184389s][吞吐率：5.42req/s] [内存消耗：2,961.75kb] [文件加载：84]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'Index',
+    2 => 'index',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/',
+  'cookie' => 'PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/personal.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.000653s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002278s ]
+[ info ] [ RUN ] app\home\controller\Index->index[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Index.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home/view/default/home_page\index_front.html [ array (
+  0 => 'lang',
+  1 => 'map_lat',
+  2 => 'map_lng',
+  3 => 'site_name',
+  4 => 'site_host',
+  5 => 'site_tpl',
+  6 => 'site_tpl_m',
+  7 => 'site_logo',
+  8 => 'site_icp',
+  9 => 'site_tongji',
+  10 => 'site_copyright',
+  11 => 'site_co_name',
+  12 => 'site_address',
+  13 => 'site_tel',
+  14 => 'site_admin_email',
+  15 => 'site_qq',
+  16 => 'site_seo_title',
+  17 => 'site_seo_keywords',
+  18 => 'site_seo_description',
+  19 => 'yf_theme_path',
+  20 => 'user',
+  21 => 'is_admin',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003437s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000079s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.006743s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.011200s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] IS NULL) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005900s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_news' [ RunTime:0.006186s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_news' [ RunTime:0.011057s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (3)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.005501s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (21)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 8) [ RunTime:0.005576s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (6)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.005611s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (5)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.005960s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_img],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (22)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.005422s ]
+---------------------------------------------------------------
+[ 2018-04-08T14:57:02+08:00 ] 211.66.88.159 113.103.92.88 POST /home/login/runlogin.html
+[ info ] zzxt.gdngs.cn/home/login/runlogin.html [运行时间：0.540460s][吞吐率：1.85req/s] [内存消耗：6,187.95kb] [文件加载：110]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'login',
+    2 => 'runlogin',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/login/runlogin.html',
+  'content-length' => '62',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zzxt.gdngs.cn',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+  'member_list_username' => '441827199609218729',
+  'member_list_pwd' => '218729',
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.168304s ]
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002479s ]
+[ info ] [ RUN ] app\home\controller\Login->runlogin[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Login.php ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003016s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000081s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_web_log' [ RunTime:0.033261s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_web_log' [ RunTime:0.062612s ]
+[ sql ] [ SQL ] INSERT INTO [yf_web_log] ([uid] , [ip] , [location] , [os] , [browser] , [url] , [module] , [controller] , [action] , [method] , [data] , [otime]) VALUES (0 , '113.103.92.88' , '中国 广东 广州 ' , 'Mac' , 'Chrome(65.0.3325.181)' , '/home/login/runlogin.html' , 'home' , 'Login' , 'runlogin' , 'Ajax' , 's:12:"保密数据";' , 1523170622) [ RunTime:0.016974s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.005880s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.012856s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] IS NULL) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005062s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [id_number] = '441827199609218729') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.007816s ]
+[ sql ] [ SQL ] INSERT INTO [yf_member_list] ([member_list_username] , [member_list_nickname] , [member_list_salt] , [member_list_pwd] , [member_list_groupid] , [member_list_open] , [member_list_addtime] , [user_status] , [id_number]) VALUES ('20166613140' , '陈桂茵' , 'eJezuKzGXE' , 'cd9c606da72f42b59c3fdc1ac755200b' , 1 , 1 , 1523170622 , 1 , '441827199609218729') [ RunTime:0.008499s ]
+[ sql ] [ SQL ] UPDATE [yf_member_list] SET [last_login_time]=1523170622,[last_login_ip]='113.103.92.88' FROM [yf_member_list]   WHERE  [member_list_id] = 8927 [ RunTime:0.007692s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_user' [ RunTime:0.006068s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_user' [ RunTime:0.011050s ]
+[ sql ] [ SQL ] INSERT INTO [yf_user] ([studentid] , [studentname] , [id_number] , [gender] , [birthday] , [political] , [nation] , [grade] , [class] , [profession] , [admission_date] , [department_name] , [is_rural_student] , [faculty_number] , [profession_number] , [class_number] , [class_name] , [current_grade]) VALUES ('20166613140' , '陈桂茵' , '441827199609218729' , '女' , '19960921' , '共青团员' , '汉族' , '' , '' , '商务英语' , '20160901' , '外语学院' , '' , '6' , '613' , '20166131' , '商务英语1' , '2016') [ RunTime:0.009109s ]
+---------------------------------------------------------------
+[ 2018-04-08T14:57:02+08:00 ] 211.66.88.159 113.103.92.88 GET /
+[ info ] zzxt.gdngs.cn/ [运行时间：0.248526s][吞吐率：4.02req/s] [内存消耗：2,956.65kb] [文件加载：83]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'Index',
+    2 => 'index',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/',
+  'cookie' => 'PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.000656s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002646s ]
+[ info ] [ RUN ] app\home\controller\Index->index[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Index.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home/view/default/home_page\index_front.html [ array (
+  0 => 'lang',
+  1 => 'map_lat',
+  2 => 'map_lng',
+  3 => 'site_name',
+  4 => 'site_host',
+  5 => 'site_tpl',
+  6 => 'site_tpl_m',
+  7 => 'site_logo',
+  8 => 'site_icp',
+  9 => 'site_tongji',
+  10 => 'site_copyright',
+  11 => 'site_co_name',
+  12 => 'site_address',
+  13 => 'site_tel',
+  14 => 'site_admin_email',
+  15 => 'site_qq',
+  16 => 'site_seo_title',
+  17 => 'site_seo_keywords',
+  18 => 'site_seo_description',
+  19 => 'yf_theme_path',
+  20 => 'user',
+  21 => 'is_admin',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003617s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000084s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.006209s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.011443s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005641s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005586s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.010056s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.006493s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.011317s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005329s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_news' [ RunTime:0.006085s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_news' [ RunTime:0.010853s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (3)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.006376s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (21)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 8) [ RunTime:0.006229s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (6)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.005426s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (5)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.005679s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_img],[news_time] FROM [yf_news] [a] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (22)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.005584s ]
+---------------------------------------------------------------
+[ 2018-04-08T14:57:06+08:00 ] 211.66.88.159 113.103.92.88 GET /home/student/examinestatus.html
+[ info ] zzxt.gdngs.cn/home/student/examinestatus.html [运行时间：0.311640s][吞吐率：3.21req/s] [内存消耗：3,092.47kb] [文件加载：84]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'Student',
+    2 => 'examineStatus',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/student/examinestatus.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.000664s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002434s ]
+[ info ] [ RUN ] app\home\controller\Student->examineStatus[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Student.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home/view/default/student_personal_front\personal_status.html [ array (
+  0 => 'lang',
+  1 => 'map_lat',
+  2 => 'map_lng',
+  3 => 'site_name',
+  4 => 'site_host',
+  5 => 'site_tpl',
+  6 => 'site_tpl_m',
+  7 => 'site_logo',
+  8 => 'site_icp',
+  9 => 'site_tongji',
+  10 => 'site_copyright',
+  11 => 'site_co_name',
+  12 => 'site_address',
+  13 => 'site_tel',
+  14 => 'site_admin_email',
+  15 => 'site_qq',
+  16 => 'site_seo_title',
+  17 => 'site_seo_keywords',
+  18 => 'site_seo_description',
+  19 => 'yf_theme_path',
+  20 => 'user',
+  21 => 'is_admin',
+  22 => 'e_status_name',
+  23 => 'u_status_name',
+  24 => 'm_status_name',
+  25 => 'n_status_name',
+  26 => 'e_status',
+  27 => 'e_class',
+  28 => 'w_status',
+  29 => 'w_class',
+  30 => 'u_status',
+  31 => 'u_class',
+  32 => 'n_status',
+  33 => 'n_class',
+  34 => 'm_status',
+  35 => 'm_class',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003706s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000084s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.006268s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.013853s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005394s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005737s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005551s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.006161s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.011868s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005040s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_status' [ RunTime:0.005179s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_status' [ RunTime:0.012007s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [status] FROM [yf_evaluation_status] WHERE  (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )  AND [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005940s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_work_status' [ RunTime:0.006126s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_work_status' [ RunTime:0.011601s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [status] FROM [yf_work_status] WHERE  (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )  AND [user_id] = '20166613140') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005141s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_apply_scholarships_status' [ RunTime:0.005429s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_apply_scholarships_status' [ RunTime:0.010735s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_apply_scholarships_status] WHERE  [user_id] = '20166613140'  AND (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )  AND [fund_type] = '2') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.006534s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_apply_scholarships_status] WHERE  [user_id] = '20166613140'  AND [fund_type] = '1'  AND (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005803s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_apply_scholarships_status] WHERE  [user_id] = '20166613140'  AND (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )  AND [fund_type] = '1') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005986s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_apply_scholarships_status] WHERE  [user_id] = '20166613140'  AND [fund_type] = '2'  AND (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005345s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_apply_scholarships_status] WHERE  [user_id] = '20166613140'  AND [fund_type] = '3'  AND (  CONVERT(VARCHAR(4),DATEADD(S,create_at + 8 * 3600,'1970-01-01 00:00:00'),20) = 2018 )) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005304s ]
+---------------------------------------------------------------
+[ 2018-04-08T14:57:07+08:00 ] 211.66.88.159 113.103.92.88 GET /personal.html
+[ info ] zzxt.gdngs.cn/personal.html [运行时间：0.262077s][吞吐率：3.82req/s] [内存消耗：3,075.20kb] [文件加载：84]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'personal',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/personal.html',
+  'cookie' => 'PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/home/student/examinestatus.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.000699s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002433s ]
+[ info ] [ RUN ] app\home\controller\Show->personal[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home/view/default/\evaluation\personal_front.html [ array (
+  0 => 'lang',
+  1 => 'map_lat',
+  2 => 'map_lng',
+  3 => 'site_name',
+  4 => 'site_host',
+  5 => 'site_tpl',
+  6 => 'site_tpl_m',
+  7 => 'site_logo',
+  8 => 'site_icp',
+  9 => 'site_tongji',
+  10 => 'site_copyright',
+  11 => 'site_co_name',
+  12 => 'site_address',
+  13 => 'site_tel',
+  14 => 'site_admin_email',
+  15 => 'site_qq',
+  16 => 'site_seo_title',
+  17 => 'site_seo_keywords',
+  18 => 'site_seo_description',
+  19 => 'yf_theme_path',
+  20 => 'user',
+  21 => 'is_admin',
+  22 => 'user_info',
+  23 => 'pass_status',
+  24 => 'is_eval_app',
+  25 => 'eval_app',
+  26 => 'eval_form',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003407s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000084s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.005751s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.010970s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005038s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005151s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005696s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.006280s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.012147s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005140s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_user' [ RunTime:0.005354s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_user' [ RunTime:0.010596s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [id],[studentid],[studentname],[id_number],[gender],[birthday],[political],[nation],[grade],[class],[profession],[admission_date],[department_name],[is_rural_student],[current_grade],[class_name] FROM [yf_user] WHERE  [id_number] = '441827199609218729') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005730s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_application' [ RunTime:0.006189s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_application' [ RunTime:0.011889s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_application] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005384s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_status' [ RunTime:0.005239s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_status' [ RunTime:0.010829s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_status] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005637s ]
+---------------------------------------------------------------
+[ 2018-04-08T15:19:02+08:00 ] 211.66.88.159 113.103.92.88 POST /home/show/evaluation_application.html
+[ info ] zzxt.gdngs.cn/home/show/evaluation_application.html [运行时间：1.062339s][吞吐率：0.94req/s] [内存消耗：6,153.44kb] [文件加载：109]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'evaluation_application',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/show/evaluation_application.html',
+  'content-length' => '1524',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/personal.html',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zzxt.gdngs.cn',
+  'accept' => '*/*',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+  'suffering' => '0',
+  'residence_address' => '1',
+  'zip_code' => '',
+  'number' => '2',
+  'school_population' => '2',
+  'population' => '2',
+  'housing_situation' => '0',
+  'housing_situation_other' => '',
+  'car_situation' => '0',
+  'mini_living' => '1',
+  'martyrs_children' => '1',
+  'poor_children' => '1',
+  'members' => 
+  array (
+    'name' => 
+    array (
+      0 => 'a',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'age' => 
+    array (
+      0 => '45',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'relationship' => 
+    array (
+      0 => '1',
+      1 => '1',
+      2 => '1',
+      3 => '1',
+      4 => '1',
+    ),
+    'unit' => 
+    array (
+      0 => '1',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'career' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+    'culture' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+    'income' => 
+    array (
+      0 => '111',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'handicap' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+    'health' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+  ),
+  'income_source' => '',
+  'funded' => '',
+  'natural_disasters' => '',
+  'unexpected_events' => '',
+  'debt' => '',
+  'other' => '',
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.216991s ]
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002837s ]
+[ info ] [ RUN ] app\home\controller\Show->evaluation_application[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.050792s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_web_log' [ RunTime:0.035432s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_web_log' [ RunTime:0.058213s ]
+[ sql ] [ SQL ] INSERT INTO [yf_web_log] ([uid] , [ip] , [location] , [os] , [browser] , [url] , [module] , [controller] , [action] , [method] , [data] , [otime]) VALUES (8927 , '113.103.92.88' , '中国 广东 广州 ' , 'Mac' , 'Chrome(65.0.3325.181)' , '/home/show/evaluation_application.html' , 'home' , 'Show' , 'evaluation_application' , 'Ajax' , 'a:19:{s:9:"suffering";s:1:"0";s:17:"residence_address";s:1:"1";s:8:"zip_code";s:0:"";s:6:"number";s:1:"2";s:17:"school_population";s:1:"2";s:10:"population";s:1:"2";s:17:"housing_situation";s:1:"0";s:23:"housing_situation_other";s:0:"";s:13:"car_situation";s:1:"0";s:11:"mini_living";s:1:"1";s:16:"martyrs_children";s:1:"1";s:13:"poor_children";s:1:"1";s:7:"members";a:9:{s:4:"name";a:5:{i:0;s:1:"a";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:3:"age";a:5:{i:0;s:2:"45";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:12:"relationship";a:5:{i:0;s:1:"1";i:1;s:1:"1";i:2;s:1:"1";i:3;s:1:"1";i:4;s:1:"1";}s:4:"unit";a:5:{i:0;s:1:"1";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:6:"career";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:7:"culture";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:6:"income";a:5:{i:0;s:3:"111";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:8:"handicap";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:6:"health";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}}s:13:"income_source";s:0:"";s:6:"funded";s:0:"";s:17:"natural_disasters";s:0:"";s:17:"unexpected_events";s:0:"";s:4:"debt";s:0:"";s:5:"other";s:0:"";}' , 1523171941) [ RunTime:0.023263s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.041238s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.089661s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.007822s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.008341s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.013148s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.031110s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.083489s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.031055s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_user' [ RunTime:0.025178s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_user' [ RunTime:0.062134s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [id],[studentid],[studentname],[id_number],[gender],[birthday],[political],[nation],[grade],[class],[profession],[admission_date],[department_name],[is_rural_student],[current_grade],[class_name] FROM [yf_user] WHERE  [id_number] = '441827199609218729') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.007703s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_set_subsidy' [ RunTime:0.026574s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_set_subsidy' [ RunTime:0.060333s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_set_subsidy] WHERE  [id] = 5) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.013478s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_application' [ RunTime:0.026865s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_application' [ RunTime:0.075156s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_application] WHERE  [member_list_id] = 8927  AND [times] = 1504800000) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.013726s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_status' [ RunTime:0.034623s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_status' [ RunTime:0.055558s ]
+[ error ] [10501]SQLSTATE[42S22]: [Microsoft][ODBC Driver 11 for SQL Server][SQL Server]列名 'times' 无效。[D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\library\think\db\Connection.php:388]
+---------------------------------------------------------------
+[ 2018-04-08T15:19:31+08:00 ] 211.66.88.159 113.103.92.88 POST /home/show/evaluation_application.html
+[ info ] zzxt.gdngs.cn/home/show/evaluation_application.html [运行时间：0.327663s][吞吐率：3.05req/s] [内存消耗：6,153.42kb] [文件加载：109]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'evaluation_application',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/show/evaluation_application.html',
+  'content-length' => '1524',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/personal.html',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zzxt.gdngs.cn',
+  'accept' => '*/*',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+  'suffering' => '0',
+  'residence_address' => '1',
+  'zip_code' => '',
+  'number' => '2',
+  'school_population' => '2',
+  'population' => '2',
+  'housing_situation' => '0',
+  'housing_situation_other' => '',
+  'car_situation' => '0',
+  'mini_living' => '1',
+  'martyrs_children' => '1',
+  'poor_children' => '1',
+  'members' => 
+  array (
+    'name' => 
+    array (
+      0 => 'a',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'age' => 
+    array (
+      0 => '45',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'relationship' => 
+    array (
+      0 => '1',
+      1 => '1',
+      2 => '1',
+      3 => '1',
+      4 => '1',
+    ),
+    'unit' => 
+    array (
+      0 => '1',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'career' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+    'culture' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+    'income' => 
+    array (
+      0 => '111',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'handicap' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+    'health' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+  ),
+  'income_source' => '',
+  'funded' => '',
+  'natural_disasters' => '',
+  'unexpected_events' => '',
+  'debt' => '',
+  'other' => '',
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.066668s ]
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002417s ]
+[ info ] [ RUN ] app\home\controller\Show->evaluation_application[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000118s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_web_log' [ RunTime:0.005430s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_web_log' [ RunTime:0.009836s ]
+[ sql ] [ SQL ] INSERT INTO [yf_web_log] ([uid] , [ip] , [location] , [os] , [browser] , [url] , [module] , [controller] , [action] , [method] , [data] , [otime]) VALUES (8927 , '113.103.92.88' , '中国 广东 广州 ' , 'Mac' , 'Chrome(65.0.3325.181)' , '/home/show/evaluation_application.html' , 'home' , 'Show' , 'evaluation_application' , 'Ajax' , 'a:19:{s:9:"suffering";s:1:"0";s:17:"residence_address";s:1:"1";s:8:"zip_code";s:0:"";s:6:"number";s:1:"2";s:17:"school_population";s:1:"2";s:10:"population";s:1:"2";s:17:"housing_situation";s:1:"0";s:23:"housing_situation_other";s:0:"";s:13:"car_situation";s:1:"0";s:11:"mini_living";s:1:"1";s:16:"martyrs_children";s:1:"1";s:13:"poor_children";s:1:"1";s:7:"members";a:9:{s:4:"name";a:5:{i:0;s:1:"a";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:3:"age";a:5:{i:0;s:2:"45";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:12:"relationship";a:5:{i:0;s:1:"1";i:1;s:1:"1";i:2;s:1:"1";i:3;s:1:"1";i:4;s:1:"1";}s:4:"unit";a:5:{i:0;s:1:"1";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:6:"career";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:7:"culture";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:6:"income";a:5:{i:0;s:3:"111";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:8:"handicap";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:6:"health";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}}s:13:"income_source";s:0:"";s:6:"funded";s:0:"";s:17:"natural_disasters";s:0:"";s:17:"unexpected_events";s:0:"";s:4:"debt";s:0:"";s:5:"other";s:0:"";}' , 1523171971) [ RunTime:0.005684s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.006121s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.009953s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004252s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004666s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004479s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.004759s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.009433s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.008863s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_user' [ RunTime:0.004853s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_user' [ RunTime:0.009560s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [id],[studentid],[studentname],[id_number],[gender],[birthday],[political],[nation],[grade],[class],[profession],[admission_date],[department_name],[is_rural_student],[current_grade],[class_name] FROM [yf_user] WHERE  [id_number] = '441827199609218729') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005047s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_set_subsidy' [ RunTime:0.004880s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_set_subsidy' [ RunTime:0.010192s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_set_subsidy] WHERE  [id] = 5) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005585s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_application' [ RunTime:0.005176s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_application' [ RunTime:0.010023s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_application] WHERE  [member_list_id] = 8927  AND [times] = 1504800000) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004807s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_status' [ RunTime:0.004505s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_status' [ RunTime:0.010158s ]
+[ error ] [10501]SQLSTATE[42S22]: [Microsoft][ODBC Driver 11 for SQL Server][SQL Server]列名 'times' 无效。[D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\library\think\db\Connection.php:388]
+---------------------------------------------------------------
+[ 2018-04-08T15:21:53+08:00 ] 211.66.88.159 113.103.92.88 POST /home/show/evaluation_application.html
+[ info ] zzxt.gdngs.cn/home/show/evaluation_application.html [运行时间：0.449186s][吞吐率：2.23req/s] [内存消耗：6,150.67kb] [文件加载：107]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'evaluation_application',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/show/evaluation_application.html',
+  'content-length' => '1524',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/personal.html',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zzxt.gdngs.cn',
+  'accept' => '*/*',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+  'suffering' => '0',
+  'residence_address' => '1',
+  'zip_code' => '',
+  'number' => '2',
+  'school_population' => '2',
+  'population' => '2',
+  'housing_situation' => '0',
+  'housing_situation_other' => '',
+  'car_situation' => '0',
+  'mini_living' => '1',
+  'martyrs_children' => '1',
+  'poor_children' => '1',
+  'members' => 
+  array (
+    'name' => 
+    array (
+      0 => 'a',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'age' => 
+    array (
+      0 => '45',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'relationship' => 
+    array (
+      0 => '1',
+      1 => '1',
+      2 => '1',
+      3 => '1',
+      4 => '1',
+    ),
+    'unit' => 
+    array (
+      0 => '1',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'career' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+    'culture' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+    'income' => 
+    array (
+      0 => '111',
+      1 => '',
+      2 => '',
+      3 => '',
+      4 => '',
+    ),
+    'handicap' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+    'health' => 
+    array (
+      0 => '0',
+      1 => '0',
+      2 => '0',
+      3 => '0',
+      4 => '0',
+    ),
+  ),
+  'income_source' => '',
+  'funded' => '',
+  'natural_disasters' => '',
+  'unexpected_events' => '',
+  'debt' => '',
+  'other' => '',
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.126282s ]
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002610s ]
+[ info ] [ RUN ] app\home\controller\Show->evaluation_application[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.002932s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.052230s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_web_log' [ RunTime:0.005587s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_web_log' [ RunTime:0.012230s ]
+[ sql ] [ SQL ] INSERT INTO [yf_web_log] ([uid] , [ip] , [location] , [os] , [browser] , [url] , [module] , [controller] , [action] , [method] , [data] , [otime]) VALUES (8927 , '113.103.92.88' , '中国 广东 广州 ' , 'Mac' , 'Chrome(65.0.3325.181)' , '/home/show/evaluation_application.html' , 'home' , 'Show' , 'evaluation_application' , 'Ajax' , 'a:19:{s:9:"suffering";s:1:"0";s:17:"residence_address";s:1:"1";s:8:"zip_code";s:0:"";s:6:"number";s:1:"2";s:17:"school_population";s:1:"2";s:10:"population";s:1:"2";s:17:"housing_situation";s:1:"0";s:23:"housing_situation_other";s:0:"";s:13:"car_situation";s:1:"0";s:11:"mini_living";s:1:"1";s:16:"martyrs_children";s:1:"1";s:13:"poor_children";s:1:"1";s:7:"members";a:9:{s:4:"name";a:5:{i:0;s:1:"a";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:3:"age";a:5:{i:0;s:2:"45";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:12:"relationship";a:5:{i:0;s:1:"1";i:1;s:1:"1";i:2;s:1:"1";i:3;s:1:"1";i:4;s:1:"1";}s:4:"unit";a:5:{i:0;s:1:"1";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:6:"career";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:7:"culture";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:6:"income";a:5:{i:0;s:3:"111";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:8:"handicap";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:6:"health";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}}s:13:"income_source";s:0:"";s:6:"funded";s:0:"";s:17:"natural_disasters";s:0:"";s:17:"unexpected_events";s:0:"";s:4:"debt";s:0:"";s:5:"other";s:0:"";}' , 1523172112) [ RunTime:0.005786s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.005451s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.011449s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004512s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005234s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005382s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.005598s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.009630s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004799s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_user' [ RunTime:0.006629s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_user' [ RunTime:0.009687s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [id],[studentid],[studentname],[id_number],[gender],[birthday],[political],[nation],[grade],[class],[profession],[admission_date],[department_name],[is_rural_student],[current_grade],[class_name] FROM [yf_user] WHERE  [id_number] = '441827199609218729') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004880s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_set_subsidy' [ RunTime:0.004961s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_set_subsidy' [ RunTime:0.010103s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_set_subsidy] WHERE  [id] = 5) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004896s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_application' [ RunTime:0.005656s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_application' [ RunTime:0.009687s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_application] WHERE  [member_list_id] = 8927  AND [times] = 1504800000) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004826s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_status' [ RunTime:0.005686s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_status' [ RunTime:0.009975s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_status] WHERE  [evaluation_id] IS NULL) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.006421s ]
+[ sql ] [ SQL ] INSERT INTO [yf_evaluation_application] ([population] , [school_population] , [account] , [establish_card] , [special_person] , [mini_living] , [poor_children] , [low_income] , [orphan] , [single_parent] , [martyrs_children] , [disability] , [disability_type] , [disability_type_other] , [disability_grade] , [disability_other] , [suffering] , [residence_address] , [residence_address_situation] , [zip_code] , [number] , [annual_income] , [housing_situation] , [housing_situation_other] , [car_situation] , [income_source] , [funded] , [natural_disasters] , [natural_disasters_type] , [unexpected_events] , [unexpected_events_type] , [debt] , [other] , [housing_other] , [member_list_id] , [members] , [score] , [assess_fraction] , [times]) VALUES (2 , 2 , '1' , '0' , '0' , '1' , '1' , '0' , '0' , '0' , '1' , '0' , '0' , '' , '0' , '' , '0' , '1' , '0' , '' , '2' , '' , '0' , '' , '0' , '' , '' , '' , '0' , '' , '0' , '' , '' , '' , 8927 , 'a:9:{s:4:"name";a:5:{i:0;s:1:"a";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:3:"age";a:5:{i:0;s:2:"45";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:12:"relationship";a:5:{i:0;s:1:"1";i:1;s:1:"1";i:2;s:1:"1";i:3;s:1:"1";i:4;s:1:"1";}s:4:"unit";a:5:{i:0;s:1:"1";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:6:"career";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:7:"culture";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:6:"income";a:5:{i:0;s:3:"111";i:1;s:0:"";i:2;s:0:"";i:3;s:0:"";i:4;s:0:"";}s:8:"handicap";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}s:6:"health";a:5:{i:0;s:1:"0";i:1;s:1:"0";i:2;s:1:"0";i:3;s:1:"0";i:4;s:1:"0";}}' , 0 , '0' , 1504800000) [ RunTime:0.012888s ]
+[ sql ] [ SQL ] INSERT INTO [yf_evaluation_status] ([evaluation_id] , [status] , [member_list_id] , [create_at] , [update_at]) VALUES (56 , '1' , 8927 , 1523172113 , 1523172113) [ RunTime:0.009466s ]
+---------------------------------------------------------------
+[ 2018-04-08T15:21:53+08:00 ] 211.66.88.159 113.103.92.88 GET /material.html
+[ info ] zzxt.gdngs.cn/material.html [运行时间：0.398213s][吞吐率：2.51req/s] [内存消耗：3,120.32kb] [文件加载：84]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'material',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/material.html',
+  'cookie' => 'PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/personal.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.000627s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002325s ]
+[ info ] [ RUN ] app\home\controller\Show->material[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home/view/default/\evaluation\material_front.html [ array (
+  0 => 'lang',
+  1 => 'map_lat',
+  2 => 'map_lng',
+  3 => 'site_name',
+  4 => 'site_host',
+  5 => 'site_tpl',
+  6 => 'site_tpl_m',
+  7 => 'site_logo',
+  8 => 'site_icp',
+  9 => 'site_tongji',
+  10 => 'site_copyright',
+  11 => 'site_co_name',
+  12 => 'site_address',
+  13 => 'site_tel',
+  14 => 'site_admin_email',
+  15 => 'site_qq',
+  16 => 'site_seo_title',
+  17 => 'site_seo_keywords',
+  18 => 'site_seo_description',
+  19 => 'yf_theme_path',
+  20 => 'user',
+  21 => 'is_admin',
+  22 => 'eval_app',
+  23 => 'material',
+  24 => 'material_configs',
+  25 => 'm',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003472s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000080s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.005381s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.009783s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004998s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004972s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005765s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.005286s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.010386s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005262s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_application' [ RunTime:0.005837s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_application' [ RunTime:0.009872s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_application] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.007925s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_material' [ RunTime:0.028108s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_material' [ RunTime:0.058685s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [em].[evaluation_id],[em].[member_list_id],[em].[images],[emc].* FROM [yf_evaluation_material] [em] INNER JOIN [yf_evaluation_material_config] [emc] ON [em].[cid]=[emc].[cid] WHERE  [em].[evaluation_id] = '56') AS thinkphp) AS T1 [ RunTime:0.009642s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_material_config' [ RunTime:0.029198s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_material_config' [ RunTime:0.056447s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY sort asc ,cid asc) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_material_config] WHERE  [is_show] = 1  AND [is_image] = 1) AS thinkphp) AS T1 [ RunTime:0.007681s ]
+---------------------------------------------------------------
+[ 2018-04-08T15:22:03+08:00 ] 211.66.88.159 113.103.92.88 POST /home/show/material_upload.html
+[ info ] zzxt.gdngs.cn/home/show/material_upload.html [运行时间：0.339277s][吞吐率：2.95req/s] [内存消耗：6,117.56kb] [文件加载：107]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'material_upload',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/show/material_upload.html',
+  'content-length' => '51943',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/material.html',
+  'content-type' => 'multipart/form-data; boundary=----WebKitFormBoundaryT8K4HQBQh6WFBfYs',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zzxt.gdngs.cn',
+  'accept' => '*/*',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.103810s ]
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002513s ]
+[ info ] [ RUN ] app\home\controller\Show->material_upload[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.004861s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000084s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_web_log' [ RunTime:0.005846s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_web_log' [ RunTime:0.013431s ]
+[ sql ] [ SQL ] INSERT INTO [yf_web_log] ([uid] , [ip] , [location] , [os] , [browser] , [url] , [module] , [controller] , [action] , [method] , [data] , [otime]) VALUES (8927 , '113.103.92.88' , '中国 广东 广州 ' , 'Mac' , 'Chrome(65.0.3325.181)' , '/home/show/material_upload.html' , 'home' , 'Show' , 'material_upload' , 'Ajax' , 'a:0:{}' , 1523172123) [ RunTime:0.007817s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.005197s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.009889s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004625s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.006369s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004885s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.005770s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.015584s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004982s ]
+---------------------------------------------------------------
+[ 2018-04-08T15:22:08+08:00 ] 211.66.88.159 113.103.92.88 POST /home/show/material_upload.html
+[ info ] zzxt.gdngs.cn/home/show/material_upload.html [运行时间：0.285970s][吞吐率：3.50req/s] [内存消耗：6,117.56kb] [文件加载：107]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'material_upload',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/show/material_upload.html',
+  'content-length' => '51943',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/material.html',
+  'content-type' => 'multipart/form-data; boundary=----WebKitFormBoundarytTEhyaSNPG1sLyGJ',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zzxt.gdngs.cn',
+  'accept' => '*/*',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.068670s ]
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002393s ]
+[ info ] [ RUN ] app\home\controller\Show->material_upload[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003380s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000081s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_web_log' [ RunTime:0.004650s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_web_log' [ RunTime:0.010453s ]
+[ sql ] [ SQL ] INSERT INTO [yf_web_log] ([uid] , [ip] , [location] , [os] , [browser] , [url] , [module] , [controller] , [action] , [method] , [data] , [otime]) VALUES (8927 , '113.103.92.88' , '中国 广东 广州 ' , 'Mac' , 'Chrome(65.0.3325.181)' , '/home/show/material_upload.html' , 'home' , 'Show' , 'material_upload' , 'Ajax' , 'a:0:{}' , 1523172127) [ RunTime:0.005462s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.005440s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.013091s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004774s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005711s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005005s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.006694s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.010074s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004824s ]
+---------------------------------------------------------------
+[ 2018-04-08T15:22:12+08:00 ] 211.66.88.159 113.103.92.88 POST /home/show/material_upload.html
+[ info ] zzxt.gdngs.cn/home/show/material_upload.html [运行时间：0.282160s][吞吐率：3.54req/s] [内存消耗：6,117.56kb] [文件加载：107]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'material_upload',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/show/material_upload.html',
+  'content-length' => '51943',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/material.html',
+  'content-type' => 'multipart/form-data; boundary=----WebKitFormBoundaryqppRBozSwfXHca5U',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zzxt.gdngs.cn',
+  'accept' => '*/*',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.075829s ]
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002495s ]
+[ info ] [ RUN ] app\home\controller\Show->material_upload[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.002812s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000081s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_web_log' [ RunTime:0.005243s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_web_log' [ RunTime:0.009946s ]
+[ sql ] [ SQL ] INSERT INTO [yf_web_log] ([uid] , [ip] , [location] , [os] , [browser] , [url] , [module] , [controller] , [action] , [method] , [data] , [otime]) VALUES (8927 , '113.103.92.88' , '中国 广东 广州 ' , 'Mac' , 'Chrome(65.0.3325.181)' , '/home/show/material_upload.html' , 'home' , 'Show' , 'material_upload' , 'Ajax' , 'a:0:{}' , 1523172132) [ RunTime:0.010876s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.006227s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.009798s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.006482s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005316s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.006190s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.005280s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.009812s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004986s ]
+---------------------------------------------------------------
+[ 2018-04-08T15:22:16+08:00 ] 211.66.88.159 113.103.92.88 POST /home/show/material_upload.html
+[ info ] zzxt.gdngs.cn/home/show/material_upload.html [运行时间：0.281903s][吞吐率：3.55req/s] [内存消耗：6,117.56kb] [文件加载：107]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'material_upload',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/show/material_upload.html',
+  'content-length' => '51943',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/material.html',
+  'content-type' => 'multipart/form-data; boundary=----WebKitFormBoundary1RoPJY7yGF2nbh2D',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'x-requested-with' => 'XMLHttpRequest',
+  'origin' => 'http://zzxt.gdngs.cn',
+  'accept' => '*/*',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.069198s ]
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002524s ]
+[ info ] [ RUN ] app\home\controller\Show->material_upload[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003558s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000088s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_web_log' [ RunTime:0.005074s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_web_log' [ RunTime:0.009845s ]
+[ sql ] [ SQL ] INSERT INTO [yf_web_log] ([uid] , [ip] , [location] , [os] , [browser] , [url] , [module] , [controller] , [action] , [method] , [data] , [otime]) VALUES (8927 , '113.103.92.88' , '中国 广东 广州 ' , 'Mac' , 'Chrome(65.0.3325.181)' , '/home/show/material_upload.html' , 'home' , 'Show' , 'material_upload' , 'Ajax' , 'a:0:{}' , 1523172136) [ RunTime:0.005473s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.005517s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.009658s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004960s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004914s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004945s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.005297s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.010992s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005843s ]
+---------------------------------------------------------------
+[ 2018-04-08T15:22:24+08:00 ] 211.66.88.159 113.103.92.88 POST /home/show/material_post.html
+[ info ] zzxt.gdngs.cn/home/show/material_post.html [运行时间：0.409090s][吞吐率：2.44req/s] [内存消耗：6,233.74kb] [文件加载：109]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'material_post',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/home/show/material_post.html',
+  'content-length' => '220379',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/material.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'content-type' => 'multipart/form-data; boundary=----WebKitFormBoundaryzuE3Vbc8UqwG2FnA',
+  'upgrade-insecure-requests' => '1',
+  'origin' => 'http://zzxt.gdngs.cn',
+  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+  'member_list_headpic_url' => '/public/uploads/20180408\\469c828e69b1b3b3be9b2c804dbd14c5.jpg',
+  'cids' => 
+  array (
+    0 => '41',
+    1 => '42',
+    2 => '43',
+    3 => '1',
+    4 => '2',
+    5 => '3',
+    6 => '4',
+    7 => '5',
+    8 => '6',
+    9 => '7',
+    10 => '8',
+    11 => '9',
+    12 => '10',
+    13 => '11',
+    14 => '12',
+    15 => '13',
+    16 => '14',
+    17 => '15',
+    18 => '16',
+    19 => '17',
+    20 => '18',
+    21 => '19',
+    22 => '20',
+    23 => '21',
+    24 => '22',
+    25 => '23',
+    26 => '24',
+    27 => '25',
+    28 => '26',
+    29 => '27',
+    30 => '28',
+    31 => '29',
+    32 => '30',
+    33 => '33',
+    34 => '34',
+    35 => '35',
+    36 => '38',
+    37 => '39',
+  ),
+  'images' => 
+  array (
+    0 => '/public/uploads/20180408\\e85897e1125f07dc0fa3a4fb7310faf9.jpg',
+    1 => '/public/uploads/20180408\\25f357f21b524173415690ee482c66a0.jpg',
+    2 => '/public/uploads/20180408\\eddbc9e311fbe37ad21b748b1bc74685.jpg',
+    3 => '',
+    4 => '',
+    5 => '',
+    6 => '',
+    7 => '',
+    8 => '',
+    9 => '',
+    10 => '',
+    11 => '',
+    12 => '',
+    13 => '',
+    14 => '',
+    15 => '',
+    16 => '',
+    17 => '',
+    18 => '',
+    19 => '',
+    20 => '',
+    21 => '',
+    22 => '',
+    23 => '',
+    24 => '',
+    25 => '',
+    26 => '',
+    27 => '',
+    28 => '',
+    29 => '',
+    30 => '',
+    31 => '',
+    32 => '',
+    33 => '',
+    34 => '',
+    35 => '',
+    36 => '',
+    37 => '',
+  ),
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.071327s ]
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002479s ]
+[ info ] [ RUN ] app\home\controller\Show->material_post[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003254s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000079s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_web_log' [ RunTime:0.004937s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_web_log' [ RunTime:0.009595s ]
+[ sql ] [ SQL ] INSERT INTO [yf_web_log] ([uid] , [ip] , [location] , [os] , [browser] , [url] , [module] , [controller] , [action] , [method] , [data] , [otime]) VALUES (8927 , '113.103.92.88' , '中国 广东 广州 ' , 'Mac' , 'Chrome(65.0.3325.181)' , '/home/show/material_post.html' , 'home' , 'Show' , 'material_post' , 'POST' , 'a:3:{s:23:"member_list_headpic_url";s:61:"/public/uploads/20180408\469c828e69b1b3b3be9b2c804dbd14c5.jpg";s:4:"cids";a:38:{i:0;s:2:"41";i:1;s:2:"42";i:2;s:2:"43";i:3;s:1:"1";i:4;s:1:"2";i:5;s:1:"3";i:6;s:1:"4";i:7;s:1:"5";i:8;s:1:"6";i:9;s:1:"7";i:10;s:1:"8";i:11;s:1:"9";i:12;s:2:"10";i:13;s:2:"11";i:14;s:2:"12";i:15;s:2:"13";i:16;s:2:"14";i:17;s:2:"15";i:18;s:2:"16";i:19;s:2:"17";i:20;s:2:"18";i:21;s:2:"19";i:22;s:2:"20";i:23;s:2:"21";i:24;s:2:"22";i:25;s:2:"23";i:26;s:2:"24";i:27;s:2:"25";i:28;s:2:"26";i:29;s:2:"27";i:30;s:2:"28";i:31;s:2:"29";i:32;s:2:"30";i:33;s:2:"33";i:34;s:2:"34";i:35;s:2:"35";i:36;s:2:"38";i:37;s:2:"39";}s:6:"images";a:38:{i:0;s:61:"/public/uploads/20180408\e85897e1125f07dc0fa3a4fb7310faf9.jpg";i:1;s:61:"/public/uploads/20180408\25f357f21b524173415690ee482c66a0.jpg";i:2;s:61:"/public/uploads/20180408\eddbc9e311fbe37ad21b748b1bc74685.jpg";i:3;s:0:"";i:4;s:0:"";i:5;s:0:"";i:6;s:0:"";i:7;s:0:"";i:8;s:0:"";i:9;s:0:"";i:10;s:0:"";i:11;s:0:"";i:12;s:0:"";i:13;s:0:"";i:14;s:0:"";i:15;s:0:"";i:16;s:0:"";i:17;s:0:"";i:18;s:0:"";i:19;s:0:"";i:20;s:0:"";i:21;s:0:"";i:22;s:0:"";i:23;s:0:"";i:24;s:0:"";i:25;s:0:"";i:26;s:0:"";i:27;s:0:"";i:28;s:0:"";i:29;s:0:"";i:30;s:0:"";i:31;s:0:"";i:32;s:0:"";i:33;s:0:"";i:34;s:0:"";i:35;s:0:"";i:36;s:0:"";i:37;s:0:"";}}' , 1523172144) [ RunTime:0.007706s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.005407s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.010039s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004404s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005576s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005620s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.005219s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.009983s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004839s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_application' [ RunTime:0.006108s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_application' [ RunTime:0.010200s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_application] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005603s ]
+[ sql ] [ SQL ] UPDATE [yf_member_list] SET [member_list_headpic]='/public/uploads/20180408\469c828e69b1b3b3be9b2c804dbd14c5.jpg' FROM [yf_member_list]   WHERE  [member_list_id] = 8927 [ RunTime:0.006845s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_material' [ RunTime:0.005905s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_material' [ RunTime:0.010186s ]
+[ sql ] [ SQL ] INSERT INTO [yf_evaluation_material] ([evaluation_id] , [cid] , [images] , [member_list_id]) VALUES (56 , 41 , '/public/uploads/20180408\e85897e1125f07dc0fa3a4fb7310faf9.jpg' , 8927) [ RunTime:0.007773s ]
+[ sql ] [ SQL ] INSERT INTO [yf_evaluation_material] ([evaluation_id] , [cid] , [images] , [member_list_id]) VALUES (56 , 42 , '/public/uploads/20180408\25f357f21b524173415690ee482c66a0.jpg' , 8927) [ RunTime:0.005125s ]
+[ sql ] [ SQL ] INSERT INTO [yf_evaluation_material] ([evaluation_id] , [cid] , [images] , [member_list_id]) VALUES (56 , 43 , '/public/uploads/20180408\eddbc9e311fbe37ad21b748b1bc74685.jpg' , 8927) [ RunTime:0.005521s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  max(emc.score) as material_score,[em].[member_list_id] FROM [yf_evaluation_material] [em] INNER JOIN [yf_evaluation_application] [ea] ON [ea].[evaluation_id]=[em].[evaluation_id] INNER JOIN [yf_evaluation_material_config] [emc] ON [em].[cid]=[emc].[cid] WHERE  [em].[evaluation_id] = '56' GROUP BY em.member_list_id) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.011874s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004892s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_material_config' [ RunTime:0.006365s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_material_config' [ RunTime:0.010937s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_material_config] WHERE  [cid] = 40) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.007805s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_material_config] WHERE  [cid] = 40) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004996s ]
+[ sql ] [ SQL ] UPDATE [yf_evaluation_application] SET [assess_fraction]='0',[score]=0 FROM [yf_evaluation_application]   WHERE  [evaluation_id] = 56 [ RunTime:0.006590s ]
+---------------------------------------------------------------
+[ 2018-04-08T15:22:24+08:00 ] 211.66.88.159 113.103.92.88 GET /material.html
+[ info ] zzxt.gdngs.cn/material.html [运行时间：0.265577s][吞吐率：3.77req/s] [内存消耗：3,101.48kb] [文件加载：84]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'home',
+    1 => 'show',
+    2 => 'material',
+  ),
+  'convert' => false,
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/material.html',
+  'cookie' => 'PHPSESSID=vvg9u0atmdbgvisnuqgnjso3s6; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/material.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.000769s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002251s ]
+[ info ] [ RUN ] app\home\controller\Show->material[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Show.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home/view/default/\evaluation\material_front.html [ array (
+  0 => 'lang',
+  1 => 'map_lat',
+  2 => 'map_lng',
+  3 => 'site_name',
+  4 => 'site_host',
+  5 => 'site_tpl',
+  6 => 'site_tpl_m',
+  7 => 'site_logo',
+  8 => 'site_icp',
+  9 => 'site_tongji',
+  10 => 'site_copyright',
+  11 => 'site_co_name',
+  12 => 'site_address',
+  13 => 'site_tel',
+  14 => 'site_admin_email',
+  15 => 'site_qq',
+  16 => 'site_seo_title',
+  17 => 'site_seo_keywords',
+  18 => 'site_seo_description',
+  19 => 'yf_theme_path',
+  20 => 'user',
+  21 => 'is_admin',
+  22 => 'eval_app',
+  23 => 'material',
+  24 => 'material_configs',
+  25 => 'm',
+) ]
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.003447s ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000080s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.005467s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.018604s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004957s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_member_list] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.005094s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [u].*,[m].[member_list_id],[m].[member_list_username],[m].[member_list_province],[m].[member_list_city],[m].[member_list_town],[m].[member_list_nickname],[m].[member_list_headpic] FROM [yf_member_list] [m] INNER JOIN [yf_user] [u] ON [u].[id_number]=[m].[id_number] WHERE  [m].[member_list_id] = '8927') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004802s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.005188s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.009725s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] WHERE  [member_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.004934s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_application' [ RunTime:0.005915s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_application' [ RunTime:0.010503s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_application] WHERE  [member_list_id] = 8927) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.008879s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_material' [ RunTime:0.007696s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_material' [ RunTime:0.010287s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [em].[evaluation_id],[em].[member_list_id],[em].[images],[emc].* FROM [yf_evaluation_material] [em] INNER JOIN [yf_evaluation_material_config] [emc] ON [em].[cid]=[emc].[cid] WHERE  [em].[evaluation_id] = '56') AS thinkphp) AS T1 [ RunTime:0.007170s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_evaluation_material_config' [ RunTime:0.005443s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_evaluation_material_config' [ RunTime:0.010392s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY sort asc ,cid asc) AS ROW_NUMBER FROM (SELECT  * FROM [yf_evaluation_material_config] WHERE  [is_show] = 1  AND [is_image] = 1) AS thinkphp) AS T1 [ RunTime:0.006003s ]

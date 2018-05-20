@@ -1,0 +1,96 @@
+---------------------------------------------------------------
+[ 2018-05-15T21:53:16+08:00 ] 211.66.88.159 183.62.38.253 GET /admin/model/model_list.html
+[ info ] zzxt.gdngs.cn/admin/model/model_list.html [运行时间：1.331244s][吞吐率：0.75req/s] [内存消耗：5,110.38kb] [文件加载：81]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'model',
+    2 => 'model_list',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'x-rewrite-url' => '/admin/model/model_list.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=pq1sjr4cnmslvev0urc273lle4; thinkphp_show_page_trace=0|0',
+  'accept-language' => 'zh-CN,zh;q=0.9,zh-TW;q=0.8,ja;q=0.7',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://zzxt.gdngs.cn/admin/admin/admin_group_list.html',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'host' => 'zzxt.gdngs.cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.001029s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.004537s ]
+[ info ] [ RUN ] app\admin\controller\Model->model_list[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\admin\controller\Model.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/admin\view\model\model_list.html [ array (
+  0 => 'lang',
+  1 => 'menus',
+  2 => 'menus_curr',
+  3 => 'menus_child',
+  4 => 'id_curr',
+  5 => 'admin',
+  6 => 'admin_avatar',
+  7 => 'admin_rule',
+  8 => 'models',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.103778s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_auth_rule' [ RunTime:0.059400s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_auth_rule' [ RunTime:0.082143s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY level desc,sort) AS ROW_NUMBER FROM (SELECT  [id],[level],[sort] FROM [yf_auth_rule] WHERE  [name] = 'admin/Model/model_list') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.012107s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY level desc,sort) AS ROW_NUMBER FROM (SELECT  [id],[pid],[level],[sort] FROM [yf_auth_rule]) AS thinkphp) AS T1 [ RunTime:0.008920s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY level desc,sort) AS ROW_NUMBER FROM (SELECT  [id],[level],[sort] FROM [yf_auth_rule] WHERE  [name] = 'admin/Model/model_list'  AND [status] = 1) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.008538s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [pid] FROM [yf_auth_rule] WHERE  [id] = 207) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.006711s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY [sort]) AS ROW_NUMBER FROM (SELECT  * FROM [yf_auth_rule] WHERE  [status] = 1  AND [pid] = 206) AS thinkphp) AS T1 [ RunTime:0.007195s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_admin' [ RunTime:0.028070s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_admin' [ RunTime:0.060209s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  * FROM [yf_admin] [a] INNER JOIN [yf_auth_group_access] [b] ON [a].[admin_id]=[b].[uid] INNER JOIN [yf_auth_group] [c] ON [b].[group_id]=[c].[id] WHERE  [a].[admin_id] = '1') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.012753s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_news' [ RunTime:0.028022s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_news' [ RunTime:0.083430s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  COUNT(*) AS tp_count FROM [yf_news] WHERE  [news_auto] = '1') AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.010984s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_model' [ RunTime:0.039149s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_model' [ RunTime:0.062520s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY create_time desc) AS ROW_NUMBER FROM (SELECT  * FROM [yf_model]) AS thinkphp) AS T1 [ RunTime:0.007962s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY [sort]) AS ROW_NUMBER FROM (SELECT  * FROM [yf_auth_rule]) AS thinkphp) AS T1 [ RunTime:0.007667s ]
+[ log ] Cron:clearlog Runat 2018-05-15 21:53:16 Use 0.000553 s
+
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.007381s ]

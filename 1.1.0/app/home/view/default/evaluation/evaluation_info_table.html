@@ -1,0 +1,95 @@
+        <table width="800px">
+            <tbody>
+            <tr class="printHide" style="height:30px;">
+                <td colspan="2" style="border-bottom:1px solid #000000;">
+
+                </td>
+                <td colspan="1" style="text-align: right;border-bottom:1px solid #000000;">
+                    <span style="font-size: 13px;color: grey;">广东农工商职业技术学院</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center;font-size: 25px;font-weight: bold;line-height:48px;">
+                    家庭经济困难学生认定申请表
+                </td>
+            </tr>
+
+        </table>
+        <br>
+		<table width="800px" class="k-w-table line_table">
+			<tbody>
+				<tr class="line-table-height">
+					<td class="k-s-content title"  rowspan="4" style="width: 40px;">学生基本情况</td>
+					<td class="k-s-content title" style="text-align: center;width:80px;">姓名</td>
+                    <td colspan="2" class="k-s-content content" style="width:160px;"><input type="text" name="name" value="{$user_info.studentname}" disabled/></td>
+                    <td class="k-s-content title" style="width: 80px;">性别</td>
+                    <td class="k-s-content content" style="width: 80px;"><input type="text" name="sex"  value="{$user_info.gender}" disabled/></td>
+                    <td class="k-s-content title" style="width: 80px;">出生年月</td>
+                    <td class="k-s-content content" style="width: 100px;"><input type="text" name="nation"  value="{$user_info.birthday}" disabled/></td>
+                    <td class="k-s-content title" style="width: 80px;">民族</td>
+                    <td class="k-s-content content" style="width: 100px;"><input type="text" name="nation"  value="{$user_info.nation}" disabled/></td>
+				</tr>
+				<tr class="line-table-height">
+                    <td class="k-s-content title" style="text-align: center;">身份证</td>
+                    <td colspan="2" class="k-s-content content"><input type="text" name="name" value="{$user_info.id_number}" disabled/></td>
+                    <td colspan="2" class="k-s-content title">政治面貌</td>
+                    <td colspan="2" class="k-s-content content">
+                        
+                    </td>
+                    <td class="k-s-content title">家庭人均年收入</td>
+                    <td colspan="2" class="k-s-content content">
+                        <input type="text" name="nation"  value="" style="width:60px;">元
+                    </td>
+                </tr>
+				<tr class="line-table-height">
+					<td class="k-s-content title" style="text-align: center;">院（系）</td>
+					<td colspan="2" class="k-s-content content"><input type="text" name="name" value="{$user_info.department_name}" disabled/></td>
+					<td class="k-s-content title">专业</td>
+                    <td colspan="3" class="k-s-content content"><input type="text" name="sex"  value="{$user_info.class_name}" disabled/></td>
+					 <td class="k-s-content title" style="width: 60px;">年级</td>
+                    <td class="k-s-content content"><input type="text" name="current_grade"  value="{$user_info.current_grade}" disabled/></td>
+				</tr>
+				<tr class="line-table-height">
+					<td class="k-s-content title" style="text-align: center;">班级</td>
+					<td colspan="5" class="k-s-content content"><input type="text" name="department_name" value="{$user_info.department_name}" disabled/></td>
+					<td class="k-s-content title" style="text-align: center;width: 60px; ">联系电话</td>
+                    <td colspan="2" class="k-s-content content"><input type="text" name="number" value="{$eval_app.number}"/></td>
+				</tr>
+				<tr class="line-table-height">
+					<td class="k-s-content title" style="height:400px;">学生陈述申请认定理由</td>
+					<td class="k-s-content content" colspan="9" style="text-align: left;vertical-align:top;">
+						<div>
+							<textarea style="width: 100%;height: 300px;"></textarea>
+							<p>本人承诺以上所填内容真实无误，并予以认可，如不真实，本人愿意承担相应后果。
+							</p>
+							<div style="float: right;">
+                                <div class="level_form">
+                                    <div class="signature">
+                                        <label for="">学生签字：</label>
+                                        <input type="text" value="{$user_info.studentname}" disabled style="text-align:left;">
+                                    </div>
+                                </div>
+                                <div class="level_form">
+                                    <div class="level_time">
+                                        <input type="text" value="" disabled>
+                                        <label for="">年</label>
+                                    </div>
+                                    <div class="level_time">
+                                        <input type="text" value="" disabled>
+                                        <label for="">月</label>
+                                    </div>
+                                    <div class="level_time">
+                                        <input type="text" value="" disabled>
+                                        <label for="">日</label>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="clearfix"></div>
+							</p>
+							<p>注：可另附详细情况说明。</p>
+						</div>
+					</td>
+				</tr>	
+			</tbody>
+		</table>
+        

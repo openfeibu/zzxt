@@ -1,0 +1,130 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content">
+    <div class="row clearfix w1000">
+        <div class="col-md-12 column">
+            <div>
+                <p>学生资助管理系统调查问卷编辑</p>
+            </div>
+            <form class="">
+                {foreach $title as $t}
+                <div class="ques_module">
+                    <div class="ques_b_title">
+                        <input type="text" value="{$t.title}" name="{$t.classification_id}">
+                        <div class="control_btn">
+                            <a class="btn btn-info btn-sm ques_b_add" >添加子类</a>
+                            <a class="btn btn-success btn-sm" onclick='editD($(this))'>点击修改</a>
+                            <a class="btn btn-danger btn-sm ques_b_remove" onclick="delect($(this),'title')">删除本项</a>
+                        </div>
+                    </div>
+                    {foreach $list as $l}
+                    {if condition="$t.classification_id == $l.question_title_id"}
+
+                    <div class="ques_m_title">
+                        <input type="text" value="{$l.question_name}" name="{$l.question_id}">
+                        <div class="control_btn">
+                            选择类型：
+                            <select class="form-control">
+                                <option value="radio" {if condition="!empty($l['question_options']['0'])"} {if condition="$l['question_options']['0']['type']=='radio'"}selected{/if} {/if}>单项选择</option>
+                                <option value="checkbox" {if condition="!empty($l['question_options']['0'])"}  {if condition="$l['question_options']['0']['type']=='checkbox'"}selected{/if}{/if}>多项选择</option>
+                                <option value="text" {if condition="!empty($l['question_options']['0'])"}  {if condition="$l['question_options']['0']['type']=='text'"}selected{/if}{/if}>文本框</option>
+                            </select>
+                            <a class="btn btn-info btn-sm ques_m_add">添加子类</a>
+                            <a class="btn btn-success btn-sm" onclick="editZ($(this))">点击修改</a>
+                            <a class="btn btn-danger btn-sm ques_m_remove" onclick="delect($(this),'topic')">删除本项</a>
+                        </div>
+                        <ul class="ques_m_option">
+                            {if condition="isset($l.question_options) and !empty($l.question_options)"}
+                            {foreach $l.question_options as $k => $qo}
+                            <li>
+                                <input type="text" value="{$qo.text}" name="{$k}">
+                                <div class="control_btn">
+                                    <a class="btn btn-success btn-sm" onclick="editX($(this))">点击修改</a>
+                                    <a class="btn btn-danger btn-sm ques_s_remove" onclick="delect($(this),'option')">删除本项</a>
+                                </div>
+                            </li>
+                            {/foreach}
+                            {/if}
+                        </ul>
+                    </div>
+                    {/if}
+                    {/foreach}
+                </div>
+                {/foreach}
+                <a class="ques_type_add">
+                    <i class="fa fa-plus fa-3x" aria-hidden="true"></i>
+                    <p>点击添加分类</p>
+                </a>
+            </form>
+        </div><!--column/12-->
+    </div><!--row-->
+</div><!--page-content-->
+
+<script>
+    function addZ(obj) {
+        var name = obj.parents(".ques_m_title").find("input").eq(0).attr("name");
+        var value = obj.parents(".ques_m_title").find("input").eq(0).val();
+        console.log(name)
+        $.post("{:url('admin/survey/add')}",{title:name,value:value},function(data){
+            //呃。标题
+            location.reload()
+        })
+    }
+
+    function addX(obj) {
+        var option_name = obj.parents(".ques_m_title").find("input").eq(0).attr("name");
+        var option_value = obj.parents("li").find("input").eq(0).val();
+        var option_type = obj.parents(".ques_m_title").find("select").val();
+        $.post("{:url('admin/survey/add')}",{option_id:option_name,option_value:option_value,option_type:option_type},function(data){
+//            呃。标题
+            location.reload()
+        })
+    }
+    function editZ(obj) {
+        var div_input_name = obj.parents(".ques_m_title").find("input").eq(0).attr("name");
+        var div_input_value = obj.parents(".ques_m_title").find("input").eq(0).val();
+        $.post("{:url('admin/survey/edit')}", {title_id:div_input_name,title_value:div_input_value},function(data){
+            location.reload()
+        })
+    }
+    function editX(obj) {
+        var title_id = obj.parents(".ques_m_title").find("input").eq(0).attr("name");
+        var select_type = obj.parents(".ques_m_title").find("select").val();
+        var option_name = obj.parents("li").find("input").eq(0).attr("name");
+        var option_val = obj.parents("li").find("input").eq(0).val();
+        $.post("{:url('admin/survey/edit')}",{title_name:title_id,select_type:select_type,option_id:option_name,option_val:option_val}, function(data){
+            location.reload()
+        })
+    }
+
+    function editD(obj) {
+        var title_id = obj.parents(".ques_b_title").find("input").eq(0).attr("name");
+        var title_val = obj.parents(".ques_b_title").find("input").eq(0).val();
+        $.post("{:url('admin/survey/edit')}", {first_title:title_id,first_val:title_val}, function (data) {
+            location.reload()
+        })
+    }
+
+
+    function delect(obj,type) {
+        var stirng ="";
+        if (type == "title") {
+            string = {"title_id":obj.parents(".ques_b_title").find("input").eq(0).attr("name")};
+        } else if(type == 'topic') {
+            string = {"topic_id":obj.parents(".ques_m_title").find("input").attr('name')};
+        } else {
+         string = {"topic":obj.parents(".ques_m_title").find("input").eq(0).attr("name"),"option_id":obj.parents("li").find("input").attr('name')};
+        }
+        $.post("{:url('admin/survey/delete')}", string, function(data) {
+            location.reload()
+        })
+    }
+
+    function addD(obj) {
+        var value = obj.parents(".ques_b_title").find("input").eq(0).val()
+        $.post("{:url('admin/survey/add')}",{first_title:value},function(data){
+            location.reload()
+        })
+    }
+</script>
+{/block}

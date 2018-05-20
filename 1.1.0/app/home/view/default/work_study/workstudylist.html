@@ -1,0 +1,39 @@
+{include file="public/header/nav_membership_header"}
+
+<!--<div class="nav printHide">
+    <ul class="w1000">
+        <li><a href="{:url('/personal')}">首页</a></li>
+        <li><a href="{:url('home/workstudy/resume')}">个人信息</a></li>
+        <li class=" active"><a href="{:url('home/workstudy/list')}">岗位申报</a></li>
+        <li><a href="{:url('home/workstudy/showStatusList')}">申报状态</a></li>
+        <li><a href="{:url('/notice')}">公示公告</a></li>
+    </ul>
+</div>-->
+
+<!-- 主体内容 S -->
+<div class="main w1000" style="background:#fff;">
+
+    <div class="myexam">
+        <table width="800" style="margin:0 auto;border-radio:5px;">
+            <tr class="line-table-height" style="font-size:16px;background:#438EB9;color:#fff;line-height:35px">
+                <td class="k-s-content title"  width="20%">岗位</td>
+                <td class="k-s-content title">计划人数</td>
+                <td class="k-s-content title">已报名人数</td>
+                <td class="k-s-content title" >操作</td>
+            </tr>
+            {foreach $list as $row}
+            <tr class="line-table-height">
+                <td class="k-s-content content"  width="40%">{$row.job_name}</td>
+                <td class="k-s-content content">{$row.number}</td>
+                <td class="k-s-content content">{$row.count}</td>
+                <td class="k-s-content content" ><a class="btn" href="{:url('home/WorkStudy/applyJob',['id'=>$row.work_id])}">申请</a></td>
+            </tr>
+            {/foreach}
+        </table>
+    </div>
+
+
+</div>
+<!-- 主体内容 E -->
+
+{include file="public/footer"}

@@ -1,0 +1,80 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content">
+    <!--主题-->
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                添加岗位
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal "  method="post" action="{:url('admin/workstudy/entryExcel',['id'=>$id])}" enctype="multipart/form-data">
+                <input type="hidden" value="{$id}" name="work_apply_id">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 学号： </label>
+                    <div class="col-sm-9">
+                        <input type="text" name="user_id" id="department" placeholder="学号" class="col-xs-10 col-sm-5" />
+                    </div>
+                </div>
+
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info" type="submit">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            保存
+                        </button>
+
+                        &nbsp; &nbsp; &nbsp;
+
+                        <a href="javascript:;" class="file btn btn-default save-flie" id="ffff">选择文件
+                            <input type="file" name="excel" id="entry">
+                        </a>
+
+                        <a href="{$dir}" download="导入模版.xlsx" class="file btn btn-default save-flie" id="ffff">excel模版
+
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div><!-- /.page-content -->
+<script>
+    $("#ffff").change(function(){
+        var u = $("input[name='work_apply_id']").val();
+        var formData = new FormData();
+        var name = $("#entry")[0].files[0];
+        formData.append("excel",name);
+        formData.append("work_id",u);
+        $.ajax({
+            url : "{:url('admin/workstudy/entryExcel',['id'=>$id])}",
+            type : 'POST',
+            data : formData,
+// 告诉jQuery不要去处理发送的数据
+            processData : false,
+// 告诉jQuery不要去设置Content-Type请求头
+            contentType : false,
+            beforeSend:function(){
+                console.log("正在进行，请稍候");
+            },
+            success : function(responseStr) {
+                alert(responseStr.msg)
+                location.reload();
+            },
+            error : function(responseStr) {
+                console.log("error");
+            }
+        });
+    })
+
+
+</script>
+{/block}
+
+
+

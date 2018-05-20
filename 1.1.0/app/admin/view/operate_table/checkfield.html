@@ -1,0 +1,118 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content" xmlns="http://www.w3.org/1999/html">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-select/css/bootstrap-select.min.css">
+    <!--主题-->
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                编辑字段
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-horizontal modelform" name="model_edit" method="post" action="{:url('admin/OperateTable/updateField')}">
+                <!--<input name="model_id" id="model_id" type="hidden" value="" />-->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 字段名：  </label>
+                    <div class="col-sm-10">
+                        <input type="text" name="field" onKeyUp="value=value.replace(/[^\w\.\/]/ig,'')" id="model_name" onblur="auto_pk()" class="col-xs-6 col-sm-6" value="{$row.field}" required/>
+                        <span class="lbl">&nbsp;&nbsp;<span class="red">*</span>必填，标识必须是以字母开头,字母或数字组合</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 名称：  </label>
+                    <div class="col-sm-10">
+                        <input type="text" name="name" id="model_title" value="{$row.name}" class="col-xs-6 col-sm-6" required/>
+                        <span class="lbl">&nbsp;&nbsp;<span class="red">*</span>必填,可以英文和中文</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 选项：  </label>
+                    <div class="col-sm-10">
+                        <textarea name="score"  class="col-xs-6 col-sm-6" required placeholder="选项名字|分数，所需提交的材料（多个材料用|分开）">{$row.score}</textarea>
+                        <span class="lbl"><span class="red">*</span>选项名字|分数，所需提交的材料（多个材料用|分开）</span><br>
+                        <span class="lbl">例如:是|100，扶贫帮扶手册|户口簿|相关证明 </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 字段类型：  </label>
+                    <div class="col-sm-10">
+                        <select name="field_type"  id="field_type" class="col-xs-10 col-sm-5 selector field_type" required>
+                            <option value="">请选择字段类型</option>
+                            <option value="char" {if condition="$row.field_type == 'char'"} selected {/if}>字符型char</option>
+                            <option value="varchar" {if condition="$row.field_type == 'varchar'"} selected {/if}>字符型varchar</option>
+                            <option value="text" {if condition="$row.field_type == 'text'"} selected {/if}>字符型text</option>
+                            <option value="nchar(MAX)" {if condition="$row.field_type == 'nchar(MAX)'"} selected {/if}>字符型nchar(MAX)</option>
+                            <option value="ntext(MAX)" {if condition="$row.field_type == 'ntext(MAX)'"} selected {/if}>字符型ntext(MAX)</option>
+                            <option value="nvarchar(MAX)" {if condition="$row.field_type == 'nvarchar(MAX)'"} selected {/if}>字符型nvarchar(MAX)</option>
+                        </select>
+                        <span class="lbl"><span class="red">*</span>必填,若选择包含（MAX）长度请填写为-1</span>
+                    </div>
+                </div>
+
+                <div id="input_length">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 字段长度：  </label>
+                        <div class="col-sm-10">
+                            <input type="field_length" value="{$row.field_length}" name="field_length" id="field_length" placeholder="输入字段长度" class="col-xs-10 col-sm-5"/><span class="lbl"></span>
+                            <span class="lbl"><span class="red">*</span>必填</span>
+                        </div>
+                    </div>
+                    <div class="space-4 col-xs-12"></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 选项类型：  </label>
+                    <div class="col-sm-10">
+                        <select name="option_type"  id="option_type" class="col-xs-10 col-sm-5 selector field_type" required>
+                            <option value="">请选择选项类型</option>
+                            <option value="text" {if condition="$row.option_type == 'text'"} selected {/if}>文本</option>
+                            <option value="file"{if condition="$row.option_type == 'file'"} selected {/if}>单文件</option>
+                            <option value="select"{if condition="$row.option_type == 'select'"} selected {/if}>选择文本</option>
+                            <option value="checkbox"{if condition="$row.option_type == 'checkbox'"} selected {/if}>复选框</option>
+                            <option value="radio"{if condition="$row.option_type == 'radio'"} selected {/if}>单选框</option>
+                        </select>
+                        <span class="lbl"><span class="red">*</span>必填</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="is_null"> 是否为空： </label>
+                    <div class="col-sm-10" style="padding-top:5px;">
+                        <input name="is_null" id="is_null" value="1" class="ace ace-switch ace-switch-4 btn-flat" type="checkbox"  {if condition="$row.is_null == '是'"} checked{/if}/>
+                        <span class="lbl">&nbsp;&nbsp;默认为空</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right" for="model_status"> 是否启用： </label>
+                    <div class="col-sm-10" style="padding-top:5px;">
+                        <input name="enable" id="model_status" value="1" class="ace ace-switch ace-switch-4 btn-flat" type="checkbox" {if condition="$row.enable ==1 "} checked{/if}/>
+                        <span class="lbl">&nbsp;&nbsp;默认启用</span>
+                    </div>
+                </div>
+
+
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info save-model" type="submit">
+                            <i class="ace-icon fa fa-check bigger-110"></i>
+                            保存
+                        </button>
+
+                        <!--&nbsp; &nbsp; &nbsp;-->
+                        <!--<button class="btn" type="reset">-->
+                            <!--<i class="ace-icon fa fa-undo bigger-110"></i>-->
+                            <!--重置-->
+                        <!--</button>-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{/block}
+

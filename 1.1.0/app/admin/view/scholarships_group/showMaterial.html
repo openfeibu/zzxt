@@ -1,0 +1,93 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="{:url('admin/scholarships_group/showreviewlist')}">国家{php}echo config('application_type.'.$type_id);{/php}班级审核</a>
+            </small>
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                添加评语
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="w800">
+                <table class="table_heading" style="width:100%">
+                    <tr>
+                        <td colspan="2"></td>
+                        <td style="text-align: right"><span style="font-size: 13px;color:grey;">广东农工商职业技术学院</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
+                            普通本科高校、高等职业学校国家{php}echo config('application_type.'.$type_id);{/php}申请表
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-bordered tab_center">
+                    <!--本人情况-->
+                    {if $type_id == 1}
+                    {include file="common/scholar" /}
+                    {else}
+                    {include file="common/grants_inspirational" /}
+					{/if}
+                </table>
+                <form action="{:url('admin/ScholarshipHandle/MultipleGroupFill')}" method="post" id="passingForm" class="passingForm">
+                    <table class="w800">
+                        <!-- <tr>
+                            <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">班级小组添加评语：</p></td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="tab_content">
+                                <textarea name="group_opinion[text]" id="" class="tab_opinion">{$user.group_opinion.text}</textarea>
+                                <div class="tab_sign">
+                                    <label for="">班级小组负责人签名：</label>
+                                    <input type="text" name="group_opinion[name]" value="{$user.group_opinion.name}">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="tab_time">
+                                    <input type="text" name="group_opinion[year]" value="{$user.group_opinion.time|date='Y',###}">年
+                                    <input type="text" name="group_opinion[month]" value="{$user.group_opinion.time|date='n',###}">月
+                                    <input type="text" name="group_opinion[day]" value="{$user.group_opinion.time|date='d',###}">日
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="height: 30px;"></td>
+                        </tr>
+                        <input type="hidden" value="{$user.user_id}" name="user_id">
+                        <input type="hidden" value="{$id}" name="status_id">
+                        <input type="hidden" value="{$type_id}" name="type_id">
+                            <tr>
+                                <td style="width: 266px;"></td>
+                                <td class="tab_content" style="width: 266px;">
+                                    <button type="submit"  class="btn btn-success" name="pass">通过</button>
+                                    <button type="submit" class="btn btn-danger" name="fail" value="1">不通过</button>
+                                </td>
+                                <td style="width: 266px;"></td>
+                            </tr> -->
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{if !in_array($user.check_status,[1])}
+<script>
+$(".passingForm").find("textarea").attr('disabled',true);
+$(".passingForm").find("input").attr('disabled',true);
+$(".passingForm").find("select").attr('disabled',true);
+$(".passingForm").find("button").attr('disabled',true);
+</script>
+{/if}
+{/block}

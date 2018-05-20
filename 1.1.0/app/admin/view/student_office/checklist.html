@@ -1,0 +1,121 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="">岗位考核</a>
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="check_main">
+                <form action="" method="post">
+                    <!--startprint1-->
+                    <table class="table_heading">
+                        <tr>
+                            <td colspan="2"></td>
+                            <td style="text-align: right"><span style="font-size: 13px;color:grey;">广东农工商职业技术学院</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
+                                2017年9月勤工助学岗位考核表
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="">用工单位：</label>
+                                <input type="text" style="width:60%;border-bottom:1px solid #555555;">
+                            </td>
+                            <td></td>
+                            <td>
+                                填表日期：
+                                <input type="text" style="width:15%;border-bottom:1px solid #555555;">年
+                                <input type="text" style="width:15%;border-bottom:1px solid #555555;">月
+                                <input type="text" style="width:15%;border-bottom:1px solid #555555;">日
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered check_tab_body">
+                        <tr>
+                            <td class="tab_title tab_120px">学生姓名</td>
+                            <td class="tab_title tab_120px">学号</td>
+                            <td class="tab_title tab_120px">专业、班级</td>
+                            <td class="tab_title tab_80px">津贴标准（元）</td>
+                            <td class="tab_title tab_50px">工作小时</td>
+                            <td class="tab_title tab_50px">考核情况（优、亮、中、差）</td>
+                            <td class="tab_title tab_80px">实发金额（元）</td>
+                            <td colspan="2" class="tab_title">工作地点和内容</td>
+                        </tr>
+                        <!--主体填写部分-->
+                        <tr>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td class="tab_content"><input type="text"></td>
+                            <td colspan="2" class="tab_content"><input type="text"></td>
+                        </tr>
+                        <!--其他事宜-->
+                        <tr>
+                            <td class="tab_title">津贴合计</td>
+                            <td colspan="8" class="tab_content"><input type="text" style="width:10%;border-bottom:1px solid #555555;">元</td>
+                        </tr>
+                        <tr>
+                            <td class="tab_title">用工部门审核意见</td>
+                            <td colspan="8" class="tab_content">
+                                <textarea name="" id="" class="tab_opinion"></textarea>
+                                <div class="tab_sign">
+                                    <label for="">考核人签名：</label>
+                                    <input type="text">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="tab_time">
+                                    <input type="text">年
+                                    <input type="text">月
+                                    <input type="text">日
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="9" style="padding: 10px;text-align: left;">
+                                <p>备注：</p>
+                                <ul>
+                                    <li>
+                                        <p>1.各用人单位应对在岗勤工助学学生进行考核，对不能胜任工作或不服从管理的学生，用工部门可报学生工作处，经核实后，将终止其参加勤工助学活动。</p>
+                                    </li>
+                                    <li>
+                                        <p>2.津贴标准请根据学院审批的各用工岗位津贴标准填写。</p>
+                                    </li>
+                                    <li>
+                                        <p>3.考核情况为“优”、“良”者，全额发放酬金；考核为“中”，按80%发放，考核为“差”，按70%发放。</p>
+                                    </li>
+                                    <li>
+                                        <p>4.各用工部门于每月20日前填写该表，交学生工作处。</p>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--endprint1-->
+                    <div class="btn_center" style="margin-left: -60px;">
+                        <button type="submit" class="btn btn-info" >提交</button>
+                        <button class="btn btn-danger" onclick="preview(1)">打印</button>
+                    </div>
+                </form>
+            </div>
+        </div><!--column/12-->
+    </div><!--row-->
+</div><!--page-content-->
+
+
+{/block}

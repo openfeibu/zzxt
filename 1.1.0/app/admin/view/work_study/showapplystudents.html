@@ -1,0 +1,110 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content">
+    <!--主题-->
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                {$dir}
+            </small>
+        </h1>
+    </div>
+    <div class="row w1000">
+        <form action="" method="post">
+            <div class="col-xs-12 col-sm-12">
+                <small>是否贫困生：</small>
+                <small>
+                    <select name="is_poor">
+                        <option value="1">默认是</option>
+                        <option value="0">否</option>
+                    </select>
+                </small>
+                <!--系别-->
+                <small>
+                    <select name="faculty" required>
+                        <option value="0">--默认全院--</option>
+                        {foreach name="faculty_list" item="v"}
+                        <option value="{$v.faculty_id}" style="margin-left:55px;">{$v.faculty_name}</option>
+                        {/foreach}
+                    </select>
+                </small>
+                <!--系别end-->
+                <small>性别：</small>
+                <small>
+                    <select name="gender">
+                        <option value="0">--默认男女--</option>
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                    </select>
+                </small>
+
+                <small>
+                    <button class="btn btn-xs btn-info ruleadd">
+                        查询
+                    </button>
+                </small>
+            </div>
+        </form>
+        <div class="space-4"></div>
+        <div class="col-xs-12">
+            <input type="hidden" value="{$id}" name="job_id">
+            <button class="btn btn-default btn-xs" id="allcheckbox">全选</button>
+            <button class="btn btn-default btn-xs" id="quxiao">反选</button>
+            <button class="btn btn-default btn-xs" id="hiring" onclick="hiring('hiring')">批量录取</button>
+            <button class="btn btn-default btn-xs" id="nothiring" onclick="hiring('nothiring')">批量排除</button>
+            <table class="table" style="margin-top:10px;">
+                <tr>
+                    <td>学号</td>
+                    <td>姓名</td>
+                    <td>专业班级</td>
+                    <td>操作</td>
+                </tr>
+                {foreach $list as $row}
+                <tr>
+                    <td><input type="checkbox" value="{$row.user_id}">{$row.user_id}</td>
+                    <td>{$row.studentname}</td>
+                    <td>{$row.class}</td>
+                    <td><span><a href="{:url('admin/workstudy/showStudentResume',['id'=>$row.user_id,'job_id'=>$id])}">查看简历</a></span>
+                        <span><a href="{:url('admin/WorkStudy/hiringById',['id'=>$row.user_id,'job_id'=>$id])}">录用</a></span>
+                        <span><a href="{:url('admin/WorkStudy/nothiring',['id'=>$row.user_id,'job_id'=>$id])}">排除</a></span>
+                    </td>
+                </tr>
+                {/foreach}
+                <tr>
+                    <td>{$list->render()}</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        //全选
+        $("#allcheckbox").click(function(){
+            $("input[type='checkbox']").prop("checked",true);
+        })
+        //反选
+        $("#quxiao").click(function(){
+            $("input[type='checkbox']").prop("checked",false);
+        })
+    })
+    function hiring(type){
+        var array = new Array();
+        $("input[type='checkbox']:checkbox").each(function(){
+            array.push($(this).val())
+        })
+        var job_id = $("input[name='job_id']").val();
+        $.post("{:url('admin/WorkStudy/hiring')}",{data_list:array,job_id:job_id,type:type},function(data){
+            if (data.code=='200') {
+                location.reload()
+            } else if (data.code == '400') {
+                alert("达到报名上限人数")
+                location.reload()
+            }
+        })
+    }
+</script>
+{/block}

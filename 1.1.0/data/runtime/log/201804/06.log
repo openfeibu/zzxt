@@ -1,0 +1,82 @@
+---------------------------------------------------------------
+[ 2018-04-06T01:22:59+08:00 ] 211.66.88.159 185.222.210.29 PROPFIND /
+[ info ] localhost/ [运行时间：0.577669s][吞吐率：1.73req/s] [内存消耗：6,130.41kb] [文件加载：110]
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/lang\zh-cn.php
+[ info ] [ CACHE ] INIT File
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => '',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'localhost',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home\lang\zh-cn.php
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ BEHAVIOR ] Run app\common\behavior\WebLog @module_init [ RunTime:0.039253s ]
+[ info ] [ DB ] INIT sqlsrv
+[ info ] [ BEHAVIOR ] Run Closure @action_begin [ RunTime:0.002396s ]
+[ info ] [ RUN ] app\home\controller\Index->index[ D:\UPUPW_K2.1\htdocs\zzxt\1.0.0\app\home\controller\Index.php ]
+[ info ] [ VIEW ] D:\UPUPW_K2.1\htdocs\zzxt\1.0.0/app/home/view/default/home_page\index_front.html [ array (
+  0 => 'lang',
+  1 => 'map_lat',
+  2 => 'map_lng',
+  3 => 'site_name',
+  4 => 'site_host',
+  5 => 'site_tpl',
+  6 => 'site_tpl_m',
+  7 => 'site_logo',
+  8 => 'site_icp',
+  9 => 'site_tongji',
+  10 => 'site_copyright',
+  11 => 'site_co_name',
+  12 => 'site_address',
+  13 => 'site_tel',
+  14 => 'site_admin_email',
+  15 => 'site_qq',
+  16 => 'site_seo_title',
+  17 => 'site_seo_keywords',
+  18 => 'site_seo_description',
+  19 => 'yf_theme_path',
+  20 => 'user',
+  21 => 'is_admin',
+) ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.108195s ] sqlsrv:Server=139.199.184.111;Database=zzxt
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_member_list' [ RunTime:0.057281s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_member_list' [ RunTime:0.109161s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER FROM (SELECT  [member_list_username],[id_number] FROM [yf_member_list] WHERE  [member_list_id] IS NULL) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 1) [ RunTime:0.008439s ]
+[ sql ] [ SQL ] SELECT   column_name,   data_type,   column_default,   is_nullable
+        FROM    information_schema.tables AS t
+        JOIN    information_schema.columns AS c
+        ON  t.table_catalog = c.table_catalog
+        AND t.table_schema  = c.table_schema
+        AND t.table_name    = c.table_name
+        WHERE   t.table_name = 'yf_news' [ RunTime:0.036657s ]
+[ sql ] [ SQL ] SELECT column_name FROM information_schema.key_column_usage WHERE table_name='yf_news' [ RunTime:0.062561s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] INNER JOIN [yf_member_list] [b] ON [a].[news_auto]=[b].[member_list_id] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (3)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.013781s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] INNER JOIN [yf_member_list] [b] ON [a].[news_auto]=[b].[member_list_id] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (21)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 8) [ RunTime:0.010209s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] INNER JOIN [yf_member_list] [b] ON [a].[news_auto]=[b].[member_list_id] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (6)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.007062s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_time] FROM [yf_news] [a] INNER JOIN [yf_member_list] [b] ON [a].[news_auto]=[b].[member_list_id] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (5)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.005595s ]
+[ sql ] [ SQL ] SELECT T1.* FROM (SELECT thinkphp.*, ROW_NUMBER() OVER ( ORDER BY news_time desc) AS ROW_NUMBER FROM (SELECT  [n_id],[news_title],[news_content],[news_img],[news_time] FROM [yf_news] [a] INNER JOIN [yf_member_list] [b] ON [a].[news_auto]=[b].[member_list_id] WHERE  [news_open] = '1'  AND [news_l] = 'zh-cn'  AND [news_back] = 0  AND [news_columnid] IN (22)) AS thinkphp) AS T1 WHERE (T1.ROW_NUMBER BETWEEN 1 AND 6) [ RunTime:0.011026s ]
+[ log ] Cron:clearlog Runat 2018-04-06 01:22:59 Use 0.000465 s
+
+[ info ] [ BEHAVIOR ] Run app\admin\behavior\Cron @app_end [ RunTime:0.006897s ]

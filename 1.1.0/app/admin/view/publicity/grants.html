@@ -1,0 +1,44 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1 style="display: inline-block;">
+            您当前操作
+            <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>查看国家助学金公示结果
+            </small>
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div >
+                <table class="table_heading" style="width:100%">
+                    <tr>
+                        <td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;line-height: 48px;">
+                            国家助学金结果公示
+                        </td>
+                    </tr>
+                </table>
+                {include file="publicity\yxselect"}
+                {if !isset($list)}
+                公示时间为：{$begin_time|date='Y-n-d',###} —— {$end_time|date='Y-n-d',###}
+                {else}
+				{include file="publicity\select"}
+                <table class="table table-bordered table-hover tab_center">
+                    <thead>
+                    <th>姓名</th>
+                    <th>身份证</th>
+                    <th>班级</th>
+                    <!--<th>公示时间</th>-->
+                    </thead>
+                    <tbody id="ajax-data">
+                    {include file="publicity\common"}
+                    </tbody>
+                </table>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

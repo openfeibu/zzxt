@@ -1,0 +1,98 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="{:url('admin/EvaluFront/E_faculty_review')}">学生家庭经济困难认定</a>
+            </small>
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                添加评语
+            </small>
+            <!--<small>-->
+            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
+            <!--个人简历-->
+            <!--</small>-->
+        </h1>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="w900">
+                {include file="evaluation/student_information_table"}
+                <tr >
+                    <h3 style="text-align:center">佐证材料</h3>
+                </tr>
+                <tr>
+                    <div class="photo">
+                        <ul>
+                            {foreach name="material" item="v"}
+                            <li>
+                                <div class="img">
+                                    <div class="cell"><img src="{$v.images}" alt="{$v.name}"></div>
+                                </div>
+                                <p>{$v.name}</p>
+                            </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </tr>
+                    <!--班级小组评语-->
+                    {if $user.group_opinion}
+                    <tr>
+                        <td colspan="11" class="tab_content disabled">
+                            <p class="tab_left">班级评定小组意见</p>
+                            <textarea class="tab_opinion" disabled>{$user.group_opinion.text}</textarea>
+                            <div class="tab_time">
+                                <input type="text" value="{$user.group_opinion.time|date='Y',###}">年
+                                <input type="text" value="{$user.group_opinion.time|date='n',###}">月
+                                <input type="text" value="{$user.group_opinion.time|date='d',###}">日
+                            </div>
+                        </td>
+                    </tr>
+                    {/if}
+                    {if $user.faculty_opinion}
+                    <tr>
+                        <td colspan="11" class="tab_content disabled">
+                            <p class="tab_left">院系评定小组意见</p>
+                            <textarea class="tab_opinion" disabled>{$user.faculty_opinion.text}</textarea>
+                            <div class="tab_time">
+                                <input type="text" value="{$user.faculty_opinion.time|date='Y',###}">年
+                                <input type="text" value="{$user.faculty_opinion.time|date='n',###}">月
+                                <input type="text" value="{$user.faculty_opinion.time|date='d',###}">日
+                            </div>
+                        </td>
+                    </tr>
+                    {/if}
+                </table>
+                <form action="{:url('admin/EvaluationHandle/studentOffice')}" method="post" id="passingForm" class="passingForm">
+                <table class="w800">
+                    <tr>
+                        <td style="width: 266px;"></td>
+                        <td class="tab_content" style="width: 266px;">
+                            <input type="hidden" name="evaluation_id" value="{$user.evaluation_id}">
+                            <input type="hidden" name="status_id" value="{$status_id}">
+                            <!-- <button type="submit" class="btn btn-success" name="pass">通过</button> -->
+                            <button type="submit" class="btn btn-danger" name="fail" value="1">不通过</button>
+                        </td>
+                        <td style="width: 266px;"></td>
+                    </tr>
+                </table>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+{if $user.evaluation_status == 9}
+<script>
+$("#passingForm").find("textarea").attr('disabled',true);
+$("#passingForm").find("input").attr('disabled',true);
+$("#passingForm").find("select").attr('disabled',true);
+$("#passingForm").find("button").attr('disabled',true);
+</script>
+{/if}
+{/block}

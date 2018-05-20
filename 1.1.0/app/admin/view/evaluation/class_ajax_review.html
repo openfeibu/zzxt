@@ -1,0 +1,14 @@
+{foreach $user as $num => $row}
+<tr>
+    <td>{$row.evaluation_id}</td>
+    {include file="common\evaluation_val"}
+    <td>
+        <div class="audit_opera">
+            <a href="{:url('admin/EvaluationGroup/showEvaluationMaterial',['id'=>$row.status_id])}" class="btn btn-info btn-sm">查看</a>
+        </div>
+    </td>
+</tr>
+{/foreach}
+<tr>
+    <td height="50" colspan="12" align="left">{$page}</td>
+</tr>

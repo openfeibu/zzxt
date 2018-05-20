@@ -1,0 +1,27 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>查看系统公告
+                <i class="ace-icon fa fa-angle-double-right"></i>{$news_title}
+            </small>
+        </h1>
+    </div>
+    <div class="clearfix">
+        <div class="col-md-12">
+            <div class="w1000">
+                <h3 class="text-center">{$news_title}</h3>
+                <p class="text-center">发布时间：{$news_time|date="Y-m-d H:i:s",###}</p>
+                <br>
+                <br>
+                <p>{$content}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}

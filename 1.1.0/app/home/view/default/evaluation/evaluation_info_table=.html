@@ -1,0 +1,257 @@
+        <table width="800px">
+            <tbody>
+            <tr class="printHide" style="height:30px;">
+                <td colspan="2" style="border-bottom:1px solid #000000;">
+
+                </td>
+                <td colspan="1" style="text-align: right;border-bottom:1px solid #000000;">
+                    <span style="font-size: 13px;color: grey;">广东农工商职业技术学院</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center;font-size: 25px;font-weight: bold;line-height:48px;">
+                    家庭经济困难学生认定申请表
+                </td>
+            </tr>
+
+        </table>
+        <br>
+        <table width="800px" class="k-w-table line_table">
+            <tbody>
+                <tr class="line-table-height">
+                    <td class="k-s-content title"  rowspan="3" style="width: 40px;">学生基本情况</td>
+                    <td class="k-s-content title" style="text-align: center;width: 60px; ">院系</td>
+                    <td colspan="2" class="k-s-content content"><input type="text" name="name" value="{$user_info.department_name}" disabled/></td>
+                    <td class="k-s-content title">专业</td>
+                    <td colspan="3" class="k-s-content content"><input type="text" name="sex"  value="{$user_info.class_name}" disabled/></td>
+                    <td class="k-s-content title" style="width: 60px;">年级</td>
+                    <td class="k-s-content content"><input type="text" name="nation"  value="{$user_info.current_grade}" disabled/></td>
+                </tr>
+                <tr class="line-table-height">
+                    <td class="k-s-content title" style="text-align: center;">姓名</td>
+                    <td colspan="2" class="k-s-content content"><input type="text" name="name" value="{$user_info.studentname}" disabled/></td>
+                    <td class="k-s-content title" style="width: 60px;">性别</td>
+                    <td class="k-s-content content" style="width: 60px;"><input type="text" name="sex"  value="{$user_info.gender}" disabled/></td>
+                    <td class="k-s-content title" style="width: 80px;">出生年月</td>
+                    <td class="k-s-content content" style="width: 100px;"><input type="text" name="nation"  value="{$user_info.birthday}" disabled/></td>
+                    <td class="k-s-content title">民族</td>
+                    <td class="k-s-content content"><input type="text" name="nation"  value="{$user_info.nation}" disabled/></td>
+                </tr>
+                <tr class="line-table-height">
+                    <td class="k-s-content title" style="text-align: center;">身份证</td>
+                    <td colspan="2" class="k-s-content content"><input type="text" name="name" value="{$user_info.id_number}" disabled/></td>
+                    <td colspan="2" class="k-s-content title">入学前户口</td>
+                    <td colspan="2" class="k-s-content content">
+                        <div style="display:inline-block;">
+                            <label>
+                                <input type="radio" name="account" style="height:auto;width: auto;margin-right: 5px;"value="0"  {if condition="$user_info.is_rural_student=='否'"} checked {/if} disabled/>城镇
+                            </label>
+                        </div>
+                        <div style="display:inline-block;">
+                            <label>
+                                <input type="radio" name="account" style="height:auto;width: auto;margin-right: 5px;"value="1"  {if condition="$user_info.is_rural_student=='是'"} checked {/if} disabled/>农村
+                            </label>
+                        </div>
+                    </td>
+                    <td class="k-s-content title">健康</td>
+                    <td colspan="2" class="k-s-content content">
+                        <div style="display:inline-block;">
+                            <label>
+                                <input type="radio" name="suffering" style="height:auto;width: auto;margin-right: 5px;" value="1" {if $eval_app.suffering == 1}checked{/if}/>
+                            </label>
+                        </div>
+                        <div style="display:inline-block;">
+                            <label>
+                                <input type="radio" name="suffering" style="height:auto;width: auto;margin-right: 5px;" value="0" {if $eval_app.suffering == 0}checked{/if}/>否
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="line-table-height">
+                    <td class="k-s-content title"  rowspan="5" style="width: 40px;">家庭基本情况</td>
+                    <td class="k-s-content title" style="text-align: center;width: 60px; ">户籍地址</td>
+                    <td colspan="6" class="k-s-content content"><input type="text" name="residence_address" value="{$eval_app.residence_address}"/></td>
+                    <td class="k-s-content title">邮编</td>
+                    <td colspan="3" class="k-s-content content"><input type="text" name="zip_code" value="{$eval_app.zip_code}"/></td>
+                </tr>
+                <tr class="line-table-height">
+                    <td class="k-s-content title" style="text-align: center;width: 60px; ">联系电话</td>
+                    <td colspan="2" class="k-s-content content"><input type="text" name="number" value="{$eval_app.number}"/></td>
+                    <td colspan="2" class="k-s-content title">家庭在上学人口</td>
+                    <td colspan="2" class="k-s-content content"><input type="text" name="school_population"  value="{$eval_app.school_population}" style="width:30px;" />人</td>
+                    <td class="k-s-content title">家庭人口</td>
+                    <td class="k-s-content content"><input type="text"  name="population"  value="{$eval_app.population}" style="width:30px;" />人</td>
+                </tr>
+                <tr class="line-table-height">
+                    <td class="k-s-content title">住房情况</td>
+                    <td colspan="4" class="k-s-content content">
+                        {foreach $eval_form.housing_situation as $key => $val}
+    					<div style="display:inline-block;">
+                            <label>
+                                <input type="radio" name="housing_situation" value="{$key}" style="height:auto;width: auto;margin-right: 5px;" {if $key == $eval_app['housing_situation'] }checked{/if}/ >{$val}
+                            </label>
+                        </div>
+    					{/foreach}
+                        <input type="text" name="housing_situation_other" style="width: auto;height: auto;border-bottom:1px solid #555555;width:100px;" value="{$eval_app.housing_situation_other}">
+                    </td>
+                    <td class="k-s-content title">购车情况</td>
+                    <td colspan="3" class="k-s-content content">
+                        {foreach $eval_form.car_situation as $key => $val}
+    					<div style="display:inline-block;">
+                            <label>
+                                <input type="radio" name="car_situation" value="{$key}" style="height:auto;width: auto;margin-right: 5px;" {if $key == $eval_app['car_situation'] }checked{/if}/>{$val}
+                            </label>
+                        </div>
+    					{/foreach}
+                    </td>
+                </tr>
+                <tr class="line-table-height">
+                    <td colspan="9" class="k-s-content content" style="text-align: left; ">
+                        <input type="checkbox" name="establish_card" value="1" style="height:auto;width: auto;margin-left: 5px;margin-right: 5px;" {if $eval_app.establish_card == 1}checked{/if}/>建档立卡贫困户
+                        <input type="checkbox" name="special_person" value="1" style="height:auto;width: auto;margin-left: 5px;margin-right: 5px;" {if $eval_app.special_person == 1}checked{/if}/>特困供养户
+                        <input type="checkbox" name="mini_living" value="1" style="height:auto;width: auto;margin-left: 5px;margin-right: 5px;" {if $eval_app.mini_living == 1}checked{/if}/>城乡低保户
+                        <input type="checkbox" name="low_income" value="1" style="height:auto;width: auto;margin-left: 5px;margin-right: 5px;" {if $eval_app.low_income == 1}checked{/if}/>城镇低收入困难家庭
+                        <input type="checkbox" name="single_parent" value="1" style="height:auto;width: auto;margin-left: 5px;margin-right: 5px;" {if $eval_app.single_parent == 1}checked{/if} />单亲家庭
+                    </td>
+
+                </tr>
+                <tr class="line-table-height">
+                    <td colspan="9" class="k-s-content content" style="text-align: left; ">
+                        <input type="checkbox" name="orphan" value="1" style="height:auto;width: auto;margin-left: 5px;margin-right: 5px;"  {if $eval_app.orphan == 1}checked{/if}/>孤儿
+                        <input type="checkbox" name="martyrs_children" value="1" style="height:auto;width: auto;margin-left: 5px;margin-right: 5px;" {if $eval_app.martyrs_children == 1}checked{/if}/>烈士或国家抚恤对象
+                        <input type="checkbox" name="poor_children" value="1" style="height:auto;width: auto;margin-left: 5px;margin-right: 5px;" {if $eval_app.poor_children == 1}checked{/if}/>特困职工子女
+                    </td>
+
+                </tr>
+                {if $is_eval_app}
+                {php}$num = 1;{/php}
+                {for start="1" end="6"}
+    			{if $eval_app['members']['name'][$i-1]}
+                {php}$num++;{/php}
+                {/if}
+                {/for}
+                {else}
+                {php}$num = 6;{/php}
+                {/if}
+                <tr class="line-table-height">
+                    <td rowspan="{php}echo $num;{/php}" class="k-s-content title" style="width: 40px;">家庭成员情况(含祖父母）</td>
+                    <td class="k-s-content title" style="width: 70px;">姓名</td>
+                    <td class="k-s-content title" style="width: 70px;">年龄</td>
+                    <td class="k-s-content title" style="width: 70px;">与学生关系</td>
+                    <td colspan="2" class="k-s-content title">工作（学习）单位</td>
+                    <td class="k-s-content title" style="width: 70px;">从业情况</td>
+                    <td class="k-s-content title" style="width: 70px;">文化程度</td>
+                    <td class="k-s-content title" style="width: 70px;">年收入（元）</td>
+                    <td class="k-s-content title" style="width: 70px;">健康状况</td>
+                </tr>
+                {if $is_eval_app}
+
+    			{for start="1" end="6"}
+    			{if $eval_app['members']['name'][$i-1]}
+    			 <tr class="line-table-height">
+                    <td class="k-s-content content"><input type="text" name="members[name][]" value="{$eval_app['members']['name'][$i-1]}"></td>
+                    <td class="k-s-content content"><input type="text" name="members[age][]" value="{$eval_app['members']['age'][$i-1]}" class="number"></td>
+                    <td class="k-s-content content">
+    					{$eval_form.relationship[$eval_app['members']['relationship'][$i-1]]}
+                    </td>
+                    <td colspan="2" class="k-s-content content"><input type="text" name="members[unit][]" value="{$eval_app['members']['unit'][$i-1]}"></td>
+                    <td class="k-s-content content">
+    					{$eval_form.career[$eval_app['members']['career'][$i-1]]}
+    				</td>
+                    <td class="k-s-content content">
+    					{$eval_form.culture[$eval_app['members']['culture'][$i-1]]}
+    				</td>
+                    <td class="k-s-content content"><input type="text" name="members[income][]" class="number" value="{$eval_app['members']['income'][$i-1]}"></td>
+                    <td class="k-s-content content">
+    					{$eval_form.handicap[$eval_app['members']['handicap'][$i-1]]}<br>
+    					{$eval_form.health[$eval_app['members']['health'][$i-1]]}
+                    </td>
+                </tr>
+    			{/if}
+    			{/for}
+                {else}
+                {for start="1" end="6"}
+    			 <tr class="line-table-height">
+                    <td class="k-s-content content"><input type="text" name="members[name][]" value=""></td>
+                    <td class="k-s-content content"><input type="text" name="members[age][]" class="number" value=""></td>
+                    <td class="k-s-content content">
+                        <select name="members[relationship][]" id="">
+                            {foreach $eval_form.relationship as $key => $val}
+                            <option value="{$key}">{$val}</option>
+    						{/foreach}
+                        </select>
+                    </td>
+                    <td colspan="2" class="k-s-content content"><input type="text" name="members[unit][]" value=""></td>
+                    <td class="k-s-content content">
+    					<select name="members[career][]" id="">
+    						{foreach $eval_form.career as $key => $val}
+    						<option value="{$key}">{$val}</option>
+    						{/foreach}
+    					</select>
+    				</td>
+                    <td class="k-s-content content">
+    					<select name="members[culture][]" id="">
+    						{foreach $eval_form.culture as $key => $val}
+    							<option value="{$key}" >{$val}</option>
+    						{/foreach}
+    					</select>
+    				</td>
+                    <td class="k-s-content content"><input type="text" name="members[income][]" class="number" value=""></td>
+                    <td class="k-s-content content">
+                        <select name="members[handicap][]" id="">
+    						{foreach $eval_form.handicap as $key => $val}
+                            <option value="{$key}">{$val}</option>
+    						{/foreach}
+                        </select>
+                        <select name="members[health][]" id="" style="width: 75px;margin-top: 3px;">
+    						{foreach $eval_form.health as $key => $val}
+                            <option value="{$key}">{$val}</option>
+    						{/foreach}
+                        </select>
+                    </td>
+                </tr>
+    			{/for}
+                {/if}
+                <tr class="line-table-height">
+                    <td class="k-s-content title">影响家庭紧急状况有关信息</td>
+                    <td colspan="10" class="k-s-content content" style="text-align:left;">
+                        <div style="padding: 5px;">
+                            <label for="">家庭主要收入来源类型</label>
+                            <input type="text" name="income_source" style="width: auto;border-bottom: 1px solid #555555;" placeholder="主要收入来源" value="{$eval_app.income_source}">
+                        </div>
+                        <p>
+                            （只能选填其中一项。<br>
+                            1.<u>工资、奖金、津贴、补贴和其他劳动收入</u>；
+                            2.<u>离退休金、基本养老金、基本生活费、失业保险金</u>；
+                            3.<u>继承、接受赠予、出租或出售家庭财产获得的收入</u>；
+                            4.<u>存款及利息，有价证券及红利、股票、博彩收入</u>；
+                            5.<u>经商、办厂以及从事种植业、养殖业、加工业扣除必要成本后的收入</u>；
+                            6.<u>赡养费、抚(扶)养费</u>；
+                            7.<u>自谋职业收入</u>；
+                            8.<u>其他应当计入家庭的收入</u>）
+                        </p>
+                        <div style="padding: 5px;">
+                            <label for="">学生已获资助情况</label>
+                            <input type="text" name="funded" style="width: 80%;border-bottom: 1px solid #555555;" placeholder="时间、受资助的具体项目、受助金额人民币元" value="{$eval_app.funded}">
+                        </div>
+                        <p><strong>（如无以下情形，只需填写“无”）：</strong></p>
+                        <div style="padding: 5px;">
+                            <label for="">家庭遭受自然灾害情况</label>
+                            <input type="text" name="natural_disasters" style="width: 60%;border-bottom: 1px solid #555555;" placeholder="（时间最近两年内发生、损失金额、人员伤亡等具体描述）" value="{$eval_app.natural_disasters}">
+                        </div>
+                        <div style="padding: 5px;">
+                            <label for="">家庭遭受突发意外事件</label>
+                            <input type="text" name="unexpected_events" style="width: 60%;border-bottom: 1px solid #555555;" placeholder="（时间最近两年内发生、损失金额、人员伤亡等具体描述）" value="{$eval_app.unexpected_events}">
+                        </div>
+                        <div style="padding: 5px;">
+                            <label for="">家庭欠债情况</label>
+                            <input type="text" name="debt" style="width: 80%;border-bottom: 1px solid #555555;" placeholder="（时间、原因、金额人民币元）" value="{$eval_app.debt}">
+                        </div>
+                        <div style="padding: 5px;">
+                            <label for="">其他情况</label>
+                            <input type="text" name="other" style="width: 80%;border-bottom: 1px solid #555555;" placeholder="（时间、人员）" value="{$eval_app.other}">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>

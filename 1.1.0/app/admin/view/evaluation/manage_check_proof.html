@@ -1,0 +1,144 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="{:url('admin/EvaluFront/E_faculty_review')}">学生家庭经济困难认定</a>
+            </small>
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                <a href="{:url('admin/EvaluFront/E_faculty_add_review')}">查看学生信息</a>
+            </small>
+            <small>
+            <i class="ace-icon fa fa-angle-double-right"></i>
+            查看佐证材料
+            </small>
+        </h1>
+    </div>
+    <div class="row clearfix w1000">
+        <div class="col-md-12 column">
+            <div class="con_right">
+                <div class="photo">
+                    <ul>
+                        {foreach name="material" item="v"}
+                        <li>
+                            <div class="img">
+                                <div class="cell"><img src="{$v.images}" alt="{$v.name}"></div>
+                            </div>
+                            <p>{$v.name}</p>
+                        </li>
+                        {/foreach}
+                    </ul>
+                </div>
+                <div class="clear"></div>
+                <div class="photo_box">
+                    <ul>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p1.jpg" alt=""></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p2.jpg" alt=""></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p3.jpg" alt=""></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p1.jpg" alt=""></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p2.jpg" alt=""></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p3.jpg" alt=""></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p1.jpg" alt=""></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p2.jpg" alt=""></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p3.jpg" alt=""></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="photo_all">
+                <div class="photo_all_box">
+                    <div class="close"><p></p></div>
+                    <ul>
+                        <li class="on">
+                            <div class="cell"><img src="__PUBLIC__/img/p1.jpg" alt="" /> </div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p2.jpg" alt="" /></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p3.jpg" alt="" /> </div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p1.jpg" alt="" /> </div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p2.jpg" alt="" /></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p3.jpg" alt="" /> </div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p1.jpg" alt="" /> </div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p2.jpg" alt="" /></div>
+                        </li>
+                        <li>
+                            <div class="cell"><img src="__PUBLIC__/img/p3.jpg" alt="" /> </div>
+                        </li>
+                    </ul>
+                    <div class="page_box">
+                        <div class="page_p"><p></p></div>
+                        <div class="page_n"><p></p></div>
+                        <ol>
+                            <li class="on">
+                                <div class="cell"><img src="__PUBLIC__/img/p1.jpg" alt="" /> </div>
+                            </li>
+                            <li>
+                                <div class="cell"><img src="__PUBLIC__/img/p2.jpg" alt="" /></div>
+                            </li>
+                            <li>
+                                <div class="cell"><img src="__PUBLIC__/img/p3.jpg" alt="" /> </div>
+                            </li>
+                            <li>
+                                <div class="cell"><img src="__PUBLIC__/img/p1.jpg" alt="" /> </div>
+                            </li>
+                            <li>
+                                <div class="cell"><img src="__PUBLIC__/img/p2.jpg" alt="" /></div>
+                            </li>
+                            <li>
+                                <div class="cell"><img src="__PUBLIC__/img/p3.jpg" alt="" /> </div>
+                            </li>
+                            <li>
+                                <div class="cell"><img src="__PUBLIC__/img/p1.jpg" alt="" /> </div>
+                            </li>
+                            <li>
+                                <div class="cell"><img src="__PUBLIC__/img/p2.jpg" alt="" /></div>
+                            </li>
+                            <li>
+                                <div class="cell"><img src="__PUBLIC__/img/p3.jpg" alt="" /> </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+
+
+
+        </div>
+    </div>
+</div>
+{/block}

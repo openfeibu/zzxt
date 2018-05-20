@@ -1,0 +1,43 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+
+<div class="page-content">
+
+    <!--主题-->
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                问卷调查设置
+            </small>
+        </h1>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <table>
+                <thead>
+                    {foreach $title as $r}
+                    <tr>
+                        <td tid="{$r.classification_id}">{$r.title}</td>
+                    </tr>
+                    {foreach $list as $row}
+                    <tr>
+                        <td>
+                            {if condition="$r.classification_id==$row.question_title_id"}
+                                {$row.question_id}.{$row.question_name}<br>
+                            {foreach $row.question_options as $key => $item}
+                            <input type="{$item.type}" name="{$row.question_id}" value="{$key}">{$item.text}<br>
+                            {/foreach}
+                            {/if}</td>
+                    </tr>
+                    {/foreach}
+                    {/foreach}
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+{/block}

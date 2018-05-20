@@ -1,0 +1,106 @@
+{extend name="admin@public/base" /}
+{block name="main-content"}
+<div class="page-content">
+    <!--主题-->
+    <div class="page-header">
+        <h1>
+            您当前操作
+            <small>
+                <i class="ace-icon fa fa-angle-double-right"></i>
+                岗位列表
+            </small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <form id="leftnav" name="leftnav" method="post" action="" >
+                    <!--<table class="table table-striped table-bordered table-hover tab_center" id="dynamic-table">
+                        <thead>
+                        <tr>
+                            <th class="info_bg">ID</th>
+                            <td class="info_bg">岗位性质</td>
+                            <th class="info_bg">岗位名称</th>
+                            <th class="info_bg">部门</th>
+                            <th class="info_bg">负责人</th>
+                            <th class="info_bg">人数</th>
+                            <th class="info_bg">已报名人数</th>
+                            <th class="info_bg">未审核人数</th>
+                            <th class="info_bg">录用人数</th>
+                            <th class="hidden-sm hidden-xs info_bg" style="border-right:#CCC solid 1px;">操作</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {foreach $list as $row}
+                        <tr>
+                            <td height="28">{$row.work_id}</td>
+                            <td>{if condition="$row.is_special==1"}特殊岗位{else}普通岗位{/if}</td>
+                            <td>{$row.job_name}</td>
+                            <td>{$row.department}</td>
+                            <td>{$row.department_principal}</td>
+                            <td >{$row.number}</td>
+                            <td>{$row.apply_count}</td>
+                            <td>{$row.not_count}</td>
+                            <td>{$row.count}</td>
+                            <td class="hidden-sm hidden-xs">
+                                &lt;!&ndash;<span><a href="{:url('admin/workstudy/complete',['id' => $row.work_id])}">修改岗位信息</a></span>&ndash;&gt;
+                                <span><a href="{:url('admin/workstudy/showApplyStudents',['id'=>$row.work_id])}">查看报名名单</a></span>
+                                <span><a href="{:url('admin/workstudy/showNotAcount',['id'=>$row.work_id])}">查看未审核名单</a></span>
+                                <span><a href="{:url('admin/workstudy/showPassStudents',['id'=>$row.work_id])}">查看通过的学生</a></span>
+                                &lt;!&ndash;<span><a href="{:url('admin/workstudy/showpayroll',['id'=>$row.work_id])}">打印工资条</a></span>&ndash;&gt;
+                                <span><a href="{:url('admin/workstudy/deletejob',['id'=>$row.work_id])}">删除</a></span>
+                            </td>
+                        </tr>
+                        {/foreach}
+                        &lt;!&ndash;<tr>&ndash;&gt;
+                            &lt;!&ndash;<td height="50" colspan="6" align="left">&nbsp;</td>&ndash;&gt;
+                        &lt;!&ndash;</tr>&ndash;&gt;
+                        </tbody>
+                    </table>-->
+                    <table  id="dynamic-table"  class="table table-striped table-bordered table-hover tab_center">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <td>岗位性质</td>
+                            <th>岗位名称</th>
+                            <th>部门</th>
+                            <th>负责人</th>
+                            <th>人数</th>
+                            <th>已报名人数</th>
+                            <th>未审核人数</th>
+                            <th>录用人数</th>
+                            <th class="hidden-sm hidden-xs" style="border-right:#CCC solid 1px;">操作</th>
+                        </tr>
+
+                        </thead>
+                        <tbody>
+                        {foreach $list as $row}
+                        <tr>
+                            <td height="28">{$row.work_id}</td>
+                            <td>{if condition="$row.is_special==1"}特殊岗位{else}普通岗位{/if}</td>
+                            <td>{$row.job_name}</td>
+                            <td>{$row.department}</td>
+                            <td>{$row.department_principal}</td>
+                            <td >{$row.number}</td>
+                            <td>{$row.apply_count}</td>
+                            <td>{$row.not_count}</td>
+                            <td>{$row.count}</td>
+                            <td class="hidden-sm hidden-xs ">
+                                <span><a href="{:url('admin/workstudy/complete',['id' => $row.work_id])}">修改岗位信息</a></span>
+                                <span><a href="{:url('admin/workstudy/showApplyStudents',['id'=>$row.work_id])}">查看报名名单</a></span>
+                                <span><a href="{:url('admin/workstudy/showNotAcount',['id'=>$row.work_id])}">查看未审核名单</a></span>
+                                <span><a href="{:url('admin/workstudy/showPassStudents',['id'=>$row.work_id])}">查看通过的学生</a></span>
+                                <span><a href="{:url('admin/workstudy/showpayroll',['id'=>$row.work_id])}">打印工资条</a></span>
+                                <span><a href="{:url('admin/workstudy/deletejob',['id'=>$row.work_id])}">删除</a></span>
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
