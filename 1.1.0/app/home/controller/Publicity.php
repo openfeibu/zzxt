@@ -33,7 +33,7 @@ class Publicity extends Base
 		if($this->public_type == 'ypublic')
 		{
 			$where = " u.faculty_number = '".$this->faculty."'";
-            $where .= " AND ass.status in (4)";
+            $where .= " AND ass.status in (4,5)";
 		}else{
             $where = " ass.status in (5)";
 		}

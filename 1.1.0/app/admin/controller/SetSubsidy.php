@@ -49,8 +49,8 @@ class SetSubsidy extends Base
 				'end_time' => $data['end_time'][$key] ? strtotime($data['end_time'][$key]) : '',
 				'ypublic_begin_time' => $data['ypublic_begin_time'][$key] ? strtotime($data['ypublic_begin_time'][$key]) : '',
 				'ypublic_end_time' => $data['ypublic_end_time'][$key] ? strtotime($data['ypublic_end_time'][$key]) : '',
-				'xpublic_begin_time' => $data['xpublic_begin_time'][$key] ? strtotime($data['xpublic_begin_time'][$key]) : '',
-				'xpublic_end_time' => $data['xpublic_end_time'][$key] ? strtotime($data['xpublic_end_time'][$key]) : '',
+				// 'xpublic_begin_time' => $data['xpublic_begin_time'][$key] ? strtotime($data['xpublic_begin_time'][$key]) : '',
+				// 'xpublic_end_time' => $data['xpublic_end_time'][$key] ? strtotime($data['xpublic_end_time'][$key]) : '',
 			);
 			$bool = Db::name('set_subsidy')
                 ->where('id',$id)

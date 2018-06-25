@@ -203,7 +203,8 @@ class Publicity extends Base
      * @return string
      */
     public function evaluPublicity() {
-		$where = $this->common_where;
+		//$where = $this->common_where;
+		$where = '';
         $subsidy = Db::table('yf_set_subsidy')
             ->where('id', 5)
             ->find();

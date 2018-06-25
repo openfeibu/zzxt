@@ -92,7 +92,7 @@ class EvaluationGroup extends Base
         $this->assign('status_id', $id);
         $this->assign('user', $apply);
         $this->assign('user_info', $apply);
-		$apply['members'] = unserialize($apply['members']);
+		//$apply['members'] = unserialize($apply['members']);
 		$this->assign('eval_app',$apply);
 		$eval_form = Config::get('evaluation_form');
 		$this->assign('eval_form',$eval_form);

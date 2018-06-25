@@ -63,7 +63,9 @@
                         ID
                     </th>
                     {include file="common\group_application_key"}
-                    <th>意见</th>
+                    {if $type_id == 1}
+                    <th>推荐理由</th>
+					{/if}
                     <th>操作</th>
                     </thead>
                     <tbody id="ajax-data">

@@ -38,31 +38,31 @@
             <tr class="line-table-height scholar_tab">
                 <td rowspan="4" class="k-s-content title" style="width: 40px;">基本情况</td>
                 <td class="k-s-content title" style="text-align: center;">姓名</td>
-                <td class="k-s-content content"><input type="text" name="" value="{$user_info.studentname}"/></td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.studentname}" disabled/></td>
                 <td class="k-s-content title">性别</td>
-                <td class="k-s-content content"><input type="text" name="" value="{$user_info.gender}"/></td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.gender}" disabled/></td>
                 <td class="k-s-content title">出生年月</td>
-                <td colspan="2" class="k-s-content content"><input type="text" name="" value="{$user_info.birthday}"/></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="" value="{$user_info.birthday}" disabled/></td>
             </tr>
             <tr class="line-table-height tab_style">
                 <td class="k-s-content title" style="text-align: center;">政治面貌</td>
-                <td class="k-s-content content"><input type="text" name="" value="{$user_info.political}"/></td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.political}" disabled/></td>
                 <td class="k-s-content title">民族</td>
-                <td class="k-s-content content"><input type="text" name="" value="{$user_info.nation}"/></td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.nation}" disabled/></td>
                 <td class="k-s-content title">入学时间</td>
-                <td colspan="2" class="k-s-content content"><input type="text" name="" value="{$user_info.admission_date}"/></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="" value="{$user_info.admission_date|trim}"disabled/></td>
             </tr>
             <tr class="line-table-height tab_style">
                 <td class="k-s-content title" style="text-align: center;">专业</td>
-                <td class="k-s-content content"><input type="text" name="" value="{$user_info.profession}"/></td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.profession}" disabled/></td>
                 <td class="k-s-content title">学制</td>
-                <td class="k-s-content content"><input type="text" name="" value="{$user_info.school_system}"/></td>
+                <td class="k-s-content content"><input type="text" name="" value="{$user_info.school_system}" disabled/></td>
                 <td class="k-s-content title">联系电话</td>
-                <td colspan="2" class="k-s-content content"><input type="text" name="tel" /></td>
+                <td colspan="2" class="k-s-content content"><input type="text" name="phone" value="{$user_info.phone}"/></td>
             </tr>
             <tr class="line-table-height tab_style">
                 <td class="k-s-content title" style="text-align: center;">身份证号</td>
-                <td colspan="6" class="k-s-content content"><input type="text" name="" value="{$user_info.id_number}"/></td>
+                <td colspan="6" class="k-s-content content"><input type="text" name="" value="{$user_info.id_number}" disabled/></td>
             </tr>
             <!--学习情况-->
             <tr class="line-table-height scholar_tab">

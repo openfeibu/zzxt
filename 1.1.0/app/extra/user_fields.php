@@ -13,7 +13,7 @@ return  [
 	'profession' => '专业名称',
 	'admission_date' => '入学时间',
 	'department_name' => '系所名称',
-	'is_rural_student' => '',
+	//'is_rural_student' => '',
 	'faculty_number' => '系所代码',
 	'profession_number' => '专业代码',
 	'class_number' => '班级代码',

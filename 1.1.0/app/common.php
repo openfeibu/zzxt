@@ -1649,7 +1649,7 @@ function get_sex($idcard){
 	return substr($idcard, -2 , 1) % 2 ? '男' : '女';
 }
 
-
+/*
 function get_score($eval_app)
 {
 	$score = 0;
@@ -1727,6 +1727,12 @@ function get_score($eval_app)
 
 	return $score;
 }
+*/
+function get_score()
+{
+	$score = 0;
+	return $score;
+}
 function export_excel($data,$table,$field_titles,$fields)
 {
 	error_reporting(E_ALL);
@@ -1781,6 +1787,13 @@ function handleApply($apply = array())
 		$apply['faculty_opinion']['text'] = '';
 		$apply['faculty_opinion']['name'] = '';
 	}
+	if (isset($apply['school_opinion']) && !empty($apply['school_opinion'])) {
+		$apply['school_opinion'] = json_decode($apply['school_opinion'], true);
+	} else {
+		$apply['school_opinion']['time'] = time();
+		$apply['school_opinion']['text'] = '';
+		$apply['school_opinion']['name'] = '';
+	}
 	return $apply;
 }
 function handleScholarshipApply($apply = array()){
@@ -1825,3 +1838,4 @@ function getGrade($current_grade)
 	}
 	return $grade;
 }
+

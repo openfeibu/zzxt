@@ -37,6 +37,7 @@ class User extends Model
         'profession_number',
         'class_number',
         'current_grade',
+		'phone'
     ];
     public static function getUserFields($name =''){
         $fields = self::$fields;

@@ -69,15 +69,40 @@
                     </tr>
                     {/if}
                 </table>
+				<div class="clearfix"></div>
+				<div class="" style="text-align:left;font-size: 16px;">
+				<p>系统评级：{$eval_app.poor_grade_name}</p>	
+				<p>
+					小组评级：{$eval_app.group_poor_grade_name}
+				</p>
+				<p>
+					院系评级：{$eval_app.faculty_poor_grade_name}
+					<input type="hidden" name="last_poor_grade" class="last_poor_grade" value="{$eval_app.faculty_poor_grade}">
+				</p>				
+				</div>
                 <form action="{:url('admin/EvaluationHandle/studentOffice')}" method="post" id="passingForm" class="passingForm">
-                <table class="w800">
+				<input name="school_opinion[text]" class="text" type="hidden" value="同意"/>
+                <table class="w900">
+					<tr>
+                        <td colspan="3" class="">
+							<span style="font-size: 16px;">学校评级：</span>
+                            {if in_array($user.evaluation_status,[4])}
+							{php} echo \app\admin\model\Evaluation::getGradesHtml($eval_app['faculty_poor_grade'],'poor_grade');{/php}
+							{else}
+							{php} echo \app\admin\model\Evaluation::getGradesHtml($eval_app['school_poor_grade'],'poor_grade');{/php}
+							{/if}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="height: 30px;"></td>
+                    </tr>
                     <tr>
                         <td style="width: 266px;"></td>
                         <td class="tab_content" style="width: 266px;">
                             <input type="hidden" name="evaluation_id" value="{$user.evaluation_id}">
                             <input type="hidden" name="status_id" value="{$status_id}">
-                            <!-- <button type="submit" class="btn btn-success" name="pass">通过</button> -->
-                            <button type="submit" class="btn btn-danger" name="fail" value="1">不通过</button>
+                            <button type="submit" class="btn btn-primary" name="pass">提交</button>
+                            <!-- <button type="submit" class="btn btn-danger" name="fail" value="1">不同意</button> -->
                         </td>
                         <td style="width: 266px;"></td>
                     </tr>

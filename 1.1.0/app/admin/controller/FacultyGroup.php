@@ -242,9 +242,9 @@ class FacultyGroup extends Base
 		$evaluation_model = new Evaluation();
         $apply = $evaluation_model->getEvaluation($data['evaluation_id']);
 
-        $apply = handleApply($apply);
+        $apply = \app\admin\model\Evaluation::handleEvaluation($apply);
 
-        $apply['members'] = unserialize($apply['members']);
+        //$apply['members'] = unserialize($apply['members']);
 		$this->assign('eval_app',$apply);
 		$eval_form = Config::get('evaluation_form');
 		$this->assign('eval_form',$eval_form);

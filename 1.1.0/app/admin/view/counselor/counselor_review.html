@@ -39,7 +39,7 @@
                     </select>
                     <select class="form-control tab_select class_select ajax_change" name="status">
                         <option value="0">全部</option>
-                        {foreach $Think.config.evaluation_status as $k => $v}
+                        {foreach $Think.config.check_status as $k => $v}
                         <option value="{$k}">{$v}</option>
                         {/foreach}
                     </select>
@@ -59,7 +59,9 @@
                         ID
                     </th>
                     {include file="common\group_application_key"}
-                    <th>意见</th>
+					{if $type_id == 1}
+                    <th>推荐理由</th>
+					{/if}
                     <th>操作</th>
                     </thead>
                     <tbody id="ajax-data">

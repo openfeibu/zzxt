@@ -55,46 +55,27 @@
                     </tr>
                     {/if}
                 </table>
+				<div class="clearfix"></div>
+				<div class="" style="text-align:left;font-size: 16px;">
+				<p>系统评级：{$eval_app.poor_grade_name}</p>	
+				<p>
+					小组评级：{$eval_app.group_poor_grade_name}
+					<input type="hidden" name="last_poor_grade" class="last_poor_grade" value="{$eval_app.group_poor_grade}">
+				</p>	
+				</div>
                 <form action="{:url('admin/EvaluationHandle/faculty')}" method="post" id="passingForm" class="passingForm">
-                <table class="w800">
-                     <tr>
-                        <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">院系小组添加评语：</p></td>
-                        <td colspan="2"></td>
-                    </tr>
+				<input name="faculty_opinion[text]" class="text" type="hidden" value="同意"/>
+                <table class="w900">
                     <tr>
-                        <td colspan="3" class="tab_content">
-                            {if !in_array($user.evaluation_status,[3,9])}
-                            <textarea name="faculty_opinion[text]" class="tab_opinion">{$user.faculty_opinion.text}</textarea>
-                            {else}
-                            <select class="form-control tab_select" name="faculty_opinion[text]">
-                                {foreach $Think.config.eval_opinion2 as $k => $v}
-                                <option value="{$v}">{$v}</option>
-                                {/foreach}
-                            </select>
-                            {/if}
-                            <!--
-                            <div class="modify pull-left">
-                                <p>院系小组修改评分：</p>
-                                <div class="modify_score">
-                                    <button type="button" class="modify_less btn"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                                    <input type="text" name="change_fraction" class="modify_num" value="{$user.change_fraction}">
-                                    <button type="button" class="modify_add btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                </div>
-                            </div>
-                            <div class="tab_sign">
-                                <label>院系小组负责人签名：</label>
-                                <input type="text" name="faculty_opinion[name]" value="{$user.faculty_opinion.name}" >
-                            </div>
-                            <div class="clearfix"></div>
-                            <div class="tab_time">
-                                <input type="text" name="faculty_opinion[year]" value="{$user.faculty_opinion.time|date='Y',###}">年
-                                <input type="text" name="faculty_opinion[month]" value="{$user.faculty_opinion.time|date='n',###}">月
-                                <input type="text" name="faculty_opinion[day]" value="{$user.faculty_opinion.time|date='d',###}">日
-                            </div>
-                            -->
+                        <td colspan="3" class="">
+							<span style="font-size: 16px;">院系评级：</span>
+                            {if in_array($user.evaluation_status,[3])}
+							{php} echo \app\admin\model\Evaluation::getGradesHtml($eval_app['group_poor_grade'],'poor_grade');{/php}
+							{else}
+							{php} echo \app\admin\model\Evaluation::getGradesHtml($eval_app['faculty_poor_grade'],'poor_grade');{/php}
+							{/if}
                         </td>
                     </tr>
-
                     <tr>
                         <td colspan="3" style="height: 30px;"></td>
                     </tr>
@@ -104,8 +85,8 @@
                             <input type="hidden" name="evaluation_id" value="{$user.evaluation_id}">
                             <input type="hidden" name="status_id" value="{$status_id}">
                             <!-- <a href="{:url('admin/Counselor/showEvaluationEvidence',['id'=>$user.evaluation_id])}" target="_blank" class="btn btn-info">查看相关证明</a> -->
-                            <button type="submit" class="btn btn-primary" name="pass">通过</button>
-                            <!-- <button type="submit" class="btn btn-danger" name="fail" value="1">不通过</button> -->
+                            <button type="submit" class="btn btn-primary" name="pass">提交</button>
+                            <!-- <button type="submit" class="btn btn-danger" name="fail" value="1">不同意</button> -->
                         </td>
                         <td style="width: 266px;"></td>
                     </tr>
@@ -115,7 +96,7 @@
         </div>
     </div>
 </div>
-{if !in_array($user.evaluation_status,[3,9])}
+{if !in_array($user.evaluation_status,[3])}
 <script>
 $("#passingForm").find("textarea").attr('disabled',true);
 $("#passingForm").find("input").attr('disabled',true);

@@ -253,6 +253,8 @@ class StudentOffice extends Base
 		$show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 
         $data_arr = $data->all();
+		$data_arr = Evaluation::handleEvaluationList($data_arr);
+		
         foreach ($data as $key => $val) {
             $data_arr[$key]['material_score'] = Evaluation::getMaterilaScore($val['evaluation_id']);
             $data_arr[$key]['rank'] = Evaluation::getGrade($val['score']);
@@ -381,8 +383,8 @@ class StudentOffice extends Base
             ->field('u.*,app.*')
             ->where('evaluation_id',$data['evaluation_id'])
             ->find();
-        $apply = handleApply($apply);
-        $apply['members'] = unserialize($apply['members']);
+        $apply = \app\admin\model\Evaluation::handleEvaluation($apply);
+        //$apply['members'] = unserialize($apply['members']);
 		$this->assign('eval_app', $apply);
 		$eval_form = Config::get('evaluation_form');
 		$this->assign('eval_form',$eval_form);

@@ -10,29 +10,26 @@
         </label>
         {/if}
     </td>
-
     {include file="common\group_application_val"}
-    <td>
+	{if $type_id == 1}
+	<td>
         {if !in_array($row.check_status,[1,2])}
         {$row.group_opinion.text}
         {else}
-        <select class="form-control tab_select text" name="group_opinion[text]">
-            {foreach $Think.config.scholarships_opinion as $k => $v}
-            <option value="{$v}">{$v}</option>
-            {/foreach}
-        </select>
+        <textarea name="group_opinion[text]" class="text">{$row.group_opinion.text|default="同意"}</textarea>
         {/if}
     </td>
+	{/if}
     <td>
         <div class="audit_opera">
             <div action="{:url('admin/ScholarshipHandle/MultipleCounselorFill')}" class="passingDiv2" method="post">
                 <input type="hidden" name="status_id" value="{$row.status_id}" />
                 <div class="audit_opera">
-                    <button class="btn btn-primary btn-sm" type="submit" name="pass" {if !in_array($row.check_status,[1,2])}disabled{/if}>通过</button>
+                    <button class="btn btn-primary btn-sm" type="submit" name="pass" {if !in_array($row.check_status,[1,2])}disabled{/if}>同意</button>
                 </div>
-                <!-- <div class="audit_opera"> -->
-                    <!-- <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if !in_array($row.check_status,[1,2])}disabled{/if} value="1">不通过</button> -->
-                <!-- </div> -->
+                <div class="audit_opera">
+                    <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if !in_array($row.check_status,[1,2])}disabled{/if} value="1">不同意</button>
+                </div>
                 <a href="{$detail_url}&id={$row.status_id}" class="btn btn-info btn-sm">查看</a>
             </div>
         </div>
@@ -41,8 +38,8 @@
 {/foreach}
 <tr>
     <td align="left" class="hidden-xs center" href="{:url('admin/ScholarshipHandle/MultipleCounselorAllFill')}">
-        <button id="passSubmit" class="btn btn-primary btn-sm hidden-xs" name="pass">通过&nbsp;</button>
-        <!-- <button id="failSubmit" class="btn btn-danger  btn-sm hidden-xs" name="fail">不通过</button> -->
+        <button id="passSubmit" class="btn btn-primary btn-sm hidden-xs" name="pass">同意&nbsp;</button>
+        <button id="failSubmit" class="btn btn-danger  btn-sm hidden-xs" name="fail">不同意</button>
     </td>
     <td height="50" colspan="12" align="left">{$page}</td>
 </tr>

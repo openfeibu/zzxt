@@ -1,7 +1,7 @@
 {foreach $user as $num => $row}
 <tr>
     <td class="hidden-xs" height="28" >
-        {if $row.status != 9}
+        {if $row.status == 4}
         <label class="pos-rel">
             <input name="n_id[]" id="navid" class="ace" type="checkbox" value="{$row.evaluation_id}">
             <span class="lbl"></span>
@@ -9,30 +9,45 @@
         {/if}
         {$row.evaluation_id}
     </td>
-    {include file="common\evaluation_val"}
+	{include file="common\evaluation_val"}
+	<td>{$row.group_opinion.text}</td>
+	<td>{$row.group_poor_grade_name}</td>
+	<td>{$row.faculty_opinion.text}</td>
+	<td class="last_poor_grade" last_poor_grade="{$row.group_poor_grade}">{$row.faculty_poor_grade_name}</td>
+	{if in_array($row.evaluation_status,[4])}
+	<td class="this_poor_grade_name">同意</td>
+	<td>
+		{php} echo \app\admin\model\Evaluation::getGradesHtml($row['faculty_poor_grade'],'poor_grade');{/php}
+	</td>
+	{else}
+	<td>{$row.school_opinion.text}</td>
+	<td>{$row.school_poor_grade_name}</td>
+	{/if}
     <td class="tab_content">
-        <div action="{:url('admin/EvaluationHandle/studentOffice')}" class="passingDiv" method="post">
+		<form action="{:url('admin/EvaluationHandle/studentOffice')}" class="passingForm2" method="post">
+        <!-- <div action="{:url('admin/EvaluationHandle/studentOffice')}" class="passingForm2" method="post"> -->
         <input type="hidden" name="user_name" value="{:session('admin_auth.admin_username')}">
         <input type="hidden" name="status_id" value="{$row.status_id}" />
-        <!-- <div class="audit_opera"> -->
-            <!-- <button class="btn btn-info btn-sm btn-success" type="submit" name="pass" {if $row.status != 4}disabled{/if}>通过</button> -->
-        <!-- </div> -->
+		<input name="school_opinion[text]" class="text" type="hidden" value="同意"/>
         <div class="audit_opera">
-            <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if $row.status == 9}disabled{/if} value="1">不通过</button>
+            <button class="btn btn-primary btn-sm" type="submit" name="pass" {if $row.status != 4}disabled{/if}>提交</button>
         </div>
+        <!-- <div class="audit_opera"> -->
+            <!-- <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if $row.status == 9}disabled{/if} value="1">不同意</button> -->
+        <!-- </div> -->
 
         <div class="audit_opera">
             <a href="{:url('admin/StudentOffice/showEvaluationMaterial',['id'=>$row.status_id])}" class="btn btn-info btn-sm">查看</a>
         </div>
-        </div>
+        </form>
     </td>
 
 </tr>
 {/foreach}
 <tr>
-    <td align="left" class="hidden-xs center">
-        <!-- <button id="passSubmit2" class="btn btn-purple btn-sm hidden-xs" name="pass">通过&nbsp;</button> -->
-        <button id="failSubmit2" class="btn btn-danger  btn-sm hidden-xs" name="fail">不通过</button>
+    <td align="left" class="hidden-xs center" href="{:url('admin/EvaluationHandle/studentOfficeAll')}">
+        <button id="passSubmit" class="btn btn-primary btn-sm hidden-xs" name="pass">提交&nbsp;</button>
+        <!-- <button id="failSubmit2" class="btn btn-danger  btn-sm hidden-xs" name="fail">不同意</button> -->
     </td>
-    <td height="50" colspan="12" align="left">{$page}</td>
+    <td height="50" colspan="20" align="left">{$page}</td>
 </tr>

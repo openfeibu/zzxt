@@ -51,21 +51,19 @@
                         </tr>
                         <tr>
                             <td colspan="3" class="tab_content">
-                                {if !in_array($user.evaluation_status,[1,2])}
-                                <textarea name="group_opinion[text]" class="tab_opinion">{$user.group_opinion.text}</textarea>
-                                {else}
-                                <select class="form-control tab_select" name="group_opinion[text]">
-                                    {foreach $Think.config.eval_opinion as $k => $v}
-                                    <option value="{$v}">{$v}</option>
-                                    {/foreach}
-                                </select>
-                                {/if}
+
+                                <textarea name="group_opinion[text]" class="tab_opinion">{$user.group_opinion.text|default='同意'}</textarea>
+                                <div class="" style="text-align:left;font-size: 16px;">
+								<p>系统评级：{$eval_app.poor_grade_name}</p>	
+								</div>
                                 <div class="modify pull-left">
-                                    <p>修改评分：</p>
+                                    <p>修改评级：</p>
                                     <div class="modify_score">
-                                        <button type="button" class="modify_less btn"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                                        <input type="text" name="change_fraction" class="modify_num" value="{$user.change_fraction}">
-                                        <button type="button" class="modify_add btn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+										{if in_array($user.evaluation_status,[1,2])}
+										{php} echo \app\admin\model\Evaluation::getGradesHtml($eval_app['poor_grade'],'poor_grade');{/php}
+										{else}
+										{php} echo \app\admin\model\Evaluation::getGradesHtml($eval_app['group_poor_grade'],'poor_grade');{/php}
+										{/if}
                                     </div>
                                 </div>
                             </td>
@@ -77,8 +75,8 @@
 							<td class="tab_content" style="width: 500px;">
 								<input type="hidden" name="status_id" value="{$status_id}"/>
 								<input type="hidden" name="evaluation_id" value="{$user.evaluation_id}"/>
-								<button type="submit" class="btn btn-sm btn-primary" name="pass" value="{$status_id}">通过</button>
-								<!-- <button type="submit" class="btn btn-danger" name="fail" value="{$status_id}">不通过</button> -->
+								<button type="submit" class="btn btn-sm btn-primary" name="pass" value="{$status_id}">提交</button>
+								<!-- <button type="submit" class="btn btn-danger" name="fail" value="{$status_id}">不同意</button> -->
 								<!-- <a href="{:url('admin/Counselor/evaluationNext',['id'=>$status_id])}" class="btn btn-success">下一个</a> -->
 							</td>
 

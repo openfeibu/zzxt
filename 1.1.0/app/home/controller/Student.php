@@ -122,9 +122,13 @@ class Student extends Base
             //助学金
             $data['application_type'] = $type_id;
             $data['members'] = json_encode($data['members']);
-
+			
+			$user_data = [
+				'phone' => isset($data['phone']) ? $data['phone'] : '',
+			];
+			DB::name('user')->where('id_number',$this->user['id_number'])->update($user_data);
             //删除不必要的数据
-            unset($data['studentname'],$data['gender'],$data['birthday']);
+            unset($data['studentname'],$data['gender'],$data['birthday'],$data['phone']);
 
             if ($application) {
                 //提交过的话。做更新处理
@@ -179,6 +183,7 @@ class Student extends Base
         $user_info = $user_model->get_user($this->user['id_number']);
         //政治面貌
         $user_info['political'] = substr($user_info['political'],-6,6);
+		$user_info['birthday'] = substr($user_info['birthday'],0,6);
         $this->assign('user_info', $user_info);
 
 		//检查本年是否已经提交过
@@ -190,11 +195,14 @@ class Student extends Base
             $data['member_list_id'] = $this->user['member_list_id'];
             $data['application_type'] = $type_id;
             $data['members'] = json_encode($data['members']);
-
-            //删除不必要的数据
-            unset($data['studentname'],$data['gender'],$data['birthday']);
-
 			
+			$user_data = [
+				'phone' => isset($data['phone']) ? $data['phone'] : '',
+			];
+			DB::name('user')->where('id_number',$this->user['id_number'])->update($user_data);
+            //删除不必要的数据
+            unset($data['studentname'],$data['gender'],$data['birthday'],$data['phone']);
+
             if ($application) {
                 //提交过的话。做更新处理
                 $data['update_at'] = time();
@@ -259,9 +267,13 @@ class Student extends Base
             $data['user_id'] = $this->user_id;
             $data['member_list_id'] = $this->user['member_list_id'];
             $data['awards'] = json_encode($data['awards']);
-
+			
+			$user_data = [
+				'phone' => isset($data['phone']) ? $data['phone'] : '',
+			];
+			DB::name('user')->where('id_number',$this->user['id_number'])->update($user_data);
             //删除不必要的数据
-//            unset($data['studentname'],$data['gender'],$data['birthday'],$data['birthday']);
+            unset($data['studentname'],$data['gender'],$data['birthday'],$data['birthday'],$data['phone']);
             //检查本年是否已经提交过
             
             if ($application) {

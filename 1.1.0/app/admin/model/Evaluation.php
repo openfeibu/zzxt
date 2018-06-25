@@ -41,13 +41,25 @@ class Evaluation extends Model
             ->field('em.evaluation_id,em.member_list_id,em.images,emc.*')->where('em.evaluation_id',$evaluation_id)
             ->select();
     }
+	public static function handleEvaluation($data)
+	{
+		$data['material_score'] = self::getMaterilaScore($data['evaluation_id']);
+		$grade = self::getGrade($data['score']);
+		$data['poor_grade_name'] = $grade['poor_grade_name'];
+		$data['poor_grade'] = $grade['poor_grade'];
+		$data['group_poor_grade_name'] = self::getGradeData($data['group_poor_grade'],'name');
+		$data['faculty_poor_grade_name'] = self::getGradeData($data['faculty_poor_grade'],'name');
+		$data['school_poor_grade_name'] = self::getGradeData($data['school_poor_grade'],'name');
+		$data = handleApply($data);
+		return $data;
+	}
     public static function getMaterilaScore($evaluation_id)
     {
         $material = Db::name('evaluation_material')
             ->alias('em')
             ->join('yf_evaluation_application ea ','ea.evaluation_id = em.evaluation_id')
             ->join('yf_evaluation_material_config emc ','em.cid = emc.cid')
-            ->field('max(emc.score) as material_score,em.member_list_id')
+            ->field('sum(emc.score) as material_score,em.member_list_id')
             ->where('em.evaluation_id',$evaluation_id)
             ->group('em.member_list_id')
             ->find();
@@ -58,7 +70,7 @@ class Evaluation extends Model
         {
             $material_score += $material_config_40['score'];
         }
-        $material_config_37 = EvaluationMaterialConfig::getConfig(40);
+        $material_config_37 = EvaluationMaterialConfig::getConfig(37);
         if($material_config_37 && $member['is_rural_student'] == '是')
         {
             $material_score += $material_config_37['score'];
@@ -71,20 +83,32 @@ class Evaluation extends Model
     }
     public static function getGrade($value)
     {
-        $grade = '不困难';
+        $poor_grade_name = '不困难';
+		$poor_grade = 4;
         $grade_config = Db::name('evaluation_grade')
                    ->where("max <= '$value'")
                    ->order("max desc")
                    ->find();
         if($grade_config){
-            return $grade_config ? $grade_config['name'] : $grade;
+			$poor_grade_name = $grade_config['name'];
+			$poor_grade = $grade_config['id'];
         }else{
             $grade_config = Db::name('evaluation_grade')
                        ->where("min <= '$value' AND max >= '$value'")
                        ->find();
+			if($grade_config){
+				$poor_grade_name = $grade_config['name'];
+				$poor_grade = $grade_config['id'];
+			}
         }
-        return $grade_config ? $grade_config['name'] : $grade;
+		$data = [
+			'rank' => $poor_grade_name,
+			'poor_grade_name' =>$poor_grade_name,
+			'poor_grade' => $poor_grade
+		];
+        return $data;
     }
+	
     public function getEvaluationList($where,$order = '')
     {
         return Db::name('evaluation_status')
@@ -95,7 +119,7 @@ class Evaluation extends Model
                     ->where($where)
 					->where('app.times',$this->subsidy['begin_time'])
                     ->order($order)
-                    ->field('ass.*,m.member_list_username,m.member_list_nickname,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,app.group_opinion,app.faculty_opinion,u.*')
+                    ->field('ass.*,m.member_list_username,m.member_list_nickname,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,app.group_opinion,app.faculty_opinion,app.school_opinion,app.group_poor_grade,app.faculty_poor_grade,app.school_poor_grade, u.*')
                     ->paginate(40);
     }
     public function getAllEvaluationList($where)
@@ -108,15 +132,13 @@ class Evaluation extends Model
         			->order('score desc')
         			->where($where)
 					->where('app.times',$this->subsidy['begin_time'])
-                    ->field('ass.*,m.member_list_username,m.member_list_nickname,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,app.group_opinion,app.faculty_opinion,u.*')
+                    ->field('ass.*,m.member_list_username,m.member_list_nickname,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,app.group_opinion,app.faculty_opinion,app.school_opinion,app.group_poor_grade,app.faculty_poor_grade,app.school_poor_grade,u.*')
                     ->select();
     }
     public static function handleEvaluationList($data)
     {
         foreach ($data as $key => $val) {
-            $data[$key] = handleApply($val);
-            $data[$key]['material_score'] = self::getMaterilaScore($val['evaluation_id']);
-            $data[$key]['rank'] = self::getGrade($val['score']);
+			$data[$key] = self::handleEvaluation($val);
         }
         return $data;
     }
@@ -134,6 +156,7 @@ class Evaluation extends Model
         $eval_app = Db::name('evaluation_application')
 				->where('member_list_id',$member_list_id)
                 ->where(['evaluation_status' => ['in','4,5']])
+				->where(['school_poor_grade' => ['in','1,2,3']])
 				->where('times',$this->subsidy['begin_time'])
                 ->field('evaluation_id')
 				->find();
@@ -159,4 +182,26 @@ class Evaluation extends Model
         $count = $count->count();
 		return $count;
     }
+	public static function getGradeData($id,$value = 'name')
+	{
+		return Db::name('evaluation_grade')->where('id',$id)->value($value);
+	}
+	public static function getGradesHtml($grade = 1,$name="grade")
+	{
+		$grade = $grade ? $grade : 1;
+		$grades = self::getGradeConfigs();
+		$html = '<select name="'.$name.'">';
+		foreach($grades as $key => $value)
+		{
+			if($value['id'] == $grade)
+			{
+				$html .= '<option value="'.$value['id'].'" selected>'.$value['name'].'</option>';
+			}else{
+				$html .= '<option value="'.$value['id'].'">'.$value['name'].'</option>';
+			}
+			
+		}
+		$html .= '</select>';
+		return $html;
+	}
 }

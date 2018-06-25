@@ -51,8 +51,10 @@ class ScholarshipHandle extends Base
         $update_app_data = [];
         if (input('fail') !== null and !empty(input('fail'))) {
             $update_app_data['check_status'] = $status = 7;
+			$text = "不同意";
         } else {
             $update_app_data['check_status'] = $status = 3;
+			$text = "同意";
         }
         if(empty($ids)){
             $this -> error("请选择数据");
@@ -66,7 +68,7 @@ class ScholarshipHandle extends Base
         foreach($data as $key => $val)
         {
             $k = array_search($val['application_id'], $ids);
-            $array['text'] = $group_opinions[$k];
+            $array['text'] = isset($group_opinions[$k]) ? $group_opinions[$k] : $text;
             $array['name'] = '';
             $array['time'] = time();
             $update_app_data['group_opinion'] = json_encode($array);
@@ -80,11 +82,13 @@ class ScholarshipHandle extends Base
         $data = $request->post();
         if (isset($data['fail']) and !empty($data['fail'])) {
             $update_app_data['check_status'] = $status = 7;
+			$text = "不同意";
         } else {
             $update_app_data['check_status'] = $status = 3;
+			$text = "同意";
         }
         //构造评语
-        $array['text'] = $data['group_opinion']['text'];
+        $array['text'] = isset($data['group_opinion']['text']) ? $data['group_opinion']['text'] : $text;
         //$array['name'] = $data['group_opinion']['name'];
         $array['name'] = '';
         $array['time'] = time();
@@ -103,8 +107,10 @@ class ScholarshipHandle extends Base
         $update_app_data = [];
         if (input('fail') !== null and !empty(input('fail'))) {
             $update_app_data['check_status'] = $status = 8;
+			$text = "不同意";
         } else {
             $update_app_data['check_status'] = $status = 4;
+			$text = "同意";
         }
         if(empty($ids)){
             $this -> error("请选择数据");
@@ -124,7 +130,7 @@ class ScholarshipHandle extends Base
                 $update_app_data['publicity_end'] = time() + 60*60*24*5;
             }
             $k = array_search($val['application_id'], $ids);
-            $array['text'] = $faculty_opinions[$k];
+            $array['text'] = isset($faculty_opinions[$k]) ? $faculty_opinions[$k] : $text;
             $array['name'] = '';
             $array['time'] = time();
             $update_app_data['faculty_opinion'] = json_encode($array);
@@ -138,22 +144,22 @@ class ScholarshipHandle extends Base
         $data = $request->post();
         if (isset($data['fail']) and !empty($data['fail'])) {
             $update_app_data['check_status'] = $status = 8;
+			$text = "不同意";
         } else {
             $update_app_data['check_status'] = $status = 4;
+			$text = "同意";
         }
         //状态表id
         $status_id = $data['status_id'];
         //获取multiple_id
         $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type,status_id')->find();
         //构造json
-        if(isset($data['faculty_opinion']))
-        {
-            $array['text'] = $data['faculty_opinion']['text'];
-            //$array['name'] = $data['faculty_opinion']['name'];
-            $array['name'] = '';
-            $array['time'] = time();
-            $update_app_data['faculty_opinion'] = json_encode($array);
-        }
+ 
+		$array['text'] = isset($data['faculty_opinion']['text']) ? $data['faculty_opinion']['text'] : $text;
+		//$array['name'] = $data['faculty_opinion']['name'];
+		$array['name'] = '';
+		$array['time'] = time();
+		$update_app_data['faculty_opinion'] = json_encode($array);
 
         $update_app_data['update_at'] = time();
 
@@ -170,9 +176,16 @@ class ScholarshipHandle extends Base
         $data = $request->post();
         if (isset($data['fail']) and !empty($data['fail'])) {
             $update_app_data['check_status'] = $status = 9;
+			$text = "不同意";
         } else {
             $update_app_data['check_status'] = $status = 5;
+			$text = "同意";
         }
+		$array['text'] = isset($data['school_opinion']['text']) ? $data['school_opinion']['text'] : $text;
+		//$array['name'] = $data['faculty_opinion']['name'];
+		$array['name'] = '';
+		$array['time'] = time();
+		$update_app_data['school_opinion'] = json_encode($array);
         $status_id = $data['status_id'];
         $app_status_data = Db::name('apply_scholarships_status')->where('status_id',$status_id)->field('application_id,fund_type,status_id')->find();
         $update_app_data['update_at'] = time();
@@ -187,7 +200,8 @@ class ScholarshipHandle extends Base
     public function MultipleStudentOfficeFillAll()
     {
         $p = input('p');
-        $ids = input('n_id/a');
+        $ids = input('n_ids/a');
+		$school_opinions = input('opinions/a');
         if(empty($ids)){
             $this -> error("请选择数据");
         }
@@ -199,15 +213,23 @@ class ScholarshipHandle extends Base
         $data = Db::name('apply_scholarships_status')->where($where)->select();
         if (input('fail') !== null and !empty(input('fail'))) {
             $update_app_data['check_status'] = $status = 9;
+			$text = "不同意";
         } else {
             $update_app_data['check_status'] = $status = 5;
+			$text = "同意";
         }
         foreach($data as $key => $val)
         {
             if ($status == 5) {
                 $update_app_data['office_begin'] = time();
                 $update_app_data['office_end'] = time() + 60*60*24*5;
+				
             }
+			$k = array_search($val['application_id'], $ids);
+			$array['text'] = isset($school_opinions[$k]) ? $school_opinions[$k] : $text;
+			$array['name'] = '';
+			$array['time'] = time();
+			$update_app_data['school_opinion'] = json_encode($array);
             $this->multipleFill($val,$update_app_data);
         }
         $this->success("操作成功");
@@ -221,6 +243,7 @@ class ScholarshipHandle extends Base
                 'update_at' => time(),
                 'status' => $update_app_data['check_status']
             ]);
+
         if($app_status_data['fund_type'] == 1)
         {
             $res = Db::name("national_scholarship")

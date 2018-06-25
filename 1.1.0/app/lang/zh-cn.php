@@ -48,4 +48,33 @@ return [
 	'save'=>'保存',
 	'edit'=>'编辑',
 	'admin manage'=>'后台管理',
+	'common' => [
+		'id' => 'ID',
+		'handle' => '操作',
+		'status' => '状态',
+		'addtime' => '添加时间',
+		'user' => [
+			'admin_username' => '账号',
+			'group' => '用户组',
+			'faculty' => '所属部门',
+			'login_count' => '登陆数',
+			'ip' => '最近IP',
+			'member_list_username' => '学号',
+			'name' => '姓名',
+			'id_number' => '身份证',
+			'department' => '学院',
+			'profession' => '专业',
+			'class' => '班级',
+		],
+		'application' => [
+			
+		],
+		'check_option' => '评议',
+		'check_grade' => '评级',
+		'group' => '小组',
+		'college' => '学院', 
+		'school' => '学校', 
+		'assess_fraction' => '系统分',
+		'poor_grade_name' => '系统评级',
+	],
 ];

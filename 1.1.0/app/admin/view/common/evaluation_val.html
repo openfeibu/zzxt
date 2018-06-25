@@ -1,10 +1,8 @@
 <td>{$row.studentname}</td>
-<td>{$row.studentid}</td>
-<td>{$row.profession}</td>
+<td style="font-size: 12px;">{$row.id_number}</td>
+<td>{$row.class_name}</td>
 <td>{$row.assess_fraction}</td>
-<td>{$row.change_fraction}</td>
-<td>{$row.score}</td>
-<td>{$row.rank}</td>
+<td class="rank">{$row.poor_grade_name}</td>
 <td class="status">
-    {php}echo config('evaluation_status.'.$row['status']);{/php}
+	{php}echo config('evaluation_status.'.$row['status']);{/php}
 </td>

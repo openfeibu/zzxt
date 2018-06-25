@@ -32,22 +32,25 @@ class EvaluationHandle extends Base
         $array['name'] = '';
         $array['time'] = time();
         $evdata['group_opinion'] = json_encode($array);
+		$evdata['group_poor_grade'] = $data['poor_grade'];
         $id = $data['status_id'];
         $evaluation_id = $data['evaluation_id'];
         //更新
         $evaluation_model = new Evaluation();
         $eval_app = $evaluation_model->getEvaluation($evaluation_id);
-
+		$data['change_fraction'] = isset($data['change_fraction']) ? $data['change_fraction'] : 0;
         $evdata['score'] = intval($eval_app['assess_fraction']) + intval($data['change_fraction']) ;
         $evdata['change_fraction'] = intval($data['change_fraction']);
+		
         return $this->fill($data,$evdata,$status);
     }
     public function counselorAll()
     {
         $p = input('p');
         $ids = input('n_ids/a');
-        $change_fractions = input('change_fractions/a');
+        //$change_fractions = input('change_fractions/a');
         $group_opinions = input('opinions/a');
+		$group_poor_grades = input('poor_grades/a');
         if(empty($ids)){
             $this -> error("请选择数据");
         }
@@ -73,8 +76,9 @@ class EvaluationHandle extends Base
             $array['name'] = '';
             $array['time'] = time();
             $evdata['group_opinion'] = json_encode($array);
-            $evdata['score'] = intval($eval_app['assess_fraction']) + intval($change_fractions[$k]) ;
-            $evdata['change_fraction'] = intval($change_fractions[$k]);
+			$evdata['group_poor_grade'] = $group_poor_grades[$k];
+           // $evdata['score'] = intval($eval_app['assess_fraction']) + intval($change_fractions[$k]) ;
+           // $evdata['change_fraction'] = intval($change_fractions[$k]);
             $this->fill($data,$evdata,$status);
         }
         $this->success("操作成功");
@@ -92,6 +96,7 @@ class EvaluationHandle extends Base
         $array['name'] = '';
         $array['time'] = time();
         $evdata['faculty_opinion'] = json_encode($array);
+		$evdata['faculty_poor_grade'] = $data['poor_grade'];
         //var_dump($evdata);exit;
         $data['publicity_begin'] = time();
         //5天
@@ -104,6 +109,7 @@ class EvaluationHandle extends Base
         $p = input('p');
         $ids = input('n_ids/a');
         $faculty_opinions = input('opinions/a');
+		$faculty_poor_grades = input('poor_grades/a');
         if(empty($ids)){
             $this -> error("请选择数据",url('admin/StudentOffice/showEvaluationList',array('p'=>$p)));
         }
@@ -127,6 +133,7 @@ class EvaluationHandle extends Base
             $array['name'] = '';
             $array['time'] = time();
             $evdata['faculty_opinion'] = json_encode($array);
+			$evdata['faculty_poor_grade'] = $faculty_poor_grades[$k];
             $data['publicity_begin'] = time();
             //5天
             $data['publicity_end'] = time() + 60*60*24*5;
@@ -137,18 +144,26 @@ class EvaluationHandle extends Base
     public function studentOffice(Request $request)
     {
         $data = $request->post();
+		$array['text'] = $data['school_opinion']['text'];
+        $array['name'] = '';
+        $array['time'] = time();
+        $evdata['school_opinion'] = json_encode($array);
+		$evdata['school_poor_grade'] = $data['poor_grade'];
         if (isset($data['fail']) and !empty($data['fail'])) {
             $evdata['evaluation_status'] = $status = 9;
         } else {
             $evdata['evaluation_status'] = $status = 5;
         }
+		$evdata['school_poor_grade'] = $data['poor_grade'];
 		$this->fill($data,$evdata,$status);
         $this->success("操作成功",url('admin/StudentOffice/showEvaluationList'));
     }
     public function studentOfficeAll()
     {
         $p = input('p');
-        $ids = input('n_id/a');
+        $ids = input('n_ids/a');
+		$school_opinions = input('opinions/a');
+		$school_poor_grades = input('poor_grades/a');
         if(empty($ids)){
             $this -> error("请选择数据",url('admin/StudentOffice/showEvaluationList',array('p'=>$p)));
         }
@@ -163,9 +178,16 @@ class EvaluationHandle extends Base
         } else {
             $evdata['evaluation_status'] = $status = 5;
         }
-        foreach($esdata as $key => $val)
+        foreach($esdata as $k => $val)
         {
             $data['status_id'] = $val['status_id'];
+			
+			//构造评语什么的
+            $array['text'] = $school_opinions[$k];
+            $array['name'] = '';
+            $array['time'] = time();
+            $evdata['school_opinion'] = json_encode($array);
+			$evdata['school_poor_grade'] = $school_poor_grades[$k];
             $this->fill($data,$evdata,$status);
         }
         $this->success("操作成功",url('admin/StudentOffice/showEvaluationList',array('p'=>$p)));

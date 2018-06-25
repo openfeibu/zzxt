@@ -145,7 +145,7 @@ class Counselor extends Base
 		$apply = $this->scholarships->getScholarship($data['fund_type'],$id);
 
 		$this->assign('type_id', $type_id);
-        $this->assign('id', $id);
+        $this->assign('id', $apply_id);
         $this->assign('user', $apply);
         return $this->view->fetch('counselor_add_review');
     }
@@ -214,11 +214,11 @@ class Counselor extends Base
             ->where('evaluation_id',$data['evaluation_id'])
             ->field('u.*,app.*')
             ->find();
-        $apply = handleApply($apply);
+        $apply = \app\admin\model\Evaluation::handleEvaluation($apply);
 
         $this->assign('status_id', $id);
         $this->assign('user', $apply);
-		$apply['members'] = unserialize($apply['members']);
+		//$apply['members'] = unserialize($apply['members']);
 		$this->assign('eval_app',$apply);
 		$eval_form = Config::get('evaluation_form');
 		$this->assign('eval_form',$eval_form);
