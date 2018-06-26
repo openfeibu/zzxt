@@ -119,6 +119,7 @@ class Evaluation extends Model
                     ->where($where)
 					->where('app.times',$this->subsidy['begin_time'])
                     ->order($order)
+					->order('evaluation_id desc')
                     ->field('ass.*,m.member_list_username,m.member_list_nickname,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,app.group_opinion,app.faculty_opinion,app.school_opinion,app.group_poor_grade,app.faculty_poor_grade,app.school_poor_grade, u.*')
                     ->paginate(40);
     }
@@ -216,4 +217,53 @@ class Evaluation extends Model
         $school_poor_grade =  $school_poor_grade ? $school_poor_grade : 0;
 		return self::getGradeData($school_poor_grade);
 	}
+	public function getEvaluationNext($evaluation_id,$where = "",$order)
+	{
+		$next_apply = Db::table('yf_evaluation_application')
+            ->alias('app')
+			->join('yf_evaluation_status ass', 'ass.evaluation_id = app.evaluation_id')
+            ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+            ->where('app.evaluation_id','<',$evaluation_id)
+			->where($where)
+			->order($order)
+			->order('evaluation_id desc')
+			->field('ass.status_id,app.evaluation_id,app.evaluation_status')
+			->find();
+		return $next_apply;
+	}
+	public function getEvaluationNextUrl($evaluation_id,$type,$where="",$order="")
+	{
+		$next_url = "";
+		$next_apply = $this->getEvaluationNext($evaluation_id,$where,$order);
+		if($next_apply){
+			$next_url = url('admin/'.$type.'/showEvaluationMaterial',['id' => $next_apply['status_id']]);
+		}
+		return $next_url;
+	}
+	public function getEvaluationPrevious($evaluation_id,$where="",$order="")
+	{
+		$previous_apply = Db::table('yf_evaluation_application')
+            ->alias('app')
+			->join('yf_evaluation_status ass', 'ass.evaluation_id = app.evaluation_id')
+            ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+            ->where('app.evaluation_id','>',$evaluation_id)
+			->where($where)
+			->order($order)
+			->order('evaluation_id asc')
+			->field('ass.status_id,app.evaluation_id,app.evaluation_status')
+			->find();
+		return $previous_apply;
+	}
+	public function getEvaluationPreviousUrl($evaluation_id,$type,$where="",$order="")
+	{
+		$previous_url = "";
+		$previous_apply = $this->getEvaluationPrevious($evaluation_id,$where,$order);
+		if($previous_apply){
+			$previous_url = url('admin/'.$type.'/showEvaluationMaterial',['id' => $previous_apply['status_id']]);
+		}
+		return $previous_url;
+	}
+	
 }

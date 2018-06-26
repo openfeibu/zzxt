@@ -75,6 +75,12 @@
                             <!-- <a href="{:url('admin/Counselor/showEvaluationEvidence',['id'=>$user.evaluation_id])}" target="_blank" class="btn btn-info">查看相关证明</a> -->
                             <button type="submit" class="btn btn-primary" name="pass">提交</button>
                             <!-- <button type="submit" class="btn btn-danger" name="fail" value="1">不同意</button> -->
+							{if $previous_url}
+							<a href="{$previous_url}" class="btn btn-success">上一个</a> 
+							{/if}
+							{if $next_url}
+							<a href="{$next_url}" class="btn btn-success">下一个</a> 
+							{/if}
                         </td>
                         <td style="width: 266px;"></td>
                     </tr>

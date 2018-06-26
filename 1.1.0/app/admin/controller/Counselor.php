@@ -148,6 +148,15 @@ class Counselor extends Base
 		$this->assign('type_id', $type_id);
         $this->assign('id', $apply_id);
         $this->assign('user', $apply);
+		
+		$where = " u.class_number in (".implode(',',$this->class_number).") ";
+		$where .= " AND check_status in(1,2,3,4,5,6,7,8,9) ";
+		$previous_url = $this->scholarships->getScholarshipPreviousUrl($type_id,$apply_id,'Counselor/showMaterial'.$type_id,$where);
+		$next_url = $this->scholarships->getScholarshipNextUrl($type_id,$apply_id,'Counselor/showMaterial'.$type_id,$where);
+
+		$this->assign('previous_url', $previous_url);
+		$this->assign('next_url', $next_url);
+		
         return $this->view->fetch('showMaterial');
     }
 
@@ -174,8 +183,8 @@ class Counselor extends Base
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
         }
-        $order = "charindex(','+convert(varchar,status)+',',',1,2,3,4,5,6,7,8,9,')";
-        $where .= " AND ass.status in(1,2,3,4,5,6,7,8,9)";
+        $order = "charindex(','+convert(varchar,evaluation_status)+',',',1,2,3,4,5,6,7,8,9,')";
+        $where .= " AND evaluation_status in(1,2,3,4,5,6,7,8,9)";
         $data = $this->evaluation->getEvaluationList($where,$order);
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
@@ -226,74 +235,14 @@ class Counselor extends Base
         $material = \app\admin\model\Evaluation::getEvaluationMaterial($apply['evaluation_id']);
         $this->assign('material', $material);
 		
-		$where = ' 1 = 1 ';
-		$where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
-		$where .= " AND ass.status in(1,2,3,4,5,6,7,8,9)";
-		$previous_url = "";
-		$next_url = "";
-		$previous_apply = Db::table('yf_evaluation_application')
-            ->alias('app')
-			->join('yf_evaluation_status ass', 'ass.evaluation_id = app.evaluation_id')
-            ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
-            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-            ->where('app.evaluation_id','<',$apply['evaluation_id'])
-			->order('evaluation_id desc')
-			->field('ass.status_id,app.evaluation_id')
-			->find();
-		
-		if($previous_apply){
-			$previous_url = url('admin/Counselor/showEvaluationMaterial',['id' => $previous_apply['status_id']]);
-		}
-		$next_apply = Db::table('yf_evaluation_application')
-            ->alias('app')
-			->join('yf_evaluation_status ass', 'ass.evaluation_id = app.evaluation_id')
-            ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
-            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-            ->where('app.evaluation_id','>',$data['evaluation_id'])
-			->order('evaluation_id asc')
-			->field('ass.status_id,app.evaluation_id')
-			->find();
-		if($next_apply){
-			$next_url = url('admin/Counselor/showEvaluationMaterial',['id' => $next_apply['status_id']]);
-		}
+		$where = " u.class_number in (".implode(',',$this->class_number).") ";
+		$where .= " AND evaluation_status in(1,2,3,4,5,6,7,8,9) ";
+		$previous_url = $this->evaluation->getEvaluationPreviousUrl($apply['evaluation_id'],'Counselor',$where);
+		$next_url = $this->evaluation->getEvaluationNextUrl($apply['evaluation_id'],'Counselor',$where);
 
 		$this->assign('previous_url', $previous_url);
 		$this->assign('next_url', $next_url);
 		
         return $this->view->fetch('evaluation/counselor_add_review');
-    }
-
-    /**
-     * 下一页（评估系统内容页）
-     */
-    public function evaluationNext($id){
-        $data = Db::name('evaluation_status')
-            ->alias('ass')
-            ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
-            ->where("ass.status_id",$id)
-            ->field('app.score')
-            ->find();
-
-		$next = Db::name('evaluation_status')
-			->alias('ass')
-			->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
-			->where('app.score','=',$data['score'])
-			->where('ass.status_id','>',$id)
-			->field('ass.status_id,app.score')
-			->order('score desc')
-			->order('status_id asc')
-			->select();
-
-		if (empty($next)) {
-			$next = Db::name('evaluation_status')
-				->alias('ass')
-				->join('yf_evaluation_application app', 'ass.evaluation_id = app.evaluation_id')
-				->where('app.score', '<', $data['score'])
-				->field('ass.status_id,app.score')
-				->order('score desc')
-				->select();
-		}
-		//$where = " u.class_number in (".implode(',',$this->class_number).") ";
-        $this->redirect('admin/Counselor/showEvaluationMaterial',['id'=>$next[0]['status_id']]);
     }
 }

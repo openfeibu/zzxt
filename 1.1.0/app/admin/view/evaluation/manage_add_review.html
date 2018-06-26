@@ -87,6 +87,12 @@
                             <input type="hidden" name="status_id" value="{$status_id}">
                             <button type="submit" class="btn btn-primary" name="pass">提交</button>
                             <!-- <button type="submit" class="btn btn-danger" name="fail" value="1">不同意</button> -->
+							{if $previous_url}
+							<a href="{$previous_url}" class="btn btn-success">上一个</a> 
+							{/if}
+							{if $next_url}
+							<a href="{$next_url}" class="btn btn-success">下一个</a> 
+							{/if}
                         </td>
                         <td style="width: 266px;"></td>
                     </tr>
@@ -96,7 +102,7 @@
         </div>
     </div>
 </div>
-{if $user.evaluation_status == 9}
+{if !in_array($user.evaluation_status,[4]) }
 <script>
 $("#passingForm").find("textarea").attr('disabled',true);
 $("#passingForm").find("input").attr('disabled',true);

@@ -98,7 +98,15 @@ class EvaluationGroup extends Base
 		$this->assign('eval_form',$eval_form);
         $material = \app\admin\model\Evaluation::getEvaluationMaterial($apply['evaluation_id']);
         $this->assign('material', $material);
+		
+		$where = " u.class_number = '".$this->class_number."' ";
+		$where .= " AND evaluation_status in(1,2,3,4,5,6,7,8,9) ";
+		$previous_url = $this->evaluation->getEvaluationPreviousUrl($apply['evaluation_id'],'EvaluationGroup',$where);
+		$next_url = $this->evaluation->getEvaluationNextUrl($apply['evaluation_id'],'EvaluationGroup',$where);
 
+		$this->assign('previous_url', $previous_url);
+		$this->assign('next_url', $next_url);
+		
         return $this->view->fetch('evaluation/class_add_review');
     }
 

@@ -183,6 +183,15 @@ class StudentOffice extends Base
         $this->assign('type_id', $type_id);
         $this->assign('id', $apply_id);
         $this->assign('user', $apply);
+		
+		$where = " 1=1  ";
+		$where .= " AND check_status in(1,2,3,4,5,6,7,8,9) ";
+		$previous_url = $this->scholarships->getScholarshipPreviousUrl($type_id,$apply_id,'StudentOffice/showMaterial'.$type_id,$where);
+		$next_url = $this->scholarships->getScholarshipNextUrl($type_id,$apply_id,'StudentOffice/showMaterial'.$type_id,$where);
+
+		$this->assign('previous_url', $previous_url);
+		$this->assign('next_url', $next_url);
+		
         return $this->view->fetch('showMaterial');
     }
 
@@ -398,6 +407,15 @@ class StudentOffice extends Base
         $this->assign('user', $apply);
         $material = \app\admin\model\Evaluation::getEvaluationMaterial($apply['evaluation_id']);
         $this->assign('material', $material);
+		
+		$where = " 1 = 1  ";
+		$where .= " AND evaluation_status in(1,2,3,4,5,6,7,8,9) ";
+		$order = "charindex(','+convert(varchar,evaluation_status)+',',',1,2,3,4,5,6,7,8,9,')";
+		$previous_url = $this->evaluation->getEvaluationPreviousUrl($apply['evaluation_id'],'StudentOffice',$where);
+		$next_url = $this->evaluation->getEvaluationNextUrl($apply['evaluation_id'],'StudentOffice',$where);
+		$this->assign('previous_url', $previous_url);
+		$this->assign('next_url', $next_url);
+		
         return $this->view->fetch('evaluation/manage_add_review');
     }
 }
