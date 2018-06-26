@@ -104,7 +104,7 @@ table input[type="text"]{border:none;width: 90%;text-align: center;}
 .input_border_bottom{display:inline-block;border-bottom: 1px solid #555555!important;width: auto!important;}
 .input_border_bottom[disabled]{background-color: #fff!important;}
 /*评估系统修改分数*/
-.modify{width: 400px;}
+/* .modify{width: 250px;} */
 .modify>p{display: inline-block;font-size: 16px;font-weight: 600;}
 .modify_add,.modify_less{border:0;}
 .modify_score{display: inline-block;}

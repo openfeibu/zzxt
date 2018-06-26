@@ -1,5 +1,4 @@
-<?php
-return array (
+<?php	return array (
   'yfcmf_version' => 'V2.3.1',
   'update_check' => false,
   'think_sdk_qq' => 

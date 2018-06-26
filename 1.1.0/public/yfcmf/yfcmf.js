@@ -1219,13 +1219,14 @@ $('body').on('click',".passingForm2 button[type='submit']",function () {
 	name = $(this).attr('name');
 	text = $(this).closest("tr").find(".text").val();
 	textname = $(this).closest("tr").find(".text").attr('name');
+	poor_grade = $(this).closest("tr").find("select[name='poor_grade']").val();
 	change_fraction = $(this).closest("tr").find(".change_fraction").val();
 	fail = '';
 	if(name == 'fail')
 	{
 		fail = 1;
 	}
-	data = data +"&"+"fail="+fail+"&"+textname+"="+text+"&change_fraction="+change_fraction;
+	data = data +"&"+"fail="+fail+"&"+textname+"="+text+"&change_fraction="+change_fraction+'&poor_grade='+poor_grade;
 	//console.log(data);return false;
 	$.ajax({
 		cache: true,
@@ -1243,9 +1244,10 @@ $('body').on('click',".passingForm2 button[type='submit']",function () {
 			if (data.code == 1 || data.code == 200) {
 				$this.closest("tr").find(".text").attr("disabled",true);
 				$this.closest("tr").find(".change_fraction").attr("disabled",true);
+				$this.closest("tr").find("select[name='poor_grade']").attr("disabled",true);
 				$this.closest("tr").find(".score").text(data.score);
 				$this.closest("tr").find(".status").text(data.status);
-				$this.closest("tr").find(".rank").text(data.rank);
+				$this.closest("tr").find(".rank").text(data.poor_grade_name);
                 layer.msg(data.msg,{icon: 6});
             }else{
                 layer.msg(data.msg,{icon: 5});
@@ -1321,6 +1323,7 @@ $('body').on('click','.passingDiv2 button',function () {
 		success: function(data) {
 			$this.closest(".passingDiv2").find("button[name='pass']").attr('disabled',true);
 			$this.closest(".passingDiv2").find("button[name='fail']").attr('disabled',true);
+			$this.closest("tr").find(".text").attr('disabled',true);
 			if (data.code == 1 || data.code == 200) {
                 layer.msg(data.msg,{icon: 6});
             }else{
@@ -1348,18 +1351,20 @@ $('body').on('click','#passSubmit',function () {
 	var n_ids = [];
 	var opinions = [];
 	var change_fractions = [];
+	var poor_grades = [];
 	$.each(n_id,function(i,obj){
 		n_ids.push($(this).val());
-		var opinion = $(this).parents('tr').find('.text').find('option:selected').val();
+		var opinion = $(this).parents('tr').find('.text').val();
 		var change_fraction = $(this).parents('tr').find('.change_fraction').val();
 		opinions.push(opinion);
 		change_fractions.push(change_fraction);
+		poor_grades.push($(this).parents('tr').find("select[name='poor_grade']").val());
 	});
 
 	$.ajax({
 		url: href,
 		type:'POST',
-		data:{'n_ids':n_ids,'opinions':opinions,'change_fractions':change_fractions},
+		data:{'n_ids':n_ids,'opinions':opinions,'change_fractions':change_fractions,'poor_grades':poor_grades},
 		success: function(data){
 			if (data.code == 1) {
                 layer.msg(data.msg,{icon: 6});
@@ -1402,4 +1407,32 @@ $('body').on('click','#failSubmit',function () {
 		}
 	});
 	return false;
+});
+$('body').on('change',"select[name='poor_grade']",function () {
+	last_project = $(this).closest("tr").find(".last_poor_grade");
+	var last_poor_grade = last_project.attr('last_poor_grade');
+	if(last_poor_grade)	
+	{
+		var this_poor_grade = $(this).val();
+		text = "不同意";
+		if(this_poor_grade == last_poor_grade)
+		{
+			text = "同意";
+		}
+		$(this).closest("tr").find(".text").val(text);
+		$(this).closest("tr").find(".this_poor_grade_name").text(text);
+	}else{
+		last_project = $(".last_poor_grade");
+		var last_poor_grade = last_project.val();
+		if(last_poor_grade)
+		{
+			var this_poor_grade = $(this).val();
+			text = "不同意";
+			if(this_poor_grade == last_poor_grade)
+			{
+				text = "同意";
+			}
+			$(".text").val(text);
+		}
+	}
 });

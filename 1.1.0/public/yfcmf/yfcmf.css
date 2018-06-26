@@ -15,3 +15,11 @@
 .export{
     font-size: 30px;
 }
+.level_form{display: inline-block;margin:5px;}
+.level_form>div{display: inline-block;}
+.level_form>div>label{display: inline-block;}
+.level_form>div>input{display: inline-block;width: auto;height: auto;}
+.level_form>.level_time{width: 90px;}
+.level_form>.level_time>input{width:70%;border-bottom:1px solid #555555;}
+.level_form>.signature>label{display: inline-block}
+.level_form>.signature>input{display: inline-block;border-bottom:1px solid #555555;}
