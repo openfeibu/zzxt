@@ -2,19 +2,7 @@
 {block name="main-content"}
 
 <div class="page-content">
-    <div class="page-header">
-        <h1>
-            您当前操作
-            <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>
-                <a href="{:url('admin/EvaluFront/E_faculty_review')}">学生家庭经济困难认定</a>
-            </small>
-            <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>
-                查看学生信息
-            </small>
-        </h1>
-    </div>
+    <div class="page-header"></div>
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="w900">
@@ -57,7 +45,7 @@
                 </table>
 				<div class="clearfix"></div>
 				<div class="" style="text-align:left;font-size: 16px;">
-				<p>系统评级：{$eval_app.poor_grade_name}</p>	
+				<p>系统评级：{$eval_app.system_poor_grade_name}</p>	
 				<p>
 					小组评级：{$eval_app.group_poor_grade_name}
 					<input type="hidden" name="last_poor_grade" class="last_poor_grade" value="{$eval_app.group_poor_grade}">

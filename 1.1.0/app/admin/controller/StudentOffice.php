@@ -88,6 +88,12 @@ class StudentOffice extends Base
         }
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+		$data_arr = $data->all();
+        foreach($data_arr as $key => $value)
+        {
+            $data_arr[$key] = handleApply($value);
+			$data_arr[$key]['poor_grade_name'] = $this->evaluation->getMemberEvaluationGradeName($value['member_list_id']);
+        }
        //待操作
 		$doingcount = $this->scholarships->getCount($id,' check_status in (4) ');
 		//总得人数
@@ -95,7 +101,7 @@ class StudentOffice extends Base
         $this->assign('type_id', $id);
         $this->assign('doingcount', $doingcount);
         $this->assign('allcount', $allcount);
-        $this->assign('user', $data);
+        $this->assign('user', $data_arr);
         $this->assign('page', $show);
         $detail_url = url('admin/StudentOffice/showMaterial'.$id,['type_id'=>$id]);
         $this->assign('detail_url',$detail_url);

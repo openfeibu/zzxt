@@ -2,18 +2,7 @@
 {block name="main-content"}
 
 <div class="page-content">
-    <div class="page-header">
-        <h1>
-            您当前操作
-            <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>学生家庭经济困难认定
-            </small>
-            <small>
-            <i class="ace-icon fa fa-angle-double-right"></i>
-            学生处审核
-            </small>
-        </h1>
-    </div>
+    <div class="page-header"></div>
     <div class="row clearfix">
         <div class="col-md-12 column">
             <!--<div class="w1000">-->
@@ -30,7 +19,7 @@
                 </div>
                 <form class="tab_inquire" method="post" action="{:url('admin/StudentOffice/showEvaluationList')}">
                     <select class="form-control tab_select counselor_sub ajax_change faculty_more" name="faculty_number" href="{:url('admin/ClassCode/getClasses')}">
-                        <option value="0">所有系</option>
+                        <option value="0">所有院系</option>
                         {foreach $faculties as $row}
                         <option value="{$row.faculty_number}">{$row.faculty_name}</option>
                         {/foreach}

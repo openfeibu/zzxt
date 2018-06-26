@@ -93,6 +93,7 @@ class Counselor extends Base
         foreach($data_arr as $key => $value)
         {
             $data_arr[$key] = handleApply($value);
+			$data_arr[$key]['poor_grade_name'] = $this->evaluation->getMemberEvaluationGradeName($value['member_list_id']);
         }
 
 		//待操作
@@ -108,9 +109,9 @@ class Counselor extends Base
         $detail_url = url('admin/Counselor/showMaterial'.$id,['type_id'=>$id]);
         $this->assign('detail_url',$detail_url);
         if(request()->isAjax()){
-			return $this->fetch('counselor_ajax_review');
+			return $this->fetch('ajax_showApplicationList');
 		}else{
-			return $this->fetch('counselor_review');
+			return $this->fetch('showApplicantList');
 		}
     }
     public function showMaterial1($type_id)
@@ -147,7 +148,7 @@ class Counselor extends Base
 		$this->assign('type_id', $type_id);
         $this->assign('id', $apply_id);
         $this->assign('user', $apply);
-        return $this->view->fetch('counselor_add_review');
+        return $this->view->fetch('showMaterial');
     }
 
     /**

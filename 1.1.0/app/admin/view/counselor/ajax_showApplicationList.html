@@ -12,6 +12,17 @@
     </td>
     {include file="common\group_application_val"}
 	{if $type_id == 1}
+	<td>{$row.reason}</td>
+	<td>
+        {if !in_array($row.check_status,[1,2])}
+        {$row.group_opinion.text}
+        {else}
+        <textarea name="group_opinion[text]" class="text">{$row.group_opinion.text|default="同意"}</textarea>
+        {/if}
+    </td>
+	{else}
+	<td>{$row.poor_grade_name}</td>
+	<td>{$row.reason}</td>
 	<td>
         {if !in_array($row.check_status,[1,2])}
         {$row.group_opinion.text}
@@ -20,6 +31,9 @@
         {/if}
     </td>
 	{/if}
+	<td>
+		{php}echo config('check_status.'.$row['check_status']);{/php}
+	</td>
     <td>
         <div class="audit_opera">
             <div action="{:url('admin/ScholarshipHandle/MultipleCounselorFill')}" class="passingDiv2" method="post">

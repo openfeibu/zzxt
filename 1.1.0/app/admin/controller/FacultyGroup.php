@@ -89,6 +89,7 @@ class FacultyGroup extends Base
         foreach($data_arr as $key => $value)
         {
             $data_arr[$key] = handleApply($value);
+			$data_arr[$key]['poor_grade_name'] = $this->evaluation->getMemberEvaluationGradeName($value['member_list_id']);
         }
 
         //待操作

@@ -10,7 +10,29 @@
         {/if}
         {$row.status_id}
     </td>
-    {include file="common\group_application_val"}
+    <td>{$row.studentname}</td>
+	<td>{$row.id_number}</td>
+	<td>{$row.department_name}{$row.class_name}</td>
+	{if $type_id == 1}
+	<td>{$row.reason}</td>
+	<td>{$row.group_opinion.text}</td>
+	<td>{$row.faculty_opinion.text}</td>
+	<td>
+        {if !in_array($row.check_status,[4])}
+        {$row.school_opinion.text}
+        {else}
+        <textarea name="school_opinion[text]" class="text">{$row.school_opinion.text|default="同意"}</textarea>
+        {/if}
+    </td>
+	{else}
+	<td>{$row.poor_grade_name}</td>
+	<td>{$row.reason}</td>
+	<td>{$row.group_opinion.text}</td>
+	{/if}
+	<td>
+		{php}echo config('check_status.'.$row['check_status']);{/php}
+	</td>
+
     <td class="tab_content">
         <div action="{:url('admin/ScholarshipHandle/MultipleStudentOfficeFill')}" class="passingDiv2" method="post">
             <input type="hidden" name="status_id" value="{$row.status_id}" />

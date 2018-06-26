@@ -67,14 +67,26 @@ return [
 			'class' => '班级',
 		],
 		'application' => [
-			
+			'apply_reason' => '申请理由',
+			'recommend_reason' => '推荐理由',
+			'group' => [
+				'option' => '推荐理由',
+			],
+			'college' => [
+				'option' => '学院意见',
+			],
+			'school' => [
+				'option' => '学校意见',
+			],
 		],
 		'check_option' => '评议',
 		'check_grade' => '评级',
 		'group' => '小组',
-		'college' => '学院', 
-		'school' => '学校', 
+		'college' => '学院',
+		'school' => '学校',
 		'assess_fraction' => '系统分',
 		'poor_grade_name' => '系统评级',
+		'poor_grade' => '困难等级',
+		'check_status' => '审批状态',
 	],
 ];

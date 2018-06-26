@@ -2,18 +2,7 @@
 {block name="main-content"}
 
 <div class="page-content">
-    <div class="page-header">
-        <h1>
-            您当前操作
-            <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>国家励志奖学金院系审核
-            </small>
-            <!--<small>-->
-            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
-            <!--个人简历-->
-            <!--</small>-->
-        </h1>
-    </div>
+    <div class="page-header"></div>
     <input type="hidden" name="faculty" value="5">
     <div class="row clearfix">
         <div class="col-md-12 column">
@@ -60,12 +49,19 @@
                     </th>
                     {include file="common\group_application_key"}
 					{if $type_id == 1}
-                    <th>推荐理由</th>
+                    <th>{$Think.lang.common['application']['apply_reason']}</th>
+					<!-- <th>{$Think.lang.common['application']['recommend_reason']}</th> -->
+					<th>{$Think.lang.common['application']['group']['option']}</th>
+					{else}
+					<th>{$Think.lang.common['poor_grade']}</th>
+					<th>{$Think.lang.common['application']['apply_reason']}</th>
+					<th>{$Think.lang.common['application']['group']['option']}</th>
 					{/if}
-                    <th>操作</th>
+					<th>{$Think.lang.common['check_status']}</th>
+                    <th>{$Think.lang.common['handle']}</th>
                     </thead>
                     <tbody id="ajax-data">
-                        {include file="counselor\counselor_ajax_review"}
+                        {include file="counselor\ajax_showApplicationList"}
                     </tbody>
                 </table>
             </div>

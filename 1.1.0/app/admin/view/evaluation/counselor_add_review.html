@@ -2,19 +2,7 @@
 {block name="main-content"}
 
 <div class="page-content">
-    <div class="page-header">
-        <h1>
-            您当前操作
-            <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>
-                <a href="{:url('admin/EvaluFront/E_counselor_review')}">学生家庭经济困难认定</a>
-            </small>
-            <small>
-                <i class="ace-icon fa fa-angle-double"></i>
-                查看学生资料
-            </small>
-        </h1>
-    </div>
+    <div class="page-header"></div>
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="w900" method="post">
@@ -54,13 +42,13 @@
 
                                 <textarea name="group_opinion[text]" class="tab_opinion">{$user.group_opinion.text|default='同意'}</textarea>
                                 <div class="" style="text-align:left;font-size: 16px;">
-								<p>系统评级：{$eval_app.poor_grade_name}</p>	
+								<p>系统评级：{$eval_app.system_poor_grade_name}</p>	
 								</div>
                                 <div class="modify pull-left">
                                     <p>修改评级：</p>
                                     <div class="modify_score">
 										{if in_array($user.evaluation_status,[1,2])}
-										{php} echo \app\admin\model\Evaluation::getGradesHtml($eval_app['poor_grade'],'poor_grade');{/php}
+										{php} echo \app\admin\model\Evaluation::getGradesHtml($eval_app['system_poor_grade'],'poor_grade');{/php}
 										{else}
 										{php} echo \app\admin\model\Evaluation::getGradesHtml($eval_app['group_poor_grade'],'poor_grade');{/php}
 										{/if}

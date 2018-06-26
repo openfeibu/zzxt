@@ -2,14 +2,7 @@
 {block name="main-content"}
 
 <div class="page-content">
-    <div class="page-header">
-        <h1>
-            您当前操作
-            <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>国家{php}echo config('application_type.'.$type_id);{/php}班级审核
-            </small>
-        </h1>
-    </div>
+    <div class="page-header"></div>
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div>
@@ -41,6 +34,10 @@
                     <tr>
                         <th>ID</th>
                         {include file="common\group_application_key"}
+						{if $type_id == 1}
+						{else}
+						<th>{$Think.lang.common['poor_grade']}</th>
+						{/if}
                         <th>操作</th>
                     </tr>
 

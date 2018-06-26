@@ -3,19 +3,7 @@
 {block name="main-content"}
 
 <div class="page-content">
-    <div class="page-header">
-        <h1>
-            您当前操作
-            <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>
-                <a href="">国家{php}echo config('application_type.'.$type_id);{/php}全院审核</a>
-            </small>
-            <!--<small>-->
-            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
-            <!--个人简历-->
-            <!--</small>-->
-        </h1>
-    </div>
+    <div class="page-header"></div>
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div >
@@ -32,7 +20,7 @@
                 <div class="clearfix"></div>
                 <form class="tab_inquire" method="post">
                     <select class="form-control tab_select counselor_sub ajax_change faculty_more" name="faculty_number" href="{:url('admin/ClassCode/getClasses')}">
-                        <option value="0">所有系</option>
+                        <option value="0">所有院系</option>
                         {foreach $faculties as $row}
                         <option value="{$row.faculty_number}">{$row.faculty_name}</option>
                         {/foreach}
@@ -67,7 +55,18 @@
                         </label>ID
 					</th>
                     {include file="common\group_application_key"}
-                    <th>操作</th>
+					{if $type_id == 1}
+					<th>{$Think.lang.common['application']['apply_reason']}</th>
+					<th>{$Think.lang.common['application']['group']['option']}</th>
+					<th>{$Think.lang.common['application']['college']['option']}</th>
+					<th>{$Think.lang.common['application']['school']['option']}</th>
+					{else}
+					<th>{$Think.lang.common['poor_grade']}</th>
+					<th>{$Think.lang.common['application']['apply_reason']}</th>
+					<th>{$Think.lang.common['application']['group']['option']}</th>
+					{/if}
+					<th>{$Think.lang.common['check_status']}</th>
+					<th>{$Think.lang.common['handle']}</th>
                     </thead>
                     <tbody id="ajax-data">
                     {include file="student_office\ajax_showApplicationList"}

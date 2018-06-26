@@ -45,11 +45,11 @@ class Evaluation extends Model
 	{
 		$data['material_score'] = self::getMaterilaScore($data['evaluation_id']);
 		$grade = self::getGrade($data['score']);
-		$data['poor_grade_name'] = $grade['poor_grade_name'];
-		$data['poor_grade'] = $grade['poor_grade'];
+		$data['system_poor_grade_name'] = $grade['poor_grade_name'];
+		$data['system_poor_grade'] = $grade['poor_grade'];
 		$data['group_poor_grade_name'] = self::getGradeData($data['group_poor_grade'],'name');
 		$data['faculty_poor_grade_name'] = self::getGradeData($data['faculty_poor_grade'],'name');
-		$data['school_poor_grade_name'] = self::getGradeData($data['school_poor_grade'],'name');
+		$data['poor_grade_name'] = self::getGradeData($data['school_poor_grade'],'name');
 		$data = handleApply($data);
 		return $data;
 	}
@@ -203,5 +203,17 @@ class Evaluation extends Model
 		}
 		$html .= '</select>';
 		return $html;
+	}
+	public function getMemberEvaluationGradeName($member_list_id)
+	{
+		$school_poor_grade = Db::name('evaluation_application')
+				->where('member_list_id',$member_list_id)
+                ->where(['evaluation_status' => ['in','4,5']])
+				->where(['school_poor_grade' => ['in','1,2,3']])
+				->where('times',$this->subsidy['begin_time'])
+                ->field('evaluation_id')
+				->value('school_poor_grade');
+        $school_poor_grade =  $school_poor_grade ? $school_poor_grade : 0;
+		return self::getGradeData($school_poor_grade);
 	}
 }

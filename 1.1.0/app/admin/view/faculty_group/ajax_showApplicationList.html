@@ -12,10 +12,23 @@
     </td>
     {include file="common\group_application_val"}
 	{if $type_id == 1}
+	<td>{$row.reason}</td>
+	<td>{$row.group_opinion.text}</td>
 	<td>
-		{$row.group_opinion.text}
-	</td>
+        {if !in_array($row.check_status,[3])}
+        {$row.faculty_opinion.text}
+        {else}
+        <textarea name="faculty_opinion[text]" class="text">{$row.faculty_opinion.text|default="同意"}</textarea>
+        {/if}
+    </td>
+	{else}
+	<td>{$row.poor_grade_name}</td>
+	<td>{$row.reason}</td>
+	<td>{$row.group_opinion.text}</td>
 	{/if}
+	<td>
+		{php}echo config('check_status.'.$row['check_status']);{/php}
+	</td>
     <!-- <td> -->
         <!-- {if !in_array($row.check_status,[3])} -->
         <!-- {$row.faculty_opinion.text} -->

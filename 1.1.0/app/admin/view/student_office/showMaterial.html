@@ -2,23 +2,7 @@
 {block name="main-content"}
 
 <div class="page-content">
-    <div class="page-header">
-        <h1>
-            您当前操作
-            <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>
-                <a href="{:url('admin/scholarships_group/showreviewlist')}">国家{php}echo config('application_type.'.$type_id);{/php}全院审核</a>
-            </small>
-            <small>
-                <i class="ace-icon fa fa-angle-double-right"></i>
-                添加评语
-            </small>
-            <!--<small>-->
-            <!--<i class="ace-icon fa fa-angle-double-right"></i>-->
-            <!--个人简历-->
-            <!--</small>-->
-        </h1>
-    </div>
+    <div class="page-header"></div>
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="w800">
@@ -34,7 +18,7 @@
                     </tr>
                 </table>
                 <table class="table table-bordered tab_center">
-                     {if $type_id == 1}
+                    {if $type_id == 1}
                     {include file="common/scholar" /}
                     {else}
                     {include file="common/grants_inspirational" /}

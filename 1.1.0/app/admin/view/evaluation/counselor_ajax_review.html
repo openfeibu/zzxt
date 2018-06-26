@@ -16,7 +16,7 @@
 		<textarea name="group_opinion[text]" class="text">{$row.group_opinion.text|default="同意"}</textarea>
     </td>
 	<td>
-		{php} echo \app\admin\model\Evaluation::getGradesHtml($row['poor_grade'],'poor_grade');{/php}
+		{php} echo \app\admin\model\Evaluation::getGradesHtml($row['system_poor_grade'],'poor_grade');{/php}
 	</td>
 	{else}
 	<td>{$row.group_opinion.text}</td>

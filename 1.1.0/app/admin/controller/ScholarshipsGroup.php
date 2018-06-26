@@ -12,6 +12,7 @@ use app\home\model\MultipleScholarship;
 use app\home\model\NationalScholarship;
 use app\home\model\Scholarships;
 use app\admin\model\User as UserModel;
+use app\admin\model\Evaluation;
 use think\Db;
 use think\Request;
 
@@ -33,6 +34,7 @@ class ScholarshipsGroup extends Base
 		$this->national = new NationalScholarship();
 		$this->scholarships = new Scholarships();
         $this->applyStatus = new ScholarshipsApplyStatus();
+		$this->evaluation = new Evaluation();
 
     }
 
@@ -71,6 +73,12 @@ class ScholarshipsGroup extends Base
         }
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
+		$data_arr = $data->all();
+        foreach($data_arr as $key => $value)
+        {
+            $data_arr[$key] = handleApply($value);
+			$data_arr[$key]['poor_grade_name'] = $this->evaluation->getMemberEvaluationGradeName($value['member_list_id']);
+        }
 		//待操作
 		$doingcount = $this->scholarships->getCount($id,$count_where.' and check_status in (1)');
 		//总得人数
@@ -78,8 +86,8 @@ class ScholarshipsGroup extends Base
         $this->assign('doingcount', $doingcount);
         $this->assign('allcount', $allcount);
         $this->assign('type_id', $id);
-        $this->assign('user', $data);
-        $this->assign('list', $data);
+        $this->assign('user', $data_arr);
+        $this->assign('list', $data_arr);
         $this->assign('page', $show);
         $detail_url = url('admin/ScholarshipsGroup/showMaterial'.$id,['type_id'=>$id]);
         $this->assign('detail_url',$detail_url);
