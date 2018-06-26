@@ -65,7 +65,12 @@
 								<input type="hidden" name="evaluation_id" value="{$user.evaluation_id}"/>
 								<button type="submit" class="btn btn-primary" name="pass" value="{$status_id}">提交</button>
 								<!-- <button type="submit" class="btn btn-danger" name="fail" value="{$status_id}">不同意</button> -->
-								<!-- <a href="{:url('admin/Counselor/evaluationNext',['id'=>$status_id])}" class="btn btn-success">下一个</a> -->
+								{if $previous_url}
+								<a href="{$previous_url}" class="btn btn-success">上一个</a> 
+								{/if}
+								{if $next_url}
+								<a href="{$next_url}" class="btn btn-success">下一个</a> 
+								{/if}
 							</td>
 
                             <td style="width: 266px;"></td>

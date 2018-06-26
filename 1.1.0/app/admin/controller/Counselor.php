@@ -225,6 +225,41 @@ class Counselor extends Base
 		$this->assign('eval_form',$eval_form);
         $material = \app\admin\model\Evaluation::getEvaluationMaterial($apply['evaluation_id']);
         $this->assign('material', $material);
+		
+		$where = ' 1 = 1 ';
+		$where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
+		$where .= " AND ass.status in(1,2,3,4,5,6,7,8,9)";
+		$previous_url = "";
+		$next_url = "";
+		$previous_apply = Db::table('yf_evaluation_application')
+            ->alias('app')
+			->join('yf_evaluation_status ass', 'ass.evaluation_id = app.evaluation_id')
+            ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+            ->where('app.evaluation_id','<',$apply['evaluation_id'])
+			->order('evaluation_id desc')
+			->field('ass.status_id,app.evaluation_id')
+			->find();
+		
+		if($previous_apply){
+			$previous_url = url('admin/Counselor/showEvaluationMaterial',['id' => $previous_apply['status_id']]);
+		}
+		$next_apply = Db::table('yf_evaluation_application')
+            ->alias('app')
+			->join('yf_evaluation_status ass', 'ass.evaluation_id = app.evaluation_id')
+            ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
+            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+            ->where('app.evaluation_id','>',$data['evaluation_id'])
+			->order('evaluation_id asc')
+			->field('ass.status_id,app.evaluation_id')
+			->find();
+		if($next_apply){
+			$next_url = url('admin/Counselor/showEvaluationMaterial',['id' => $next_apply['status_id']]);
+		}
+
+		$this->assign('previous_url', $previous_url);
+		$this->assign('next_url', $next_url);
+		
         return $this->view->fetch('evaluation/counselor_add_review');
     }
 

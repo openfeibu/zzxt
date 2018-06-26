@@ -39,6 +39,7 @@ class MultipleScholarship extends Model
                     ->where($where)
 					->where('ms.times',$subsidy['begin_time'])
                     ->order($order)
+					->order('ms desc')
                     ->field('u.*,ass.status_id,ms.check_status,ms.multiple_id,m.member_list_id,m.member_list_username,m.member_list_nickname,ms.group_opinion,ms.faculty_opinion,ms.school_opinion,ms.reason')
                     ->paginate(40);
         return $data;
@@ -55,6 +56,7 @@ class MultipleScholarship extends Model
                     ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                     ->where($where)
 					->where('ms.times',$subsidy['begin_time'])
+					->order('ms desc')
                     ->field('u.*,ass.status_id,ass.status,ms.check_status,ms.multiple_id,m.member_list_id,m.member_list_username,m.member_list_nickname,ms.group_opinion,ms.faculty_opinion,ms.school_opinion,ms.reason')
                     ->select();
         return $data;
