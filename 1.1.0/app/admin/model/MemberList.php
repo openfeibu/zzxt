@@ -58,4 +58,41 @@ class MemberList extends Model
 						->find($member_list_id);
 	    return $member;
 	}
+	public static function getAdminMember($id_number)
+	{
+		$admin = Db::name('admin')->alias('a')
+									->join('yf_auth_group_access ags','a.admin_id = ags.uid')
+									->join('yf_auth_group ag','ags.group_id = ag.id')
+									->where('a.admin_username',$id_number)
+									->field('yf_auth_group_access.group_id')
+									->find();
+		return $admin;							
+	}
+
+	public static function isEvalGroup($id_number)
+	{
+		$admin = self::getAdminMember($id_number);
+		if(!$admin)
+		{
+			return false;
+		}
+		if($admin['group_id'] == 21 || $admin['group_id'] == 26)
+		{
+			return true;
+		}
+		return false;
+	}
+	public static function isScholarshipsGroup($id_number)
+	{
+		$admin = self::getAdminMember($id_number);
+		if(!$admin)
+		{
+			return false;
+		}
+		if($admin['group_id'] == 25 || $admin['group_id'] == 26)
+		{
+			return true;
+		}
+		return false;
+	}
 }

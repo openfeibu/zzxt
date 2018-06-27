@@ -13,6 +13,7 @@ use think\Config;
 use app\home\model\User;
 use app\admin\model\EvaluationMaterialConfig;
 use app\admin\model\Evaluation as EvaluationModel;
+use app\admin\model\MemberList as MemberListModel;
 
 class Show extends Base
 {
@@ -68,9 +69,16 @@ class Show extends Base
 //    评估页方法
     public function personal()
     {
+		
+		$is_eval_group = MemberListModel::isEvalGroup($this->user['id_number']);
+		$this->assign('is_eval_group',$is_eval_group);
+		if(!$is_eval_group){
+			return $this->view->fetch(':evaluation/personal_front');
+		}
 		$user_model = new User();
 		$user_info = $user_model->get_user($this->user['id_number']);
 		$this->assign('user',$this->user);
+		$this->assign('user_info',$user_info);
 		$this->assign('user_info',$user_info);
 		$eval_app = DB::name('evaluation_application')->where('member_list_id',$this->user['member_list_id'])->find();
 		$pass_status = DB::name('evaluation_status')->where('member_list_id',$this->user['member_list_id'])->find();

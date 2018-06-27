@@ -18,12 +18,17 @@
         </ul>
     </div>
     <!--startprint1-->
+	{if $is_eval_group}
+		<div><p style=" font-size: 18px;color: red; text-align: center; margin-top: 10px;">经济评议小组不能参与</p></div>
+	{else}
     <div class="personal_table">
+		
 		<form name="evau_form" action="" id="evalu_form"/>
 
 		    {include file="evaluation/evaluation_info_table"}
 
 		</form>
+		
     </div>
     <!--endprint1-->
 
@@ -42,6 +47,7 @@
 	<button type="submit" class="print printHide evalu_btn">提交</button>
 	{else}
     <button class="print printHide" onclick="preview(1)">打印</button>
+	{/if}
 	{/if}
 </div>
 <!-- 主体内容 E -->

@@ -9,11 +9,12 @@ use think\File;
 use app\home\model\Survey;
 use app\home\model\Identify;
 use app\home\model\Poor;
-use app\admin\model\Evaluation as EvaluationModel;
 use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\NationalScholarship;
 use app\home\model\MultipleScholarship;
 use app\home\model\User;
+use app\admin\model\Evaluation as EvaluationModel;
+use app\admin\model\MemberList as MemberListModel;
 
 
 class Student extends Base
@@ -44,14 +45,22 @@ class Student extends Base
     {
         $type = input('choose_type');
         $grade = getGrade($this->user['current_grade']);
-
+		
 		if($grade > 3) {
 			 $this->error("抱歉，你不是在校生");
 		}
-
+		
+		$is_eval_group = MemberListModel::isEvalGroup($this->user['id_number']);
+		$is_scholarships_group = MemberListModel::isScholarshipsGroup($this->user['id_number']);
+		
+		if($is_scholarships_group)
+		{
+			$this->error("抱歉，三金评议小组不能参与");
+		}
         switch ($type) {
             //国家奖学金
             case 1 :
+				
                 //判断是否大二
                 if($grade == 2 || $grade == 3) {
                     //判断是否申请过励志奖学金
@@ -65,6 +74,9 @@ class Student extends Base
 
             //励志奖学金
             case 2 :
+				if($is_eval_group){
+					$this->error("抱歉，经济评议小组不能参与");
+				}
 				$is_eval_app_pass = $this->evaluation->isExistMemberEvaluationPass($this->user['member_list_id']);
                 if(!$is_eval_app_pass)
                 {
@@ -84,6 +96,9 @@ class Student extends Base
 
             //助学金
             case 3 :
+				if($is_eval_group){
+					$this->error("抱歉，经济评议小组不能参与");
+				}
                 $is_eval_app_pass = $this->evaluation->isExistMemberEvaluationPass($this->user['member_list_id']);
                 if(!$is_eval_app_pass)
                 {
@@ -326,17 +341,35 @@ class Student extends Base
 
         //家庭经济困难评定状态
 		$eval_app = $this->evaluation->getMemberEvaluation($this->user['member_list_id']);
-        $e_status = $eval_app['evaluation_status'];
-        if (empty($eval_app['evaluation_status'])) {
-            $e_status = '未申请';
-            $e_class = 'review-error';
-        } elseif (0 < $eval_app['evaluation_status'] && $eval_app['evaluation_status'] < 5) {
-            $e_class = 'reviewing';
-        } elseif ($eval_app['evaluation_status'] == 5) {
-            $e_class = 'review-success';
-        } elseif (5 < $eval_app['evaluation_status'] && $eval_app['evaluation_status'] < 9) {
-            $e_class = 'review-error';
-        }
+		$e_status = $eval_app['evaluation_status'];
+		//是否经济评议小组
+		$is_eval_group = MemberListModel::isEvalGroup($this->user['id_number']);
+		$is_scholarships_group = MemberListModel::isScholarshipsGroup($this->user['id_number']);
+		if($is_eval_group || $is_scholarships_group)
+		{
+			if($is_eval_group)
+			{
+				$m_status = $u_status = $e_status = "经济评议小组不能参与";
+				$m_class = $u_class = $e_class = 'review-error';
+			}else{
+				$n_status = $m_status = $u_status = $e_status = "三金评议小组不能参与";
+				$n_class = $m_class = $u_class = $e_class = 'review-error';
+			}
+			
+		}
+        else{
+			if (empty($eval_app['evaluation_status'])) {
+				$e_status = '未申请';
+				$e_class = 'review-error';
+			} elseif (0 < $eval_app['evaluation_status'] && $eval_app['evaluation_status'] < 5) {
+				$e_class = 'reviewing';
+			} elseif ($eval_app['evaluation_status'] == 5) {
+				$e_class = 'review-success';
+			} elseif (5 < $eval_app['evaluation_status'] && $eval_app['evaluation_status'] < 9) {
+				$e_class = 'review-error';
+			}
+		}
+		
 
         //勤工助学状态
         $work_status = Db::table('yf_work_status')
@@ -357,74 +390,103 @@ class Student extends Base
         } elseif ($work_status['status'] == 4) {
             $w_class = 'review-error';
         }
-
-        //判断是否大二
-        $grade = getGrade($this->user['current_grade']);
-        if($grade == 2 || $grade == 3) {
-			$nApplication = $this->NationalScholarship->isHaveApply($this->user['member_list_id']);
-			$mApplication = $this->MultipleScholarship->isHaveApply($this->user['member_list_id'],2);
-            //判断是否申请过励志奖学金
-            if (!$mApplication) {
-                if ($nApplication) {
-					$n_status = $ncheck_status = $nApplication['check_status'];
-                    if(0 < $ncheck_status && $ncheck_status < 4) {
-                        $n_class = 'reviewing';
-                    } elseif(5 <= $ncheck_status && $ncheck_status <= 7) {
-                        $n_class = 'review-error';
-                    } elseif($ncheck_status == 4) {
-                        $n_class = 'review-success';
-                    }
-                } else {
-                    $n_status = '未申请';
-                    $n_class = 'review-error';
-                }
-            } else {
-                $n_status = '你已经申请励志奖学金，根据规定无法申请国家奖学金';
-                $n_class = 'review-error';
-            }
+		
+		if($is_scholarships_group)
+		{
+			$u_status = $m_status = $n_status = '三金评议小组不能参与';
+            $u_class = $m_class = $n_class = 'review-error';
 			
-            if (!$nApplication) {
-                if ($mApplication) {
-					$m_status = $mcheck_status = $mApplication['check_status'];
-                    if(0 < $mcheck_status && $mcheck_status < 4) {
-                        $m_class = 'reviewing';
-                    } elseif(5 <= $mcheck_status && $mcheck_status <= 7) {
-                        $m_class = 'review-error';
-                    } elseif($mcheck_status == 4) {
-                        $m_class = 'review-success';
-                    }
-                } else {
-                    $m_status = '未申请';
-                    $m_class = 'review-error';
-                }
-            } else {
-                $m_status = '你已经申请国家奖学金，根据规定无法申请励志奖学金';
-                $m_class = 'review-error';
-            }
+		}
+		else{
+			//判断是否大二
+			$grade = getGrade($this->user['current_grade']);
+			if($grade == 2 || $grade == 3) {
+				$nApplication = $this->NationalScholarship->isHaveApply($this->user['member_list_id']);
+				if($is_eval_group){
+					$mApplication = false;
+				}else{
+					$mApplication = $this->MultipleScholarship->isHaveApply($this->user['member_list_id'],2);
+				}
+				
+				//判断是否申请过励志奖学金
+				if (!$mApplication) {
+					if ($nApplication) {
+						$n_status = $ncheck_status = $nApplication['check_status'];
+						if(0 < $ncheck_status && $ncheck_status < 4) {
+							$n_class = 'reviewing';
+						} elseif(5 <= $ncheck_status && $ncheck_status <= 7) {
+							$n_class = 'review-error';
+						} elseif($ncheck_status == 4) {
+							$n_class = 'review-success';
+						}
+					} else {
+						$n_status = '未申请';
+						$n_class = 'review-error';
+					}
+				} else {
+					$n_status = '你已经申请励志奖学金，根据规定无法申请国家奖学金';
+					$n_class = 'review-error';
+				}
+				
+				if($is_eval_group){
+					$m_status = '经济评议小组不能参与';
+					$m_class = 'review-error';
+				}
+				else{
+					if (!$nApplication) {
+						if ($mApplication) {
+							$m_status = $mcheck_status = $mApplication['check_status'];
+							if(0 < $mcheck_status && $mcheck_status < 4) {
+								$m_class = 'reviewing';
+							} elseif(5 <= $mcheck_status && $mcheck_status <= 7) {
+								$m_class = 'review-error';
+							} elseif($mcheck_status == 4) {
+								$m_class = 'review-success';
+							}
+						} else {
+							$m_status = '未申请';
+							$m_class = 'review-error';
+						}
+					} else {
+						$m_status = '你已经申请国家奖学金，根据规定无法申请励志奖学金';
+						$m_class = 'review-error';
+					}
+				}
+				
 
-        } else {
-            $n_status = "你不是二年级学生,根据规定只有大二以上才可申请";
-            $n_class = 'review-error';
-            $m_status = "你不是二年级学生,根据规定只有大二以上才可申请";
-            $m_class = 'review-error';
-        }
-		$uApplication = $this->MultipleScholarship->isHaveApply($this->user['member_list_id'],3);
-
-		
-        if ($uApplication) {
-			$u_status = $ucheck_status = $uApplication['check_status'];
-            if (0 < $ucheck_status && $ucheck_status < 4) {
-                $u_class = 'reviewing';
-            } elseif (5 <= $ucheck_status && $ucheck_status <= 7) {
-                $u_class = 'review-error';
-            } elseif ($ucheck_status == 4) {
-                $u_class = 'review-success';
-            }
-        } else {
-            $u_status = '未申请';
-            $u_class = 'review-error';
-        }
-		
+			} else {
+				if($is_eval_group){
+					$m_status = '经济评议小组不能参与';
+					$m_class = 'review-error';
+				}else{
+					$m_status = "你不是二年级学生,根据规定只有大二以上才可申请";
+					$m_class = 'review-error';
+				}
+				$n_status = "你不是二年级学生,根据规定只有大二以上才可申请";
+				$n_class = 'review-error';
+				
+			}
+			if($is_eval_group){
+				$u_status = '经济评议小组不能参与';
+				$u_class = 'review-error';
+			}else{
+				
+				$uApplication = $this->MultipleScholarship->isHaveApply($this->user['member_list_id'],3);
+				if ($uApplication) {
+					$u_status = $ucheck_status = $uApplication['check_status'];
+					if (0 < $ucheck_status && $ucheck_status < 4) {
+						$u_class = 'reviewing';
+					} elseif (5 <= $ucheck_status && $ucheck_status <= 7) {
+						$u_class = 'review-error';
+					} elseif ($ucheck_status == 4) {
+						$u_class = 'review-success';
+					}
+				} else {
+					$u_status = '未申请';
+					$u_class = 'review-error';
+				}
+			}
+		}
 		$e_status_name = isset(config('status_stu')[$e_status]) ? config('status_stu')[$e_status] : $e_status;
 		$u_status_name = isset(config('status_stu')[$u_status]) ? config('status_stu')[$u_status] : $u_status;
 		$m_status_name = isset(config('status_stu')[$m_status]) ? config('status_stu')[$m_status] : $m_status;
