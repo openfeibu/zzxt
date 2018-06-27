@@ -63,6 +63,12 @@ class Data extends Model
 		$rs = odbc_exec($this->conn,$sql);
 		return $this->handleFetchRow($rs);
 	}
+	protected function getAdmins($where,$fields)
+	{
+		$sql="SELECT ".$fields." FROM 学院教职工基本情况表 ".$where;
+		$rs = odbc_exec($this->conn,$sql);
+		return $this->handleFetchRow($rs);
+	}
 	public function test($id_card)
 	{
 		$sql="SELECT top 1 * FROM 学生信息表 where 身份证号 = '".$id_card."'";

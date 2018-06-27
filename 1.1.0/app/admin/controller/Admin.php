@@ -29,7 +29,15 @@ class Admin extends Base
 		}
         $classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
-		$admin_list=Db::name('admin')->where($map)->order('admin_id')->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
+		//$admin_list=Db::name('admin')->where($map)->where('',)->order('admin_id')->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
+		$admin_list=Db::name('admin')->alias('a')
+									->join('yf_auth_group_access ags','a.admin_id = ags.uid')
+									->join('yf_auth_group ag','ags.group_id = ag.id')
+									->where('ag.id in (22)')
+									->where($map)
+									->order('admin_id')
+									->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
+									
 		$page = $admin_list->render();
 		$this->assign('admin_list',$admin_list);
         $this->assign('faculty_number', $faculty);

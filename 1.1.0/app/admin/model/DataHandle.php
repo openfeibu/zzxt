@@ -38,6 +38,11 @@ class DataHandle extends Model
 		$result = $this->dataClass->getStudents($where,$fields);
 		return $result;
 	}
+	public function getAdmins($where,$fields)
+	{
+		$result = $this->dataClass->getAdmins($where,$fields);
+		return $result;
+	}
 	//获取系的班级列表
 	// public function getFacultyClasses($where,$fields)
 	// {

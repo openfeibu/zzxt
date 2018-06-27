@@ -289,3 +289,16 @@ footer p{line-height: 28px;}
 
 .login_error{ text-align: center;width: 100%; color: red; margin-top: 20px;}
 .status_error{ text-align: center;width: 100%; color: red; }
+
+
+.z_photo img{width:1rem;height:1rem}
+.z_addImg{float:left;margin-right:.2rem}
+.z_file{width:1rem;height:1rem;background:url(z_add.png) no-repeat;background-size:100% 100%;float:left;margin-right:.2rem}
+.z_file input::-webkit-file-upload-button{width:1rem;height:1rem;border:none;position:absolute;outline:0;opacity:0}
+.z_file input#file{display:block;width:auto;border:0;vertical-align:middle}
+.z_mask{width:100%;height:100%;background:rgba(0,0,0,.5);position:fixed;top:0;left:0;z-index:999;display:none}
+.z_alert{width:3rem;height:2rem;border-radius:.2rem;background:#fff;font-size:.24rem;text-align:center;position:absolute;left:50%;top:50%;margin-left:-1.5rem;margin-top:-2rem}
+.z_alert p:nth-child(1){line-height:1.5rem}
+.z_alert p:nth-child(2) span{display:inline-block;width:49%;height:.5rem;line-height:.5rem;float:left;border-top:1px solid #ddd}
+.z_cancel{border-right:1px solid #ddd}
+
