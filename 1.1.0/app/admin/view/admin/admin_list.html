@@ -52,15 +52,14 @@
 							<thead>
 							<tr>
 								<th>{$Think.lang.common['user']['admin_username']}</th>
-								<!--<th class="hidden-sm hidden-xs">邮箱</th>-->
+								<th>{$Think.lang.common['user']['admin_realname']}</th>
 								<th>{$Think.lang.common['user']['group']}</th>
 								<!--<th>真实姓名</th>-->
 								<!--<th class="hidden-sm hidden-xs">电话号码</th>-->
-								<th class="hidden-sm hidden-xs">{$Think.lang.common['user']['faculty']}</th>
+								<th class="hidden-sm hidden-xs">{$Think.lang.common['user']['department']}</th>
 
 								<th class="hidden-sm hidden-xs">{$Think.lang.common['user']['login_count']}</th>
 								<th class="hidden-sm hidden-xs">{$Think.lang.common['user']['ip']}</th>
-								<!-- <th>状态</th> -->
 								<th style="border-right:#CCC solid 1px;">{$Think.lang.common['handle']}</th>
 							</tr>
 							</thead>
@@ -70,10 +69,8 @@
 							{foreach name="admin_list" item="v"}
 								<tr>
 									<td height="28" >{$v.admin_username}</td>
-									<!--<td class="hidden-sm hidden-xs">{$v.admin_email}</td>-->
+									<td>{$v.admin_realname}</td>
 									<td>{$v.admin_id|get_groups}</td>
-									<!--<td>{$v.admin_realname}</td>-->
-									<!--<td class="hidden-sm hidden-xs">{$v.admin_tel}</td>-->
 									<?php $num = $v['faculty_number'] -1;?>
 									<td class="hidden-sm hidden-xs">{if condition="$v.faculty_number"}{$faculty_number[$num]['faculty_name']}{else}{/if}</td>
 
@@ -81,7 +78,8 @@
 									<td class="hidden-sm hidden-xs">{$v.admin_ip}</td>
 									
 									<td>
-										<div class="hidden-sm hidden-xs action-buttons">
+										{if $v.group_id == 22}
+										<div class="action-buttons">
 											<a class="green" href="{:url('admin/Admin/admin_edit',array('admin_id'=>$v['admin_id']))}" title="修改">
 												<i class="ace-icon fa fa-pencil bigger-130"></i>																</a>
 											{if condition="$v['admin_id'] neq 1"}
@@ -90,31 +88,7 @@
 												</a>
 											{/if}
 										</div>
-										<div class="hidden-md hidden-lg">
-											<div class="inline position-relative">
-												<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-													<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-												</button>
-												<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-													<li>
-														<a href="{:url('admin/Admin/admin_edit',array('admin_id'=>$v['admin_id']))}" class="tooltip-success" data-rel="tooltip" title="" data-original-title="修改">
-																	<span class="green">
-																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																	</span>
-														</a>
-													</li>
-													{if condition="$v['admin_id'] neq 1"}
-														<li>
-															<a href="{:url('admin/Admin/admin_del',array('admin_id'=>$v['admin_id']))}"  data-info="你确定要删除吗？" class="tooltip-error confirm-rst-url-btn" data-rel="tooltip" title="" data-original-title="删除">
-																	<span class="red">
-																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																	</span>
-															</a>
-														</li>
-													{/if}
-												</ul>
-											</div>
-										</div>
+										{/if}
 									</td>
 								</tr>
 							{/foreach}

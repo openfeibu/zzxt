@@ -34,12 +34,6 @@ class Ajax
 		return json($list);
 	}
 
-	public function get_class()
-	{
-		$classCode = new ClassCode();
-		$class = $classCode->getClass(input('faculty_number'));
-		return $class;
-	}
 	public function getStudents()
 	{
 		$value = input('value');

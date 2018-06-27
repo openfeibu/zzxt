@@ -53,6 +53,12 @@ class Data extends Model
 		$result = $this->handleFetchRow($rs);
 		return $result;
 	}
+	protected function getClass($where)
+	{
+		$sql="SELECT 班级代码 as class_number,班级名称 as class_name,当前所在级 as current_grade FROM V班级代码表 ".$where ." ORDER BY 班级代码 ASC ";
+	    $rs = odbc_exec($this->conn,$sql);
+		return $this->getSafeArr(odbc_fetch_array($rs));
+	}
 	// protected function getFacultyClasses($where = '',$fields)
 	// {
 			
@@ -69,6 +75,7 @@ class Data extends Model
 		$rs = odbc_exec($this->conn,$sql);
 		return $this->handleFetchRow($rs);
 	}
+	
 	public function test($id_card)
 	{
 		$sql="SELECT top 1 * FROM 学生信息表 where 身份证号 = '".$id_card."'";

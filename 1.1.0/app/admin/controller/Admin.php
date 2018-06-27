@@ -33,9 +33,10 @@ class Admin extends Base
 		$admin_list=Db::name('admin')->alias('a')
 									->join('yf_auth_group_access ags','a.admin_id = ags.uid')
 									->join('yf_auth_group ag','ags.group_id = ag.id')
-									->where('ag.id in (22)')
+									->where('ag.id in (20,21,22,23,24,25,26)')
 									->where($map)
-									->order('admin_id')
+									->order("charindex(','+convert(varchar,group_id)+',',',23,22,20,21,25,26,24,')")
+									->order('admin_id asc')
 									->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 									
 		$page = $admin_list->render();
@@ -182,8 +183,14 @@ class Admin extends Base
 									->where($map)
 									->order('admin_id')
 									->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
+		$admin_list_arr = $admin_list->all();
+		foreach($admin_list_arr as $key => $admin)
+		{
+			$class = $classCode->getClass($admin['class_number']);
+			$admin_list_arr[$key]['class_name'] = $class ? $class['class_name'] : '';
+		}			
 		$page = $admin_list->render();
-		$this->assign('admin_list',$admin_list);
+		$this->assign('admin_list',$admin_list_arr);
         $this->assign('faculty_number', $faculty);
         $this->assign('page',$page);
 		return $this->fetch();
@@ -278,8 +285,15 @@ class Admin extends Base
 									->where($map)
 									->order('admin_id')
 									->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
+		$admin_list_arr = $admin_list->all();
+		foreach($admin_list_arr as $key => $admin)
+		{
+			$class = $classCode->getCounselorClasses($admin['class_number']);
+			$class_name = getValuesByArr($class,'class_name');
+			$admin_list_arr[$key]['class_name'] = $class_name;
+		}							
 		$page = $admin_list->render();
-		$this->assign('admin_list',$admin_list);
+		$this->assign('admin_list',$admin_list_arr);
         $this->assign('faculty_number', $faculty);
         $this->assign('page',$page);
 		return $this->fetch();

@@ -1838,4 +1838,16 @@ function getGrade($current_grade)
 	}
 	return $grade;
 }
-
+function getValuesByArr($arr,$key,$split='、')
+{
+	$values = "";
+	if($count = count($arr) <= 0)
+	{
+		return $values;
+	}
+	foreach($arr as $k => $v)
+	{
+		$values .= $v[$key] . $split;
+	}
+	return rtrim($values,$split); 
+}

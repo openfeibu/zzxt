@@ -325,7 +325,6 @@ class Student extends Base
         $this_time = date('Y', time());
 
         //家庭经济困难评定状态
-  
 		$eval_app = $this->evaluation->getMemberEvaluation($this->user['member_list_id']);
         $e_status = $eval_app['evaluation_status'];
         if (empty($eval_app['evaluation_status'])) {

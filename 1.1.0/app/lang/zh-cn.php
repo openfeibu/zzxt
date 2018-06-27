@@ -55,8 +55,9 @@ return [
 		'addtime' => '添加时间',
 		'user' => [
 			'admin_username' => '账号',
+			'admin_realname' => '姓名',
 			'group' => '用户组',
-			'faculty' => '所属部门',
+			'faculty' => '学院',
 			'login_count' => '登陆数',
 			'ip' => '最近IP',
 			'member_list_username' => '学号',

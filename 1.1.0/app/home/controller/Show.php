@@ -78,7 +78,6 @@ class Show extends Base
 		if(!$eval_app)
 		{
 			$eval_app = [
-				
 				'number' => '',
 				'annual_income' => '',
 				'reason' => '',
@@ -88,7 +87,6 @@ class Show extends Base
 		}
 		else{
 			$this->assign('is_eval_app',1);
-			
 		}
 		$this->assign('eval_app',$eval_app);
 		$eval_form = Config::get('evaluation_form');

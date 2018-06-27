@@ -31,10 +31,11 @@ class ClassCode extends Model
 		return $faculty;
 	}
 
-	public function getClass($faculty_number)
+	public function getClass($class_number)
 	{
-		$class = DB::name('class_code')->field('系所代码 as faculty_number,系所名称 as faculty_name,班级代码 as class_number, 班级名称 as class_name,当前所在级 as current_grade')->order('faculty_number asc')->where('系所代码',$faculty_number)->select();
-
+		$where = " WHERE 班级代码 in (".$class_number.") ";
+		$dataHandleClass = new DataHandle();
+		$class = $dataHandleClass->getClass($where);
 		return $class;
 	}
     public function getFacultyClasses($faculty_number)
@@ -55,7 +56,7 @@ class ClassCode extends Model
 		$professiones = $dataHandleClass->getProfessiones($where);
 		return $professiones;
 	}
-
+	/*
 	public function getClassByNumbers($numbers)
 	{
 		$map['班级代码'] = array('in',$numbers);
@@ -63,18 +64,7 @@ class ClassCode extends Model
 
 		return $class;
 	}
-	// public function getCounselorClasses($admin_professiones)
-	// {
-		// $dataHandleClass = new DataHandle();
-		// $arr = array();
-		// foreach($admin_professiones as $key => $val)
-		// {
-			// $where = " WHERE 专业代码 = '".$val['profession_number']."' AND 当前所在级 = '".$val['current_grade']."'";
-			// $classes = $dataHandleClass->getClasses($where);
-			// $arr = array_merge($arr,$classes);
-		// }
-		// return $arr;
-	// }
+	*/
 	public function getCounselorClasses($class_number)
 	{
 		$dataHandleClass = new DataHandle();
