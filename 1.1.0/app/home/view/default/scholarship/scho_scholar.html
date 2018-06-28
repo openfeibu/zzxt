@@ -148,7 +148,7 @@
             <tr class="line-table-height">
                 <td class="k-s-content title">申请理由(200字)</td>
                 <td colspan="7" class="k-s-content content" style="text-align: left;">
-                    <textarea name="reason" id="" class="longtext">{if isset($list.reason)}{$list.reason}{/if}</textarea>
+                    <textarea name="reason" id="" class="longtext" placeholder="不少于200字">{if isset($list.reason)}{$list.reason}{/if}</textarea>
                     <div style="float: right;">
                         <div class="level_form">
                             <div class="signature">
@@ -158,15 +158,15 @@
                         </div>
                         <div class="level_form">
                             <div class="level_time">
-                                <input type="text" value="{$list.time|date='Y',###}">
+                                <input type="text" value="{$list.create_at|date='Y',###}">
                                 <label for="">年</label>
                             </div>
                             <div class="level_time">
-                                <input type="text" value="{$list.time|date='m',###}">
+                                <input type="text" value="{$list.create_at|date='m',###}">
                                 <label for="">月</label>
                             </div>
                             <div class="level_time">
-                                <input type="text" value="{$list.time|date='d',###}">
+                                <input type="text" value="{$list.create_at|date='d',###}">
                                 <label for="">日</label>
                             </div>
                         </div>

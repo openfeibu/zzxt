@@ -33,9 +33,9 @@
     <td colspan="3" class="k-s-content title" style="text-align: center;">
         <div class="ranking">
             成绩排名：
-            <input type="text" name="course_ranking" style="width:50px;border-bottom: 1px solid #555555;">
+            <input type="text" name="course_ranking" value="{$user.course_ranking}" style="width:50px;border-bottom: 1px solid #555555;">
             /
-            <input type="text" name="course_total_people" style="width:50px;border-bottom: 1px solid #555555;">
+            <input type="text" name="course_total_people" value="{$user.course_total_people}" style="width:50px;border-bottom: 1px solid #555555;">
             （名次/总人数）
         </div>
     </td>
@@ -43,12 +43,12 @@
         实行综合考评排名：
         <div style="display:inline-block;">
             <label>
-                是<input type="radio" name="is_assessment" value="1" style="height:auto;width: auto;margin-right: 5px;"/>
+                是<input type="radio" name="is_assessment" value="1" style="height:auto;width: auto;margin-right: 5px;" {if condition="isset($user.is_assessment) && $user.is_assessment=='1'"} checked {/if}/>
             </label>
         </div>
         <div style="display:inline-block;">
             <label>
-                否<input type="radio" name="is_assessment" value="0" style="height:auto;width: auto;margin-right: 5px;"/>
+                否<input type="radio" name="is_assessment" value="0" style="height:auto;width: auto;margin-right: 5px;" {if condition="isset($user.is_assessment) && $user.is_assessment=='0'"} checked {/if}/>
             </label>
         </div>
     </td>
@@ -56,16 +56,16 @@
 <tr class="line-table-height scholar_tab">
     <td colspan="3" class="k-s-content title">
         必修课
-        <input type="text" style="width:10%;border-bottom: 1px solid #555555;" name="compulsory_course">门，
+        <input type="text" style="width:10%;border-bottom: 1px solid #555555;" name="compulsory_course" value="{$user.compulsory_course}">门，
         其中及格以上
-        <input type="text" style="width:10%;border-bottom: 1px solid #555555;" name="pass_count">门
+        <input type="text" style="width:10%;border-bottom: 1px solid #555555;" name="pass_count" value="{$user.pass_count}">门
     </td>
     <td colspan="4" class="k-s-content title" style="text-align: center;">
         <div class="ranking">
             如是，排名：
-            <input type="text" name="assessment_ranking" style="width:50px;border-bottom: 1px solid #555555;">
+            <input type="text" name="assessment_ranking" value="{$user.assessment_ranking}" style="width:50px;border-bottom: 1px solid #555555;">
             /
-            <input type="text" name="assessment_total_people" style="width:50px;border-bottom: 1px solid #555555;">
+            <input type="text" name="assessment_total_people" value="{$user.assessment_total_people}" style="width:50px;border-bottom: 1px solid #555555;">
             （名次/总人数）
         </div>
     </td>
@@ -111,15 +111,15 @@
             </div>
             <div class="level_form" style="float: left;margin-left:10px;">
                 <div class="level_time" style="float: left;">
-                    <input type="text" value=""  style="width:100px;border-bottom: 1px solid #555555;">
+                    <input type="text" value="{$user.create_at|date='Y',###}"  style="border-bottom: 1px solid #555555;">
                     <label for="">年</label>
                 </div>
                 <div class="level_time" style="float: left;" >
-                    <input type="text" value="" style="width:100px;border-bottom: 1px solid #555555;">
+                    <input type="text" value="{$user.create_at|date='m',###}" style="border-bottom: 1px solid #555555;">
                     <label for="">月</label>
                 </div>
                 <div class="level_time" style="float: left;">
-                    <input type="text" value=""  style="width:100px;border-bottom: 1px solid #555555;">
+                    <input type="text" value="{$user.create_at|date='d',###}"  style="border-bottom: 1px solid #555555;">
                     <label for="">日</label>
                 </div>
             </div>
