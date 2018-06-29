@@ -86,9 +86,9 @@ class Publicity extends Base
 		$this->public_type = input('public_type','ypublic');
 		if($this->public_type == 'ypublic')
 		{
-			$this->common_where .= " AND ass.status = 4";
+			$this->common_where .= " AND ass.status in (4,5)";
 		}else{
-			$this->common_where .= " AND ass.status = 5";
+			$this->common_where .= " AND ass.status in (4,5)";
 		}
 		$this->assign('public_type',$this->public_type);
     }
@@ -203,8 +203,9 @@ class Publicity extends Base
      * @return string
      */
     public function evaluPublicity() {
-		//$where = $this->common_where;
-		$where = '';
+		$where = $this->common_where;
+
+		$where .= ' AND ((app.faculty_poor_grade <4 AND app.group_poor_grade is null)  OR ( app.faculty_poor_grade <4 AND app.group_poor_grade <4)) ';
         $subsidy = Db::table('yf_set_subsidy')
             ->where('id', 5)
             ->find();
