@@ -204,8 +204,8 @@ class Publicity extends Base
      */
     public function evaluPublicity() {
 		$where = $this->common_where;
-
-		$where .= ' AND ((app.faculty_poor_grade <4 AND app.group_poor_grade is null)  OR ( app.faculty_poor_grade <4 AND app.group_poor_grade <4)) ';
+		//$where .= ' AND ((app.faculty_poor_grade <4 AND app.group_poor_grade is null)  OR ( app.faculty_poor_grade <4 AND app.group_poor_grade <4)) ';
+		
         $subsidy = Db::table('yf_set_subsidy')
             ->where('id', 5)
             ->find();
