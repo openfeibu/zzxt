@@ -97,6 +97,7 @@ class Show extends Base
 		else{
 			$this->assign('is_eval_app',1);
 		}
+		$eval_app['time'] = $eval_app ? $eval_app['create_at'] : time();
 		$this->assign('eval_app',$eval_app);
 		$eval_form = Config::get('evaluation_form');
 		$this->assign('eval_form',$eval_form);
