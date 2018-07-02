@@ -28,7 +28,7 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 班级：  </label>
 						<div class="col-sm-10">
-							<select name="class_number" id="">
+							<select name="class_number" id="" disabled>
 								{foreach $classes as $row}
 								<option value="{$row.class_number}" {if $row.class_number == $admin_list.class_number}selected{/if}>{$row.current_grade}{$row.class_name}</option>
 								{/foreach}
