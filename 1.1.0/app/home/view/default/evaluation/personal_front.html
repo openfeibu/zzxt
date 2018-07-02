@@ -79,12 +79,12 @@ $('.number').keyup(function(){
     }
 });
 </script>
-{if $is_eval_app == 1}
+{if !$is_eval_group && $is_eval_app == 1}
 <script>
 	$("#evalu_form").find("input").attr('disabled',true);
 	$("#evalu_form").find("select").attr('disabled',true);
 	$("#evalu_form").find("textarea").attr('disabled',true);
-</script>
+</script> 
 {/if}
 
 

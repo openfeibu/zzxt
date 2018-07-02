@@ -72,7 +72,8 @@ class Show extends Base
 		
 		$is_eval_group = MemberListModel::isEvalGroup($this->user['id_number']);
 		$this->assign('is_eval_group',$is_eval_group);
-		if(!$is_eval_group){
+
+		if($is_eval_group){
 			return $this->view->fetch(':evaluation/personal_front');
 		}
 		$user_model = new User();

@@ -328,6 +328,7 @@ class Student extends Base
 		if (isset($data['awards'])) {
             $data['awards'] = json_decode($data['awards'], true);
         }
+
 		$this->assign('list', $data);
         return $this->view->fetch('scholarship/scho_scholar');
     }
