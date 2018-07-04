@@ -80,8 +80,8 @@ class Publicity extends Base
             $this->common_where .= " AND u.class_number = '".$p_class_number."'";
         }else if($p_faculty_number){
 			$this->common_where .= " AND u.faculty_number = '".$p_faculty_number."'";
-        }else if(isset($this->class_number) && $this->class_number){
-			$this->common_where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
+        }else if(isset($class_number) && $class_number){
+			$this->common_where .= " AND u.class_number in (".implode(',',$class_number).") ";
 		}
 		$this->public_type = input('public_type','ypublic');
 		if($this->public_type == 'ypublic')
@@ -90,6 +90,7 @@ class Publicity extends Base
 		}else{
 			$this->common_where .= " AND ass.status in (4,5)";
 		}
+
 		$this->assign('public_type',$this->public_type);
     }
 

@@ -69,7 +69,6 @@ class Show extends Base
 //    评估页方法
     public function personal()
     {
-		
 		$is_eval_group = MemberListModel::isEvalGroup($this->user['id_number']);
 		$this->assign('is_eval_group',$is_eval_group);
 
