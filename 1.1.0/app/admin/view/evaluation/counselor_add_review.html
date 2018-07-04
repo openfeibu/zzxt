@@ -1,6 +1,7 @@
 {extend name="admin@public/base" /}
 {block name="main-content"}
 
+
 <div class="page-content">
     <div class="page-header"></div>
     <div class="row clearfix">
@@ -17,18 +18,7 @@
                             <h3 style="text-align:center">佐证材料</h3>
                         </tr>
                         <tr>
-                            <div class="photo">
-                                <ul>
-                                    {foreach name="material" item="v"}
-                                    <li>
-                                        <div class="img">
-                                            <div class="cell"><img src="{$v.images}" alt="{$v.name}"></div>
-                                        </div>
-                                        <p>{$v.name}</p>
-                                    </li>
-                                    {/foreach}
-                                </ul>
-                            </div>
+							{include file="evaluation/material"}
                         </tr>
                         <tr>
                             <td colspan="3" style="height: 30px;"></td>
@@ -88,6 +78,8 @@ $("#passingForm").find("textarea").attr('disabled',true);
 $("#passingForm").find("input").attr('disabled',true);
 $("#passingForm").find("select").attr('disabled',true);
 $("#passingForm").find("button").attr('disabled',true);
+
+
 </script>
 {/if}
 {/block}

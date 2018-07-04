@@ -13,19 +13,7 @@
                     </tr>
                     <tr>
                         <td>
-                        <div class="photo">
-                            <ul>
-                                {foreach name="material" item="v"}
-                                <li>
-                                    <div class="img">
-                                        <div class="cell"><img src="{$v.images}" alt="{$v.name}"></div>
-                                    </div>
-                                    <p>{$v.name}</p>
-                                </li>
-                                {/foreach}
-                            </ul>
-                        </div>
-                        <div class="clearfix"></div>
+							{include file="evaluation/material"}
                         </td>
                     </tr>
                     {if $user.group_opinion}

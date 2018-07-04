@@ -11,19 +11,7 @@
                     <h3 style="text-align:center">佐证材料</h3>
                 </tr>
                 <tr>
-                    <div class="photo">
-                        <ul>
-                            {foreach name="material" item="v"}
-                            <li>
-                                <div class="img">
-                                    <div class="cell"><img src="{$v.images}" alt="{$v.name}"></div>
-                                </div>
-                                <p>{$v.name}</p>
-                            </li>
-                            {/foreach}
-                        </ul>
-                    </div>
-                    <div class="clearfix"></div>
+                    {include file="evaluation/material"}
                 </tr>
                     <!--班级小组评语-->
                     {if $user.group_opinion}

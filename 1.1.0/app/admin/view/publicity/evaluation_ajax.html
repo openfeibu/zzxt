@@ -5,7 +5,7 @@
     <td>{$row.id_number}</td>
 	<td>{$row.department_name}</td>
     <td>{$row.class_name}</td>
-    <td>{$row.poor_grade_name}</td>
+    <td>{if $row.poor_grade_name}{$row.poor_grade_name}{else}{$row.faculty_poor_grade_name}{/if}</td>
 </tr>
 {/foreach}
 <tr>

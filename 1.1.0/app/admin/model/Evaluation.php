@@ -156,7 +156,7 @@ class Evaluation extends Model
     {
         $eval_app = Db::name('evaluation_application')
 				->where('member_list_id',$member_list_id)
-                ->where(['evaluation_status' => ['in','4,5']])
+                ->where(['evaluation_status' => ['in','5']])
 				->where(['school_poor_grade' => ['in','1,2,3']])
 				->where('times',$this->subsidy['begin_time'])
                 ->field('evaluation_id')
