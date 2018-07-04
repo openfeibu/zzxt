@@ -120,14 +120,14 @@ table input[type="text"]{border:none;width: 90%;text-align: center;}
 .con_right .list_ul li a:hover{color: #3f83ca;}
 
 .photo{width: 100%;}
-.photo ul{width: 100%;}
-.photo ul li{width: 30%;float: left;cursor: pointer;margin:0 1.5% 10px 1.5%;border:1px solid #fff;}
+.photo{width: 100%;}
+.photo li{/*width: 30%;*/float: left;cursor: pointer;margin:0 1.5% 10px 1.5%;border:1px solid #fff;}
 .word_test .test_title{text-align: center;font-size: 18px;color: #4a97e6;line-height: 40px;margin-bottom: 5px;border-bottom: 1px solid #e5e5e5}
-.photo ul li:hover{border:1px solid #4a97e6;}
-.photo ul li .img{width: 100%;height: 180px;display: table;}
-.photo ul li .img .cell{width: 100%;height: 180px;display: table-cell;vertical-align: middle;}
-.photo ul li img{max-width: 100%;max-height: 180px;margin: 0 auto;}
-.photo ul li p{height: 40px;line-height: 40px;text-align: center;font-size: 14px;color: #333;}
+.photo li:hover{border:1px solid #4a97e6;}
+.photo li .img{width: 100%;height: 180px;display: table;}
+.photo li .img .cell{width: 100%;height: 180px;display: table-cell;vertical-align: middle;}
+.photo li img{max-width: 100%;max-height: 180px;margin: 0 auto;}
+.photo li p{height: 40px;line-height: 40px;text-align: center;font-size: 14px;color: #333;}
 
 .photo_box{display: none;width: 100%;height: 100%;position: fixed;top:0;left:0;background:url("../img/photo_bg.png") ;z-index: 1000}
 .photo_box ul{width: 100%;height: 100%;}
