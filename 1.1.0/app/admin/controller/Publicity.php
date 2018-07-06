@@ -87,7 +87,6 @@ class Publicity extends Base
 			}else{
 				$this->common_where .= " AND u.class_number = '".$class_number."' ";
 			}
-			
 		}
 		$this->public_type = input('public_type','ypublic');
 		if($this->public_type == 'ypublic')
