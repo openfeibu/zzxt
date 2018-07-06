@@ -25,12 +25,12 @@ $(function () {
             var extStart=filearr[i].name.lastIndexOf(".");//获取文件名中“.”后面的内容，后缀名
             var ext=filearr[i].name.substring(extStart,filearr[i].name.length).toUpperCase();
             if(fileSize/(1024*1024)>2) {
-                alert("文件大小超出限制，请重新选择！");
+                layer.msg("文件大小超出限制，请重新选择！");
                 $(this).attr("value","");
                 return false;
             }
             if(ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG") {
-                alert("文件格式错误，请重新选择！");
+                layer.msg("文件格式错误，请重新选择！");
                 $(this).attr("value","");
                 return false;
             }

@@ -81,7 +81,13 @@ class Publicity extends Base
         }else if($p_faculty_number){
 			$this->common_where .= " AND u.faculty_number = '".$p_faculty_number."'";
         }else if(isset($class_number) && $class_number){
-			$this->common_where .= " AND u.class_number in (".implode(',',$class_number).") ";
+			if(is_array($class_number))
+			{
+				$this->common_where .= " AND u.class_number in (".implode(',',$class_number).") ";
+			}else{
+				$this->common_where .= " AND u.class_number = '".$class_number."' ";
+			}
+			
 		}
 		$this->public_type = input('public_type','ypublic');
 		if($this->public_type == 'ypublic')
