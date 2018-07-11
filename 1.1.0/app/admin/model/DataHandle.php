@@ -12,6 +12,7 @@ namespace app\admin\model;
 use think\Model;
 use think\Db;
 use app\admin\model\Data;
+use app\admin\model\DataOracle;
 /**
  * 配置模型
  * @package app\admin\model
@@ -44,10 +45,17 @@ class DataHandle extends Model
 		$result = $this->dataClass->getStudents($where,$fields);
 		return $result;
 	}
+	/*获取教师工号*/
 	public function getAdmins($where,$fields)
 	{
 		$result = $this->dataClass->getAdmins($where,$fields);
 		return $result;
+	}
+	public function getStudentNew($id_number)
+	{
+		$DataOracle = new DataOracle();
+		$student = $DataOracle->getStudent($id_number);
+		return $student;
 	}
 	//获取系的班级列表
 	// public function getFacultyClasses($where,$fields)

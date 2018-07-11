@@ -138,7 +138,6 @@ class Login extends Base
 		if (!$member||encrypt_password($member_list_pwd,$member['member_list_salt'])!==$member['member_list_pwd']){
             $this->error(lang('username or pwd incorrect'));//账号密码不正确
 		}else{
-			
 			//更新字段
 			$data = array(
 				'last_login_time' => time(),
@@ -151,25 +150,6 @@ class Login extends Base
 				//更新cookie
 				cookie('yf_logged_user', jiami("{$member['member_list_id']}.{$data['last_login_time']}"));
 			}
-			/*
-			//根据需要决定是否同步后台登录状态
-			$admin=Db::name('admin')->where('member_id',$member['member_list_id'])->find();
-			if($admin){
-                // 记录登录
-                $auth = array(
-                    'aid'             			 => $admin['admin_id'],
-                    'admin_avatar'    			 => $admin['admin_avatar'],
-                    'admin_last_change_pwd_time' => $admin['admin_changepwd'],
-                    'admin_realname'       		 => $admin['admin_realname'],
-                    'admin_username'          	 => $admin['admin_username'],
-                    'member_id'        			 => $admin['member_id'],
-                    'admin_last_ip' 			 => $admin['admin_last_ip'],
-                    'admin_last_time'   		 => $admin['admin_last_time']
-                );
-                session('admin_auth', $auth);
-                session('admin_auth_sign', data_signature($auth));
-			}
-			*/
 			$this->success('登录成功',url('home/Login/check_active'));
 		}
     }

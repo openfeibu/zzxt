@@ -14,7 +14,7 @@
 	<td>{$row.id_number}</td>
 	<td>{$row.department_name}{$row.class_name}</td>
 	{if $type_id == 1}
-	<td>{$row.reason}</td>
+	<td><p>{$row.reason}</p></td>
 	<td>{$row.group_opinion.text}</td>
 	<td>{$row.faculty_opinion.text}</td>
 	<td>
@@ -26,7 +26,7 @@
     </td>
 	{else}
 	<td>{$row.poor_grade_name}</td>
-	<td>{$row.reason}</td>
+	<td><p>{$row.reason}</p></td>
 	<td>{$row.group_opinion.text}</td>
 	{/if}
 	<td>

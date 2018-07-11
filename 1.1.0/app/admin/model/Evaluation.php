@@ -143,6 +143,7 @@ class Evaluation extends Model
         }
         return $data;
     }
+	/* 是否已申请困难认定 */
     public function isExistMemberEvaluation($member_list_id)
     {
         $eval_app = Db::name('evaluation_application')
@@ -152,13 +153,14 @@ class Evaluation extends Model
 				->find();
         return $eval_app ? $eval_app['evaluation_id'] : 0;
     }
+	/* 是否通过困难认定，条件：困难学生（1,2,3）、公示结束后、 学校通过（默认取学院通过结果）*/
     public function isExistMemberEvaluationPass($member_list_id)
     {
         $eval_app = Db::name('evaluation_application')
 				->where('member_list_id',$member_list_id)
-                ->where(['evaluation_status' => ['in','5']])
-				->where(['school_poor_grade' => ['in','1,2,3']])
+				->where("(school_poor_grade in (1,2,3) OR (faculty_poor_grade in (1,2,3) AND school_poor_grade is NULL))")
 				->where('times',$this->subsidy['begin_time'])
+				->where('create_at','>=',$this->subsidy['ypublic_end_time'])
                 ->field('evaluation_id')
 				->find();
         return $eval_app ? $eval_app['evaluation_id'] : 0;
@@ -207,15 +209,21 @@ class Evaluation extends Model
 	}
 	public function getMemberEvaluationGradeName($member_list_id)
 	{
-		$school_poor_grade = Db::name('evaluation_application')
+		$eval_app = Db::name('evaluation_application')
 				->where('member_list_id',$member_list_id)
-                ->where(['evaluation_status' => ['in','4,5']])
-				->where(['school_poor_grade' => ['in','1,2,3']])
+				->where("(school_poor_grade in (1,2,3) OR (faculty_poor_grade in (1,2,3) AND school_poor_grade is NULL))")
 				->where('times',$this->subsidy['begin_time'])
-                ->field('evaluation_id')
-				->value('school_poor_grade');
-        $school_poor_grade =  $school_poor_grade ? $school_poor_grade : 0;
-		return self::getGradeData($school_poor_grade);
+				->where('create_at','>=',$this->subsidy['ypublic_end_time'])
+                ->field('evaluation_id,school_poor_grade,faculty_poor_grade')
+				->find();
+		if(!$eval_app)
+		{
+			$poor_grade = 4;
+		}
+		else{
+			$poor_grade = $eval_app['school_poor_grade'] ? $eval_app['school_poor_grade'] : $eval_app['faculty_poor_grade'];
+		}
+		return self::getGradeData($poor_grade);
 	}
 	public function getEvaluationNext($evaluation_id,$where = "",$order)
 	{

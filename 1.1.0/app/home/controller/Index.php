@@ -11,6 +11,7 @@ namespace app\home\controller;
 use think\Cache;
 use think\Db;
 use think\captcha\Captcha;
+use app\admin\model\DataHandle;
 
 class Index extends Base
 {
