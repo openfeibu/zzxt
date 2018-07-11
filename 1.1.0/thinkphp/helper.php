@@ -86,7 +86,7 @@ if (!function_exists('lang')) {
      * @param string    $lang 语言
      * @return mixed
      */
-    function lang($name, $vars = [], $lang = '')
+    function lang($name, $vars = [], $lang = 'zh-cn')
     {
         return Lang::get($name, $vars, $lang);
     }

@@ -154,6 +154,8 @@ class Lang
      */
     public static function detect()
     {
+		/*
+		zsign
         // 自动侦测设置获取语言选择
         $langSet = '';
 
@@ -175,6 +177,7 @@ class Lang
             // 合法的语言
             self::$range = $langSet ?: self::$range;
         }
+		*/
         return self::$range;
     }
 
