@@ -592,18 +592,6 @@ class Admin extends Base
 	}
 	public function test()
 	{
-		/*
-		$dataclass = new \app\admin\model\Data();
-		$result = $dataclass->getUserByIdCard('440514199411193010');
-		var_dump($result);exit;
-		$user_fields = config('user_fields');
-		$user = array();
-		foreach($user_fields as $key => $val)
-		{
-			$user[$key] = isset($result[$val]) ? $result[$val] : '' ;
-		}
-		var_dump($user);exit;
-		*/
 		$faculty_number = '5';
 		$year = date('Y');
 		$month = date('m');

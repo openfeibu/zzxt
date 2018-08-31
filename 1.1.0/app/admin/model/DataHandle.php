@@ -22,6 +22,7 @@ class DataHandle extends Model
 	public function __construct()
 	{
 		$this->dataClass = new Data();
+		$this->dataOracleClass = new DataOracle();
 	}
 	public function getProfessiones($where)
 	{
@@ -29,15 +30,31 @@ class DataHandle extends Model
 		return $result;
 	}
 	//获取班级信息
-	public function getClass($where)
+	public function getClass($where,$type='oracle')
 	{
-		$result = $this->dataClass->getClass($where);
+		switch($type)
+		{
+			case 'oracle':
+				$result = $this->dataOracleClass->getClass($where);
+			break;
+			case 'sqlserver':
+				$result = $this->dataClass->getClass($where);
+			break;
+		}
 		return $result;
 	}
 	//获取班级列表
-	public function getClasses($where)
+	public function getClasses($where,$type='oracle')
 	{
-		$result = $this->dataClass->getClasses($where);
+		switch($type)
+		{
+			case 'oracle':
+				$result = $this->dataOracleClass->getClasses($where);
+			break;
+			case 'sqlserver':
+				$result = $this->dataClass->getClasses($where);
+			break;
+		}
 		return $result;
 	}
 	public function getStudents($where,$fields)
@@ -51,10 +68,10 @@ class DataHandle extends Model
 		$result = $this->dataClass->getAdmins($where,$fields);
 		return $result;
 	}
-	public function getStudentNew($id_number)
+	public function getStudent($where)
 	{
 		$DataOracle = new DataOracle();
-		$student = $DataOracle->getStudent($id_number);
+		$student = $DataOracle->getStudent($where);
 		return $student;
 	}
 	//获取系的班级列表

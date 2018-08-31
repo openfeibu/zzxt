@@ -33,8 +33,11 @@ class ClassCode extends Model
 
 	public function getClass($class_number)
 	{
+		/*
 		$where = " WHERE 班级代码 in (".$class_number.") ";
+		*/
 		$dataHandleClass = new DataHandle();
+		$where = " WHERE BJH in (".$class_number.")";
 		$class = $dataHandleClass->getClass($where);
 		return $class;
 	}
@@ -42,7 +45,11 @@ class ClassCode extends Model
     {
         $years = getYears();
 		$dataHandleClass = new DataHandle();
+		/*
 		$where = " WHERE 系所代码 = '".$faculty_number."' AND 当前所在级 in(".$years.")";
+		*/
+		$faculty = $this->getFaculty($faculty_number); 
+		$where = " WHERE DWH = '".$faculty['DWH']."' AND NJ in(".$years.")";
 		$classes = $dataHandleClass->getClasses($where);
 		return $classes;
     }
@@ -56,15 +63,7 @@ class ClassCode extends Model
 		$professiones = $dataHandleClass->getProfessiones($where);
 		return $professiones;
 	}
-	/*
-	public function getClassByNumbers($numbers)
-	{
-		$map['班级代码'] = array('in',$numbers);
-		$class = DB::name('class_code')->field('系所代码 as faculty_number,系所名称 as faculty_name,班级代码 as class_number, 班级名称 as class_name,当前所在级 as current_grade')->order('faculty_number asc')->where($map)->select();
 
-		return $class;
-	}
-	*/
 	public function getCounselorClasses($class_number)
 	{
 		$dataHandleClass = new DataHandle();

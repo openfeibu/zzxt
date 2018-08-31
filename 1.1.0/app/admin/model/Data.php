@@ -39,13 +39,7 @@ class Data extends Model
 		$result = $this->handleFetchRow($rs);
 		return $result;
 	}
-	protected function getClassNumbers($where = '')
-	{
-		$sql="SELECT 班级代码 as class_number ".$where ;
-	    $rs = odbc_exec($this->conn,$sql);
-		$result = $this->handleFetchRow($rs);
-		return $result;
-	}
+
 	protected function getClasses($where = '')
 	{
 		$sql="SELECT 班级代码 as class_number,班级名称 as class_name,当前所在级 as current_grade FROM V班级代码表 ".$where ." ORDER BY 班级代码 ASC ";

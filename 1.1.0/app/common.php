@@ -1828,6 +1828,17 @@ function getYears()
 	$years = implode(',',$years);
 	return $years;
 }
+function getYearArr()
+{
+	$year = date('Y');
+	$month = date('m');
+	if($month < 9){
+		$years = [$year-3,$year-2,$year-1];
+	}else{
+		$years = [$year-2,$year-1,$year];
+	}
+	return $years;
+}
 function getGrade($current_grade)
 {
 	$year = date('Y');

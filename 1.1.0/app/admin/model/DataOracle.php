@@ -28,28 +28,49 @@ class Dataoracle extends Model
 			trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
 		}
 	}
-	public function getStudent($id_number)
+	public function getStudent($where,$fields='XH as studentid,BH as class_number,DWH ,DWMC as department_name ,ZY as profession ,BJ as class_name')
 	{
-		$data = $this->query("SELECT * FROM LY_MH_XSZXJBXX_DMT WHERE EDUPERSONCARDID = '".$id_number."'");
-		var_dump($data);
-		exit;
+		$data = $this->query("SELECT ".$fields." FROM LY_YKT_XS_DMT ".$where." AND ROWNUM = 1");
+		return $data;
+	}
+	public function getClass($where)
+	{
+		$sql="SELECT BJH as class_number,BJMC as class_name,NJ as current_grade FROM LY_XXZX_BJ_DMT ".$where ." AND ROWNUM = 1 ORDER BY BJH ASC ";
+		$rs = $this->query($sql);
+		return $rs;
+	}
+	public function getClasses($where)
+	{
+		$sql="SELECT BJH as class_number,BJMC as class_name,NJ as current_grade FROM LY_XXZX_BJ_DMT ".$where ." ORDER BY BJH ASC ";
+		$rs = $this->queryReturn2DArr($sql);
+		return $rs;
 	}
 	public function query($sql) {
-        $this->query = oci_parse($this->conn,$sql);
-        oci_execute($this->query);
-        $rs = $this->fetch_array();
+        $query = oci_parse($this->conn,$sql);
+        oci_execute($query);
+        $rs = $this->fetch_array($query);
         return $rs;
     }
-	
-	public function handleFetchRow($rs)
+	public function queryReturn2DArr($sql)
+	{
+		$query = oci_parse($this->conn,$sql);
+        oci_execute($query);
+		$rs = $this->handleFetchRow($query);
+        return $rs;
+	}
+	public function handleFetchRow($query,$strtolower = true)
 	{
 		$arr = $arr1 = array();
-		while(oci_fetch_row($rs))
+		while(oci_fetch_row($query))
 		{
-			for ($i = 1; $i <= oci_num_fields($rs); $i++) 
+			for ($i = 1; $i <= oci_num_fields($query); $i++) 
 			{
-				$name = oci_field_name($rs, $i);
-				$value = oci_result($rs, $i);
+				$name = oci_field_name($query, $i);
+				$value = oci_result($query, $i);
+				if($strtolower)
+				{
+					$name = strtolower($name);
+				}
 				$arr1[$name] = $value;
 			}
 			$arr[] = $arr1;
@@ -57,15 +78,27 @@ class Dataoracle extends Model
 		return $arr;
 	}
 	
-    public function fetch_array($type=OCI_ASSOC) {
-		
-        while( $row = oci_fetch_array($this->query,$type) ){
-            $rs[] = $row;
-        }
-        if(1==count($rs)){
-            $rs = $rs[0];
-        }
-        return $rs;
+    public function fetch_array($query,$strtolower = true) {
+		$arr = $arr1 = array();
+		while(oci_fetch_row($query))
+		{
+			for ($i = 1; $i <= oci_num_fields($query); $i++) 
+			{
+				$name = oci_field_name($query, $i);
+				$value = oci_result($query, $i);
+				if($strtolower)
+				{
+					$name = strtolower($name);
+				}
+				$arr1[$name] = $value;
+			}
+			$arr[] = $arr1;
+		}
+		if(count($arr) == 1)
+		{
+			$arr = $arr[0];
+		}
+		return $arr;
     }
-	
+		
 }

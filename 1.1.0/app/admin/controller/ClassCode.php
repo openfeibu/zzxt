@@ -28,7 +28,8 @@ class ClassCode extends Common
         $html = '<option value="">请选择专业</option>';
 		foreach($faculties as $key => $faculty)
 		{
-			$html .= "<option value='".$faculty['class_number']."'>".$faculty['current_grade'].$faculty['class_name']."</option>";
+			// $html .= "<option value='".$faculty['class_number']."'>".$faculty['current_grade'].$faculty['class_name']."</option>";
+			$html .= "<option value='".$faculty['class_number']."'>".$faculty['class_name']."</option>";
 		}
         return [
             'code' => 200,
