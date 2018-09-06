@@ -12,6 +12,7 @@ use think\Db;
 use think\captcha\Captcha;
 use think\Validate;
 use app\admin\model\Data;
+use app\admin\model\DataOracle;
 
 class Login extends Base
 {
@@ -127,6 +128,16 @@ class Login extends Base
 					
 					session('hid',$rst);
 					session('user',$sl_data);
+					
+					$xh = $school_user['studentid'];
+					$xh_unfulll = substr($xh,-9);
+					$where = " WHERE XH = '".$xh."' OR SFZH = '".$member_list_username."' OR XH = '".$xh_unfulll."' ";
+					$data_oracle = new DataOracle();
+					$new_student = $data_oracle->getStudent($where);
+					$school_user['profession'] = $new_student['profession'] ;
+					$school_user['department_name'] = $new_student['department_name'] ;
+					$school_user['class_name'] = $new_student['class_name'] ;
+					$school_user['class_number'] = $new_student['class_number'] ;
 					$rst1 = Db::name('user')->insert($school_user);
 					$this->success('登录成功',url('home/Index/index'));
 					

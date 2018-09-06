@@ -13,9 +13,9 @@
 	<td>{$row.group_opinion.text}</td>
 	<td>{$row.group_poor_grade_name}</td>
 	<td>{$row.faculty_opinion.text}</td>
-	<td class="last_poor_grade" last_poor_grade="{$row.group_poor_grade}">{$row.faculty_poor_grade_name}</td>
+	<td class="last_poor_grade" last_poor_grade="{$row.faculty_poor_grade}"  last_poor_group="学院评级">{$row.faculty_poor_grade_name}</td>
 	{if in_array($row.evaluation_status,[4])}
-	<td class="this_poor_grade_name">同意</td>
+	<td class="this_poor_grade_name">同意学院评级</td>
 	<td>
 		{php} echo \app\admin\model\Evaluation::getGradesHtml($row['faculty_poor_grade'],'poor_grade');{/php}
 	</td>

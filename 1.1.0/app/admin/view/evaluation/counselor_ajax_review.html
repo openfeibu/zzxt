@@ -13,7 +13,8 @@
 	{include file="common\evaluation_val"}
 	{if in_array($row.evaluation_status,[1,2])}
 	<td>
-		<textarea name="group_opinion[text]" class="text">{$row.group_opinion.text|default="同意"}</textarea>
+		<span style="display:none;" class="last_poor_grade" last_poor_grade="{$row.system_poor_grade}" last_poor_group="系统评级"></span>
+		<textarea name="group_opinion[text]" class="text">{$row.group_opinion.text|default="同意系统评级"}</textarea>
     </td>
 	<td>
 		{php} echo \app\admin\model\Evaluation::getGradesHtml($row['system_poor_grade'],'poor_grade');{/php}
@@ -43,7 +44,7 @@
 {/foreach}
 <tr>
     <td align="left" class="hidden-xs center" href="{:url('admin/EvaluationHandle/counselorAll')}">
-        <button id="passSubmit" class="btn btn-sm btn-primary hidden-xs" name="pass">提交&nbsp;</button>
+        <button id="passSubmit" class="btn btn-sm btn-primary hidden-xs" name="pass">提交</button>
         <!-- <button id="failSubmit" class="btn btn-danger  btn-sm hidden-xs" name="fail">不同意</button> -->
     </td>
     <td height="50" colspan="12" align="left">{$page}</td>

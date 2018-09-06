@@ -11,9 +11,9 @@
     </td>
     {include file="common\evaluation_val"}
 	<td>{$row.group_opinion.text}</td>
-	<td class="last_poor_grade" last_poor_grade="{$row.group_poor_grade}">{$row.group_poor_grade_name}</td>
+	<td class="last_poor_grade" last_poor_grade="{$row.group_poor_grade}" last_poor_group="小组评级">{$row.group_poor_grade_name}</td>
 	{if in_array($row.evaluation_status,[3])}
-	<td class="this_poor_grade_name">同意</td>
+	<td class="this_poor_grade_name">同意小组评级</td>
 	<td>
 		{php} echo \app\admin\model\Evaluation::getGradesHtml($row['group_poor_grade'],'poor_grade');{/php}
 	</td>
