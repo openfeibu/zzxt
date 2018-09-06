@@ -44,7 +44,8 @@ table input[type="text"]{border:none;width: 90%;text-align: center;}
 .tab_content{text-align: center;font-size: 14px;}
 .table .tab_radio{text-align: left!important;}
 .tab_opinion{width: 90%;height:100px;resize: none;line-height: 24px;overflow: hidden;}
-.tab_sign{float: right;margin-right: 10%;}
+.tab_sign>input,.tab_time>input{border:none;width: 90%;text-align: center;}
+.tab_sign{float: right;margin-right: 5px;}
 .tab_sign>input[type="text"]{width: 120px;border-bottom: 1px solid #555555;}
 .tab_sign>input[disabled]{background-color: #fff!important;}
 .tab_time{float: right;margin-right: 10%;}
