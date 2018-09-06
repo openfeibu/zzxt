@@ -24,6 +24,10 @@
                                 <input type="text" value="{$user.group_opinion.time|date='n',###}">月
                                 <input type="text" value="{$user.group_opinion.time|date='d',###}">日
                             </div>
+							<div class="tab_sign">
+								<input type="text" value="{$user.group_opinion.name}" disabled>
+							</div>
+							<div class="clearfix"></div>
                         </td>
                     </tr>
                     {/if}
@@ -37,6 +41,10 @@
                                 <input type="text" value="{$user.faculty_opinion.time|date='n',###}">月
                                 <input type="text" value="{$user.faculty_opinion.time|date='d',###}">日
                             </div>
+							<div class="tab_sign">
+								<input type="text" value="{$user.faculty_opinion.name}" disabled>
+							</div>
+							<div class="clearfix"></div>
                         </td>
                     </tr>
                     {/if}

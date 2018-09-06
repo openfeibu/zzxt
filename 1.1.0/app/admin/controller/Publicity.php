@@ -118,7 +118,7 @@ class Publicity extends Base
 		$end_time = $subsidy[$this->public_type.'_end_time'];
 		$this->assign('begin_time',$begin_time);
 		$this->assign('end_time',$end_time);
-		if($begin_time <= time() && $end_time >= time())
+		if($begin_time <= strtotime(date('Y-m-d')) && $end_time >= strtotime(date('Y-m-d')))
 		{
 			$data = $this->multiple->getMultipleList($type_id,$where);
 			$show=$data->render();
@@ -153,7 +153,7 @@ class Publicity extends Base
 		$this->assign('begin_time',$begin_time);
 		$this->assign('end_time',$end_time);
 		
-		if($begin_time <= time() && $end_time >= time())
+		if($begin_time <= strtotime(date('Y-m-d')) && $end_time >= strtotime(date('Y-m-d')))
 		{
 			$data = $this->multiple->getMultipleList($type_id,$where);
 			$show=$data->render();
@@ -188,7 +188,7 @@ class Publicity extends Base
 		$this->assign('begin_time',$begin_time);
 		$this->assign('end_time',$end_time);
 		
-		if($begin_time <= time() && $end_time >= time())
+		if($begin_time <= strtotime(date('Y-m-d')) && $end_time >= strtotime(date('Y-m-d')))
 		{
 			$data = $this->national->getNationalList($where);
 			$show=$data->render();
@@ -221,7 +221,7 @@ class Publicity extends Base
 		$this->assign('begin_time',$begin_time);
 		$this->assign('end_time',$end_time);
 		
-		if($begin_time <= time() && $end_time >= time())
+		if($begin_time <= strtotime(date('Y-m-d')) && $end_time >= strtotime(date('Y-m-d')))
 		{
 			$data = $this->evaluation->getEvaluationList($where);
 			$show=$data->render();

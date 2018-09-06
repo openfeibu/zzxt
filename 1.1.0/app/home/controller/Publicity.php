@@ -60,7 +60,7 @@ class Publicity extends Base
 		$this->assign('end_time',$end_time);
 		
 		
-		if($begin_time <= time() && $end_time >= time())
+		if($begin_time <= strtotime(date('Y-m-d')) && $end_time >= strtotime(date('Y-m-d')))
 		{
             $data = $this->multiple->getMultipleList($type_id,$this->common_where);
             $show=$data->render();
@@ -96,7 +96,7 @@ class Publicity extends Base
 		$this->assign('end_time',$end_time);
 		
 		
-		if($begin_time <= time() && $end_time >= time())
+		if($begin_time <= strtotime(date('Y-m-d')) && $end_time >= strtotime(date('Y-m-d')))
 		{
             $data = $this->multiple->getMultipleList($type_id,$this->common_where);
             $show=$data->render();
@@ -132,7 +132,7 @@ class Publicity extends Base
 		$this->assign('end_time',$end_time);
 		
 		
-		if($begin_time <= time() && $end_time >= time())
+		if($begin_time <= strtotime(date('Y-m-d')) && $end_time >= strtotime(date('Y-m-d')))
 		{
             $data = $this->national->getNationalList($this->common_where);
             $show=$data->render();
@@ -161,7 +161,7 @@ class Publicity extends Base
 		$this->assign('end_time',$end_time);
 		
 		
-		if($begin_time <= time() && $end_time >= time())
+		if($begin_time <= strtotime(date('Y-m-d')) && $end_time >= strtotime(date('Y-m-d')))
 		{
 			$data = $this->evaluation->getEvaluationList($this->common_where);
             $show=$data->render();
