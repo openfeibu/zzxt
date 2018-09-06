@@ -67,7 +67,7 @@ class Student extends Base
                     if ($this->MultipleScholarship->isHaveApply($this->user['member_list_id'], 2)) {
                         $this->error("抱歉，你已申请励志奖学金，不能申请奖学金");
                     }
-                    $this->success('成功',url('/home/nationalScholarship'));
+                    $this->success('成功',url('/home/stuedent/nationalScholarship'));
                 }
                 $this->error("抱歉，大二或大三生才能申请奖学金");
                 break;
@@ -89,7 +89,7 @@ class Student extends Base
                     if ($this->NationalScholarship->isHaveApply($this->user['member_list_id'], 1)) {
 						$this->error("抱歉，你已申请奖学金，不能申请励志奖学金");
                     }		
-					$this->success('成功',url('/home/inspirational'));	
+					$this->success('成功',url('/home/stuedent/inspirational'));	
                 }
                 $this->error("抱歉，大二学生才能申请励志奖学金");
                 break;
@@ -105,7 +105,7 @@ class Student extends Base
                     $this->error('抱歉，通过家庭困难认定后才能申请');
                 }
                 //跳转申请页面
-                $this->success('成功',url('/home/grants'));
+                $this->success('成功',url('/home/stuedent/grants'));
                 break;
             default :$this->error("发生未知错误，请联系管理员。");
         }

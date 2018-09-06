@@ -130,8 +130,15 @@ $(function () {
 		}, // 这是提交后的方法
 		dataType: 'json'
 	});
-
-
+	/* textarea字数*/
+    var textbox_text=$(".textbox").val();
+    var textbox_counter=textbox_text.length;
+    $(".textbox_num").text(textbox_counter);
+	$(".textbox").on('blur keyup input',function(){
+		var text=$(".textbox").val();
+		var counter=text.length;
+		$(".textbox_num").text(counter);
+	});
 });
 
 

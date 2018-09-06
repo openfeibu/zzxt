@@ -69,7 +69,7 @@
         </table>
 		{else}
 
-        <table class="table_one" style="word-wrap: break-word;word-break: break-all;">
+        <table class="table_one material_table" style="word-wrap: break-word;word-break: break-all;">
             <tbody>
             <tr class="table-tr">
                 <td>序号</td>
@@ -85,11 +85,9 @@
                 <td>本人近期蓝底或红底免冠证件照</td>
                 <td>必须上传</td>
                 <td class="title td_upfile">
-
                     <label class="file_ui">上传文件<input type="file"   name="member_list_headpic" id="member_list_headpic" class="upfile" ></label>
                     <!--<div class="upfile_name">文件名</div>-->
-					<input type="hidden" name="member_list_headpic_url" id="member_list_headpic_url" value="{$user.member_list_headpic}"/>
-					
+					<input type="hidden" name="member_list_headpic_url" id="member_list_headpic_url" value="{$user.member_list_headpic}" is_must="1" title="免冠证照"/>
                 </td>
                 <td >
 					{if $user.member_list_headpic}
@@ -109,7 +107,7 @@
                     <label class="file_ui">上传文件<input type="file"   name="image_{$v.cid}" id="image_{$v.cid}" class="upfile" ></label>
                     <!--<div class="upfile_name">文件名</div>-->
                     <input type="hidden" name="cids[]" id="cids" value="{$v.cid}"/>
-					<input type="hidden" name="images[]" id="image_{$v.cid}_url" value=""/>
+					<input type="hidden" name="images[]" id="image_{$v.cid}_url" value="" is_must="{$v.is_must}"  title="{$v.name}"/>
                 </td>
                 <td ><div class="upfile_name" id="image_{$v.cid}_image">文件名</div></td>
             </tr>
@@ -156,11 +154,32 @@ $(".upfile").change(function(){
 	});
 });
 $(".material_btn").click(function(){
-
-	if(confirm("上传后不能修改，确定上传？"))
-	{
-		$("#material_form").submit();
-	}
+	layer.confirm('上传后不能修改，确定上传？', {
+		btn: ['确定','取消'] //按钮
+	}, function(){
+		bool = true;
+		$('.material_table').find('input').each(function(){
+			if($(this).attr('is_must'))
+			{
+				var value = $(this).val();
+				if($fb.expEmpty(value) != true)
+				{
+					var title = $(this).attr('title') + '必须上传';
+					layer.msg(title);
+					bool = false;
+					return false;
+				}
+			}
+		});
+		console.log('bool:' + bool);
+		if(bool)
+		{
+			bool = null;
+			$("#material_form").submit();
+		}
+	},function(){
+		
+	});
 })
 </script>
 

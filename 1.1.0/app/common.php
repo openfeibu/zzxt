@@ -1862,3 +1862,7 @@ function getValuesByArr($arr,$key,$split='、')
 	}
 	return rtrim($values,$split); 
 }
+function handle_idcard($id_number)
+{
+	return strlen($id_number) == 15 ? substr_replace($id_number,"******",6,6) : (strlen($id_number)==18 ? substr_replace($id_number,"******",8,6) : '');
+}

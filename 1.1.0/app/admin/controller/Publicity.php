@@ -118,7 +118,6 @@ class Publicity extends Base
 		$end_time = $subsidy[$this->public_type.'_end_time'];
 		$this->assign('begin_time',$begin_time);
 		$this->assign('end_time',$end_time);
-		
 		if($begin_time <= time() && $end_time >= time())
 		{
 			$data = $this->multiple->getMultipleList($type_id,$where);

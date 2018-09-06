@@ -32,7 +32,7 @@ return [
     'job_status'=>'home/show/job_status',//勤工助学岗位状态
     'grants'=>'home/show/grants',//国家助学金页
     'motivational'=>'home/show/motivational',//国家励志奖学金页
-    'scholarship'=>'home/show/scholarship',//国家助学金页
+    'scholarship'=>'home/show/scholarship',//国家奖学金页
     'scho_status'=>'home/Student/examineStatus',//奖助学金状态页
     'personal_status'=>'home/Show/personal_status',//个人中心页审核状态
     'index_notice'=>'home/Show/index_notice',
@@ -69,10 +69,10 @@ return [
     'admin/Survey/setOpen' => 'admin/Survey/setOpen',//显示设置调查问卷开关界面
     //---------------------------------------学生端三金申请-----------------------------
     'home/text'=> 'home/Student/text',
-    'home/Scholarship/chooseType'                          => 'home/Student/chooseType',//选择申请类型,后缀加id.(id = 1为国家奖学金，2为励志奖学金，3为助学金)
-    'home/grants'                                          => 'home/Student/getGrants',//助学金
-    'home/inspirational'                                   => 'home/Student/getInspirational',//励志奖学金
-    'home/nationalScholarship'                             => 'home/Student/getNationalScholarship',//国家奖学金
+    'home/student/chooseType'                          => 'home/Student/chooseType',//选择申请类型,后缀加id.(id = 1为国家奖学金，2为励志奖学金，3为助学金)
+    'home/stuedent/grants'                                          => 'home/Student/getGrants',//助学金
+    'home/stuedent/inspirational'                                   => 'home/Student/getInspirational',//励志奖学金
+    'home/stuedent/nationalScholarship'                             => 'home/Student/getNationalScholarship',//国家奖学金
     'home/examineStatus'                                   => 'home/Student/examineStatus',//查看申请状态
     //----------------------------------------修改的三金-------------------
     'admin/ScholarshipsGroup/showApplicantList'            => 'admin/ScholarshipsGroup/showApplicantList',//显示小组的本班学生申请

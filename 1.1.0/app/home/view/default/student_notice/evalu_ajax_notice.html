@@ -2,9 +2,9 @@
 {foreach $list as $row}
 <tr class="line-table-height {if $row.member_list_id == $user.member_list_id}tr_active{/if}" >
     <td class="k-s-content content">{$row.member_list_nickname}</td>
-    <td class="k-s-content content">{$row.id_number}</td>
+    <td class="k-s-content content">{$row.id_number|handle_idcard}</td>
     <td class="k-s-content content">{$row.class_name}</td>
-    <td class="k-s-content content">{$row.school_poor_grade_name}</td>
+    <td class="k-s-content content">{if $row.poor_grade_name}{$row.poor_grade_name}{else}{$row.faculty_poor_grade_name}{/if}</td>
 </tr>
 {/foreach}
 <tr>

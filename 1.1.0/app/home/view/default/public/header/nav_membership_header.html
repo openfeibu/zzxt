@@ -22,6 +22,7 @@
 
     <script src="__PUBLIC__/others/jquery.form.js"></script>
     <script src="__PUBLIC__/layer/layer_zh-cn.js"></script>
+	<script src="__PUBLIC__/fbui/fbui.js"></script>
 </head>
 <body>
 <!-- 头部 S -->
@@ -75,7 +76,7 @@
                 </ul>
                 <script>
                     function choose_type(value) {
-                        var url = "{:url('/home/Scholarship/chooseType')}";
+                        var url = "{:url('/home/student/chooseType')}";
                         var choose_type = value;
                         $.ajax({
                             url:url,

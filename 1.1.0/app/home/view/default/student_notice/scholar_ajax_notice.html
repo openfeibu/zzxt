@@ -2,7 +2,7 @@
 {foreach $list as $row}
 <tr class="line-table-height">
     <td class="k-s-content content">{$row.member_list_nickname}</td>
-    <td class="k-s-content content">{$row.id_number}</td>
+    <td class="k-s-content content">{$row.id_number|handle_idcard}</td>
     <td class="k-s-content content">{$row.class_name}</td>
 </tr>
 {/foreach}

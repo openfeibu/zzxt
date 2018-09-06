@@ -12,22 +12,44 @@
     setInterval(function(){
         $('.nowtime').html(new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay()));
     },1000);
-    $(".personal_table input").blur(function(){
-	/*
-		var value  = $(this).val();
-		var name = $(this).attr('name');
-		if($(this).hasClass("noBlur")){
-			return false;
-		}else{
-			$.post("{:url('home/show/evaluation_application')}",{'name':name,'value':value},function(data){
-				if($("."+name).length>0){
-					$("."+name).text(value);
-				}
-				console.log(data);
-			 });
+    $(".form_table input,.form_table textarea").blur(function(){
+		return check($(this));
+    });
+	function check(_this)
+	{
+		var value  = _this.val();
+		var name = _this.attr('name');
+		var title = _this.parent('td').prev('td').text();
+		if(_this.hasClass("noBlur")){
+			return true;
 		}
-		*/
-    })
+		if(value.length <= 0)
+		{
+			layer.msg(title+' 不能为空', {icon: 5});
+			return false;
+		}
+		if(_this.attr('exp'))
+		{
+			var exp = _this.attr('exp');
+			var arr = exp.split('|');
+			var type = arr[0];
+			var bool = true;
+			var param = "'"+value+ "'";
+			for(var i=1;i<arr.length;i++)
+			{
+				param += ",'" + arr[i] + "'";
+			}
+			var func = '$fb.exp'+type+"("+param+")";
+			var rst = eval(func);
+			if(rst != true)
+			{
+				layer.msg(title+' '+rst, {icon: 5});
+				return false;
+			}
+			return true;
+		}
+		return true;
+	}
 </script>
 <script>
     $(".pro_img").on('click','.img_close',function (e) {

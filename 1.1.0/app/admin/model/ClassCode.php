@@ -70,7 +70,8 @@ class ClassCode extends Model
 		$classes = array();
 		if($class_number)
 		{
-			$where = " WHERE 班级代码 in (".$class_number.") ";
+			//$where = " WHERE 班级代码 in (".$class_number.") ";
+			$where = " WHERE BJH in (".$class_number.") ";
 			$classes = $dataHandleClass->getClasses($where);
 		}
 		return $classes;
