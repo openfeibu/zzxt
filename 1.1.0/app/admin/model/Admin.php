@@ -167,11 +167,17 @@ class Admin extends Model
     {
         $admin=self::get($data['admin_id'])->toArray();
         unset($admin['ROW_NUMBER'],$admin['admin_id']);
-        $admin['admin_username']=$data['admin_username'];
-        $admin['faculty_number'] = $data['faculty_number'];
 		if(isset($data['class_number']))
 		{
 			$admin['class_number'] = $data['class_number'];
+		}
+		if(isset($data['admin_username']))
+		{
+			$admin['admin_username'] = $data['admin_username'];
+		}
+		if(isset($data['faculty_number']))
+		{
+			$admin['faculty_number'] = $data['faculty_number'];
 		}
         if($data['admin_pwd']){
             $admin['admin_pwd_salt']=random(10);
@@ -180,18 +186,21 @@ class Admin extends Model
         }
         $rst=self::where('admin_id',$data['admin_id'])->update($admin);
         if($rst!==false){
-            $access=Db::name('auth_group_access')->where('uid',$data['admin_id'])->find();
-            if($access){
-                //修改
-                if($access['group_id']!=$data['group_id']){
-                    Db::name('auth_group_access')->where('uid',$data['admin_id'])->setField('group_id',$data['group_id']);
-                }
-            }else{
-                //增加
-                $access['uid']=$data['admin_id'];
-                $access['group_id']=$data['group_id'];
-                Db::name('auth_group_access')->insert($access);
-            }
+			if(isset($data['group_id']))
+			{
+				$access=Db::name('auth_group_access')->where('uid',$data['admin_id'])->find();
+				if($access){
+					//修改
+					if($access['group_id']!=$data['group_id']){
+						Db::name('auth_group_access')->where('uid',$data['admin_id'])->setField('group_id',$data['group_id']);
+					}
+				}else{
+					//增加
+					$access['uid']=$data['admin_id'];
+					$access['group_id']=$data['group_id'];
+					Db::name('auth_group_access')->insert($access);
+				}
+			}
             return true;
         }else{
             return false;
