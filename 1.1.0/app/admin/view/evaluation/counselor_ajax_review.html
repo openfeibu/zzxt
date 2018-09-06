@@ -13,7 +13,7 @@
 	{include file="common\evaluation_val"}
 	{if in_array($row.evaluation_status,[1,2])}
 	<td>
-		<span style="display:none;" class="last_poor_grade" last_poor_grade="{$row.system_poor_grade}" last_poor_group="系统评级"></span>
+		<span style="display:none;" class="last_poor_grade" last_poor_grade="{$row.system_poor_grade}" last_group="系统评级"></span>
 		<textarea name="group_opinion[text]" class="text">{$row.group_opinion.text|default="同意系统评级"}</textarea>
     </td>
 	<td>

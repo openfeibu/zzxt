@@ -30,9 +30,11 @@
                         <tr>
                             <td colspan="3" class="tab_content">
 
-                                <textarea name="group_opinion[text]" class="tab_opinion">{$user.group_opinion.text|default='同意'}</textarea>
+                                <textarea name="group_opinion[text]" class="tab_opinion text">{$user.group_opinion.text|default='同意系统评级'}</textarea>
                                 <div class="" style="text-align:left;font-size: 16px;">
-								<p>系统评级：{$eval_app.system_poor_grade_name}</p>	
+								<p>系统评级：{$eval_app.system_poor_grade_name}
+								<input type="hidden" class="last_poor_grade" value="{$eval_app.system_poor_grade}" last_group="系统评级">
+								</p>	
 								</div>
                                 <div class="modify pull-left">
                                     <p>修改评级：</p>

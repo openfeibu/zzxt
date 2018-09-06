@@ -30,7 +30,7 @@
                     {if $user.faculty_opinion}
                     <tr>
                         <td colspan="11" class="tab_content disabled">
-                            <p class="tab_left">院系评定小组意见</p>
+                            <p class="tab_left">学院评定小组意见</p>
                             <textarea class="tab_opinion" disabled>{$user.faculty_opinion.text}</textarea>
                             <div class="tab_time">
                                 <input type="text" value="{$user.faculty_opinion.time|date='Y',###}">年
@@ -48,8 +48,8 @@
 					小组评级：{$eval_app.group_poor_grade_name}
 				</p>
 				<p>
-					院系评级：{$eval_app.faculty_poor_grade_name}
-					<input type="hidden" name="last_poor_grade" class="last_poor_grade" value="{$eval_app.faculty_poor_grade}">
+					学院评级：{$eval_app.faculty_poor_grade_name}
+					<input type="hidden" name="last_poor_grade" class="last_poor_grade" value="{$eval_app.faculty_poor_grade}" last_group="学院评级">
 				</p>				
 				</div>
                 <form action="{:url('admin/EvaluationHandle/studentOffice')}" method="post" id="passingForm" class="passingForm">
