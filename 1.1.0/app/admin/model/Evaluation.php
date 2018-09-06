@@ -59,7 +59,7 @@ class Evaluation extends Model
             ->alias('em')
             ->join('yf_evaluation_application ea ','ea.evaluation_id = em.evaluation_id')
             ->join('yf_evaluation_material_config emc ','em.cid = emc.cid')
-            ->field('sum(emc.score) as material_score,em.member_list_id')
+            ->field('max(emc.score) as material_score,em.member_list_id')
             ->where('em.evaluation_id',$evaluation_id)
             ->group('em.member_list_id')
             ->find();
@@ -68,12 +68,14 @@ class Evaluation extends Model
         $material_config_40 = EvaluationMaterialConfig::getConfig(40);
         if($material_config_40 && $member['nation'] != '汉族')
         {
-            $material_score += $material_config_40['score'];
+            //$material_score += $material_config_40['score'];
+			$material_score = $material_score > $material_config_40['score'] ? $material_score : $material_config_40['score'];
         }
         $material_config_37 = EvaluationMaterialConfig::getConfig(37);
         if($material_config_37 && $member['is_rural_student'] == '是')
         {
-            $material_score += $material_config_37['score'];
+            //$material_score += $material_config_37['score'];
+			$material_score = $material_score > $material_config_37['score'] ? $material_score : $material_config_37['score'];
         }
         return $material_score;
     }
