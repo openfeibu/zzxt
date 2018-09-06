@@ -35,7 +35,7 @@ class ScholarshipHandle extends Base
         //构造评语什么的
         $array['text'] = $data['group_opinion']['text'];
         //$array['name'] = $data['group_opinion']['name'];
-        $array['name'] = '';
+        $array['name'] = session('admin_auth.admin_realname');
         $array['time'] = time();
         $update_app_data['group_opinion'] = json_encode($array);
         //状态表的id
@@ -69,7 +69,7 @@ class ScholarshipHandle extends Base
         {
             $k = array_search($val['application_id'], $ids);
             $array['text'] = isset($group_opinions[$k]) ? $group_opinions[$k] : $text;
-            $array['name'] = '';
+            $array['name'] = session('admin_auth.admin_realname');
             $array['time'] = time();
             $update_app_data['group_opinion'] = json_encode($array);
             $this->multipleFill($val,$update_app_data);
@@ -90,7 +90,7 @@ class ScholarshipHandle extends Base
         //构造评语
         $array['text'] = isset($data['group_opinion']['text']) ? $data['group_opinion']['text'] : $text;
         //$array['name'] = $data['group_opinion']['name'];
-        $array['name'] = '';
+        $array['name'] = session('admin_auth.admin_realname');
         $array['time'] = time();
         $update_app_data['group_opinion'] = json_encode($array);
 
@@ -131,7 +131,7 @@ class ScholarshipHandle extends Base
             }
             $k = array_search($val['application_id'], $ids);
             $array['text'] = isset($faculty_opinions[$k]) ? $faculty_opinions[$k] : $text;
-            $array['name'] = '';
+            $array['name'] = session('admin_auth.admin_realname');
             $array['time'] = time();
             $update_app_data['faculty_opinion'] = json_encode($array);
             $this->multipleFill($val,$update_app_data);
@@ -157,7 +157,7 @@ class ScholarshipHandle extends Base
  
 		$array['text'] = isset($data['faculty_opinion']['text']) ? $data['faculty_opinion']['text'] : $text;
 		//$array['name'] = $data['faculty_opinion']['name'];
-		$array['name'] = '';
+		$array['name'] = session('admin_auth.admin_realname');
 		$array['time'] = time();
 		$update_app_data['faculty_opinion'] = json_encode($array);
 
@@ -183,7 +183,7 @@ class ScholarshipHandle extends Base
         }
 		$array['text'] = isset($data['school_opinion']['text']) ? $data['school_opinion']['text'] : $text;
 		//$array['name'] = $data['faculty_opinion']['name'];
-		$array['name'] = '';
+		$array['name'] = session('admin_auth.admin_realname');
 		$array['time'] = time();
 		$update_app_data['school_opinion'] = json_encode($array);
         $status_id = $data['status_id'];
@@ -227,7 +227,7 @@ class ScholarshipHandle extends Base
             }
 			$k = array_search($val['application_id'], $ids);
 			$array['text'] = isset($school_opinions[$k]) ? $school_opinions[$k] : $text;
-			$array['name'] = '';
+			$array['name'] = session('admin_auth.admin_realname');
 			$array['time'] = time();
 			$update_app_data['school_opinion'] = json_encode($array);
             $this->multipleFill($val,$update_app_data);

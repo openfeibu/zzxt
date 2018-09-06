@@ -29,7 +29,7 @@ class EvaluationHandle extends Base
         }
         //构造评语什么的
         $array['text'] = $data['group_opinion']['text'];
-        $array['name'] = '';
+        $array['name'] = session('admin_auth.admin_realname');
         $array['time'] = time();
         $evdata['group_opinion'] = json_encode($array);
 		$evdata['group_poor_grade'] = $data['poor_grade'];
@@ -73,7 +73,7 @@ class EvaluationHandle extends Base
             $data['status_id'] = $val['status_id'];
             //构造评语什么的
             $array['text'] = $group_opinions[$k];
-            $array['name'] = '';
+            $array['name'] = session('admin_auth.admin_realname');
             $array['time'] = time();
             $evdata['group_opinion'] = json_encode($array);
 			$evdata['group_poor_grade'] = $group_poor_grades[$k];
@@ -93,7 +93,7 @@ class EvaluationHandle extends Base
         }
         //构造评语什么的
         $array['text'] = $data['faculty_opinion']['text'];
-        $array['name'] = '';
+        $array['name'] = session('admin_auth.admin_realname');
         $array['time'] = time();
         $evdata['faculty_opinion'] = json_encode($array);
 		$evdata['faculty_poor_grade'] = $data['poor_grade'];
@@ -130,7 +130,7 @@ class EvaluationHandle extends Base
             $data['status_id'] = $val['status_id'];
             //构造评语什么的
             $array['text'] = $faculty_opinions[$k];
-            $array['name'] = '';
+            $array['name'] = session('admin_auth.admin_realname');
             $array['time'] = time();
             $evdata['faculty_opinion'] = json_encode($array);
 			$evdata['faculty_poor_grade'] = $faculty_poor_grades[$k];
@@ -145,7 +145,7 @@ class EvaluationHandle extends Base
     {
         $data = $request->post();
 		$array['text'] = $data['school_opinion']['text'];
-        $array['name'] = '';
+        $array['name'] = session('admin_auth.admin_realname');
         $array['time'] = time();
         $evdata['school_opinion'] = json_encode($array);
 		$evdata['school_poor_grade'] = $data['poor_grade'];
@@ -184,7 +184,7 @@ class EvaluationHandle extends Base
 			
 			//构造评语什么的
             $array['text'] = $school_opinions[$k];
-            $array['name'] = '';
+            $array['name'] = session('admin_auth.admin_realname');
             $array['time'] = time();
             $evdata['school_opinion'] = json_encode($array);
 			$evdata['school_poor_grade'] = $school_poor_grades[$k];

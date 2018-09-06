@@ -22,11 +22,16 @@
                             <p class="tab_left">班级评定小组意见</p>
                             <textarea class="tab_opinion" disabled>{$user.group_opinion.text}</textarea>
                             <div class="clearfix"></div>
+							<div class="tab">
+							</div>
                             <div class="tab_time">
                                 <input type="text" value="{$user.group_opinion.time|date='Y',###}" disabled>年
                                 <input type="text" value="{$user.group_opinion.time|date='n',###}" disabled>月
                                 <input type="text" value="{$user.group_opinion.time|date='d',###}" disabled>日
                             </div>
+							<div class="tab_sign">
+								<input type="text" value="{$user.group_opinion.name}" disabled>
+							</div>
                         </td>
                     </tr>
                     {/if}
