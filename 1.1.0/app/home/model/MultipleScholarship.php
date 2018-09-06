@@ -9,6 +9,17 @@ use app\admin\model\Evaluation as EvaluationModel;
 class MultipleScholarship extends Model
 {
     protected $table = 'yf_multiple_scholarship';
+	
+	public function __construct()
+	{
+		parent::__construct();
+		$this->u_subsidy = Db::table('yf_set_subsidy')
+                ->where('id', 3)
+                ->find();
+		$this->m_subsidy = Db::table('yf_set_subsidy')
+                ->where('id', 2)
+                ->find();
+	}
     /**
      * 创建新记录
      * @param $type

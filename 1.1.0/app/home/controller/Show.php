@@ -75,13 +75,22 @@ class Show extends Base
 		if($is_eval_group){
 			return $this->view->fetch(':evaluation/personal_front');
 		}
+		$is_open = $this->evaluation->is_open();
+		$this->assign('is_close',false);
+		$eval_app = $this->evaluation->getMemberEvaluation($this->user['member_list_id']);
+		if(!$is_open && !$eval_app)
+		{
+			$this->assign('is_close',true);
+			$this->assign('subsidy',$this->evaluation->subsidy);
+			return $this->view->fetch(':evaluation/personal_front');
+		}
 		$user_model = new User();
 		$user_info = $user_model->get_user($this->user['id_number']);
 		$this->assign('user',$this->user);
 		$this->assign('user_info',$user_info);
 		$this->assign('user_info',$user_info);
-		$eval_app = DB::name('evaluation_application')->where('member_list_id',$this->user['member_list_id'])->find();
-		$pass_status = DB::name('evaluation_status')->where('member_list_id',$this->user['member_list_id'])->find();
+		
+		$pass_status = DB::name('evaluation_status')->where('evaluation_id',$eval_app['evaluation_id'])->find();
         $this->assign('pass_status',$pass_status['status']);
 		if(!$eval_app)
 		{

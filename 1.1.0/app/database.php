@@ -12,7 +12,7 @@
 return [
     //
     'type' => 'sqlsrv',
-     'hostname'       => '139.199.184.111',
+     'hostname'       => '211.66.88.159',
     // 数据库名
         'database'       => 'zzxt',
     // 用户名
@@ -22,9 +22,9 @@ return [
     // 端口
         'hostport'       => '1433',
     // 连接dsn
-        'dsn'            => 'sqlsrv:Server=139.199.184.111;Database=zzxt',
+        'dsn'            => 'sqlsrv:Server=211.66.88.159;Database=zzxt',
 	'db2' => array(
-		'type' => 'sqlsrv',
+		'type' 			 => 'sqlsrv',
 		'hostname'       => '211.66.88.2',
 		// 数据库名
 		'database'       => 'jwxt',
@@ -36,6 +36,21 @@ return [
 		'hostport'       => '1433',
 		// 连接dsn
 		'dsn'            => 'sqlsrv:Server=211.66.88.2;Database=jwxt',
+		'prefix_' => '',
+	),
+	'db3' => array(
+		'type' 			 => 'oracle',
+		'hostname'       => '//211.66.88.115:1521/ORCL',
+		// 数据库名
+		'database'       => 'LYSDC_KZ',
+		// 用户名
+		'username'       => 'lysdc_kz',
+		// 密码
+		'password'       => 'lysdc_kz',
+		// 端口
+		'hostport'       => '1521',
+		// 连接dsn
+		//'dsn'            => 'sqlsrv:Server=211.66.88.2;Database=jwxt',
 		'prefix_' => '',
 	),
     // 数据库连接参数

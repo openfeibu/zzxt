@@ -23,6 +23,10 @@ class Evaluation extends Model
                 ->where('id', 5)
                 ->find();
 	}
+	public function is_open()
+	{
+		return $this->subsidy['begin_time'] <= strtotime(date('Y-m-d')) && $this->subsidy['end_time'] >= strtotime(date('Y-m-d'));
+	}
     public function getEvaluation($id)
     {
 		return Db::name('evaluation_application')
@@ -155,23 +159,32 @@ class Evaluation extends Model
 				->find();
         return $eval_app ? $eval_app['evaluation_id'] : 0;
     }
-	/* 是否通过困难认定，条件：困难学生（1,2,3）、公示结束后、 学校通过（默认取学院通过结果）*/
+	public function getMemberEvaluation($member_list_id)
+	{
+		$eval_app = DB::name('evaluation_application')->where('member_list_id',$member_list_id)->where('times',$this->subsidy['begin_time'])->find();
+		return $eval_app;
+	}
+	/* 是否通过困难认定，条件：困难学生（1,2,3）、学校通过（默认取学院通过结果）、公示结束后*/
     public function isExistMemberEvaluationPass($member_list_id)
     {
         $eval_app = Db::name('evaluation_application')
 				->where('member_list_id',$member_list_id)
 				->where("(school_poor_grade in (1,2,3) OR (faculty_poor_grade in (1,2,3) AND school_poor_grade is NULL))")
 				->where('times',$this->subsidy['begin_time'])
-				->where('create_at','>=',$this->subsidy['ypublic_end_time'])
                 ->field('evaluation_id')
-				->find();
-        return $eval_app ? $eval_app['evaluation_id'] : 0;
+				->find();		
+        return $eval_app && time() > $this->subsidy['ypublic_end_time'] ? $eval_app['evaluation_id'] : 0;
     }
-	public function getMemberEvaluation($member_list_id)
+	public function getMemberEvaluationPass($member_list_id)
 	{
-		$eval_app = DB::name('evaluation_application')->where('member_list_id',$member_list_id)->where('times',$this->subsidy['begin_time'])->find();
-		return $eval_app;
+		$eval_app = Db::name('evaluation_application')
+				->where('member_list_id',$member_list_id)
+				->where("(school_poor_grade in (1,2,3) OR (faculty_poor_grade in (1,2,3) AND school_poor_grade is NULL))")
+				->where('times',$this->subsidy['begin_time'])
+				->find();
+        return $eval_app && time() > $this->subsidy['ypublic_end_time'] ? $eval_app : false;
 	}
+	
 	public function getCount($where = '')
     {
         $count = Db::name('evaluation_application')

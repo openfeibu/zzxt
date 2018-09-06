@@ -506,7 +506,12 @@ class Student extends Base
         $this->assign('n_class',$n_class);
         $this->assign('m_status',$m_status);
         $this->assign('m_class',$m_class);
-        return $this->view->fetch('student_personal_front/personal_status');
+		
+		$this->assign('e_subsidy',$this->evaluation->subsidy);
+		$this->assign('u_subsidy',$this->MultipleScholarship->u_subsidy);
+		$this->assign('m_subsidy',$this->MultipleScholarship->m_subsidy);
+		$this->assign('n_subsidy',$this->NationalScholarship->subsidy);
+        return $this->view->fetch('student/personal_status');
     }
 
 
