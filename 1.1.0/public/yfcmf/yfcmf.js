@@ -1414,11 +1414,13 @@ $('body').on('change',"select[name='poor_grade']",function () {
 	if(last_poor_grade)	
 	{
 		var this_poor_grade = $(this).val();
-		text = "不同意";
+		var last_group = last_project.attr('last_poor_group');
+		var text = "不同意";
 		if(this_poor_grade == last_poor_grade)
 		{
 			text = "同意";
 		}
+		text += last_group;
 		$(this).closest("tr").find(".text").val(text);
 		$(this).closest("tr").find(".this_poor_grade_name").text(text);
 	}else{
@@ -1427,7 +1429,7 @@ $('body').on('change',"select[name='poor_grade']",function () {
 		if(last_poor_grade)
 		{
 			var this_poor_grade = $(this).val();
-			text = "不同意";
+			var text = "不同意";
 			if(this_poor_grade == last_poor_grade)
 			{
 				text = "同意";
