@@ -67,7 +67,7 @@ class Student extends Base
                     if ($this->MultipleScholarship->isHaveApply($this->user['member_list_id'], 2)) {
                         $this->error("抱歉，你已申请励志奖学金，不能申请奖学金");
                     }
-                    $this->success('成功',url('/home/stuedent/nationalScholarship'));
+                    $this->success('成功',url('/home/student/nationalScholarship'));
                 }
                 $this->error("抱歉，大二或大三生才能申请奖学金");
                 break;
@@ -89,7 +89,7 @@ class Student extends Base
                     if ($this->NationalScholarship->isHaveApply($this->user['member_list_id'], 1)) {
 						$this->error("抱歉，你已申请奖学金，不能申请励志奖学金");
                     }		
-					$this->success('成功',url('/home/stuedent/inspirational'));	
+					$this->success('成功',url('/home/student/inspirational'));	
                 }
                 $this->error("抱歉，大二学生才能申请励志奖学金");
                 break;
@@ -105,7 +105,7 @@ class Student extends Base
                     $this->error('抱歉，通过家庭困难认定后才能申请');
                 }
                 //跳转申请页面
-                $this->success('成功',url('/home/stuedent/grants'));
+                $this->success('成功',url('/home/student/grants'));
                 break;
             default :$this->error("发生未知错误，请联系管理员。");
         }
@@ -129,6 +129,7 @@ class Student extends Base
 		
 		//检查本年是否已经提交过
         $application = $this->MultipleScholarship->isHaveApply($this->user['member_list_id'],$type_id);
+		
         //是否post提交
         if ($request->isPost()) {
             $data = $request->post();
@@ -150,11 +151,17 @@ class Student extends Base
                 $data['update_at'] = time();
                 $apply = MultipleScholarship::where('multiple_id', $application['multiple_id'])->update($data);
                 if (!$apply) {
-                    return $this->error("更新失败");
+					return [
+						'code' => 201,
+						'message' => '更新失败',
+					];
                 }
 				//更新申请状态
 				$res = $this->applyStatus->updateStatus($bool['multiple_id'], $type_id ,$this->status);
-                return $this->success("更新成功");
+				return [
+					'code' => 200,
+					'message' => '更新成功',
+				];
             }
             //按新增处理
             $data['create_at'] = time();
@@ -164,14 +171,20 @@ class Student extends Base
                 ->find();
 				$begintime = $subsidy['begin_time'];
 				$data['times'] = $begintime;
-            $insert = MultipleScholarship::create($data);
+            $insert = DB::name('multiple_scholarship')->insert($data);
             if (!$insert) {
-                return $this->error("提交失败");
+				return [
+					'code' => 201,
+					'message' => '提交失败',
+				];
             }
             //获取插入的id，放入总的状态表中
-            $multiple_id = $insert->getLastInsID();
+            $multiple_id = DB::name('multiple_scholarship')->getLastInsID();
             $this->applyStatus->store($multiple_id, $type_id);
-            return $this->success("提交成功");
+			return [
+				'code' => 200,
+				'message' => '提交成功',
+			];
         }
       
 		$data = $application;
@@ -224,10 +237,16 @@ class Student extends Base
                 $apply = MultipleScholarship::where('multiple_id', $application['multiple_id'])
                     ->update($data);
                 if (!$apply) {
-                    return $this->error("更新失败，请联系管理员");
+                    return [
+						'code' => 201,
+						'message' => '更新失败，请联系管理员',
+					];
                 }
 				$res = $this->applyStatus->updateStatus($application['multiple_id'], $type_id ,$this->status);
-                return $this->success("更新成功");
+				return [
+					'code' => 200,
+					'message' => '更新成功',
+				];
             }
             //按新增处理
             $data['create_at'] = time();
@@ -237,14 +256,20 @@ class Student extends Base
                 ->find();
 				$begintime = $subsidy['begin_time'];
 				$data['times'] = $begintime;
-            $insert = MultipleScholarship::create($data);
+            $insert = DB::name('multiple_scholarship')->insert($data);
             if (!$insert) {
-                return $this->error("提交失败，请重新提交");
+				return [
+					'code' => 201,
+					'message' => '提交失败，请重新提交'
+				];
             }
             //获取插入的id，放入总的状态表中
-            $multiple_id = $insert->getLastInsID();
+            $multiple_id = DB::name('multiple_scholarship')->getLastInsID();
             $this->applyStatus->store($multiple_id, $type_id);
-            return $this->success("提交成功");
+			return [
+				'code' => 200,
+				'message' => '提交成功'
+			];
         }
         //get请求访问，显示相关的数据
         $data = $application;

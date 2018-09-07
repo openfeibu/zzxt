@@ -20,6 +20,10 @@
 		var value  = _this.val();
 		var name = _this.attr('name');
 		var title = _this.parent('td').prev('td').text();
+		if(!title)
+		{
+			title = _this.prev('label').text();
+		}
 		if(_this.hasClass("noBlur")){
 			return true;
 		}

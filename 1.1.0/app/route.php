@@ -70,9 +70,9 @@ return [
     //---------------------------------------学生端三金申请-----------------------------
     'home/text'=> 'home/Student/text',
     'home/student/chooseType'                          => 'home/Student/chooseType',//选择申请类型,后缀加id.(id = 1为国家奖学金，2为励志奖学金，3为助学金)
-    'home/stuedent/grants'                                          => 'home/Student/getGrants',//助学金
-    'home/stuedent/inspirational'                                   => 'home/Student/getInspirational',//励志奖学金
-    'home/stuedent/nationalScholarship'                             => 'home/Student/getNationalScholarship',//国家奖学金
+    'home/student/grants'                                          => 'home/Student/getGrants',//助学金
+    'home/student/inspirational'                                   => 'home/Student/getInspirational',//励志奖学金
+    'home/student/nationalScholarship'                             => 'home/Student/getNationalScholarship',//国家奖学金
     'home/examineStatus'                                   => 'home/Student/examineStatus',//查看申请状态
     //----------------------------------------修改的三金-------------------
     'admin/ScholarshipsGroup/showApplicantList'            => 'admin/ScholarshipsGroup/showApplicantList',//显示小组的本班学生申请

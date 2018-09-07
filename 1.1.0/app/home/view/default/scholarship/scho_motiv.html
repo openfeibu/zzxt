@@ -14,7 +14,7 @@
         </ul>
     </div>
     <!--startprint3-->
-    <form action="" method="post" enctype="multipart/form-data" id="schoForm">
+    <form action="" method="post" enctype="multipart/form-data" id="schoForm" class="form_table">
     <div class="personal_table">
         <table width="756px">
             <tbody>
@@ -119,34 +119,34 @@
                     {/foreach}
                     {else}
                     <tr class="line-table-height">
-                        <td class="k-s-content content"><input type="text" name="members[0][name]" /></td>
-                        <td class="k-s-content content"><input type="text" name="members[0][age]" /></td>
-                        <td class="k-s-content content"><input type="text" name="members[0][relation]" /></td>
-                        <td colspan="4" class="k-s-content content"><input type="text" name="members[0][unit]" /></td>
+                        <td class="k-s-content content"><input type="text" name="members[0][name]" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[0][age]" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[0][relation]" class="noBlur"/></td>
+                        <td colspan="4" class="k-s-content content"><input type="text" name="members[0][unit]" class="noBlur"/></td>
                     </tr>
                     <tr class="line-table-height">
-                        <td class="k-s-content content"><input type="text" name="members[1][name]" /></td>
-                        <td class="k-s-content content"><input type="text" name="members[1][age]" /></td>
-                        <td class="k-s-content content"><input type="text" name="members[1][relation]" /></td>
-                        <td colspan="4" class="k-s-content content"><input type="text" name="members[1][unit]" /></td>
+                        <td class="k-s-content content"><input type="text" name="members[1][name]" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[1][age]" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[1][relation]" class="noBlur"/></td>
+                        <td colspan="4" class="k-s-content content"><input type="text" name="members[1][unit]" class="noBlur"/></td>
                     </tr>
                     <tr class="line-table-height">
-                        <td class="k-s-content content"><input type="text" name="members[2][name]" /></td>
-                        <td class="k-s-content content"><input type="text" name="members[2][age]" /></td>
-                        <td class="k-s-content content"><input type="text" name="members[2][relation]" /></td>
-                        <td colspan="4" class="k-s-content content"><input type="text" name="members[2][unit]" /></td>
+                        <td class="k-s-content content"><input type="text" name="members[2][name]" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[2][age]" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[2][relation]" class="noBlur"/></td>
+                        <td colspan="4" class="k-s-content content"><input type="text" name="members[2][unit]" class="noBlur"/></td>
                     </tr>
                     <tr class="line-table-height">
-                        <td class="k-s-content content"><input type="text" name="members[3][name]" /></td>
-                        <td class="k-s-content content"><input type="text" name="members[3][age]" /></td>
-                        <td class="k-s-content content"><input type="text" name="members[3][relation]" /></td>
-                        <td colspan="4" class="k-s-content content"><input type="text" name="members[3][unit]" /></td>
+                        <td class="k-s-content content"><input type="text" name="members[3][name]" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[3][age]" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[3][relation]" class="noBlur"/></td>
+                        <td colspan="4" class="k-s-content content"><input type="text" name="members[3][unit]" class="noBlur"/></td>
                     </tr>
                     <tr class="line-table-height">
-                        <td class="k-s-content content"><input type="text" name="members[4][name]" /></td>
-                        <td class="k-s-content content"><input type="text" name="members[4][age]" /></td>
-                        <td class="k-s-content content"><input type="text" name="members[4][relation]" /></td>
-                        <td colspan="4" class="k-s-content content"><input type="text" name="members[4][unit]" /></td>
+                        <td class="k-s-content content"><input type="text" name="members[4][name]" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[4][age]" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[4][relation]" class="noBlur"/></td>
+                        <td colspan="4" class="k-s-content content"><input type="text" name="members[4][unit]" class="noBlur"/></td>
                     </tr>
                     {/if}
             <!--学生成绩-->
@@ -209,6 +209,45 @@
     <button class="print printHide" onclick="preview(3)">打印</button>
     </form>
 </div>
+<script>
+$("#schosubmit").click(function(){
+	layer.confirm('提交后将不能修改！确定无误提交吗？', {
+			btn: ['确定','取消'] //按钮
+		}, function(){
+			bool = true;
+			$(".form_table input,.form_table textarea").each(function(){
+				var rst = check($(this));
+				if(!rst)
+				{
+					$(this).focus();
+					bool = false;
+					return rst;
+				}
+				return true;
+			});
+			if(bool)
+			{
+				bool = null;
+				$.ajax({
+					type: 'post',
+					url: "{:url('home/student/getInspirational')}",
+					data: $("#schoForm").serialize(),
+					success: function(data) {
+						if(data.code == 200)
+						{
+							window.location.href="{:url('home/student/getInspirational')}";
+						}else{
+							layer.msg(data.message);
+						}
+					}
+				});
+			}
+			return true;
+		},function(){
+	});
+	return false;
+});
+</script>
 
 
 {include file="public/footer"}
