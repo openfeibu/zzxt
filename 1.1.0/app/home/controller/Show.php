@@ -221,6 +221,12 @@ class Show extends Base
 	public function material_post()
 	{
 		$eval_app = $this->evaluation->getMemberEvaluation($this->user['member_list_id']);
+		if(!$eval_app){
+			return [
+				'code' => 201,
+				'message' => '请先提交家庭经济困难学生认定申请',
+			]; 
+		}
 		$member_list_headpic = $_POST['member_list_headpic_url'];
 		$rst=Db::name('member_list')->where(array('member_list_id'=>$this->user['member_list_id']))->update(['member_list_headpic' => $member_list_headpic]);
 		$cids = $_POST['cids'];
@@ -242,7 +248,10 @@ class Show extends Base
 		DB::name('evaluation_material')->insertAll($data);
 		$assess_fraction = EvaluationModel::getMaterilaScore($eval_app['evaluation_id']);
 		DB::name('evaluation_application')->where('evaluation_id',$eval_app['evaluation_id'])->update(['assess_fraction' => $assess_fraction,'score' => $assess_fraction]);
-		header('Location:/material.html');
+		return [
+			'code' => 200,
+			'message' => '提交成功',
+		];
 	}
     public function evalu_status()
     {

@@ -175,11 +175,24 @@ $(".material_btn").click(function(){
 		if(bool)
 		{
 			bool = null;
-			$("#material_form").submit();
+			$.ajax({
+				type: 'post',
+				url: "{:url('home/show/material_post')}",
+				data: $("#material_form").serialize(),
+				success: function(data) {
+					if(data.code == 200)
+					{
+						window.location.href="{:url('home/show/material')}";
+					}else{
+						layer.msg(data.message);
+					}
+				}
+			});
 		}
 	},function(){
 		
 	});
+	return false;
 })
 </script>
 
