@@ -187,7 +187,7 @@ class Show extends Base
 	}
     public function material()
     {
-		$eval_app = DB::name('evaluation_application')->where('member_list_id',$this->user['member_list_id'])->find();
+		$eval_app = $this->evaluation->getMemberEvaluation($this->user['member_list_id']);
 		$this->assign('eval_app',$eval_app);
 		$material = DB::name('evaluation_material')->alias('em')->join('yf_evaluation_material_config emc ','em.cid = emc.cid')->field('em.evaluation_id,em.member_list_id,em.images,emc.*')->where('em.evaluation_id',$eval_app['evaluation_id'])->select();
 		$this->assign('material',$material);
@@ -220,7 +220,7 @@ class Show extends Base
 	}
 	public function material_post()
 	{
-		$eval_app = DB::name('evaluation_application')->where('member_list_id',$this->user['member_list_id'])->find();
+		$eval_app = $this->evaluation->getMemberEvaluation($this->user['member_list_id']);
 		$member_list_headpic = $_POST['member_list_headpic_url'];
 		$rst=Db::name('member_list')->where(array('member_list_id'=>$this->user['member_list_id']))->update(['member_list_headpic' => $member_list_headpic]);
 		$cids = $_POST['cids'];
