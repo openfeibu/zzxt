@@ -8,6 +8,9 @@
 <!-- footer E -->
 </body>
 <script>
+	if(navigator.appName == "Microsoft Internet Explorer"&&parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE",""))<9){
+        alert("请使用谷歌浏览器或IE9版本以上的现代浏览器访问本网站");
+    }
     $('.nowtime').html(new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay()));
     setInterval(function(){
         $('.nowtime').html(new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay()));
