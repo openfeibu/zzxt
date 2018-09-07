@@ -53,6 +53,23 @@ class Ajax
 		$fields = " top 10 工作编号 as admin_username , 姓名 as name ,密码 as password";
 		$dataHandleClass = new DataHandle();
 		$data = $dataHandleClass->getAdmins($where,$fields);
+		foreach($data as $key => $val)
+		{
+			$admin = DB::name('admin')->where('admin_username','like',$val['admin_username'].'-%')->order('admin_id','DESC')->field('admin_username,admin_id')->find();
+			if($admin)
+			{
+				$admin_username_explode = explode('-',$admin['admin_username']);
+				$number = intval($admin_username_explode[1]) + 1;
+				$data[$key]['admin_username'] = $val['admin_username'].'-'.$number;
+			}else{
+				$admin = DB::name('admin')->where('admin_username',$val['admin_username'])->order('admin_id','DESC')->field('admin_username,admin_id')->find();
+				if($admin)
+				{
+					$data[$key]['admin_username'] = $val['admin_username'].'-1';
+				}
+			}
+		}
+		
 		return json($data);
 	}
 }
