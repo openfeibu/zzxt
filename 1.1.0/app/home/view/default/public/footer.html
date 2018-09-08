@@ -18,9 +18,33 @@
     $(".form_table input,.form_table textarea").blur(function(){
 		return check($(this));
     });
+	function Text2Html(text) {
+		if (text == null) {
+			return "";
+		}else if (text.length == 0) {
+			return "";
+		}
+		text = text.replace("\n", "");
+		text = text.replace("\r", "");
+		text = text.replace("\t", "");
+		return text;
+	}
+	function htmlEscape(text){ 
+		return text.replace(/[<>"&\n\r]/g, function(match, pos, originalText){
+			switch(match){
+				case "<": return "&lt;"; 
+				case ">":return "&gt;";
+				case "&":return "&amp;"; 
+				case "\"":return "&quot;"; 
+				case "\n":return "";
+				case "\r":return ""; 
+				
+			} 
+		}); 
+	}
 	function check(_this)
 	{
-		var value  = _this.val();
+		var value  = htmlEscape($.trim(_this.val()));
 		var name = _this.attr('name');
 		var title = _this.parent('td').prev('td').text();
 		if(!title)
@@ -41,10 +65,10 @@
 			var arr = exp.split('|');
 			var type = arr[0];
 			var bool = true;
-			var param = "'"+value+ "'";
+			var param = "\""+value+ "\"";
 			for(var i=1;i<arr.length;i++)
 			{
-				param += ",'" + arr[i] + "'";
+				param += ",\"" + arr[i] + "\"";
 			}
 			var func = '$fb.exp'+type+"("+param+")";
 			var rst = eval(func);
