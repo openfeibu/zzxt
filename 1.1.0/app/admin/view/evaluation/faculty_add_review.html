@@ -42,11 +42,11 @@
 				<p>系统评级：{$eval_app.system_poor_grade_name}</p>	
 				<p>
 					小组评级：{$eval_app.group_poor_grade_name}
-					<input type="hidden" name="last_poor_grade" class="last_poor_grade" value="{$eval_app.group_poor_grade}" last_group="系统评级">
+					<input type="hidden" name="last_poor_grade" class="last_poor_grade" value="{$eval_app.group_poor_grade}" last_group="小组评级">
 				</p>	
 				</div>
                 <form action="{:url('admin/EvaluationHandle/faculty')}" method="post" id="passingForm" class="passingForm">
-				<input name="faculty_opinion[text]" class="text" type="hidden" value="同意"/>
+				<input name="faculty_opinion[text]" class="text" type="hidden" value="同意小组评级"/>
                 <table class="w900">
                     <tr>
                         <td colspan="3" class="">
