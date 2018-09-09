@@ -159,7 +159,47 @@ table input[type="text"]{border:none;width: 90%;text-align: center;}
 .photo_all_box .close p{background: url("../img/c.png") no-repeat;height: 100%;}
 
 
+.table_one{width: 800px;border:1px solid rgb(148, 192, 210);border-collapse:collapse;text-align: left;}
+.table_one tr{width: 100%;height: 40px;border:1px solid rgb(148, 192, 210);}
+.table_one tr:nth-of-type(1){ font-weight: bold; text-align: center;}
+.table_one .table-tr{ border:1px solid rgb(148, 192, 210)}
+.table_one .table-tr td {border:1px solid rgb(148, 192, 210);text-align: center;}
+.table-tr td:nth-of-type(1){ width: 100px;}
+.table-tr td:nth-of-type(2){ width: 100px;}
+.table-tr td:nth-of-type(4),.table-tr td:nth-of-type(3){ width: 120px;text-align: center;}
 
-
+.upload_img_list {
+    margin: 10px 0 0 0
+}
+.upload_img_list dd {
+    position: relative;
+    margin: 0 10px 10px 0;
+    float: left
+}
+.upload_img_list .operate {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1
+}
+.upload_img_list .operate i {
+    cursor: pointer;
+    background: #2F4056;
+    padding: 2px;
+    line-height: 15px;
+    text-align: center;
+    color: #fff;
+    margin-left: 1px;
+    float: left;
+    filter: alpha(opacity=80);
+    -moz-opacity: .8;
+    -khtml-opacity: .8;
+    opacity: .8
+}
+.upload_img_list dd .img {
+    max-height: 150px;
+    max-width: 200px;
+}
+.upload_img_list{display:inline-block;width:200px;height:auto;font-size: 14px;line-height: 1.2em;color: #555555;white-space:normal;}
 
 
