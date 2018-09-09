@@ -102,16 +102,16 @@
 				focus: function( event, ui ) {  
 					$("#admin_username").val( ui.item.id_number );  
 					$("#admin_realname").val( ui.item.name );  
-					//$('#class_number').val( ui.item.class_number);
+					$('#class_number').val( ui.item.class_number);
 					//$("button[type='submit']").attr('disabled',true);
 					return false;  
                 },  
 				select: function( event, ui ) {  
 					$("#admin_username").val( ui.item.id_number );  
 					$("#admin_realname").val( ui.item.name );  
-					//$('#class_number').val( ui.item.class_number);
+					$('#class_number').val( ui.item.class_number);
 					$("button[type='submit']").attr('disabled',false);
-					return false;  
+					return false;
 				}
 			});
 			

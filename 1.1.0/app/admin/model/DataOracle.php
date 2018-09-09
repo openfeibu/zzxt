@@ -33,6 +33,12 @@ class Dataoracle extends Model
 		$data = $this->query("SELECT ".$fields." FROM LY_YKT_XS_DMT ".$where." AND ROWNUM = 1");
 		return $data;
 	}
+	public function getStudents($where,$fields,$number=10)
+	{
+		$sql = "SELECT ROWNUM, ".$fields." FROM LY_YKT_XS_DMT ".$where." AND ROWNUM <= ".$number."  ORDER BY SFZH ASC ";
+		$rs = $this->queryReturn2DArr($sql);
+		return $rs;
+	}
 	public function getClass($where)
 	{
 		$sql="SELECT BJH as class_number,BJMC as class_name,NJ as current_grade FROM LY_XXZX_BJ_DMT ".$where ." AND ROWNUM = 1 ORDER BY BJH ASC ";

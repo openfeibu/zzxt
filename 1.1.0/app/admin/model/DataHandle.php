@@ -57,9 +57,17 @@ class DataHandle extends Model
 		}
 		return $result;
 	}
-	public function getStudents($where,$fields)
+	public function getStudents($where,$fields,$type='oracle')
 	{
-		$result = $this->dataClass->getStudents($where,$fields);
+		switch($type)
+		{
+			case 'oracle':
+				$result = $this->dataOracleClass->getStudents($where,$fields);
+			break;
+			case 'sqlserver':
+				$result = $this->dataClass->getStudents($where,$fields);
+			break;
+		}
 		return $result;
 	}
 	/*获取教师工号*/
