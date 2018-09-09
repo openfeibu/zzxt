@@ -11,8 +11,7 @@
                     <!--startprint3-->
                     {include file="evaluation/student_information_table"}
                     <!--endprint3-->
-                <button type="button" class="btn btn-info" onclick="preview(3)">打印</button>
-                    <form action="{:url('admin/EvaluationHandle/counselor')}" method="post" id="passingForm" class="passingForm">
+                    
 
                         <tr >
                             <h3 style="text-align:center">佐证材料</h3>
@@ -24,6 +23,8 @@
                             <td colspan="3" style="height: 30px;"></td>
                         </tr>
 						</table>
+					<form action="{:url('admin/EvaluationHandle/counselor')}" method="post" id="passingForm" class="passingForm">
+						<table class="w900">
                         <tr>
                             <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">添加评语：</p></td>
                             <td colspan="2"></td>
@@ -80,7 +81,6 @@ $("#passingForm").find("textarea").attr('disabled',true);
 $("#passingForm").find("input").attr('disabled',true);
 $("#passingForm").find("select").attr('disabled',true);
 $("#passingForm").find("button").attr('disabled',true);
-
 
 </script>
 {/if}
