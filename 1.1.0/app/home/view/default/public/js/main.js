@@ -16,35 +16,6 @@ function preview(oper)
 }
 
 $(function () {
-    $("body").on("change",".upfile",function () {
-        // $(this).parent().next().text("");//将存放文件名的容器置空
-        $(this).parent().parent().next().find(".upfile_name").text("");//将存放文件名的容器置空
-        var filearr=$(this).get(0).files;//将文件DOM对象转化为JQ对象
-        for(var i=0;i<filearr.length;i++) {
-            var fileSize=filearr[i].size;//获取文件大小，单位为字节
-            var extStart=filearr[i].name.lastIndexOf(".");//获取文件名中“.”后面的内容，后缀名
-            var ext=filearr[i].name.substring(extStart,filearr[i].name.length).toUpperCase();
-            if(fileSize/(1024*1024)>2) {
-                layer.msg("文件大小超出限制，请重新选择！");
-                $(this).attr("value","");
-                return false;
-            }
-            if(ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG") {
-                layer.msg("文件格式错误，请重新选择！");
-                $(this).attr("value","");
-                return false;
-            }
-            if($(this).get(0)=='') return false;//检测是否为空，点击后没选择返回false
-            var serial=i+1;
-            // $(this).parent().next().append(serial+"、"+"<u>"+filearr[i].name+"</u>"+"；")//输出文件名
-
-            $(this).parent().parent().next().find(".upfile_name").append(serial+"、"+"<u>"+filearr[i].name+"</u>"+"；")//输出文件名
-        }
-        return false;
-    })
-});
-
-$(function () {
 	$('body').on('click','.ajax-search-form',function () {
 		load = layer.load(2);
         data = $(this).parents("form").serialize();

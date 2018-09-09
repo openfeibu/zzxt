@@ -1,5 +1,9 @@
 {include file="public/header/nav_membership_header"}
+<!--引入CSS-->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/images/webuploader.css">
 
+<!--引入JS-->
+<script type="text/javascript" src="__PUBLIC__/images/webuploader.js"></script>
 
 
 <div class="main w1000" style="background:#fff;">
@@ -123,10 +127,33 @@
 </div>
 <script>
 $(".upfile").change(function(){
+	$(this).parent().parent().next().find(".upfile_name").text("");//将存放文件名的容器置空
+	var filearr=$(this).get(0).files;//将文件DOM对象转化为JQ对象
+	for(var i=0;i<filearr.length;i++) {
+		var fileSize=filearr[i].size;//获取文件大小，单位为字节
+		var extStart=filearr[i].name.lastIndexOf(".");//获取文件名中“.”后面的内容，后缀名
+		var ext=filearr[i].name.substring(extStart,filearr[i].name.length).toUpperCase();
+		if(fileSize/(1024*1024)>2) {
+			layer.msg("文件大小超出限制，请重新选择！");
+			$(this).attr("value","");
+			$(this).val('');
+			return false;
+		}
+		if(ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG") {
+			layer.msg("文件格式错误，请重新选择！");
+			$(this).attr("value","");
+			$(this).val('');
+			return false;
+		}
+		if($(this).get(0)=='') return false;//检测是否为空，点击后没选择返回false
+		var serial=i+1;
+		$(this).parent().parent().next().find(".upfile_name").append(serial+"、"+"<u>"+filearr[i].name+"</u>"+"；")//输出文件名
+	}
 	load = layer.load(2);
 	var formData = new FormData();
 	var name = $(this).attr('name');
 	formData.append("uploadfile", document.getElementById(name).files[0]);
+	_this = $(this);
 	$.ajax({
 		url: "{:url('home/Show/material_upload')}",
 		type: "POST",
@@ -143,11 +170,13 @@ $(".upfile").change(function(){
 
 			}
 			else{
+				_this.val('');
 				layer.msg(data.message,{'icon':5});
 			}
 
 		},
 		error: function () {
+			_this.val('');
 			layer.msg("上传失败！");
 			layer.close(load);
 		}
