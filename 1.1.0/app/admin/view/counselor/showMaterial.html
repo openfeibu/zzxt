@@ -24,6 +24,7 @@
                     {include file="common/grants_inspirational" /}
                     {/if}
                 </table>
+				<div class="clearfix"></div>
                 <form action="{:url('admin/ScholarshipHandle/MultipleCounselorFill')}" method="post" id="passingForm" class="passingForm">
                     <table class="w800">
 					{if !in_array($user.check_status,[1,2])}
@@ -31,13 +32,9 @@
                             <td class="tab_title"><p class=" tab_left" style="font-size: 16px;">添加评语：</p></td>
                             <td colspan="2"></td>
                         </tr>
-						
                         <tr>
                             <td colspan="3" class="tab_content">
-
                                 <textarea name="group_opinion[text]" class="tab_opinion">{$user.group_opinion.text}</textarea>
-                                
-
                                 <div class="tab_sign">
                                     <label for="">推荐人（辅导员或班主任）签名：</label>
                                     <input type="text" name="group_opinion[name]" value="{$user.group_opinion.name}">
