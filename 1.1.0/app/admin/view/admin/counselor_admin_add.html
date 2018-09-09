@@ -16,21 +16,8 @@
 						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 所属用户组： </label>
 						<div class="col-sm-10">
 							<select name="group_id"  class="col-sm-5" required>
-								<option value="">请选择所属用户组</option>
 								{foreach name="auth_group" item="v"}
 									<option value="{$v.id}">{$v.title}</option>
-								{/foreach}
-							</select>
-						</div>
-					</div>
-					<div class="space-4"></div>
-					
-					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 班级：  </label>
-						<div class="col-sm-10">
-							<select name="class_number" id="class_number">
-								{foreach $classes as $row}
-								<option value="{$row.class_number}" >{$row.current_grade}{$row.class_name}</option>
 								{/foreach}
 							</select>
 						</div>
@@ -42,6 +29,18 @@
 						<div class="col-sm-10">
 							<input type="text" name="admin_username" id="admin_username" placeholder="输入身份证、学号或姓名" class="col-xs-10 col-sm-5" required/>
 							<span class="lbl col-xs-12 col-sm-7"><span class="red">*</span>输入学生身份证、学号或姓名可查询。密码默认身份证后六位</span>
+						</div>
+					</div>
+					<div class="space-4"></div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 班级：  </label>
+						<div class="col-sm-10">
+							<select name="class_number" id="class_number" >
+								{foreach $classes as $row}
+								<option value="{$row.class_number}" >{$row.current_grade}{$row.class_name}</option>
+								{/foreach}
+							</select>
 						</div>
 					</div>
 					<div class="space-4"></div>
@@ -102,14 +101,14 @@
 				focus: function( event, ui ) {  
 					$("#admin_username").val( ui.item.id_number );  
 					$("#admin_realname").val( ui.item.name );  
-					//$('#class_number').val( ui.item.class_number);
+					$('#class_number').val( ui.item.class_number);
 					//$("button[type='submit']").attr('disabled',true);
 					return false;  
                 },  
 				select: function( event, ui ) {  
 					$("#admin_username").val( ui.item.id_number );  
 					$("#admin_realname").val( ui.item.name );  
-					//$('#class_number').val( ui.item.class_number);
+					$('#class_number').val( ui.item.class_number);
 					$("button[type='submit']").attr('disabled',false);
 					return false;
 				}
