@@ -204,6 +204,11 @@ class Show extends Base
 			$file = request()->file('uploadfile');
 
 			$info = $file->validate(['ext'=>'jpg,png,gif,jpeg'])->move(ROOT_PATH . 'public' . DS . 'uploads');
+ 
+			$image = \think\Image::open(ROOT_PATH . 'public' . DS . 'uploads' .DS. $info->getSaveName());
+ 
+			$image->thumb(1000,1000)->save(ROOT_PATH . 'public' . DS . 'uploads' .DS. $info->getSaveName());
+
 		}
 		if($info){
 			return [

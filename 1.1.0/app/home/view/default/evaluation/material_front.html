@@ -134,18 +134,19 @@ $(".upfile").change(function(){
 	var fileSize=file.size;//获取文件大小，单位为字节
 	var extStart=file.name.lastIndexOf(".");//获取文件名中“.”后面的内容，后缀名
 	var ext=file.name.substring(extStart,file.name.length).toUpperCase();
+	/*
 	if(fileSize/(1024*1024)>5) {
 		layer.msg("文件大小超出5M，请重新选择！");
 		$(this).val('');
 		return false;
 	}
+	*/
 	if(ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG") {
 		layer.msg("文件格式错误，请重新选择！");
 		$(this).val('');
 		return false;
 	}
 	if($(this).get(0)=='') return false;//检测是否为空，点击后没选择返回false
-
 
 	load = layer.load(2);
 	var formData = new FormData();
