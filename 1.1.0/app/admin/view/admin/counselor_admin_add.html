@@ -93,6 +93,7 @@
 									id_number : item.id_number,
 									name:item.name,
 									studentid : item.studentid,
+									class_number:item.class_number
 								}
 							}))
 						}
@@ -101,12 +102,14 @@
 				focus: function( event, ui ) {  
 					$("#admin_username").val( ui.item.id_number );  
 					$("#admin_realname").val( ui.item.name );  
+					$('#class_number').val( ui.item.class_number);
 					//$("button[type='submit']").attr('disabled',true);
 					return false;  
                 },  
 				select: function( event, ui ) {  
 					$("#admin_username").val( ui.item.id_number );  
 					$("#admin_realname").val( ui.item.name );  
+					$('#class_number').val( ui.item.class_number);
 					$("button[type='submit']").attr('disabled',false);
 					return false;  
 				}
