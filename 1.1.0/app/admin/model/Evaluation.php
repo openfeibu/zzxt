@@ -33,7 +33,7 @@ class Evaluation extends Model
 				->alias('app')
                 ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
 				->join('yf_user u', 'u.id_number = m.id_number', 'left')
-                ->field('u.*,app.*')
+                ->field('u.*,app.*,m.member_list_headpic')
 				->where('evaluation_id',$id)
 				->find();
 	}

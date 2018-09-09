@@ -1,16 +1,47 @@
 <link rel="stylesheet" href="__PUBLIC__/viewer/viewer.min.css" />
 <script src="__PUBLIC__/viewer/viewer.min.js"></script>
-<div class="photo_div">
-	<ul class="photo" id="image_list">
-		{foreach name="material" item="v"}
-		<li>
-			<div class="img">
-				<div class="cell"><img src="{$v.images}" alt="{$v.name}"></div>
-			</div>
-			<p>{$v.name}</p>
-		</li>
-		{/foreach}
-	</ul>
+<div class="photo_div"  id="image_list">
+	<table class="table_one" style="word-wrap: break-word;word-break: break-all;">
+		<tbody>
+			<tr class="table-tr">
+				<td style="width:100px;">困难情况</td>
+				<td>证明材料</td>
+				<td>文件</td>
+			</tr>
+			<tr class="table-tr">
+				<td>免冠证照</td>
+				<td>本人近期蓝底或红底免冠证件照</td>
+				<td class="title td_upfile">
+				   <div class="upfile_name upload_img_list" id="member_list_headpic_image">
+						<dd class="item_img">
+							<img src="{$user.member_list_headpic}" class="img"/>
+						<dd>
+					</div>
+				</td>
+			</tr>
+			{foreach name="material" item="v"}
+			<tr class="table-tr">
+				<td>{$v.name}</td>
+				<td>{$v.desc}</td>
+				<td class="title td_upfile">
+					<div class="upfile_name upload_img_list">
+					{if $v.is_multi}
+						<?php $images_data = explode(',',$v['images']); ?>
+						{foreach name="images_data" key="key" item="val"}
+						<dd class="item_img" id="{$key}">
+							<a href="{$val}" target="_blank"><img src="{$val}" class="img" ></a>
+						</dd>
+						{/foreach}
+					{else}
+						<dd class="item_img"><a href="{$v.images}" target="_blank"><img src="{$v.images}" class="img" /></a></dd>
+					{/if}
+					</div>
+				</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+	
 </div>
 <div class="clearfix"></div>
 <script>

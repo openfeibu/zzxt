@@ -4,6 +4,7 @@
 
 <!--引入JS-->
 <script type="text/javascript" src="__PUBLIC__/images/webuploader.js"></script>
+<link rel="stylesheet" href="__PUBLIC__/font-awesome/css/font-awesome.min.css">
 
 
 <div class="main w1000" style="background:#fff;">
@@ -56,7 +57,11 @@
                     <td>免冠证照</td>
                     <td>本人近期蓝底或红底免冠证件照</td>
                     <td class="title td_upfile">
-                       <a href="{$user.member_list_headpic}" target="_blank"><img src="{$user.member_list_headpic}" width="100px;"/></a>
+					   <div class="upfile_name upload_img_list" id="member_list_headpic_image">
+							<dd class="item_img">
+								<a href="{$user.member_list_headpic}" target="_blank"><img src="{$user.member_list_headpic}"  class="img"/></a>
+							<dd>
+						</div>
                     </td>
                 </tr>
                 {foreach name="material" item="v"}
@@ -65,7 +70,18 @@
                     <td>{$v.name}</td>
                     <td>{$v.desc}</td>
                     <td class="title td_upfile">
-                        <a href="{$v.images}" target="_blank"><img src="{$v.images}" width="100px;"/></a>
+						<div class="upfile_name upload_img_list">
+						{if $v.is_multi}
+							<?php $images_data = explode(',',$v['images']); ?>
+							{foreach name="images_data" key="key" item="val"}
+							<dd class="item_img" id="{$key}">
+								<a href="{$val}" target="_blank"><img src="{$val}" class="img" ></a>
+							</dd>
+							{/foreach}
+						{else}
+							<dd class="item_img"><a href="{$v.images}" target="_blank"><img src="{$v.images}" class="img" /></a></dd>
+						{/if}
+						</div>
                     </td>
                 </tr>
                 {/foreach}
@@ -89,16 +105,23 @@
                 <td>本人近期蓝底或红底免冠证件照</td>
                 <td>必须上传</td>
                 <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"   name="member_list_headpic" id="member_list_headpic" class="upfile" ></label>
+                    <label class="file_ui">
+					上传文件
+					<input type="file" name="member_list_headpic" id="member_list_headpic" class="upfile" >
+					</label>
                     <!--<div class="upfile_name">文件名</div>-->
 					<input type="hidden" name="member_list_headpic_url" id="member_list_headpic_url" value="{$user.member_list_headpic}" is_must="1" title="免冠证照"/>
                 </td>
                 <td >
+					<div class="upfile_name upload_img_list" id="member_list_headpic_image">
 					{if $user.member_list_headpic}
-					<img src="{$user.member_list_headpic}" width="100px;"/>
+						<dd class="item_img">
+							<a href="{$user.member_list_headpic}" target="_blank"><img src="{$user.member_list_headpic}"  class="img"/></a>
+						<dd>
 					{else}
-					<div class="upfile_name" id="member_list_headpic_image">文件名</div>
+					文件名
 					{/if}
+					</div>
 				</td>
             </tr>
             {foreach name="material_configs" item="v"}
@@ -106,14 +129,23 @@
                 <td>{++$m}</td>
                 <td>{$v.name}</td>
                 <td>{$v.desc}</td>
-                <td>{$v.remark}</td>
+                <td>{$v.remark}{if $v.is_multi}（可多图 [ctrl+]）{/if}</td>
                 <td class="title td_upfile">
-                    <label class="file_ui">上传文件<input type="file"   name="image_{$v.cid}" id="image_{$v.cid}" class="upfile" ></label>
+					{if $v.is_multi}
+					<div class="upfiles" id="image_{$v.cid}">上传文件</div>
+					<input type="hidden" name="image_{$v.cid}" >
+					{else}
+					<label class="file_ui">上传文件
+					<input type="file" name="image_{$v.cid}" id="image_{$v.cid}" class="upfile" >
+					</label>
+					{/if}
                     <!--<div class="upfile_name">文件名</div>-->
-                    <input type="hidden" name="cids[]" id="cids" value="{$v.cid}"/>
-					<input type="hidden" name="images[]" id="image_{$v.cid}_url" value="" is_must="{$v.is_must}"  title="{$v.name}"/>
+                    <input type="hidden" name="cids[]"  value="{$v.cid}" class="cids"/>
+					<input type="hidden" name="images[]" id="image_{$v.cid}_url" value="" is_must="{$v.is_must}"  title="{$v.name}" class="images_url"/>
                 </td>
-                <td ><div class="upfile_name" id="image_{$v.cid}_image">文件名</div></td>
+                <td >
+					<div class="upfile_name upload_img_list" id="image_{$v.cid}_image">文件名</div>
+				</td>
             </tr>
             {/foreach}
             </tbody>
@@ -151,20 +183,27 @@ $(".upfile").change(function(){
 	load = layer.load(2);
 	var formData = new FormData();
 	var name = $(this).attr('name');
-	formData.append("uploadfile", document.getElementById(name).files[0]);
+	formData.append("file", document.getElementById(name).files[0]);
 	_this = $(this);
 	$.ajax({
 		url: "{:url('home/Show/material_upload')}",
 		type: "POST",
 		data: formData,
+		dataType: 'json',
 		contentType: false,
 		processData: false,
 		success: function (data) {
 			layer.close(load);
 			if(data.code == 200)
 			{
-				$("#"+name+'_url').val(data.url);
-				$("#"+name+'_image').html('<img src="'+data.url+'" width="100px;"/>');
+				var images_object = _this.closest('td').next('td').find('.upload_img_list');
+				if(images_object.text() == '文件名' || images_object.text == '')
+				{
+					images_object.text('');
+				}
+				_this.closest('td').find('.images_url').val(data.url);
+				images_object.append('<dd class="item_img"><a href="'+data.url+'" target="_blank"><img src="' + data.url + '" class="img" url="'+data.url+'"></a></dd>');
+	
 				layer.msg("上传成功！",{'icon':1});
 
 			}
@@ -222,6 +261,106 @@ $(".material_btn").click(function(){
 	});
 	return false;
 })
+// 初始化Web Uploader
+var uploader = WebUploader.create({
+
+    // 选完文件后，是否自动上传。
+    auto: true,
+
+    // swf文件路径
+    swf: '__PUBLIC__/images/Uploader.swf',
+
+    // 文件接收服务端。
+    server: "{:url('home/Show/material_upload')}",
+
+    // 选择文件的按钮。可选。
+    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+    pick: '.upfiles',
+
+    // 只允许选择图片文件。
+    accept: {
+        title: 'Images',
+        extensions: 'gif,jpg,jpeg,bmp,png',
+        mimeTypes: 'image/*'
+    }
+});
+uploader.on( 'uploadProgress', function( file, percentage ) {
+    load = layer.load(2);
+});
+// 文件上传成功，给item添加成功class, 用样式标记上传成功。
+img_id = 100;
+uploader.on( 'uploadSuccess', function( file,data ) {
+	var uploaderId = '#rt_'+file.source.ruid;
+	var images_url_object = $(uploaderId).closest('td').find('.images_url');
+	images_url_val = images_url_object.val();
+	var val;
+	if(images_url_val.length == 0)
+	{
+		val = data.url;
+	}else{
+		val = images_url_val + ','+data.url
+	}
+	images_url_object.val(val);
+	var images_object = $(uploaderId).closest('td').next('td').find('.upfile_name');
+	if(images_object.text() == '文件名' || images_object.text == '')
+	{
+		images_object.text('');
+	}
+
+	images_object.append('<dd class="item_img" id="' + img_id + '"><div class="operate"><i class="to_left fa fa-angle-left fa-2x"></i><i class="to_right fa fa-angle-right fa-2x"></i><i class="close fa fa-trash fa-lg img_del" attr-id="'+img_id+'"></i></div><a href="'+data.url+'" target="_blank"><img src="' + data.url + '" class="img" url="'+data.url+'"></a></dd>');
+	img_id++;
+});
+// 文件上传失败，显示上传出错。
+uploader.on( 'uploadError', function( file ) {
+    layer.msg('上传失败',{'icon':5});
+});
+uploader.on( 'uploadComplete', function( file ) {
+	layer.close(load);
+});
+$("body").on("click",'.img_del',function() {
+	var closest_object = $(this).closest(".upload_img_list");
+	var img_id = $(this).attr("attr-id");
+	$("#"+img_id).remove();
+	update_images_url(closest_object);
+})
+/*
+ 多图上传变换左右位置
+ */
+$("body").on("click",'.to_left', function() {
+	var item = $(this).parent().parent(".item_img");
+	var item_left = item.prev(".item_img");
+	if ($(this).closest(".upload_img_list").children(".item_img").length >= 2) {
+		if (item_left.length == 0) {
+			item.insertAfter($(this).closest(".upload_img_list").children(".item_img:last"))
+		} else {
+			item.insertBefore(item_left)
+		}
+	}
+	var closest_object = $(this).closest(".upload_img_list");
+	update_images_url(closest_object);
+});
+$("body").on("click",'.to_right', function() {
+	var item = $(this).parent().parent(".item_img");
+	var item_right = item.next(".item_img");
+	if ($(this).closest(".upload_img_list").children(".item_img").length >= 2) {
+		if (item_right.length == 0) {
+			item.insertBefore($(this).closest(".upload_img_list").children(".item_img:first"))
+		} else {
+			item.insertAfter(item_right)
+		}
+	}
+	var closest_object = $(this).closest(".upload_img_list");
+	update_images_url(closest_object);
+});
+function update_images_url(closest_object)
+{
+	var urls = '';
+	closest_object.find('.img').each(function(){
+		urls += ','+$(this).attr('url') ;
+	});
+	urls = urls.substring(1);
+	closest_object.closest('tr').find('.images_url').val(urls);
+}
 </script>
 
 {include file="public/footer"}

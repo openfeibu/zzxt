@@ -199,30 +199,38 @@ class Show extends Base
 	public function material_upload()
 	{
 		
-		if(request()->file('uploadfile') !== null )
+		if(request()->file('file') !== null )
 		{
-			$file = request()->file('uploadfile');
+			$file = request()->file('file');
 
 			$info = $file->validate(['ext'=>'jpg,png,gif,jpeg'])->move(ROOT_PATH . 'public' . DS . 'uploads');
  
 			$image = \think\Image::open(ROOT_PATH . 'public' . DS . 'uploads' .DS. $info->getSaveName());
  
 			$image->thumb(1000,1000)->save(ROOT_PATH . 'public' . DS . 'uploads' .DS. $info->getSaveName());
-
+		
+			if($info){
+				$data = [
+					'code' => 200,
+					'url' => '/public/uploads/'.$info->getSaveName(),
+					'message' => '上传成功',
+				];
+			}else{
+				$data = [
+					'code' => 201,
+					'message' => $file->getError(),
+				]; 
+			}
 		}
-		if($info){
-			return [
-				'code' => 200,
-				'url' => '/public/uploads/'.$info->getSaveName(),
-				'message' => '上传成功',
-			];
-		}else{
-			return [
+		else{
+			$data = [
 				'code' => 201,
-				'message' => $file->getError(),
-			]; 
-		}
+				'message' => '未选择图片',
+			];
+		}	
+		echo json_encode($data);
 	}
+	
 	public function material_post()
 	{
 		$eval_app = $this->evaluation->getMemberEvaluation($this->user['member_list_id']);

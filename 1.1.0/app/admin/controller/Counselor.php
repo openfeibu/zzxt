@@ -217,14 +217,9 @@ class Counselor extends Base
         if (!$data) {
             $this->error("该学生没有填写申请表");
         }
-        $apply = Db::table('yf_evaluation_application')
-            ->alias('app')
-            ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
-            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-            ->where('evaluation_id',$data['evaluation_id'])
-            ->field('u.*,app.*')
-            ->find();
-        $apply = \app\admin\model\Evaluation::handleEvaluation($apply);
+		$evaluation_model = new Evaluation();
+        $apply = $evaluation_model->getEvaluation($data['evaluation_id']);
+        $apply = Evaluation::handleEvaluation($apply);
 
         $this->assign('status_id', $id);
         $this->assign('user', $apply);

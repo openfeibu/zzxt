@@ -391,14 +391,9 @@ class StudentOffice extends Base
         if (!$data) {
             $this->error("该学生没有填写申请表");
         }
-        $apply = Db::table('yf_evaluation_application')
-            ->alias('app')
-            ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
-            ->join('yf_user u', 'u.id_number = m.id_number', 'left')
-            ->field('u.*,app.*')
-            ->where('evaluation_id',$data['evaluation_id'])
-            ->find();
-        $apply = \app\admin\model\Evaluation::handleEvaluation($apply);
+		$evaluation_model = new Evaluation();
+        $apply = $evaluation_model->getEvaluation($data['evaluation_id']);;
+        $apply = Evaluation::handleEvaluation($apply);
         //$apply['members'] = unserialize($apply['members']);
 		$this->assign('eval_app', $apply);
 		$eval_form = Config::get('evaluation_form');
