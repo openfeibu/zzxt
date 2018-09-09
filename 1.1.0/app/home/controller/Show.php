@@ -203,7 +203,7 @@ class Show extends Base
 		{
 			$file = request()->file('uploadfile');
 
-			$info = $file->validate(['ext'=>'jpg,png,gif'])->move(ROOT_PATH . 'public' . DS . 'uploads');
+			$info = $file->validate(['ext'=>'jpg,png,gif,jpeg'])->move(ROOT_PATH . 'public' . DS . 'uploads');
 		}
 		if($info){
 			return [
