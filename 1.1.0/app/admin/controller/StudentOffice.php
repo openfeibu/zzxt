@@ -392,7 +392,7 @@ class StudentOffice extends Base
             $this->error("该学生没有填写申请表");
         }
 		$evaluation_model = new Evaluation();
-        $apply = $evaluation_model->getEvaluation($data['evaluation_id']);;
+        $apply = $evaluation_model->getEvaluation($data['evaluation_id']);
         $apply = Evaluation::handleEvaluation($apply);
         //$apply['members'] = unserialize($apply['members']);
 		$this->assign('eval_app', $apply);
