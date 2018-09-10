@@ -30,7 +30,7 @@
     'auth_user' => 'admin',
   ),
   'app_debug' => true,
-  'app_trace' => true,
+  'app_trace' => false,
   'baidumap_ak' => 'D91c810554767b49e3bdd2a7b25d97c1',
   'upload_validate' => 
   array (
