@@ -29,7 +29,17 @@
 					<td>家庭经济困难认定</td>
 					<td >
 						<span class="{$e_class}">
-							{$e_status_name}
+							{$e_status_name} [
+							{if $eval_app.poor_grade_name}
+								学校评级：{$eval_app.poor_grade_name}
+							{elseif $eval_app.faculty_poor_grade_name}
+								学院评级：{$eval_app.faculty_poor_grade_name}
+							{elseif $eval_app.group_poor_grade_name}
+								小组评级：{$eval_app.group_poor_grade_name}
+							{elseif $eval_app.system_poor_grade_name}
+								系统评级：{$eval_app.system_poor_grade_name}		
+							{/if}
+							]
 						</span>
 					</td>
 					<td>{$e_subsidy.ypublic_begin_time|date='Y-m-d',###} - {$e_subsidy.ypublic_end_time|date='Y-m-d',###}</td>

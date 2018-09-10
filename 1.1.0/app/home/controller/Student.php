@@ -366,7 +366,7 @@ class Student extends Base
         $this_time = date('Y', time());
 
         //家庭经济困难评定状态
-		$eval_app = $this->evaluation->getMemberEvaluation($this->user['member_list_id']);
+		$eval_app =  EvaluationModel::handleEvaluation($this->evaluation->getMemberEvaluation($this->user['member_list_id']));
 		$e_status = $eval_app['evaluation_status'];
 		//是否经济评议小组
 		$is_eval_group = MemberListModel::isEvalGroup($this->user['id_number']);
@@ -514,6 +514,7 @@ class Student extends Base
 			}
 		}
 		$e_status_name = isset(config('status_stu')[$e_status]) ? config('status_stu')[$e_status] : $e_status;
+		
 		$u_status_name = isset(config('status_stu')[$u_status]) ? config('status_stu')[$u_status] : $u_status;
 		$m_status_name = isset(config('status_stu')[$m_status]) ? config('status_stu')[$m_status] : $m_status;
 		$n_status_name = isset(config('status_stu')[$n_status]) ? config('status_stu')[$n_status] : $n_status;
@@ -536,6 +537,8 @@ class Student extends Base
 		$this->assign('u_subsidy',$this->MultipleScholarship->u_subsidy);
 		$this->assign('m_subsidy',$this->MultipleScholarship->m_subsidy);
 		$this->assign('n_subsidy',$this->NationalScholarship->subsidy);
+		
+		$this->assign('eval_app',$eval_app);
         return $this->view->fetch('student/personal_status');
     }
 

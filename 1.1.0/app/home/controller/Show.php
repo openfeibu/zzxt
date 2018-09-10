@@ -61,11 +61,7 @@ class Show extends Base
     {
         return $this->view->fetch(':student_personal_front/change_pd');
     }
-    //综合状态
-    public function personal_status()
-    {
-        return $this->view->fetch(':student_personal_front/personal_status');
-    }
+  
 //    评估页方法
     public function personal()
     {
