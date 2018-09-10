@@ -1440,3 +1440,32 @@ $('body').on('change',"select[name='poor_grade']",function () {
 		}
 	}
 });
+$("body").on("click",".eval_callback",function () {
+	load = layer.load();
+	$this = $(this);
+	$.ajax({
+		cache: true,
+		type: "POST",
+		url:'/admin/evaluationhandle/callback',
+		data:{'evaluation_id':$(this).attr('value')},// 你的formid
+		async: false,
+		error: function(request) {
+			layer.close(load);
+			layer.msg("连接失败",{icon: 5});
+			return false;
+		},
+		success: function(data) {
+			layer.close(load);
+			//$this.closest("form").find("button[name='pass']").attr('disabled',true);
+			//$this.closest("form").find("button[name='fail']").attr('disabled',true);
+			$this.closest("form").find(".eval_callback").attr('disabled',true);
+			if (data.code == 1 || data.code == 200) {
+                layer.msg(data.msg,{icon: 6});
+            }else{
+                layer.msg(data.msg,{icon: 5});
+            }
+			return false;
+		}
+	});
+	return false;	
+})

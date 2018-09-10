@@ -4,7 +4,6 @@ $(function () {
         $(this).closest(".ques_module").remove()
     })
 
-
     $("body").on("click",".ques_b_add",function () {
         var name = $(this).parents(".ques_b_title").find("input").eq(0).attr("name");
         var $ques_b=$("<div class=\"ques_m_title\">\n" +
