@@ -43,7 +43,7 @@
 
         <br>
 		{if $eval_app}
-		{if $material}
+		{if $material && $eval_app['material_status']}
 		<table class="table_one" style="word-wrap: break-word;word-break: break-all;">
             <tbody>
                 <tr class="table-tr">
@@ -130,6 +130,43 @@
                 <td>{$v.name}</td>
                 <td>{$v.desc}</td>
                 <td>{$v.remark}{if $v.is_multi}（可多图 [ctrl+]）{/if}</td>
+				{if isset($material[$v['cid']])}
+				<?php $material_data = $material[$v['cid']];?>
+				<td class="title td_upfile">
+					{if $v.is_multi}
+					<div class="upfiles" id="image_{$v.cid}">上传文件</div>
+					<input type="hidden" name="image_{$v.cid}" >
+					{else}
+					<label class="file_ui">上传文件
+					<input type="file" name="image_{$v.cid}" id="image_{$v.cid}" class="upfile" value="{$material_data.images}">
+					</label>
+					{/if}
+                    <!--<div class="upfile_name">文件名</div>-->
+                    <input type="hidden" name="cids[]"  value="{$v.cid}" class="cids"/>
+					<input type="hidden" name="images[]" id="image_{$v.cid}_url" is_must="{$v.is_must}"  title="{$v.name}" class="images_url" value="{$material_data.images}"/>
+                </td>
+                <td >
+					<div class="upfile_name upload_img_list" id="image_{$v.cid}_image">
+						{if $v.is_multi}
+						<?php $images_data = explode(',',$material_data['images']); ?>
+						{foreach name="images_data" key="key" item="val"}
+						<dd class="item_img" id="{$key}">
+							<div class="operate">
+							<i class="to_left fa fa-angle-left fa-2x"></i>
+							<i class="to_right fa fa-angle-right fa-2x"></i>
+							<i class="close fa fa-trash fa-lg img_del" attr-id="{$key}"></i>
+							</div>
+							<a href="{$val}" target="_blank"><img src="{$val}" class="img" url="{$val}" ></a>
+						</dd>
+						{/foreach}
+						{else}
+						<dd class="item_img" id="{$key}">
+							<a href="{$material_data['images']}" target="_blank"><img src="{$material_data['images']}" class="img" ></a>
+						</dd>
+						{/if}
+					</div>
+				</td>
+				{else}
                 <td class="title td_upfile">
 					{if $v.is_multi}
 					<div class="upfiles" id="image_{$v.cid}">上传文件</div>
@@ -146,6 +183,7 @@
                 <td >
 					<div class="upfile_name upload_img_list" id="image_{$v.cid}_image">文件名</div>
 				</td>
+				{/if}
             </tr>
             {/foreach}
             </tbody>

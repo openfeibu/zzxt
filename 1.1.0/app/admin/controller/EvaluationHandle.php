@@ -41,7 +41,7 @@ class EvaluationHandle extends Base
 		$data['change_fraction'] = isset($data['change_fraction']) ? $data['change_fraction'] : 0;
         $evdata['score'] = intval($eval_app['assess_fraction']) + intval($data['change_fraction']) ;
         $evdata['change_fraction'] = intval($data['change_fraction']);
-		
+		$evdata['material_status'] = 1;
         return $this->fill($data,$evdata,$status);
     }
     public function counselorAll()
@@ -65,6 +65,7 @@ class EvaluationHandle extends Base
         } else {
             $evdata['evaluation_status'] = $status = 3;
         }
+		$$evdata['material_status'] = 1;
 		$evaluation_model = new Evaluation();
         foreach($esdata as $key => $val)
         {
@@ -83,6 +84,44 @@ class EvaluationHandle extends Base
         }
         $this->success("操作成功");
     }
+	public function callback()
+	{
+		$evaluation_model = new Evaluation();
+		$evaluation_id = input('evaluation_id');
+		$eval_app = $evaluation_model->getEvaluation($evaluation_id);
+		if($eval_app['evaluation_status'] > 2)
+		{
+			$this->error("已审核，不能打回");
+		}
+		DB::name('evaluation_application')->where('evaluation_id',$evaluation_id)->update(['evaluation_status' => 0,'material_status' => 0]);
+		DB::name('evaluation_status')->where('evaluation_id',$evaluation_id)->update(['status' => 0]);
+		$this->success("操作成功");
+	}
+	public function callback_appliaction()
+	{
+		$evaluation_model = new Evaluation();
+		$evaluation_id = input('evaluation_id');
+		$eval_app = $evaluation_model->getEvaluation($evaluation_id);
+		if($eval_app['evaluation_status'] > 2)
+		{
+			$this->error("已审核，不能打回");
+		}
+		DB::name('evaluation_application')->where('evaluation_id',$evaluation_id)->update(['evaluation_status' => 0]);
+		DB::name('evaluation_status')->where('evaluation_id',$evaluation_id)->update(['status' => 0]);
+		$this->success("操作成功");
+	}
+	public function callback_material()
+	{
+		$evaluation_model = new Evaluation();
+		$evaluation_id = input('evaluation_id');
+		$eval_app = $evaluation_model->getEvaluation($evaluation_id);
+		if($eval_app['evaluation_status'] > 2)
+		{
+			$this->error("已审核，不能打回");
+		}
+		DB::name('evaluation_application')->where('evaluation_id',$evaluation_id)->update(['material_status' => 0]);
+		$this->success("操作成功");
+	}
     public function faculty(Request $request)
     {
         $data = $request->post();

@@ -29,6 +29,9 @@
             <input type="hidden" name="evaluation_id" value="{$row.evaluation_id}" />
             <div class="audit_opera">
                 <button class="btn btn-sm btn-primary" type="submit" {if !in_array($row.evaluation_status,[1,2])}disabled{/if} name="pass">提交</button>
+				{if in_array($row.evaluation_status,[0,1,2])}
+				<button type="button" class="btn-sm btn-warning eval_callback" value="{$row.evaluation_id}" {if $row.evaluation_status == 0 }disabled{/if}>打回重填</button>
+				{/if}
             </div>
             <!-- <div class="audit_opera"> -->
                 <!-- <button class="btn btn-info btn-sm btn-danger" type="submit" {if !in_array($row.evaluation_status,[1,2])}disabled{/if} name="fail" value="1">不同意</button> -->
@@ -45,6 +48,7 @@
 <tr>
     <td align="left" class="hidden-xs center" href="{:url('admin/EvaluationHandle/counselorAll')}">
         <button id="passSubmit" class="btn btn-sm btn-primary hidden-xs" name="pass">提交</button>
+		
         <!-- <button id="failSubmit" class="btn btn-danger  btn-sm hidden-xs" name="fail">不同意</button> -->
     </td>
     <td height="50" colspan="12" align="left">{$page}</td>

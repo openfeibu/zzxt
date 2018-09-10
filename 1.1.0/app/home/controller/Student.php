@@ -385,7 +385,10 @@ class Student extends Base
 		}
         else{
 			if (empty($eval_app['evaluation_status'])) {
-				$e_status = '未申请';
+				if($eval_app['evaluation_status'] != 0)
+				{
+					$e_status = '未申请';
+				}
 				$e_class = 'review-error';
 			} elseif (0 < $eval_app['evaluation_status'] && $eval_app['evaluation_status'] < 5) {
 				$e_class = 'reviewing';
@@ -513,7 +516,7 @@ class Student extends Base
 				}
 			}
 		}
-		$e_status_name = isset(config('status_stu')[$e_status]) ? config('status_stu')[$e_status] : $e_status;
+		$e_status_name = isset(config('eval_status_stu')[$e_status]) ? config('eval_status_stu')[$e_status] : $e_status;
 		
 		$u_status_name = isset(config('status_stu')[$u_status]) ? config('status_stu')[$u_status] : $u_status;
 		$m_status_name = isset(config('status_stu')[$m_status]) ? config('status_stu')[$m_status] : $m_status;

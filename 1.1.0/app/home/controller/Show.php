@@ -61,7 +61,11 @@ class Show extends Base
     {
         return $this->view->fetch(':student_personal_front/change_pd');
     }
-  
+	//综合状态
+    public function personal_status()
+    {
+        return $this->view->fetch(':student_personal_front/personal_status');
+    }
 //    评估页方法
     public function personal()
     {
@@ -141,19 +145,15 @@ class Show extends Base
 		//$eval_fraction = get_score($data);
 		
         if (isset($eval_app)) {
-			/*
-			if($pass_status['status'] != 9)
+			
+			if($pass_status['status'] != 0)
 			{
 				return [
 					'code' => 201,
 					'message' => '此状态下不允许修改',
 				];
 			}
-			*/
-			return [
-				'code' => 201,
-				'message' => '不允许修改',
-			];
+			$data['evaluation_status'] = 1;
             $eva_app = DB::name('evaluation_application')->where('evaluation_id',$pass_status['evaluation_id'])->update($data);
             DB::name('evaluation_status') ->where('status_id',$pass_status['status_id'])->update([
                 'status'=> 1,
@@ -185,7 +185,12 @@ class Show extends Base
     {
 		$eval_app = $this->evaluation->getMemberEvaluation($this->user['member_list_id']);
 		$this->assign('eval_app',$eval_app);
-		$material = DB::name('evaluation_material')->alias('em')->join('yf_evaluation_material_config emc ','em.cid = emc.cid')->field('em.evaluation_id,em.member_list_id,em.images,emc.*')->where('em.evaluation_id',$eval_app['evaluation_id'])->select();
+		$data = DB::name('evaluation_material')->alias('em')->join('yf_evaluation_material_config emc ','em.cid = emc.cid')->field('em.evaluation_id,em.member_list_id,em.images,emc.*')->where('em.evaluation_id',$eval_app['evaluation_id'])->select();
+		$material = [];
+		foreach($data as $key => $val)
+		{
+			$material[$val['cid']] = $val;
+		}
 		$this->assign('material',$material);
 		$material_configs = EvaluationMaterialConfig::getConfigs(1);
 		$this->assign('material_configs',$material_configs);
@@ -236,6 +241,12 @@ class Show extends Base
 				'message' => '请先提交家庭经济困难学生认定申请',
 			]; 
 		}
+		if($eval_app['material_status'] != 0){
+			return [
+				'code' => 201,
+				'message' => '该状态禁止修改',
+			]; 
+		}
 		$member_list_headpic = $_POST['member_list_headpic_url'];
 		$rst=Db::name('member_list')->where(array('member_list_id'=>$this->user['member_list_id']))->update(['member_list_headpic' => $member_list_headpic]);
 		$cids = $_POST['cids'];
@@ -254,9 +265,10 @@ class Show extends Base
 				
 			}
 		}
+		DB::name('evaluation_material')->where('evaluation_id',$eval_app['evaluation_id'])->delete();
 		DB::name('evaluation_material')->insertAll($data);
 		$assess_fraction = EvaluationModel::getMaterilaScore($eval_app['evaluation_id']);
-		DB::name('evaluation_application')->where('evaluation_id',$eval_app['evaluation_id'])->update(['assess_fraction' => $assess_fraction,'score' => $assess_fraction]);
+		DB::name('evaluation_application')->where('evaluation_id',$eval_app['evaluation_id'])->update(['assess_fraction' => $assess_fraction,'score' => $assess_fraction,'material_status' => 1]);
 		return [
 			'code' => 200,
 			'message' => '提交成功',

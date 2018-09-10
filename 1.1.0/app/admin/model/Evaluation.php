@@ -47,14 +47,17 @@ class Evaluation extends Model
     }
 	public static function handleEvaluation($data)
 	{
-		$data['material_score'] = self::getMaterilaScore($data['evaluation_id']);
-		$grade = self::getGrade($data['score']);
-		$data['system_poor_grade_name'] = $grade['poor_grade_name'];
-		$data['system_poor_grade'] = $grade['poor_grade'];
-		$data['group_poor_grade_name'] = self::getGradeData($data['group_poor_grade'],'name');
-		$data['faculty_poor_grade_name'] = self::getGradeData($data['faculty_poor_grade'],'name');
-		$data['poor_grade_name'] = self::getGradeData($data['school_poor_grade'],'name');
-		$data = handleApply($data);
+		if($data)
+		{
+			$data['material_score'] = self::getMaterilaScore($data['evaluation_id']);
+			$grade = self::getGrade($data['score']);
+			$data['system_poor_grade_name'] = $grade['poor_grade_name'];
+			$data['system_poor_grade'] = $grade['poor_grade'];
+			$data['group_poor_grade_name'] = self::getGradeData($data['group_poor_grade'],'name');
+			$data['faculty_poor_grade_name'] = self::getGradeData($data['faculty_poor_grade'],'name');
+			$data['poor_grade_name'] = self::getGradeData($data['school_poor_grade'],'name');
+			$data = handleApply($data);
+		}
 		return $data;
 	}
     public static function getMaterilaScore($evaluation_id)

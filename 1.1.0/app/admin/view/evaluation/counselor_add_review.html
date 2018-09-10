@@ -58,6 +58,7 @@
 								<input type="hidden" name="status_id" value="{$status_id}"/>
 								<input type="hidden" name="evaluation_id" value="{$user.evaluation_id}"/>
 								<button type="submit" class="btn btn-primary" name="pass" value="{$status_id}">提交</button>
+								<button type="button" class="btn btn-warning eval_callback" value="{$eval_app.evaluation_id}" {if $user.evaluation_status == 0}disabled{/if}>打回重填</button>
 								{if $previous_url}
 								<a href="{$previous_url}" class="btn btn-success">上一个</a> 
 								{/if}
@@ -75,7 +76,7 @@
         </div>
     </div>
 </div>
-{if !in_array($user.evaluation_status,[1,2])}
+{if !in_array($user.evaluation_status,[0,1,2])}
 <script>
 $("#passingForm").find("textarea").attr('disabled',true);
 $("#passingForm").find("input").attr('disabled',true);
