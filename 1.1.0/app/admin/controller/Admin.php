@@ -176,7 +176,7 @@ class Admin extends Base
 		}
 		if(session('admin_auth.class_number'))
 		{
-			$map['a.class_number'] =['in',session('admin_auth.faculty_number')] ;
+			$map['a.class_number'] =['in',session('admin_auth.class_number')] ;
 		}
 
         $classCode = new ClassCodeModel();
