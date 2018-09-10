@@ -38,6 +38,8 @@ class Base extends Common
 			$news_count=Db::name('News')->where(array('news_auto'=>session('admin_auth.member_id')))->count();
 			$admin['news_count']=$news_count;
 		}
+		session('admin_auth.class_number', $admin['class_number']);
+		session('admin_auth.faculty_number', $admin['faculty_number']);
 		$this->admin = $admin;
 		$this->assign('admin', $admin);
 		$this->assign('admin_avatar',session('admin_auth.admin_avatar'));
