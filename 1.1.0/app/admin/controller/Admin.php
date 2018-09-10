@@ -174,6 +174,11 @@ class Admin extends Base
 		if(session('admin_auth.faculty_number')){
 			$map['a.faculty_number']= session('admin_auth.faculty_number');
 		}
+		if(session('admin_auth.class_number'))
+		{
+			$map['a.class_number'] =['in',session('admin_auth.faculty_number')] ;
+		}
+
         $classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
 		$admin_list=Db::name('admin')->alias('a')
