@@ -30,6 +30,7 @@
 					<td >
 						<span class="{$e_class}">
 							{$e_status_name} [
+							{if isset($eval_app) && $eval_app}
 							{if $eval_app.poor_grade_name}
 								学校评级：{$eval_app.poor_grade_name}
 							{elseif $eval_app.faculty_poor_grade_name}
@@ -42,6 +43,7 @@
 								
 							{/if}
 							]
+							{/if}
 						</span>
 					</td>
 					<td>{$e_subsidy.ypublic_begin_time|date='Y-m-d',###} - {$e_subsidy.ypublic_end_time|date='Y-m-d',###}</td>
