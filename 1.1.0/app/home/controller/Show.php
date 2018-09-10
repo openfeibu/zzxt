@@ -241,12 +241,7 @@ class Show extends Base
 				'message' => '请先提交家庭经济困难学生认定申请',
 			]; 
 		}
-		if($eval_app['material_status'] != 0){
-			return [
-				'code' => 201,
-				'message' => '该状态禁止修改',
-			]; 
-		}
+		
 		$member_list_headpic = $_POST['member_list_headpic_url'];
 		$rst=Db::name('member_list')->where(array('member_list_id'=>$this->user['member_list_id']))->update(['member_list_headpic' => $member_list_headpic]);
 		$cids = $_POST['cids'];
