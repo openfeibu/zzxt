@@ -2,7 +2,7 @@
 
 <tr>
     <td>
-        {if in_array($row.evaluation_status,[1,2])}
+        {if in_array($row.evaluation_status,[0,1,2])}
         <label class="pos-rel">
             <input name="n_id[]" id="navid" class="ace" type="checkbox" value="{$row.evaluation_id}">
             <span class="lbl"></span>
@@ -11,7 +11,7 @@
         {$row.evaluation_id}
     </td>
 	{include file="common\evaluation_val"}
-	{if in_array($row.evaluation_status,[1,2])}
+	{if in_array($row.evaluation_status,[0,1,2])}
 	<td>
 		<span style="display:none;" class="last_poor_grade" last_poor_grade="{$row.system_poor_grade}" last_group="系统评级"></span>
 		<textarea name="group_opinion[text]" class="text">{$row.group_opinion.text|default="同意系统评级"}</textarea>
@@ -28,7 +28,7 @@
             <input type="hidden" name="status_id" value="{$row.status_id}" />
             <input type="hidden" name="evaluation_id" value="{$row.evaluation_id}" />
             <div class="audit_opera">
-                <button class="btn btn-sm btn-primary" type="submit" {if !in_array($row.evaluation_status,[1,2])}disabled{/if} name="pass">提交</button>
+                <button class="btn btn-sm btn-primary" type="submit" {if !in_array($row.evaluation_status,[0,1,2])}disabled{/if} name="pass">提交</button>
 				{if in_array($row.evaluation_status,[0,1,2])}
 				<button type="button" class="btn-sm btn-warning eval_callback" value="{$row.evaluation_id}" {if $row.evaluation_status == 0 }disabled{/if}>打回重填</button>
 				{/if}
