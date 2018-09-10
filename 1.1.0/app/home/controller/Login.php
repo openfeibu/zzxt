@@ -78,13 +78,14 @@ class Login extends Base
             $where['id_number']=$member_list_username;
         }
 		$member=Db::name("member_list")->where($where)->find();
+		
 		if(!$member)
 		{
 			$dataclass = new Data();
 			$result = $dataclass->getUserByIdCard($member_list_username);
 			if(empty($result))
 			{
-				$this->error(lang('username or pwd incorrect'));//账号密码不正确
+				$this->error('账号不存在');//账号密码不正确
 			}else{
 				$user_fields = config('user_fields'); 
 				$school_user = array();
@@ -113,7 +114,16 @@ class Login extends Base
 					'user_status'=> 0,
 					'id_number' => $member_list_username,
 				);
-	
+				
+				$xh = $school_user['studentid'];
+				$xh_unfulll = substr($xh,-9);
+				$where = " WHERE XH = '".$xh."' OR SFZH = '".$member_list_username."' OR XH = '".$xh_unfulll."' ";
+				$data_oracle = new DataOracle();
+				$new_student = $data_oracle->getStudent($where);
+				if(!$new_student)	
+				{
+					$this->error('账号不存在');
+				}
 				$users_model=Db::name("member_list");
 				$rst=$users_model->insertGetId($sl_data);
 				if($rst!==false){
