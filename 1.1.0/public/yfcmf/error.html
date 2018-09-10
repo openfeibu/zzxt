@@ -53,11 +53,11 @@
 <body>
     <div class="fb-error">
        <div class="fb-error-img"><img src="/public/img/error.png" alt=""></div>
-       <div class="fb-error-title">啊呀...这个页面不见了</div>
+       <div class="fb-error-title">页面出错或丢失</div>
        <div class="fb-error-con">
             <p>可能原因：网络信号差；网址输入错误；该页面已被移动或删除。</p>
             <p>如有任何建议，请及时反馈给 网络中心</p>
-       <div class="fb-error-button"><a id="href" href="<?php echo($url);?>">返回上一页(<span id="wait">5</span>s)</a></div>
+       <div class="fb-error-button"><a id="href" href="<?php if(isset($url)){echo($url);}else{ echo 'javascript:history.go(-1)' ;}?>">返回上一页(<span id="wait">5</span>s)</a></div>
 
     </div>
 
@@ -68,7 +68,12 @@
         var interval = setInterval(function(){
             var time = --wait.innerHTML;
             if(time <= 0) {
+				if(href.length > 0){
+				
                 location.href = href;
+				}else{
+					location.href =document.referrer;
+				}
                 clearInterval(interval);
             };
         }, 1000);
