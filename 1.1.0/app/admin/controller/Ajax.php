@@ -46,6 +46,10 @@ class Ajax
 		//$where = " where (XH = '".$value."' OR XM LIKE '".$value."%' OR SFZH LIKE '%".$value."%')  AND BH = '".$class_number."'";
 		$where = " where (XH = '".$value."' OR XM LIKE '".$value."%' OR SFZH LIKE '%".$value."%')  ";
 		$fields = " SFZH as id_number , XH as studentid, XM as name,BH as class_number ";
+		if(session('admin_auth.class_number'))
+		{
+			$where .= " AND BH IN (".session('admin_auth.class_number').")";
+		}
 		$dataHandleClass = new DataHandle();
 		$data = $dataHandleClass->getStudents($where,$fields);
 		return json($data);
