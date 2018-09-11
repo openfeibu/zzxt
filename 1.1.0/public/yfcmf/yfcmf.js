@@ -1179,96 +1179,111 @@ $("body").on('blur','.grade',function(){
 });
 $('body').on('click',".passingForm button[type='submit']",function () {
 	$this = $(this);
-	var url = $(this).closest("form").attr('action');
-	data = $(this).closest("form").serialize();
-	name = $(this).attr('name');
-	fail = '';
-	if(name == 'fail')
-	{
-		fail = 1;
-	}
-	data = data +"&"+"fail="+fail;
-//	console.log(data);return false;
-	$.ajax({
-		cache: true,
-		type: "POST",
-		url:url,
-		data:data,// 你的formid
-		async: false,
-		error: function(request) {
-			layer.msg("连接失败",{icon: 5});
-			return false;
-		},
-		success: function(data) {
-			$this.closest("form").find("button[name='pass']").attr('disabled',true);
-			$this.closest("form").find("button[name='fail']").attr('disabled',true);
-			if (data.code == 1 || data.code == 200) {
-                layer.msg(data.msg,{icon: 6});
-            }else{
-                layer.msg(data.msg,{icon: 5});
-            }
-			return false;
+	layer.confirm('确定提交操作吗？', {
+		btn: ['确定','取消'] 
+	},function(){
+	
+		$this = $(this);
+		var url = $(this).closest("form").attr('action');
+		data = $(this).closest("form").serialize();
+		name = $(this).attr('name');
+		fail = '';
+		if(name == 'fail')
+		{
+			fail = 1;
 		}
+		data = data +"&"+"fail="+fail;
+	//	console.log(data);return false;
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:url,
+			data:data,// 你的formid
+			async: false,
+			error: function(request) {
+				layer.msg("连接失败",{icon: 5});
+				return false;
+			},
+			success: function(data) {
+				$this.closest("form").find("button[name='pass']").attr('disabled',true);
+				$this.closest("form").find("button[name='fail']").attr('disabled',true);
+				if (data.code == 1 || data.code == 200) {
+					layer.msg(data.msg,{icon: 6});
+				}else{
+					layer.msg(data.msg,{icon: 5});
+				}
+				return false;
+			}
+	});
+	
+	},function(){
 	});
 	return false;
 });
 $('body').on('click',".passingForm2 button[type='submit']",function () {
 	$this = $(this);
-	var url = $(this).closest("form").attr('action');
-	data = $(this).closest("form").serialize();
-	name = $(this).attr('name');
-	text = $(this).closest("tr").find(".text").val();
-	textname = $(this).closest("tr").find(".text").attr('name');
-	poor_grade = $(this).closest("tr").find("select[name='poor_grade']").val();
-	change_fraction = $(this).closest("tr").find(".change_fraction").val();
-	fail = '';
-	if(name == 'fail')
-	{
-		fail = 1;
-	}
-	data = data +"&"+"fail="+fail+"&"+textname+"="+text+"&change_fraction="+change_fraction+'&poor_grade='+poor_grade;
-	//console.log(data);return false;
-	$.ajax({
-		cache: true,
-		type: "POST",
-		url:url,
-		data:data,// 你的formid
-		async: false,
-		error: function(request) {
-			layer.msg("连接失败",{icon: 5});
-			return false;
-		},
-		success: function(data) {
-			$this.closest("form").find("button[name='pass']").attr('disabled',true);
-			$this.closest("form").find("button[name='fail']").attr('disabled',true);
-			if (data.code == 1 || data.code == 200) {
-				$this.closest("tr").find(".text").attr("disabled",true);
-				$this.closest("tr").find(".change_fraction").attr("disabled",true);
-				$this.closest("tr").find("select[name='poor_grade']").attr("disabled",true);
-				$this.closest("tr").find(".score").text(data.score);
-				$this.closest("tr").find(".status").text(data.status);
-				$this.closest("tr").find(".rank").text(data.poor_grade_name);
-                layer.msg(data.msg,{icon: 6});
-            }else{
-                layer.msg(data.msg,{icon: 5});
-            }
-			return false;
+	layer.confirm('确定提交评议操作吗？', {
+		btn: ['确定','取消'] 
+	}, function(){
+		var url = $this.closest("form").attr('action');
+		data = $this.closest("form").serialize();
+		name = $this.attr('name');
+		text = $this.closest("tr").find(".text").val();
+		textname = $this.closest("tr").find(".text").attr('name');
+		poor_grade = $this.closest("tr").find("select[name='poor_grade']").val();
+		change_fraction = $this.closest("tr").find(".change_fraction").val();
+		fail = '';
+		if(name == 'fail')
+		{
+			fail = 1;
 		}
+		data = data +"&"+"fail="+fail+"&"+textname+"="+text+"&change_fraction="+change_fraction+'&poor_grade='+poor_grade;
+		//console.log(data);return false;
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:url,
+			data:data,// 你的formid
+			async: false,
+			error: function(request) {
+				layer.msg("连接失败",{icon: 5});
+				return false;
+			},
+			success: function(data) {
+				$this.closest("form").find("button[name='pass']").attr('disabled',true);
+				$this.closest("form").find("button[name='fail']").attr('disabled',true);
+				if (data.code == 1 || data.code == 200) {
+					$this.closest("tr").find(".text").attr("disabled",true);
+					$this.closest("tr").find(".change_fraction").attr("disabled",true);
+					$this.closest("tr").find("select[name='poor_grade']").attr("disabled",true);
+					$this.closest("tr").find(".score").text(data.score);
+					$this.closest("tr").find(".status").text(data.status);
+					$this.closest("tr").find(".rank").text(data.poor_grade_name);
+					layer.msg(data.msg,{icon: 6});
+				}else{
+					layer.msg(data.msg,{icon: 5});
+				}
+				return false;
+			}
+		});
+		
+	}, function(){
+ 
 	});
 	return false;
 });
 $('body').on('click','.passingDiv button',function () {
 	$this = $(this);
-	var url = $(this).closest(".passingDiv").attr('action');
-	var status_id = $(this).closest(".passingDiv").find("input[name = 'status_id']").val();
-	name = $(this).attr('name');
+	var url = $this.closest(".passingDiv").attr('action');
+	var status_id = $this.closest(".passingDiv").find("input[name = 'status_id']").val();
+	name = $this.attr('name');
 	fail = '';
 	if(name == 'fail')
 	{
 		fail = 1;
 	}
-	text = $(this).closest("tr").find(".text").val();
-	textname = $(this).closest("tr").find(".text").attr('name');
+	text = $this.closest("tr").find(".text").val();
+	textname = $this.closest("tr").find(".text").attr('name');
 	//console.log(status_id);return false;
 	data = {'status_id':status_id,'fail':fail};
 	data[textname] = text;
@@ -1297,17 +1312,17 @@ $('body').on('click','.passingDiv button',function () {
 });
 $('body').on('click','.passingDiv2 button',function () {
 	$this = $(this);
-	var url = $(this).closest(".passingDiv2").attr('action');
-	var status_id = $(this).closest(".passingDiv2").find("input[name = 'status_id']").val();
-	name = $(this).attr('name');
+	var url = $this.closest(".passingDiv2").attr('action');
+	var status_id = $this.closest(".passingDiv2").find("input[name = 'status_id']").val();
+	name = $this.attr('name');
 	fail = '';
 	if(name == 'fail')
 	{
 		fail = 1;
 	}
 	//console.log(status_id);return false;
-	text = $(this).closest("tr").find(".text").val();
-	textname = $(this).closest("tr").find(".text").attr('name');
+	text = $this.closest("tr").find(".text").val();
+	textname = $this.closest("tr").find(".text").attr('name');
 	data = {'status_id':status_id,'fail':fail};
 	data[textname] = text;
 	$.ajax({
