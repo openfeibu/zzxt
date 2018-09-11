@@ -1842,9 +1842,8 @@ function getYearArr()
 function getGrade($current_grade)
 {
 	$year = date('Y');
-	$month = date('m');
 	$grade = $year - $current_grade;
-	if($month > 9){
+	if($month >= 8){
 		$grade += 1;
 	}
 	return $grade;
