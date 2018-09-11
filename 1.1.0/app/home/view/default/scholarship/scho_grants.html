@@ -13,6 +13,9 @@
             </li>
         </ul>
     </div>
+	{if !($u_subsidy['begin_time'] <= strtotime(date('Y-m-d')) && $u_subsidy['end_time'] >= strtotime(date('Y-m-d')))}
+	<div><p style=" font-size: 18px;color: red; text-align: center; margin-top: 10px;">开放时间段：{$u_subsidy.begin_time|date='Y-m-d',###} - {$u_subsidy.end_time|date='Y-m-d',###}</p></div>
+	{else}
     <!--startprint2-->
     <form action="" method="post" enctype="multipart/form-data" id="schoForm" class="form_table">
         {if $is_eval_app_pass}
@@ -196,6 +199,8 @@
         </div>
         {/if}
     </form>
+
+	{/if}
 </div>
 <script>
 $("#schosubmit").click(function(){

@@ -196,6 +196,7 @@ class Student extends Base
         }
         $data['reason'] = isset($data['reason']) ? $data['reason'] : '';
         $this->assign('list', $data);
+		$this->assign('u_subsidy',$this->MultipleScholarship->u_subsidy);
         return $this->view->fetch('scholarship/scho_grants');
     }
 
@@ -280,6 +281,7 @@ class Student extends Base
             $data['members'] = json_decode($data['members'], true);
         }
         $this->assign('list', $data);
+		$this->assign('m_subsidy',$this->MultipleScholarship->m_subsidy);
         return $this->view->fetch('scholarship/scho_motiv');
     }
 
