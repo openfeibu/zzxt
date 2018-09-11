@@ -23,9 +23,10 @@ class Admin extends Base
 	{
 		$search_name=input('search_name');
 		$this->assign('search_name',$search_name);
-		$map=array();
+		$where='';
 		if($search_name){
-			$map['admin_username']= array('like',"%".$search_name."%");
+			//$map['admin_username']= array('like',"%".$search_name."%");
+			$where = " (admin_username like '%".$search_name."%' OR admin_realname like '%".$search_name."%' )";
 		}
         $classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
@@ -34,7 +35,7 @@ class Admin extends Base
 									->join('yf_auth_group_access ags','a.admin_id = ags.uid')
 									->join('yf_auth_group ag','ags.group_id = ag.id')
 									->where('ag.id in (20,21,22,23,24,25,26)')
-									->where($map)
+									->where($where)
 									->order("charindex(','+convert(varchar,group_id)+',',',23,22,20,21,25,26,24,')")
 									->order('admin_id asc')
 									->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
@@ -168,8 +169,10 @@ class Admin extends Base
 		$search_name=input('search_name');
 		$this->assign('search_name',$search_name);
 		$map=array();
+		$where = '';
 		if($search_name){
-			$map['a.admin_username']= array('like',"%".$search_name."%");
+			//$map['a.admin_username']= array('like',"%".$search_name."%");
+			$where = " (a.admin_username like '%".$search_name."%' OR a.admin_realname like '%".$search_name."%' )";
 		}
 		if(session('admin_auth.faculty_number')){
 			$map['a.faculty_number']= session('admin_auth.faculty_number');
@@ -186,6 +189,7 @@ class Admin extends Base
 									->join('yf_auth_group ag','ags.group_id = ag.id')
 									->where('ag.id in (21,25)')
 									->where($map)
+									->where($where)
 									->order('admin_id')
 									->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 		$admin_list_arr = $admin_list->all();
@@ -277,8 +281,10 @@ class Admin extends Base
 		$search_name=input('search_name');
 		$this->assign('search_name',$search_name);
 		$map=array();
+		$where = '';
 		if($search_name){
-			$map['a.admin_username']= array('like',"%".$search_name."%");
+			//$map['a.admin_username']= array('like',"%".$search_name."%");
+			$where = " (a.admin_username like '%".$search_name."%' OR a.admin_realname like '%".$search_name."%' )";
 		}
         $classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
@@ -287,7 +293,7 @@ class Admin extends Base
 									->join('yf_auth_group ag','ags.group_id = ag.id')
 									->where('ag.id in (20)')
 									->where('a.faculty_number',session('admin_auth.faculty_number'))
-									->where($map)
+									->where($where)
 									->order('admin_id')
 									->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 		$admin_list_arr = $admin_list->all();

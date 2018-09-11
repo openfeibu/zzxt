@@ -54,7 +54,7 @@ class ScholarshipsGroup extends Base
     {
         $where = " u.class_number =  ".$this->class_number;
         $status = input('status','');
-        $studentname = input('studentname','');
+        $studentname = input('studentname',''); $this->assign('studentname',$studentname );
 		$count_where = ' u.class_number = '.$this->class_number;
         if($status)
         {
@@ -62,7 +62,7 @@ class ScholarshipsGroup extends Base
         }
         if($studentname)
         {
-            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%' )" ;
         }
         if($id == 1)
         {

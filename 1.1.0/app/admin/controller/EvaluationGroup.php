@@ -32,7 +32,7 @@ class EvaluationGroup extends Base
      * 获取申请学生列表(评估系统)
      */
     public function showEvaluationList() {
-        $studentname = input('studentname','');
+        $studentname = input('studentname',''); $this->assign('studentname',$studentname );
         $status = input('status','');
 
         $where = ' 1 = 1 ';

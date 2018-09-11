@@ -58,7 +58,7 @@ class Counselor extends Base
     {
         $faculty_number = input('faculty_number',0);
         $class_number = input('class_number',0);
-        $studentname = input('studentname','');
+        $studentname = input('studentname',''); $this->assign('studentname',$studentname );
         $status = input('status','');
         $where = ' 1 = 1 ';
 		$count_where = " u.class_number in (".implode(',',$this->class_number).") ";
@@ -74,7 +74,7 @@ class Counselor extends Base
         }
         if($studentname)
         {
-            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%' )" ;
         }
         $order = "charindex(','+convert(varchar,check_status)+',',',1,2,3,4,5,6,7,8,9,')";
 		
@@ -165,7 +165,7 @@ class Counselor extends Base
      */
     public function showEvaluationList() {
         $class_number = input('class_number',0);
-        $studentname = input('studentname','');
+        $studentname = input('studentname',''); $this->assign('studentname',$studentname );
         $status = input('status','');
         $where = ' 1 = 1 ';
 		$count_where = " u.class_number in (".implode(',',$this->class_number).") ";
