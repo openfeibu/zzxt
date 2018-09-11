@@ -94,11 +94,12 @@ class Evaluation extends Model
     {
         $poor_grade_name = '不困难';
 		$poor_grade = 4;
+		
         $grade_config = Db::name('evaluation_grade')
-                   ->where("max <= '$value'")
                    ->order("max desc")
                    ->find();
-        if($grade_config){
+				   
+        if($grade_config['max'] <= $value){
 			$poor_grade_name = $grade_config['name'];
 			$poor_grade = $grade_config['id'];
         }else{
