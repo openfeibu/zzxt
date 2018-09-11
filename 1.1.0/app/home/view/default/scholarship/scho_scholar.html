@@ -12,6 +12,11 @@
             </li>
         </ul>
     </div>
+	{if !($n_subsidy['begin_time'] <= strtotime(date('Y-m-d')) && $n_subsidy['end_time'] >= strtotime(date('Y-m-d')))}
+	<div><p style=" font-size: 18px;color: red; text-align: center; margin-top: 10px;">开放时间段：{$n_subsidy.begin_time|date='Y-m-d',###} - {$n_subsidy.end_time|date='Y-m-d',###}</p></div>
+	{else}
+	
+	
     <!--startprint4-->
     <form action="" method="post" enctype="multipart/form-data" id="schoForm">
     <div class="personal_table">
@@ -193,6 +198,7 @@
 	{/if}
     <button class="print printHide" onclick="preview(4)">打印</button>
     </form>
+	{/if}
 </div>
 
 {include file="public/footer"}

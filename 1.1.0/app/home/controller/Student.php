@@ -355,6 +355,7 @@ class Student extends Base
         }
 
 		$this->assign('list', $data);
+		$this->assign('n_subsidy',$this->NationalScholarship->subsidy);
         return $this->view->fetch('scholarship/scho_scholar');
     }
 
