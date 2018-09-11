@@ -388,7 +388,7 @@ class Student extends Base
 		}
         else{
 			if (empty($eval_app['evaluation_status'])) {
-				if($eval_app['evaluation_status'] != 0)
+				if($eval_app['evaluation_status'] !== 0 && !$e_status)
 				{
 					$e_status = '未申请';
 				}
