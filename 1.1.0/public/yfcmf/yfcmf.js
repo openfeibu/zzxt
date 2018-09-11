@@ -1182,11 +1182,10 @@ $('body').on('click',".passingForm button[type='submit']",function () {
 	layer.confirm('确定提交操作吗？', {
 		btn: ['确定','取消'] 
 	},function(){
-	
-		$this = $(this);
-		var url = $(this).closest("form").attr('action');
-		data = $(this).closest("form").serialize();
-		name = $(this).attr('name');
+		$this = $this;
+		var url = $this.closest("form").attr('action');
+		data = $this.closest("form").serialize();
+		name = $this.attr('name');
 		fail = '';
 		if(name == 'fail')
 		{
@@ -1214,9 +1213,10 @@ $('body').on('click',".passingForm button[type='submit']",function () {
 				}
 				return false;
 			}
-	});
-	
+		});
+		
 	},function(){
+		
 	});
 	return false;
 });
@@ -1456,31 +1456,37 @@ $('body').on('change',"select[name='poor_grade']",function () {
 	}
 });
 $("body").on("click",".eval_callback",function () {
-	load = layer.load();
 	$this = $(this);
-	$.ajax({
-		cache: true,
-		type: "POST",
-		url:'/admin/evaluationhandle/callback',
-		data:{'evaluation_id':$(this).attr('value')},// 你的formid
-		async: false,
-		error: function(request) {
-			layer.close(load);
-			layer.msg("连接失败",{icon: 5});
-			return false;
-		},
-		success: function(data) {
-			layer.close(load);
-			//$this.closest("form").find("button[name='pass']").attr('disabled',true);
-			//$this.closest("form").find("button[name='fail']").attr('disabled',true);
-			$this.closest("form").find(".eval_callback").attr('disabled',true);
-			if (data.code == 1 || data.code == 200) {
-                layer.msg(data.msg,{icon: 6});
-            }else{
-                layer.msg(data.msg,{icon: 5});
-            }
-			return false;
-		}
-	});
-	return false;	
+	layer.confirm('确定打回重填吗？', {
+		btn: ['确定','取消'] 
+	},function(){
+		load = layer.load();
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:'/admin/evaluationhandle/callback',
+			data:{'evaluation_id':$this.attr('value')},// 你的formid
+			async: false,
+			error: function(request) {
+				layer.close(load);
+				layer.msg("连接失败",{icon: 5});
+				return false;
+			},
+			success: function(data) {
+				layer.close(load);
+				//$this.closest("form").find("button[name='pass']").attr('disabled',true);
+				//$this.closest("form").find("button[name='fail']").attr('disabled',true);
+				$this.closest("form").find(".eval_callback").attr('disabled',true);
+				if (data.code == 1 || data.code == 200) {
+					layer.msg(data.msg,{icon: 6});
+				}else{
+					layer.msg(data.msg,{icon: 5});
+				}
+				return false;
+			}
+		});
+		return false;	
+	},function(){
+		
+	})
 })
