@@ -20,7 +20,11 @@ class Schedule extends Base
 		$years = getYearArr();
 		$local_students = Db::name("member_list")->alias('m')
 			->join('yf_user u', 'u.id_number = m.id_number')
-			->where('u.current_grade','in',$years)
+			->where(function($query) use ($years){
+				$query->where('u.current_grade','in',$years)
+					->whereOr('u.current_grade','')
+					->whereNull('u.current_grade');
+			})
 			->field('u.current_grade,m.id_number,u.studentid,m.member_list_id,u.id')
 			->select();
 		foreach($local_students as $key=> $local_student)
