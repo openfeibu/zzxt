@@ -320,7 +320,8 @@ var uploader = WebUploader.create({
         title: 'Images',
         extensions: 'gif,jpg,jpeg,bmp,png',
         mimeTypes: 'image/*'
-    }
+    },
+	duplicate :true//让图片可重复上传
 });
 uploader.on( 'uploadProgress', function( file, percentage ) {
     load = layer.load(2);
@@ -399,6 +400,7 @@ function update_images_url(closest_object)
 	urls = urls.substring(1);
 	closest_object.closest('tr').find('.images_url').val(urls);
 }
+
 </script>
 
 {include file="public/footer"}

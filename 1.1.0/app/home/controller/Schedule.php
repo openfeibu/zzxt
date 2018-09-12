@@ -26,17 +26,28 @@ class Schedule extends Base
 	
 		foreach($local_students as $key=> $local_student)
 		{
-			$xh = $local_student['studentid'];
-			$xh_unfulll = substr($xh,-9);
-			$where = " WHERE XH = '".$xh."' OR SFZH = '".$local_student['id_number']."' OR XH = '".$xh_unfulll."' ";
+			$where = " WHERE SFZH = '".$local_student['id_number']."'";
+			$where_jwxt = " WHERE 身份证号 = '".$local_student['id_number']."' ";
+			if($local_student['studentid'])
+			{
+				$xh = $local_student['studentid'];
+				$xh_unfulll = substr($xh,-9);
+				$where .= " OR XH = '".$xh."' OR XH = '".$xh_unfulll."' ";
+				$where_jwxt .= " OR 学号 = '".$xh."' OR 学号 = '".$xh_unfulll."' ";
+			}
+			
 			$new_student = $data_oracle_class->getStudent($where);
 			if($new_student)
 			{
-				$data = ['profession' => $new_student['profession'],'department_name' => $new_student['department_name'],'class_name' => $new_student['class_name'],'class_number' => $new_student['class_number']];
+				$data = [
+					'profession' => $new_student['profession'],
+					'department_name' => $new_student['department_name'],
+					'class_name' => $new_student['class_name'],
+					'class_number' => $new_student['class_number']
+				];
 				
 			}
 			
-			$where_jwxt = " WHERE 身份证号 = '".$local_student['id_number']."' ";
 			$new_student_jwxt = $data_class->getStudent($where_jwxt);
 			
 			if($new_student_jwxt)
