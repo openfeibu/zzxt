@@ -141,7 +141,7 @@ class Login extends Base
 					
 					$xh = $school_user['studentid'];
 					$xh_unfulll = substr($xh,-9);
-					$where = " WHERE XH = '".$xh."' OR SFZH = '".$member_list_username."' OR XH = '".$xh_unfulll."' ";
+					$where = " WHERE SFZH = '".$member_list_username."' ";
 					$data_oracle = new DataOracle();
 					$new_student = $data_oracle->getStudent($where);
 					$school_user['profession'] = $new_student['profession'] ;
