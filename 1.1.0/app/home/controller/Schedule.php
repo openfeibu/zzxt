@@ -20,13 +20,10 @@ class Schedule extends Base
 		$years = getYearArr();
 		$local_students = Db::name("member_list")->alias('m')
 			->join('yf_user u', 'u.id_number = m.id_number')
-			->where(function($query) use ($years){
-				$query->where('u.current_grade','in',$years)
-					->whereOr('u.current_grade','')
-					->whereNull('u.current_grade');
-			})
+			->where(" u.current_grade = '"."' OR u.current_grade in (".implode(',',$years).") ")
 			->field('u.current_grade,m.id_number,u.studentid,m.member_list_id,u.id')
 			->select();
+	
 		foreach($local_students as $key=> $local_student)
 		{
 			$xh = $local_student['studentid'];
@@ -39,13 +36,14 @@ class Schedule extends Base
 				
 			}
 			
-			$where_jwxt = " WHERE 学号 = '".$xh."' OR 身份证号 = '".$local_student['id_number']."' ";
+			$where_jwxt = " WHERE 身份证号 = '".$local_student['id_number']."' ";
 			$new_student_jwxt = $data_class->getStudent($where_jwxt);
 			
 			if($new_student_jwxt)
 			{
 				$data['current_grade'] = $new_student_jwxt['current_grade'];
 			}
+
 			if(isset($data) && $data)
 			{
 				Db::name('user')->where('id',$local_student['id'])->update($data);
