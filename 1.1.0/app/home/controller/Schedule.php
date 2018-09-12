@@ -39,7 +39,7 @@ class Schedule extends Base
 				
 			}
 			
-			$where_jwxt = " WHERE 学号 = '".$xh."' OR 身份证号 = '".$local_student['id_number']."' OR 学号 = '".$xh_unfulll."'  ";
+			$where_jwxt = " WHERE 学号 = '".$xh."' OR 身份证号 = '".$local_student['id_number']."' ";
 			$new_student_jwxt = $data_class->getStudent($where_jwxt);
 			
 			if($new_student_jwxt)
