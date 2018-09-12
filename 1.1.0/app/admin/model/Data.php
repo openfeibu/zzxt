@@ -26,9 +26,9 @@ class Data extends Model
 	{
 		$this->conn= odbc_connect("DRIVER={SQL Server};SERVER=".config('database.db2')['hostname'].";DATABASE=".config('database.db2')['database'],config('database.db2')['username'],config('database.db2')['password']);
 	}
-	protected function getStudent($where,$fields='学号 as studentid,班级代码 as class_number,班级名称 as class_name,当前所在级 as current_grade,系所代码 as faculty_number,系所名称 as department_name,专业名称 as  profession_name,专业名称 as  profession,当前所在级 as current_grade')
+	protected function getStudent($where,$fields='学号 as studentid,班级代码 as class_number,班级名称 as class_name,当前所在级 as current_grade,系所代码 as faculty_number,系所名称 as department_name,专业名称 as  profession_name,专业名称 as  profession,身份证号 as id_number')
 	{
-		$sql="SELECT top 1 ".$fields." FROM V学生信息表 ".$where."";
+		$sql="SELECT top 1 ".$fields." FROM V学生信息表 ".$where." AND 当前所在级  IS NOT NULL ";
 		$rs = odbc_exec($this->conn,$sql);
 		return $this->getSafeArr(odbc_fetch_array($rs));
 	}
