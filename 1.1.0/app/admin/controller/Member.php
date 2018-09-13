@@ -119,8 +119,6 @@ class Member extends Base
 			$this->error('提交方式不正确',url('admin/Member/member_list'));
 		}else{
 			$sl_data['member_list_id']=input('member_list_id');
-			$sl_data['member_list_groupid']=input('member_list_groupid');
-			$sl_data['member_list_username']=input('member_list_username');
 			$pwd=input('member_list_pwd');
 			if (!empty($pwd)){
 				$member_list_salt=random(10);
@@ -128,28 +126,16 @@ class Member extends Base
 				$sl_data['member_list_pwd']=encrypt_password($pwd,$member_list_salt);
 			}
 			$sl_data['member_list_nickname']=input('member_list_nickname');
-			$sl_data['member_list_province']=input('member_list_province');
-			$sl_data['member_list_city']=input('member_list_city');
-			$sl_data['member_list_town']=input('member_list_town');
-			$sl_data['member_list_sex']=input('member_list_sex');
-			$sl_data['member_list_tel']=input('member_list_tel');
-			$sl_data['member_list_email']=input('member_list_email');
-			$sl_data['user_status']=input('user_status',0);
-			$sl_data['member_list_open']=input('member_list_open',0);
-			$sl_data['user_url']=input('user_url');
-			$sl_data['signature']=input('signature');
-			$sl_data['score']=input('score',0,'intval');
-			$sl_data['coin']=input('coin',0,'intval');
 			$rst=MemberList::update($sl_data);
 			if($rst!==false){
-				$this->success('会员修改成功',url('admin/Member/member_list'));
+				$this->success('学生修改成功',url('admin/Member/member_list'));
 			}else{
-				$this->error('会员修改失败',url('admin/Member/member_list'));
+				$this->error('学生修改失败',url('admin/Member/member_list'));
 			}
 		}
 	}
 	/*
-     * 会员禁止/取消禁止
+     * 学生禁止/取消禁止
      */
 	public function member_state(){
 		$id=input('x');
@@ -166,7 +152,7 @@ class Member extends Base
 		}
 	}
 	/*
-     * 会员激活/取消激活
+     * 学生激活/取消激活
      */
 	public function member_active()
 	{
@@ -185,7 +171,7 @@ class Member extends Base
 	}
 
 	/*
-     * 会员删除
+     * 学生删除
      */
 	public function member_del()
 	{
@@ -194,18 +180,18 @@ class Member extends Base
 		$member_model=new MemberList;
 		$rst=Db::name('admin')->where('member_id',$member_list_id)->find();
 		if($rst){
-			$this->error('此会员已关联管理员,请从管理员处删除',url('admin/Member/member_list', array('p' => $p)));
+			$this->error('此学生已关联管理员,请从管理员处删除',url('admin/Member/member_list', array('p' => $p)));
 		}else{
 			$rst=$member_model->where(array('member_list_id'=>$member_list_id))->delete();
 			if($rst!==false){
-				$this->success('会员删除成功',url('admin/Member/member_list', array('p' => $p)));
+				$this->success('学生删除成功',url('admin/Member/member_list', array('p' => $p)));
 			}else{
-				$this->error('会员删除失败',url('admin/Member/member_list', array('p' => $p)));
+				$this->error('学生删除失败',url('admin/Member/member_list', array('p' => $p)));
 			}
 		}
 	}
 	/*
-     *会员组显示列表
+     *学生组显示列表
      */
 	public function member_group_list()
 	{
@@ -216,7 +202,7 @@ class Member extends Base
 	}
 
 	/*
-     * 会员组添加方法
+     * 学生组添加方法
      */
 	public function member_group_runadd()
 	{
@@ -225,32 +211,32 @@ class Member extends Base
 		}else{
 			$rst=Db::name('member_group')->insert(input('post.'));
 			if($rst!==false){
-				$this->success('会员组添加成功',url('admin/Member/member_group_list'));
+				$this->success('学生组添加成功',url('admin/Member/member_group_list'));
 			}else{
-				$this->error('会员组添加失败',url('admin/Member/member_group_list'));
+				$this->error('学生组添加失败',url('admin/Member/member_group_list'));
 			}
 		}
 	}
 
 	/*
-     * 会员组删除
+     * 学生组删除
      */
 	public function member_group_del()
 	{
 		$member_group_id=input('member_group_id');
 		if (empty($member_group_id)){
-			$this->error('会员组ID不存在',url('admin/Member/member_group_list'));
+			$this->error('学生组ID不存在',url('admin/Member/member_group_list'));
 		}
         $rst=Db::name('member_group')->where(array('member_group_id'=>input('member_group_id')))->delete();
         if($rst!==false){
-            $this->success('会员组删除成功',url('admin/Member/member_group_list'));
+            $this->success('学生组删除成功',url('admin/Member/member_group_list'));
         }else{
-            $this->error('会员组删除失败',url('admin/Member/member_group_list'));
+            $this->error('学生组删除失败',url('admin/Member/member_group_list'));
         }
 	}
 
 	/*
-     * 改变会员组状态
+     * 改变学生组状态
      */
 	public function member_group_state()
 	{
@@ -287,7 +273,7 @@ class Member extends Base
 	}
 
 	/*
-     * 修改会员组返回值
+     * 修改学生组返回值
      */
 	public function member_group_edit()
 	{
@@ -321,9 +307,9 @@ class Member extends Base
 			);
 			$rst=Db::name('member_group')->update($sl_data);
 			if($rst!==false){
-				$this->success('会员组修改成功',url('admin/Member/member_group_list'));
+				$this->success('学生组修改成功',url('admin/Member/member_group_list'));
 			}else{
-				$this->error('会员组修改失败',url('admin/Member/member_group_list'));
+				$this->error('学生组修改失败',url('admin/Member/member_group_list'));
 			}
 		}
 	}
