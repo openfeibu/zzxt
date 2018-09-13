@@ -363,6 +363,7 @@ function checkadminForm() {
 }
 //member表单检查
 function checkmemberForm() {
+	/*
     if (!$("#member_list_tel").val().match(/^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/)) {
         layer.alert('电话号码格式不正确', {icon: 5}, function (index) {
             layer.close(index);
@@ -370,6 +371,7 @@ function checkmemberForm() {
         });
         return false;
     }
+	*/
 }
 //多选表单检查
 function checkselectForm() {
