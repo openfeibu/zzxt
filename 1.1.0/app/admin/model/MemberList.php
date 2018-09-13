@@ -95,4 +95,20 @@ class MemberList extends Model
 		}
 		return false;
 	}
+	public static function handleSourceUser($user)
+	{
+		$user_fields = config('user_fields'); 
+		$school_user = array();
+		foreach($user_fields as $key => $val)
+		{
+			$school_user[$key] = isset($user[$val]) ? rtrim($user[$val]) : '' ;
+		}
+		if(isset($school_user['birthday']) && !empty($school_user['birthday'])){
+			$school_user['birthday'] = date('Ymd',strtotime($school_user['birthday']));
+		}
+		if(isset($school_user['admission_date']) && !empty($school_user['admission_date'])){
+			$school_user['admission_date'] = date('Ymd',strtotime($school_user['admission_date']));
+		}
+		return $school_user;
+	}
 }

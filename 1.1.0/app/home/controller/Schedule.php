@@ -26,7 +26,7 @@ class Schedule extends Base
 	
 		foreach($local_students as $key=> $local_student)
 		{
-			$where = " WHERE SFZH = '".$local_student['id_number']."'";
+			$where = " WHERE LOWER(SFZH) = LOWER('".$local_student['id_number']."')";
 			$where_jwxt = " WHERE 身份证号 = '".$local_student['id_number']."' ";
 			if($local_student['studentid'])
 			{

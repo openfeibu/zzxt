@@ -13,6 +13,7 @@ use think\captcha\Captcha;
 use think\Validate;
 use app\admin\model\Data;
 use app\admin\model\DataOracle;
+use app\admin\model\MemberList as MemberListModel;
 
 class Login extends Base
 {
@@ -79,26 +80,16 @@ class Login extends Base
         }
 		$member=Db::name("member_list")->where($where)->find();
 		
+		$dataclass = new Data();
+		$data_oracle = new DataOracle();
 		if(!$member)
 		{
-			$dataclass = new Data();
 			$result = $dataclass->getUserByIdCard($member_list_username);
 			if(empty($result))
 			{
 				$this->error('账号不存在');//账号密码不正确
 			}else{
-				$user_fields = config('user_fields'); 
-				$school_user = array();
-				foreach($user_fields as $key => $val)
-				{
-					$school_user[$key] = isset($result[$val]) ? rtrim($result[$val]) : '' ;
-				}
-				if(isset($school_user['birthday']) && !empty($school_user['birthday'])){
-					$school_user['birthday'] = date('Ymd',strtotime($school_user['birthday']));
-				}
-				if(isset($school_user['admission_date']) && !empty($school_user['admission_date'])){
-					$school_user['admission_date'] = date('Ymd',strtotime($school_user['admission_date']));
-				}
+				$school_user = MemberListModel::handleSourceUser($result);
 				
 				$password = substr($member_list_username,-6);
 				$member_list_salt=random(10);
@@ -117,15 +108,15 @@ class Login extends Base
 				
 				$xh = $school_user['studentid'];
 				$xh_unfulll = substr($xh,-9);
-				$where = " WHERE XH = '".$xh."' OR SFZH = '".$member_list_username."' OR XH = '".$xh_unfulll."' ";
+				$where = " WHERE XH = '".$xh."' OR LOWER(SFZH) = LOWER('".$member_list_username."') OR XH = '".$xh_unfulll."' ";
 				$data_oracle = new DataOracle();
 				$new_student = $data_oracle->getStudent($where);
 				if(!$new_student)	
 				{
 					$this->error('账号不存在');
 				}
-				$users_model=Db::name("member_list");
-				$rst=$users_model->insertGetId($sl_data);
+				$member_model=Db::name("member_list");
+				$rst=$member_model->insertGetId($sl_data);
 				if($rst!==false){
 					//更新字段
 					$data = array(
@@ -134,16 +125,11 @@ class Login extends Base
 					);
 					$sl_data['last_login_time']=$data['last_login_time'];
 					$sl_data['last_login_ip']=$data['last_login_ip'];
-					$users_model->where(array('member_list_id'=>$rst))->update($data);
+					$member_model->where(array('member_list_id'=>$rst))->update($data);
 					
 					session('hid',$rst);
 					session('user',$sl_data);
-					
-					$xh = $school_user['studentid'];
-					$xh_unfulll = substr($xh,-9);
-					$where = " WHERE SFZH = '".$member_list_username."' ";
-					$data_oracle = new DataOracle();
-					$new_student = $data_oracle->getStudent($where);
+
 					$school_user['profession'] = $new_student['profession'] ;
 					$school_user['department_name'] = $new_student['department_name'] ;
 					$school_user['class_name'] = $new_student['class_name'] ;
@@ -167,6 +153,25 @@ class Login extends Base
 			Db::name("member_list")->where(array('member_list_id'=>$member["member_list_id"]))->update($data);
 			session('hid',$member['member_list_id']);
 			session('user',$member);
+			$user = DB::name('user')->where('id_number',$member['id_number'])->find();
+			$result = $dataclass->getUserByIdCard($member_list_username);
+			if(!$user)
+			{
+				$school_user = MemberListModel::handleSourceUser($result);
+				$xh = $school_user['studentid'];
+				$xh_unfulll = substr($xh,-9);
+				$where = " WHERE XH = '".$xh."' OR LOWER(SFZH) = LOWER('".$member_list_username."') OR XH = '".$xh_unfulll."' ";
+				$data_oracle = new DataOracle();
+				$new_student = $data_oracle->getStudent($where);
+				if($new_student)
+				{
+					$school_user['profession'] = $new_student['profession'] ;
+					$school_user['department_name'] = $new_student['department_name'] ;
+					$school_user['class_name'] = $new_student['class_name'] ;
+					$school_user['class_number'] = $new_student['class_number'] ;
+				}
+				$rst1 = Db::name('user')->insert($school_user);
+			}
 			if($remember && $member['user_status']){
 				//更新cookie
 				cookie('yf_logged_user', jiami("{$member['member_list_id']}.{$data['last_login_time']}"));
