@@ -142,7 +142,7 @@ class Login extends Base
 				}
 			}
 		}
-		if (!$member||encrypt_password($member_list_pwd,$member['member_list_salt'])!==$member['member_list_pwd']){
+		if (!$member||(encrypt_password(strtolower($member_list_pwd),$member['member_list_salt'])!==$member['member_list_pwd'] && encrypt_password(strtoupper($member_list_pwd),$member['member_list_salt'])!==$member['member_list_pwd'])){
             $this->error(lang('username or pwd incorrect'));//账号密码不正确
 		}else{
 			//更新字段
