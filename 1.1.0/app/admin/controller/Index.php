@@ -144,4 +144,29 @@ class Index extends Base
 		return "success";
 	}
 	*/
+	public function callback()
+	{
+		$class_number = "20170609,20170610,2016281802,2016281802";
+		$evals = Db::name('evaluation_application')
+				->alias('app')
+                ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
+				->join('yf_user u', 'u.id_number = m.id_number', 'left')
+                ->field('u.*,app.*')
+				->where("class_number in (".$class_number.")")
+				->select();
+		foreach($evals as $key => $val)
+		{
+			DB::name('evaluation_application')->where('evaluation_id',$val['evaluation_id'])
+				->update([
+					'evaluation_status' => 1,
+					'group_opinion' => NULL,
+					'group_poor_grade' => NULL,
+				]);
+			DB::name('evaluation_status')->where('evaluation_id',$val['evaluation_id'])
+				->update([
+					'status' => 1
+				]);
+		}			
+		return "success";
+	}
 }
