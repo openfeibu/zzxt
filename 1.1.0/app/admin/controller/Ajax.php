@@ -44,7 +44,7 @@ class Ajax
 		$fields = " top 10 身份证号 as id_number , 学号 as studentid, 姓名 as name,班级代码 as class_number";
 		*/
 		//$where = " where (XH = '".$value."' OR XM LIKE '".$value."%' OR SFZH LIKE '%".$value."%')  AND BH = '".$class_number."'";
-		$where = " where (XH = '".$value."' OR XM LIKE '".$value."%' OR SFZH LIKE '%".$value."%')  ";
+		$where = " where (XH LIKE '%".$value."%' OR XM LIKE '".$value."%' OR SFZH LIKE '%".$value."%')  ";
 		$fields = " SFZH as id_number , XH as studentid, XM as name,BH as class_number ";
 		if(session('admin_auth.class_number'))
 		{
