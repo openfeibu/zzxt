@@ -112,4 +112,16 @@ class Index extends Base
 		}
 		return "success";
 	}
+	public function updateAdminClass2()
+	{
+		$admins = DB::name('admin')->select();
+		foreach($admins as $key => $val)
+		{
+			$class_number_data = DB::name('admin_class')->where('admin_id',$val['admin_id'])->column('class_number');
+			$class_number = array_keys($class_number_data);
+			DB::name('admin')->where('admin_id',$val['admin_id'])->update(['class_number' => $class_number]);
+			
+		}
+		return "success";
+	}
 }
