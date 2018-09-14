@@ -257,7 +257,6 @@ class Admin extends Base
 		$admin = DB::name('admin')->where('admin_username',input('admin_username'))->find();
 		if($admin)
 		{
-			
 			$this->error('已存在该账号',url('admin/Admin/counselor_admin_add'));
 		}
         if ($group_id == 20) {
