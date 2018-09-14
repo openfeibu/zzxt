@@ -254,6 +254,8 @@ class Admin extends Base
             ->where('uid',$aid)
             ->find();
         $group_id = $user['group_id'];
+		$admin = DB::name('admin')->where('admin_username',input('admin_username'))->find();
+		$this->error('已存在该账号',url('admin/Admin/counselor_admin_add'));
         if ($group_id == 20) {
             if (input('group_id','') == 21 or input('group_id','') == 25) {
 				$password = substr(input('admin_username'),-6);

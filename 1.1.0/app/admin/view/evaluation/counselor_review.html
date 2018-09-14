@@ -19,7 +19,7 @@
                 </div>
                 <form class="tab_inquire" method="post" action="{:url('admin/Counselor/showEvaluationList')}">
                     <p>筛选：</p>
-                    <select class="form-control tab_select counselor_sub ajax_change" name="class_number">-->
+                    <select class="form-control tab_select counselor_sub ajax_change" name="class_number">
                         <option value="0">所有专业</option>
                         {foreach $classes as $row}
                         <option value="{$row.class_number}">{$row.current_grade}{$row.class_name}</option>
