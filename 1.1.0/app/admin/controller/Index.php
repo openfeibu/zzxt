@@ -111,4 +111,37 @@ class Index extends Base
 			$this->success('切换成功',session('login_http_referer'));
 		}
 	}
+	/*
+	public function updateAdminClass()
+	{
+		$admins = DB::name('admin')->where("class_number is NOT NULL AND class_number <> ''")->select();
+		foreach($admins as $key => $admin)
+		{
+			$class_number = $admin['class_number'];
+			$class_number_arr = explode(',',$class_number);
+			$data = [];
+			foreach($class_number_arr as $k => $v)
+			{
+				$data[$k] = [
+					'admin_id' => $admin['admin_id'],
+					'class_number' => $v
+				];
+			}
+			DB::name('admin_class')->insertAll($data);	
+		}
+		return "success";
+	}
+	public function updateAdminClass2()
+	{
+		$admins = DB::name('admin')->select();
+		foreach($admins as $key => $val)
+		{
+			$class_number_data = DB::name('admin_class')->where('admin_id',$val['admin_id'])->column('class_number');
+			$class_number = array_keys($class_number_data);
+			DB::name('admin')->where('admin_id',$val['admin_id'])->update(['class_number' => $class_number]);
+			
+		}
+		return "success";
+	}
+	*/
 }
