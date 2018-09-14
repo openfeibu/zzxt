@@ -272,9 +272,16 @@ $(function () {
 });
 /* admin增加编辑表单，带检查 */
 $(function () {
-    $('.adminform').ajaxForm({
+    $('.adminaddform').ajaxForm({
         beforeSubmit: checkadminForm, // 此方法主要是提交前执行的方法，根据需要设置
         success: addCompleteConfirm, // 这是提交后的方法
+        dataType: 'json'
+    });
+});
+$(function () {
+    $('.adminform').ajaxForm({
+        beforeSubmit: checkadminForm, // 此方法主要是提交前执行的方法，根据需要设置
+        success: complete, // 这是提交后的方法
         dataType: 'json'
     });
 });
