@@ -146,7 +146,7 @@ class Index extends Base
 	*/
 	public function callback()
 	{
-		$class_number = "20170609,20170610,2016281802,2016281802";
+		$class_number = "20170609,20170610,2016281801,2016281802";
 		$evals = Db::name('evaluation_application')
 				->alias('app')
                 ->join('yf_member_list m', 'm.member_list_id = app.member_list_id')
