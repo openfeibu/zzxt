@@ -280,8 +280,8 @@ $(function () {
 });
 $(function () {
     $('.adminform').ajaxForm({
-        beforeSubmit: complete2, // 此方法主要是提交前执行的方法，根据需要设置
-        success: complete, // 这是提交后的方法
+        beforeSubmit: checkadminForm, // 此方法主要是提交前执行的方法，根据需要设置
+        success: complete2, // 这是提交后的方法
         dataType: 'json'
     });
 });
