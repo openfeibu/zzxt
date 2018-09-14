@@ -19,6 +19,12 @@
                 </div>
                 <form class="tab_inquire" method="post"  class="" action="{:url('admin/EvaluationGroup/showEvaluationList')}">
                     <p>筛选：</p>
+					<select class="form-control tab_select counselor_sub ajax_change" name="class_number">
+                        <option value="0">所有专业</option>
+                        {foreach $classes as $row}
+                        <option value="{$row.class_number}">{$row.current_grade}{$row.class_name}</option>
+                        {/foreach}
+                    </select>
                     <select class="form-control tab_select class_select ajax_change" name="status">
                         <option value="0">全部</option>
                         {foreach $Think.config.evaluation_status as $k => $v}

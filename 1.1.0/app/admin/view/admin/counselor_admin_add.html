@@ -34,13 +34,11 @@
 					<div class="space-4"></div>
 					
 					<div class="form-group">
-						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 班级：  </label>
+						<label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 管理班级：  </label>
 						<div class="col-sm-10">
-							<select name="class_number" id="class_number" >
-								{foreach $classes as $row}
-								<option value="{$row.class_number}" >{$row.current_grade}{$row.class_name}</option>
-								{/foreach}
-							</select>
+							{foreach $classes as $row}
+							<label>	<input type="checkbox" name="class_number[]" value="{$row.class_number}" id="class_number_{$row.class_number}" class="class_number"> {$row.current_grade}{$row.class_name} </label>
+							{/foreach}
 						</div>
 					</div>
 					<div class="space-4"></div>
@@ -56,7 +54,7 @@
 					
 					<div class="clearfix form-actions">
 						<div class="col-md-offset-3 col-md-9">
-							<button class="btn btn-info" type="submit">
+							<button class="btn btn-info" type="submit" disabled>
 								<i class="ace-icon fa fa-check bigger-110"></i>
 								保存
 							</button>
@@ -99,16 +97,20 @@
 					});
 				},
 				focus: function( event, ui ) {  
+					/*
 					$("#admin_username").val( ui.item.id_number );  
 					$("#admin_realname").val( ui.item.name );  
 					$('#class_number').val( ui.item.class_number);
-					$("button[type='submit']").attr('disabled',true);
+					$('#class_number_'+ui.item.class_number).attr('checked',true);
+					$("button[type='submit']").attr('disabled',false);
 					return false;  
+					*/
                 },  
 				select: function( event, ui ) {  
+					$(".class_number").prop('checked',false);
 					$("#admin_username").val( ui.item.id_number );  
 					$("#admin_realname").val( ui.item.name );  
-					$('#class_number').val( ui.item.class_number);
+					$('#class_number_'+ui.item.class_number).prop('checked',true);
 					$("button[type='submit']").attr('disabled',false);
 					return false;
 				}

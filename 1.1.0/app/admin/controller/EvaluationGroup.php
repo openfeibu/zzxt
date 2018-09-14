@@ -25,7 +25,9 @@ class EvaluationGroup extends Base
         $this->classCode = new ClassCodeModel();
 		$this->evaluation = new Evaluation();
         $this->time = date("Y",time());
-		
+		$this->common_where = " u.class_number in (".$this->class_number.") ";
+		$classes = $this->classCode->getCounselorClasses($this->class_number);
+		$this->assign('classes', $classes);
     }
 
     /**
@@ -34,23 +36,25 @@ class EvaluationGroup extends Base
     public function showEvaluationList() {
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
         $status = input('status','');
-
-        $where = ' 1 = 1 ';
-		$count_where = " u.class_number = '".$this->class_number."' ";
+		$class_number = input('class_number',0);
+        $where = $this->common_where;
+		$count_where = $this->common_where;
         if($studentname)
         {
-            $where = " (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%')" ;
+            $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%')" ;
         }
         if($status)
         {
             $where .= " AND status = '".$status."'";
         }
+		if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }
 
-        //查找呃
-        $where .= " AND u.class_number = '".$this->class_number."' ";
-
-        $order = "charindex(','+convert(varchar,status)+',',',1,2,3,4,5,6,7,8,9,')";
-        $where .= " AND ass.status in(1,2,3,4,5,6,7,8,9)";
+        $order = "charindex(','+convert(varchar,status)+',',',0,1,2,3,4,5,6,7,8,9,')";
+        $where .= " AND ass.status in(0,1,2,3,4,5,6,7,8,9)";
+		
         $data = $this->evaluation->getEvaluationList($where,$order);
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);

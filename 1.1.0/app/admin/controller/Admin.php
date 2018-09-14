@@ -179,24 +179,21 @@ class Admin extends Base
 		}
 		if(session('admin_auth.class_number'))
 		{
-			$map['a.class_number'] =['in',session('admin_auth.class_number')] ;
+			$map['a.class_number'] =['in',session('admin_auth.class_number')];
 		}
 
         $classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
-		$admin_list=Db::name('admin')->alias('a')
-									->join('yf_auth_group_access ags','a.admin_id = ags.uid')
-									->join('yf_auth_group ag','ags.group_id = ag.id')
-									->where('ag.id in (21,25)')
-									->where($map)
-									->where($where)
-									->order('admin_id')
-									->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
+		$admin_list = DB::name('admin')
+			->where("admin_id in (SELECT a.admin_id FROM yf_admin a join yf_admin_class ac on a.admin_id = ac.admin_id join yf_auth_group_access ags on a.admin_id = ags.uid join  yf_auth_group ag on ags.group_id = ag.id  where ag.id in (21,25,26) AND ac.class_number in (".session('admin_auth.class_number').") GROUP BY a.admin_id)")
+			->order('admin_id','desc')
+			->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 		$admin_list_arr = $admin_list->all();
 		foreach($admin_list_arr as $key => $admin)
 		{
-			$class = $classCode->getClass($admin['class_number']);
-			$admin_list_arr[$key]['class_name'] = $class ? $class['class_name'] : '';
+			$class = $classCode->getCounselorClasses($admin['class_number']);
+			$class_name = getValuesByArr($class,'class_name');
+			$admin_list_arr[$key]['class_name'] = $class_name;
 		}			
 		$page = $admin_list->render();
 		$this->assign('admin_list',$admin_list_arr);
@@ -211,9 +208,6 @@ class Admin extends Base
         $classCode = new ClassCodeModel();
 		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
 		$this->assign('admin_list',$admin_list);
-		// $admin_professiones = session('admin_professiones');
-		// $classes = $classCode->getCounselorClasses($admin_professiones);
-		// $class_number = array_column($classes, 'class_number');
 		$class_number = session('admin_auth.class_number');
 		$classes = $classCode->getCounselorClasses($class_number);
 		$this->assign('classes', $classes);
@@ -225,8 +219,23 @@ class Admin extends Base
 	{
 		$data=input('post.');
 		$data['faculty_number'] = session('admin_auth.faculty_number');
-
+		$class_number = input('class_number/a');
+		$class_numbers = $class_number ? implode(',',$class_number) : '';
+		$data['class_number'] = $class_numbers;
 		$rst=AdminModel::edit($data);
+		$class_number_data = [];
+		foreach($class_number as $k => $v)
+		{
+			$class_number_data[$k] = [
+				'admin_id' => $data['admin_id'],
+				'class_number' => $v
+			];			
+		}
+		if(count($class_number_data))
+		{
+			DB::name('admin_class')->where('admin_id',$data['admin_id'])->delete();
+			DB::name('admin_class')->insertAll($class_number_data);	
+		}
 		if($rst!==false){
 			$this->success('管理员修改成功',url('admin/Admin/counselor_admin_list'));
 		}else{
@@ -259,26 +268,56 @@ class Admin extends Base
 		{
 			$this->error('已存在该账号',url('admin/Admin/counselor_admin_add'));
 		}
+		$class_numbers = input('class_number/a');
+		$class_number = $class_numbers ? implode(',',$class_numbers) : '';
         if ($group_id == 20) {
             if (input('group_id','') == 21 or input('group_id','') == 25) {
 				$password = substr(input('admin_username'),-6);
-                $admin_id=AdminModel::add(input('admin_username'),'',$password,input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),input('class_number',''));
+                $admin_id=AdminModel::add(input('admin_username'),'',$password,input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),$class_number);
                 if($admin_id){
-                    $this->success('班级小组添加成功',url('admin/Admin/counselor_admin_list'));
+					$message = '班级小组添加成功';
+					$url = url('admin/Admin/counselor_admin_list');
+					$error = 0;
                 }else{
-                    $this->error('班级小组添加失败',url('admin/Admin/counselor_admin_list'));
+					$message = '班级小组添加成功';
+					$url = url('admin/Admin/counselor_admin_list');
+					$error = 1;
                 }
             } else {
-                $this->error('您没有权限');
+				$message = '您没有权限';
+				$url = url('admin/Admin/counselor_admin_list');
+				$error = 1;
+
             }
         } else {
-            $admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),input('class_number',0));
+            $admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),$class_number);
             if($admin_id){
-                $this->success('管理员添加成功',url('admin/Admin/counselor_admin_list'));
+				$message = '管理员添加成功';
+				$url = url('admin/Admin/counselor_admin_list');
+				$error = 0;
             }else{
-                $this->error('管理员添加失败',url('admin/Admin/counselor_admin_list'));
+				$message = '管理员添加失败';
+				$url = url('admin/Admin/counselor_admin_list');
+				$error = 1;
             }
         }
+		if($error)
+		{
+			$this->error($message,$url);
+		}
+		$class_number_data = [];
+		foreach($class_numbers as $k => $v)
+		{
+			$class_number_data[$k] = [
+				'admin_id' => $admin_id,
+				'class_number' => $v
+			];			
+		}
+		if(count($class_number_data))
+		{
+			DB::name('admin_class')->insertAll($class_number_data);	
+		}
+		$this->success($message,$url);
 	}
 	/*院系小组查看成员（辅导员）*/
 	public function faculty_admin_list()
@@ -328,6 +367,44 @@ class Admin extends Base
 		$this->assign('faculties', $faculties);
 		return $this->fetch();
 	}
+	
+	public function faculty_admin_runadd()
+	{
+        $aid = session('admin_auth.aid');
+		$class_numbers = input('class_number/a');
+		$class_number = $class_numbers ? implode(',',$class_numbers) : '';
+
+		$admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),$class_number );
+		if($admin_id){
+			// $year_profession_numbers = $_POST['profession_number'] ;
+			// foreach($year_profession_numbers as $key  => $val)
+			// {
+				// $year_profession_number = explode('_',$val);
+				// $pdata['admin_id'] = $admin_id;
+				// $pdata['current_grade'] = $year_profession_number[0];
+				// $pdata['profession_number'] = $year_profession_number[1];
+				// $pdatas[] = $pdata;
+			// }
+			// Db::name('admin_profession')->where('admin_id',$admin_id)->delete();
+			// Db::name('admin_profession')->insertAll($pdatas);
+			$class_number_data = [];
+			foreach($class_numbers as $k => $v)
+			{
+				$class_number_data[$k] = [
+					'admin_id' => $admin_id,
+					'class_number' => $v
+				];			
+			}
+			if(count($class_number_data))
+			{
+				DB::name('admin_class')->insertAll($class_number_data);	
+			}
+			$this->success('管理员添加成功',url('admin/Admin/faculty_admin_list'));
+		}else{
+			$this->error('管理员添加失败',url('admin/Admin/faculty_admin_list'));
+		}
+
+	}
 	public function faculty_admin_edit()
 	{
 		$auth_group=Db::name('auth_group')->where('id in (20)')->select();
@@ -372,12 +449,25 @@ class Admin extends Base
 			// $pdatas[] = $pdata;
 		// }
 		
-		$class_number = input('class_number/a');
-		$class_number = $class_number ? implode(',',$class_number) : '';
+		$class_numbers = input('class_number/a');
+		$class_number = $class_numbers ? implode(',',$class_numbers) : '';
 		$data['class_number'] = $class_number;
 		$data['admin_id'] = $aid;
 		$data['faculty_number'] = session('admin_auth.faculty_number');
 		$rst=AdminModel::edit($data);
+		$class_number_data = [];
+		foreach($class_numbers as $k => $v)
+		{
+			$class_number_data[$k] = [
+				'admin_id' => $data['admin_id'],
+				'class_number' => $v
+			];			
+		}
+		if(count($class_number_data))
+		{
+			DB::name('admin_class')->where('admin_id',$data['admin_id'])->delete();
+			DB::name('admin_class')->insertAll($class_number_data);	
+		}
 		if($rst!==false){
 			// Db::name('admin_profession')->where('admin_id',$aid)->delete();
 			// Db::name('admin_profession')->insertAll($pdatas);
@@ -385,31 +475,6 @@ class Admin extends Base
 		}else{
 			$this->error('管理员修改失败',url('admin/Admin/faculty_admin_list'));
 		}
-	}
-	public function faculty_admin_runadd()
-	{
-        $aid = session('admin_auth.aid');
-		$class_number = input('class_number/a');
-		$class_number = $class_number ? implode(',',$class_number) : '';
-
-		$admin_id=AdminModel::add(input('admin_username'),'',input('admin_pwd'),input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),$class_number );
-		if($admin_id){
-			// $year_profession_numbers = $_POST['profession_number'] ;
-			// foreach($year_profession_numbers as $key  => $val)
-			// {
-				// $year_profession_number = explode('_',$val);
-				// $pdata['admin_id'] = $admin_id;
-				// $pdata['current_grade'] = $year_profession_number[0];
-				// $pdata['profession_number'] = $year_profession_number[1];
-				// $pdatas[] = $pdata;
-			// }
-			// Db::name('admin_profession')->where('admin_id',$admin_id)->delete();
-			// Db::name('admin_profession')->insertAll($pdatas);
-			$this->success('管理员添加成功',url('admin/Admin/faculty_admin_list'));
-		}else{
-			$this->error('管理员添加失败',url('admin/Admin/faculty_admin_list'));
-		}
-
 	}
 	/**
 	 * 管理员开启/禁止

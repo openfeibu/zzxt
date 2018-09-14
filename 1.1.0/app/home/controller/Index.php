@@ -93,4 +93,23 @@ class Index extends Base
 		$send_result=sendMail($member_list_email, $active_options['email_title'], $content);
 		var_dump($send_result);exit;
 	}
+	public function updateAdminClass()
+	{
+		$admins = DB::name('admin')->where("class_number is NOT NULL AND class_number <> ''")->select();
+		foreach($admins as $key => $admin)
+		{
+			$class_number = $admin['class_number'];
+			$class_number_arr = explode(',',$class_number);
+			$data = [];
+			foreach($class_number_arr as $k => $v)
+			{
+				$data[$k] = [
+					'admin_id' => $admin['admin_id'],
+					'class_number' => $v
+				];
+			}
+			DB::name('admin_class')->insertAll($data);	
+		}
+		return "success";
+	}
 }

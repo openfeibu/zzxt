@@ -60,13 +60,11 @@ class Counselor extends Base
         $class_number = input('class_number',0);
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
         $status = input('status','');
-        $where = ' 1 = 1 ';
+        $where = " u.class_number in (".implode(',',$this->class_number).") ";
 		$count_where = " u.class_number in (".implode(',',$this->class_number).") ";
         if($class_number)
         {
             $where .= " AND u.class_number = '".$class_number."'";
-        }else{
-            $where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
         }
         if($status)
         {
@@ -167,13 +165,11 @@ class Counselor extends Base
         $class_number = input('class_number',0);
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
         $status = input('status','');
-        $where = ' 1 = 1 ';
+        $where = " u.class_number in (".implode(',',$this->class_number).") ";
 		$count_where = " u.class_number in (".implode(',',$this->class_number).") ";
         if($class_number)
         {
             $where .= " AND u.class_number = '".$class_number."'";
-        }else{
-            $where .= " AND u.class_number in (".implode(',',$this->class_number).") ";
         }
         if($status)
         {
