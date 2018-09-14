@@ -139,6 +139,8 @@ class Show extends Base
 		];
 		$user_data = [
 			'phone' => isset($post['phone']) ? $post['phone'] : '',
+			'nation' =>isset($post['nation']) ? $post['nation'] : '',
+			'political' =>isset($post['political']) ? $post['political'] : '',
 		];
 		DB::name('user')->where('id_number',$this->user['id_number'])->update($user_data);
 		$data['member_list_id'] = $this->user['member_list_id'];
