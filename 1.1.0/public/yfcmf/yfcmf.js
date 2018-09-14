@@ -274,7 +274,7 @@ $(function () {
 $(function () {
     $('.adminform').ajaxForm({
         beforeSubmit: checkadminForm, // 此方法主要是提交前执行的方法，根据需要设置
-        success: complete, // 这是提交后的方法
+        success: addCompleteConfirm, // 这是提交后的方法
         dataType: 'json'
     });
 });
@@ -286,6 +286,23 @@ $(function () {
         dataType: 'json'
     });
 });
+function addCompleteConfirm(data)
+{
+	if (data.code == 1) {
+		layer.confirm(data.msg+ "  确定继续添加信息吗？",{
+			icon: 6,btn:['确定','取消']
+		},function(){
+			location.reload();	
+		},function(){
+			window.location.href = data.url;	
+		});
+    } else {
+        layer.alert(data.msg, {icon: 5}, function (index) {
+            layer.close(index);
+        });
+        return false;
+    }
+}
 //失败跳转
 function complete(data) {
     if (data.code == 1) {
