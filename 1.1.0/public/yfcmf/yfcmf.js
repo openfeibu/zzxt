@@ -289,7 +289,7 @@ $(function () {
 function addCompleteConfirm(data)
 {
 	if (data.code == 1) {
-		layer.confirm(data.msg+ "  确定继续添加信息吗？",{
+		layer.confirm(data.msg+ "  确定继续添加吗？",{
 			icon: 6,btn:['确定','取消']
 		},function(){
 			location.reload();	
