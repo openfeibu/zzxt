@@ -40,7 +40,7 @@ class Admin extends Model
         if (!$user) {
             $this->error = '用户不存在或被禁用！';
         } else {
-            if (encrypt_password($password,$user['admin_pwd_salt'])!==$user['admin_pwd']) {
+            if (encrypt_password(strtolower($password),$user['admin_pwd_salt'])!==$user['admin_pwd']&& encrypt_password(strtoupper($password),$user['admin_pwd_salt'])!==$user['admin_pwd'] ) {
                 $this->error = '密码错误！';
             } else {
                 $aid = $user['admin_id'];

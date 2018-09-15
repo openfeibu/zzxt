@@ -12,6 +12,8 @@ use think\Db;
 use think\Cache;
 use think\helper\Time;
 use app\admin\model\News as NewsModel;
+use app\admin\model\DataOracle as DataOracleModel;
+use app\admin\model\Admin as AdminModel;
 use app\admin\model\MemberList;
 
 class Index extends Base
@@ -167,6 +169,25 @@ class Index extends Base
 					'status' => 1
 				]);
 		}			
+		return "success";
+	}
+	public function updateAdminInfo()
+	{
+		$admins = DB::name('admin')->select();
+		$data_oracle_model = new DataOracleModel();
+		foreach($admins as $key => $val)
+		{
+			$where = " WHERE XH = '".$val['admin_username']."'";
+			$student = $data_oracle_model->getStudent($where);
+			if($student)
+			{
+				AdminModel::edit([
+					'admin_id' => $val['admin_id'],
+					'admin_pwd' => substr($student['id_number'],-6),
+					'admin_username' => $student['id_number']
+				]);
+			}
+		}
 		return "success";
 	}
 }
