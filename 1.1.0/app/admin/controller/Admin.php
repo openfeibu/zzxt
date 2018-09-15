@@ -203,7 +203,7 @@ class Admin extends Base
 	}
 	public function counselor_admin_edit()
 	{
-		$auth_group=Db::name('auth_group')->where('id in (21,25)')->select();
+		$auth_group=Db::name('auth_group')->where('id in (21,25,26)')->select();
 		$admin_list=Db::name('admin')->find(input('admin_id'));
         $classCode = new ClassCodeModel();
 		$auth_group_access=Db::name('auth_group_access')->where(array('uid'=>$admin_list['admin_id']))->value('group_id');
@@ -244,7 +244,7 @@ class Admin extends Base
 	}
 	public function counselor_admin_add()
 	{
-		$auth_group=Db::name('auth_group')->where('id in (21,25)')->select();
+		$auth_group=Db::name('auth_group')->where('id in (21,25,26)')->select();
 		$classCode = new ClassCodeModel();
 		$this->assign('auth_group',$auth_group);
 		// $admin_professiones = session('admin_professiones');
@@ -271,7 +271,7 @@ class Admin extends Base
 		$class_numbers = input('class_number/a');
 		$class_number = $class_numbers ? implode(',',$class_numbers) : '';
         if ($group_id == 20) {
-            if (input('group_id','') == 21 or input('group_id','') == 25) {
+            if (in_array(input('group_id',''),[21,25,26])) {
 				$password = substr(input('admin_username'),-6);
                 $admin_id=AdminModel::add(input('admin_username'),'',$password,input('admin_email',''),input('admin_tel',''),input('admin_open',0),input('admin_realname',''),input('group_id'),input('faculty_number',session('admin_auth.faculty_number')),$class_number);
                 if($admin_id){

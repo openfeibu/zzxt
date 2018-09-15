@@ -13,6 +13,7 @@ use app\home\model\NationalScholarship;
 use app\home\model\Scholarships;
 use app\admin\model\User as UserModel;
 use app\admin\model\Evaluation;
+use app\admin\model\ClassCode as ClassCodeModel;
 use think\Db;
 use think\Request;
 
@@ -35,7 +36,10 @@ class ScholarshipsGroup extends Base
 		$this->scholarships = new Scholarships();
         $this->applyStatus = new ScholarshipsApplyStatus();
 		$this->evaluation = new Evaluation();
-
+		$this->classCode = new ClassCodeModel();
+		$this->common_where = " u.class_number in (".$this->class_number.") ";
+		$classes = $this->classCode->getCounselorClasses($this->class_number);
+		$this->assign('classes', $classes);
     }
 
     public function showReviewList()
@@ -52,10 +56,11 @@ class ScholarshipsGroup extends Base
     }
     public function showReviewListHandle($id)
     {
-        $where = " u.class_number =  ".$this->class_number;
+        $where = $this->common_where;
         $status = input('status','');
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
-		$count_where = ' u.class_number = '.$this->class_number;
+		$class_number = input('class_number',0);
+		$count_where = $this->common_where;
         if($status)
         {
             $where .= " AND ass.status = '".$status."'";
@@ -64,6 +69,10 @@ class ScholarshipsGroup extends Base
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%' )" ;
         }
+		if($class_number)
+        {
+            $where .= " AND u.class_number = '".$class_number."'";
+        }
         if($id == 1)
         {
             $data = $this->national->getNationalList($where);
@@ -71,6 +80,7 @@ class ScholarshipsGroup extends Base
             $where .= " AND ms.application_type = '".$id."'";
             $data = $this->multiple->getMultipleList($id,$where);
         }
+
         $show=$data->render();
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 		$data_arr = $data->all();
@@ -79,6 +89,7 @@ class ScholarshipsGroup extends Base
             $data_arr[$key] = handleApply($value);
 			$data_arr[$key]['poor_grade_name'] = $this->evaluation->getMemberEvaluationGradeName($value['member_list_id']);
         }
+		
 		//待操作
 		$doingcount = $this->scholarships->getCount($id,$count_where.' and check_status in (1)');
 		//总得人数
