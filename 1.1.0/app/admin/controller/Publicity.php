@@ -34,6 +34,8 @@ class Publicity extends Base
 		
 		$class_number = $this->admin['class_number'];	
 		$this->faculty_number = $this->admin['faculty_number'];
+		$p_faculty_number = input('faculty_number',0);$this->assign('faculty_number', $p_faculty_number);
+        $p_class_number = input('class_number',0);$this->assign('class_number', $p_class_number);
 		switch($this->admin['group_id'])
 		{
 			//班级辅导员
@@ -59,6 +61,10 @@ class Publicity extends Base
 				$faculties = $this->classCode->getFaculties();
 				$this->assign('faculties', $faculties);
 				$this->folder = 'studentoffice';
+				if($p_faculty_number){
+					$classes = $this->classCode->getFacultyClasses($p_faculty_number);
+					$this->assign('classes', $classes);
+				}
 				break;
 			//班级三金评议小组
 			case '25':
@@ -72,8 +78,7 @@ class Publicity extends Base
 				break;
 			
 		}
-		$p_faculty_number = input('faculty_number',0);
-        $p_class_number = input('class_number',0);
+		
         $this->common_where = ' 1 = 1';
         if($p_class_number)
         {

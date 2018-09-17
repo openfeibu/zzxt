@@ -60,14 +60,15 @@ class StudentOffice extends Base
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
         $status = input('status','');$this->assign('status',$status );
         $where = ' 1 = 1 ';
+		if($faculty_number)
+		{
+			$where .= " AND u.faculty_number = '".$faculty_number."'";
+			$classes = $this->classCode->getFacultyClasses($faculty_number);
+			$this->assign('classes', $classes);
+		}
         if($class_number)
         {
             $where .= " AND u.class_number = '".$class_number."'";
-        }else{
-            if($faculty_number)
-            {
-                $where .= " AND u.faculty_number = '".$faculty_number."'";
-            }
         }
         if($status !== "")
         {
@@ -244,14 +245,15 @@ class StudentOffice extends Base
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
         $status = input('status','');$this->assign('status',$status );
         $where = ' 1 = 1 ';
+        if($faculty_number)
+		{
+			$where .= " AND u.faculty_number = '".$faculty_number."'";
+			$classes = $this->classCode->getFacultyClasses($faculty_number);
+			$this->assign('classes', $classes);
+		}
         if($class_number)
         {
             $where .= " AND u.class_number = '".$class_number."'";
-        }else{
-            if($faculty_number)
-            {
-                $where .= " AND u.faculty_number = '".$faculty_number."'";
-            }
         }
         if($status !== "")
         {
