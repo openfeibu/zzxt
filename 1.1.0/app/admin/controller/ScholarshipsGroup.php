@@ -57,11 +57,11 @@ class ScholarshipsGroup extends Base
     public function showReviewListHandle($id)
     {
         $where = $this->common_where;
-        $status = input('status','');
+        $status = input('status','');$this->assign('status',$status );
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
-		$class_number = input('class_number',0);
+		$class_number = input('class_number',0);$this->assign('class_number',$class_number );
 		$count_where = $this->common_where;
-        if($status)
+        if($status !== "")
         {
             $where .= " AND ass.status = '".$status."'";
         }

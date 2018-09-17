@@ -24,14 +24,14 @@
                     <select class="form-control tab_select counselor_sub ajax_change" name="class_number">
                         <option value="0">所有专业</option>
                         {foreach $classes as $row}
-                        <option value="{$row.class_number}">{$row.current_grade}{$row.class_name}</option>
+                        <option value="{$row.class_number}" {if $class_number && $class_number == $row['class_number']} selected {/if}>{$row.current_grade}{$row.class_name}</option>
                         {/foreach}
                     </select>
 
                     <select class="form-control tab_select class_select ajax_change" name="status">
-                        <option value="0">全部状态</option>
+                        <option value="">全部状态</option>
                         {foreach $Think.config.check_status as $k => $v}
-                        <option value="{$k}">{$v}</option>
+                        <option value="{$k}" {if isset($status) && $status && $status == $k}selected{/if}>{$v}</option>
                         {/foreach}
                     </select>
                     <div class="tab_search pull-right">

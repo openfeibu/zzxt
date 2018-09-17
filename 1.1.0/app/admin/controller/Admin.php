@@ -270,6 +270,7 @@ class Admin extends Base
 		}
 		$class_numbers = input('class_number/a');
 		$class_number = $class_numbers ? implode(',',$class_numbers) : '';
+		
         if ($group_id == 20) {
             if (in_array(input('group_id',''),[21,25,26])) {
 				$password = substr(input('admin_username'),-6);

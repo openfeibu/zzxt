@@ -56,17 +56,17 @@ class Counselor extends Base
     }
     public function showApplicantListHandle($id)
     {
-        $faculty_number = input('faculty_number',0);
-        $class_number = input('class_number',0);
+        $faculty_number = input('faculty_number',0);$this->assign('faculty_number', $faculty_number);
+        $class_number = input('class_number',0);$this->assign('class_number',$class_number );
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
-        $status = input('status','');
+        $status = input('status','');$this->assign('status',$status );
         $where = " u.class_number in (".implode(',',$this->class_number).") ";
 		$count_where = " u.class_number in (".implode(',',$this->class_number).") ";
         if($class_number)
         {
             $where .= " AND u.class_number = '".$class_number."'";
         }
-        if($status)
+        if($status !== "")
         {
             $where .= " AND status = '".$status."'";
         }
@@ -162,16 +162,16 @@ class Counselor extends Base
      * 获取申请学生列表(评估系统)
      */
     public function showEvaluationList() {
-        $class_number = input('class_number',0);
+        $class_number = input('class_number',0);$this->assign('class_number',$class_number );
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
-        $status = input('status','');
+        $status = input('status','');$this->assign('status',$status );
         $where = " u.class_number in (".implode(',',$this->class_number).") ";
 		$count_where = " u.class_number in (".implode(',',$this->class_number).") ";
         if($class_number)
         {
             $where .= " AND u.class_number = '".$class_number."'";
         }
-        if($status)
+        if($status !== "")
         {
             $where .= " AND status = '".$status."'";
         }

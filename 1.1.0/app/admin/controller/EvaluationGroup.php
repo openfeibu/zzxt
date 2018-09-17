@@ -35,15 +35,15 @@ class EvaluationGroup extends Base
      */
     public function showEvaluationList() {
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
-        $status = input('status','');
-		$class_number = input('class_number',0);
+        $status = input('status','');$this->assign('status',$status );
+		$class_number = input('class_number',0);$this->assign('class_number',$class_number );
         $where = $this->common_where;
 		$count_where = $this->common_where;
         if($studentname)
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%')" ;
         }
-        if($status)
+        if($status !== "")
         {
             $where .= " AND status = '".$status."'";
         }

@@ -55,15 +55,15 @@ class FacultyGroup extends Base
     public function showApplicantListHandle($id)
     {
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
-        $status = input('status','');
-        $class_number = input('class_number',0);
+        $status = input('status','');$this->assign('status',$status );
+        $class_number = input('class_number',0);$this->assign('class_number',$class_number );
         $where = ' 1 = 1 ';
 		$count_where = " u.faculty_number = ".$this->faculty." ";
         if($studentname)
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%' )" ;
         }
-        if($status)
+        if($status !== "")
         {
             $where .= " AND ass.status = '".$status."'";
         }
@@ -196,15 +196,15 @@ class FacultyGroup extends Base
      */
     public function showEvaluationList() {
         $studentname = input('studentname',''); $this->assign('studentname',$studentname );
-        $status = input('status','');
-        $class_number = input('class_number',0);
+        $status = input('status','');$this->assign('status',$status );
+        $class_number = input('class_number',0);$this->assign('class_number',$class_number );
         $where = ' 1 = 1 ';
 		$count_where = " u.faculty_number = ".$this->faculty." ";
         if($studentname)
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%' )" ;
         }
-        if($status)
+        if($status !== "")
         {
             $where .= " AND ass.status = '".$status."'";
         }

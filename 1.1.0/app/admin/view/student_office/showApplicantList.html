@@ -22,21 +22,21 @@
                     <select class="form-control tab_select counselor_sub ajax_change faculty_more" name="faculty_number" href="{:url('admin/ClassCode/getClasses')}">
                         <option value="0">所有学院</option>
                         {foreach $faculties as $row}
-                        <option value="{$row.faculty_number}">{$row.faculty_name}</option>
+                        <option value="{$row.faculty_number}" {if $faculty_number && $faculty_number == $row['faculty_number']}selected{/if}>{$row.faculty_name}</option>
                         {/foreach}
                     </select>
                     <select class="form-control tab_select counselor_sub ajax_change class_more" name="class_number" >
                         <option value="0">所有专业</option>
                     </select>
                     <select class="form-control tab_select class_select ajax_change" name="status">
-                        <option value="0">全部状态</option>
+                        <option value="">全部状态</option>
                         {foreach $Think.config.check_status as $k => $v}
-                        <option value="{$k}">{$v}</option>
+                        <option value="{$k}" {if isset($status) && $status && $status == $k}selected{/if}>{$v}</option>
                         {/foreach}
                     </select>
                     <div class="tab_search">
                         <input type="text" name="studentname" placeholder="身份证/学号/姓名" value="{$studentname}">
-                        <button class="btn btn-info btn-sm" type="submit">查询</button>
+                        <button class="btn btn-info btn-sm ajax-search-form" type="submit">查询</button>
                     </div>
                     <div class="tab_search">
                         <a href="{:url('admin/StudentOffice/applicantListExport',array('id' => $type_id))}" title="导出">
@@ -78,3 +78,4 @@
     </div>
 </div>
 {/block}
+
