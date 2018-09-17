@@ -270,6 +270,7 @@ $(function () {
         dataType: 'json'
     });
 });
+check_courselor_admin_add_form
 /* admin增加编辑表单，带检查 */
 $(function () {
     $('.adminaddform').ajaxForm({
@@ -277,11 +278,14 @@ $(function () {
         success: addCompleteConfirm, // 这是提交后的方法
         dataType: 'json'
     });
-});
-$(function () {
-    $('.adminform').ajaxForm({
+	$('.adminform').ajaxForm({
         beforeSubmit: checkadminForm, // 此方法主要是提交前执行的方法，根据需要设置
         success: complete2, // 这是提交后的方法
+        dataType: 'json'
+    });
+	$('.courseloradminddform').ajaxForm({
+        beforeSubmit: check_courselor_admin_add_form, // 此方法主要是提交前执行的方法，根据需要设置
+        success: addCompleteConfirm, // 这是提交后的方法
         dataType: 'json'
     });
 });
@@ -370,13 +374,7 @@ function checkadminForm() {
         });
         return false;
     }
-    if (!IdentityCodeValid(admin_username)) {
-        layer.alert('身份证号格式错误', {icon: 5}, function (index) {
-            layer.close(index);
-            $('#admin_username').focus();
-        });
-        return false;
-    }
+    
     // if (!$("#admin_tel").val().match(/^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/)) {
     //     layer.alert('电话号码格式不正确', {icon: 5}, function (index) {
     //         layer.close(index);
@@ -384,6 +382,25 @@ function checkadminForm() {
     //     });
     //     return false;
     // }
+}
+function check_courselor_admin_add_form()
+{
+	var admin_username = $.trim($('input[name="admin_username"]').val()); //获取INPUT值
+    var myReg = /^[\u4e00-\u9fa5]+$/;//验证中文
+    if (admin_username.indexOf(" ") >= 0) {
+        layer.alert('登录用户名包含了空格，请重新输入', {icon: 5}, function (index) {
+            layer.close(index);
+            $('#admin_username').focus();
+        });
+        return false;
+    }
+	if (!IdentityCodeValid(admin_username) && !IsHKID(admin_username)) {
+        layer.alert('身份证号格式错误', {icon: 5}, function (index) {
+            layer.close(index);
+            $('#admin_username').focus();
+        });
+        return false;
+    }
 }
 //member表单检查
 function checkmemberForm() {
@@ -398,47 +415,65 @@ function checkmemberForm() {
 	*/
 }
 function IdentityCodeValid(code) { 
-            var city={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江 ",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北 ",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏 ",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外 "};
-            var tip = "";
-            var pass= true;
+	var city={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江 ",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北 ",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏 ",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外 "};
+	var tip = "";
+	var pass= true;
 
-            if(!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)){
-                tip = "身份证号格式错误";
-                pass = false;
-            }
+	if(!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)){
+		tip = "身份证号格式错误";
+		pass = false;
+	}
 
-           else if(!city[code.substr(0,2)]){
-                tip = "地址编码错误";
-                pass = false;
-            }
-            else{
-                //18位身份证需要验证最后一位校验位
-                if(code.length == 18){
-                    code = code.split('');
-                    //∑(ai×Wi)(mod 11)
-                    //加权因子
-                    var factor = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ];
-                    //校验位
-                    var parity = [ 1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2 ];
-                    var sum = 0;
-                    var ai = 0;
-                    var wi = 0;
-                    for (var i = 0; i < 17; i++)
-                    {
-                        ai = code[i];
-                        wi = factor[i];
-                        sum += ai * wi;
-                    }
-                    var last = parity[sum % 11];
-                    if(parity[sum % 11] != code[17]){
-                        tip = "校验位错误";
-                        pass =false;
-                    }
-                }
-            }
-           // if(!pass) alert(tip);
-            return pass;
-        }
+   else if(!city[code.substr(0,2)]){
+		tip = "地址编码错误";
+		pass = false;
+	}
+	else{
+		//18位身份证需要验证最后一位校验位
+		if(code.length == 18){
+			code = code.split('');
+			//∑(ai×Wi)(mod 11)
+			//加权因子
+			var factor = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ];
+			//校验位
+			var parity = [ 1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2 ];
+			var sum = 0;
+			var ai = 0;
+			var wi = 0;
+			for (var i = 0; i < 17; i++)
+			{
+				ai = code[i];
+				wi = factor[i];
+				sum += ai * wi;
+			}
+			var last = parity[sum % 11];
+			if(parity[sum % 11] != code[17]){
+				tip = "校验位错误";
+				pass =false;
+			}
+		}
+	}
+   // if(!pass) alert(tip);
+	return pass;
+}
+function IsHKID(str) {
+	var strValidChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	// basic check length
+	if (str.length < 8)
+		return false;
+	// handling bracket
+	if (str.charAt(str.length-3) == '(' && str.charAt(str.length-1) == ')')
+		str = str.substring(0, str.length - 3) + str.charAt(str.length -2);
+	// convert to upper case
+		str = str.toUpperCase();
+	// regular expression to check pattern and split
+	var hkidPat = /^([A-Z]{1,2})([0-9]{6})([A0-9])$/;
+	var matchArray = str.match(hkidPat);
+	// not match, return false
+	if (matchArray == null)
+		return false;
+	return true;
+ }
 //多选表单检查
 function checkselectForm() {
     var chk_value = [];
@@ -992,11 +1027,21 @@ $(function () {
 	$('body').on('change','.ajax_change',function () {
 		load = layer.load(2);
         var $form = $(this).parents("form");
+		console.log($form.serialize());
 		$.ajax({
 		    url:$form.attr('action'),
 			type:"POST",
 			data:$form.serialize(),
 			success: function(data,status){
+				var query = location.href.split("?")[1];
+				if (!query) {
+					// 如果没有查询条件，则显示默认第1个章节
+					history.pushState(null, "", 
+						location.href + "?" + $form.serialize());    
+				} else {
+					history.pushState(null, "", 
+						location.href.split("?")[0] + "?" + $form.serialize());     
+				}      
 				if(typeof load!="undefined"){layer.close(load);}
 				$("#ajax-data").html(data);
 			}
@@ -1016,6 +1061,19 @@ $(function () {
         });
     });
     })(jQuery);
+	window.addEventListener("popstate", function() {
+        console.log("popstate called ,href="+location.href +", state = "+history.state);
+		load = layer.load(2);
+        $.ajax({
+            url:location.href,
+            type:"POST",
+            data:{},
+            success: function(data,status){
+                if(typeof load!="undefined"){layer.close(load);}
+				$("#ajax-data").html(data);
+            }
+        });
+    });
 (function ($) {
 	$('body').on('change','.submit_change',function () {
         var $form = $(this).parents("form");
@@ -1035,10 +1093,20 @@ function ajax_page(page) {
 $(function () {
 	$('body').on('click','.ajax-search-form',function () {
 		load = layer.load(2);
+		$form = $(this).closest("form");
 		$.ajax({
 			type:"POST",
-			data:$(this).parents("form").serialize(),
+			data:$form.serialize(),
 			success: function(data,status){
+				var query = location.href.split("?")[1];
+				if (!query) {
+					// 如果没有查询条件，则显示默认第1个章节
+					history.pushState(null, "", 
+						location.href + "?" + $form.serialize());    
+				} else {
+					history.pushState(null, "", 
+						location.href.split("?")[0] + "?" + $form.serialize());     
+				}    
 				if(typeof load!="undefined"){layer.close(load);}
 				$("#ajax-data").html(data);
 			}
