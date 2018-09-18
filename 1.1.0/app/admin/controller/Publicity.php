@@ -50,7 +50,7 @@ class Publicity extends Base
 				$this->class_number = $class_number; 
 				$this->folder = 'class';
 				break;
-			//学院综合评议小组
+			//学院资助工作小组
 			case '22':
 				$classes = $this->classCode->getFacultyClasses($this->faculty_number);
 				$this->assign('classes', $classes);

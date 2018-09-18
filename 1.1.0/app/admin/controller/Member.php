@@ -27,6 +27,15 @@ class Member extends Base
 		if($activetype_check !== ''){
 			$where['user_status']=$activetype_check;
 		}
+		switch($this->admin['group_id'])
+		{
+			case '20':	
+			$where['u.faculty_number'] = $this->admin['faculty_number'];
+			break;
+			case '22':	
+			$where['u.class_number'] = ['in','('.$this->admin['class_number'].')'];
+			break;
+		}
 		$member_model=new MemberList;
 		$member_list=$member_model->alias('a')->join(config('database.prefix').'member_group b','a.member_list_groupid=b.member_group_id')
 				->join('yf_user u','u.id_number = a.id_number')
