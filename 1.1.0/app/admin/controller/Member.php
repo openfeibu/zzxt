@@ -29,10 +29,10 @@ class Member extends Base
 		}
 		switch($this->admin['group_id'])
 		{
-			case '20':	
+			case '22':	
 			$where['u.faculty_number'] = $this->admin['faculty_number'];
 			break;
-			case '22':	
+			case '20':	
 			$where['u.class_number'] = ['in','('.$this->admin['class_number'].')'];
 			break;
 		}
@@ -40,7 +40,8 @@ class Member extends Base
 		$member_list=$member_model->alias('a')->join(config('database.prefix').'member_group b','a.member_list_groupid=b.member_group_id')
 				->join('yf_user u','u.id_number = a.id_number')
 				->where($where)->where('member_list_username|member_list_email|member_list_nickname|u.id_number','like',"%".$key."%")
-				->order('member_list_addtime desc')
+				->order('class_number','asc')
+				->order('member_list_addtime','desc')
 				->field('u.*,a.member_list_id,a.member_list_username,a.member_list_province,a.member_list_city,a.member_list_town,a.member_list_nickname,a.member_list_headpic,a.member_list_addtime,a.member_list_open,a.user_status')
 				->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 		$show=$member_list->render();
