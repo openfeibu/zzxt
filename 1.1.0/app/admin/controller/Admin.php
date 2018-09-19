@@ -184,8 +184,9 @@ class Admin extends Base
 
         $classCode = new ClassCodeModel();
 		$faculty = $classCode->getFaculties();
-		$admin_list = DB::name('admin')
+		$admin_list = DB::name('admin')->alias('a')
 			->where("admin_id in (SELECT a.admin_id FROM yf_admin a join yf_admin_class ac on a.admin_id = ac.admin_id join yf_auth_group_access ags on a.admin_id = ags.uid join  yf_auth_group ag on ags.group_id = ag.id  where ag.id in (21,25,26) AND ac.class_number in (".session('admin_auth.class_number').") GROUP BY a.admin_id)")
+			->where($where)
 			->order('admin_id','desc')
 			->paginate(config('paginate.list_rows'),false,['query'=>get_query()]);
 		$admin_list_arr = $admin_list->all();

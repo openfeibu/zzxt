@@ -318,7 +318,7 @@ class StudentOffice extends Base
         }
         $data = $this->evaluation->getAllEvaluationList($where);
         foreach ($data as $key => $val) {
-            $data[$key]['rank'] = Evaluation::getGrade($val['score']);
+            $data[$key]['rank'] = Evaluation::getGrade($val['score'])['poor_grade_name'];
             $data[$key]['status'] = config('evaluation_status.'.$val['status']);
         }
         $field_titles = ['姓名','学号','专业','系统分','评议分','总分','评定等级','状态'];
