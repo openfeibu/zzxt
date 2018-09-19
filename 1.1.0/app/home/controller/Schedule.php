@@ -24,7 +24,6 @@ class Schedule extends Base
 			->field('u.current_grade,m.id_number,u.studentid,m.member_list_id,u.id')
 			->order('member_list_id','desc')
 			->select();
-	
 		foreach($local_students as $key=> $local_student)
 		{
 			$where = " WHERE LOWER(SFZH) = LOWER('".$local_student['id_number']."')";
