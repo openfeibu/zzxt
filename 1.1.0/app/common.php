@@ -1866,3 +1866,7 @@ function handle_idcard($id_number)
 {
 	return strlen($id_number) == 15 ? substr_replace($id_number,"******",6,6) : (strlen($id_number)==18 ? substr_replace($id_number,"******",8,6) : '');
 }
+function get_faculty_number_by_dwh($dwh)
+{
+	return DB::name('faculty')->where('DWH',$dwh)->value('faculty_number');
+}

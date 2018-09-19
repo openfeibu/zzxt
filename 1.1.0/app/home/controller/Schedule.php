@@ -43,7 +43,8 @@ class Schedule extends Base
 					'profession' => $new_student['profession'],
 					'department_name' => $new_student['department_name'],
 					'class_name' => $new_student['class_name'],
-					'class_number' => $new_student['class_number']
+					'class_number' => $new_student['class_number'],
+					'faculty_number' => get_faculty_number_by_dwh($new_student['dwh']),
 				];
 				
 			}
