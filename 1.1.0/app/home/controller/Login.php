@@ -134,6 +134,7 @@ class Login extends Base
 					$school_user['department_name'] = $new_student['department_name'] ;
 					$school_user['class_name'] = $new_student['class_name'] ;
 					$school_user['class_number'] = $new_student['class_number'] ;
+					$school_user['faculty_number'] = get_faculty_number_by_dwh($new_student['dwh']);
 					$rst1 = Db::name('user')->insert($school_user);
 					$this->success('登录成功',url('home/Index/index'));
 					
@@ -169,6 +170,7 @@ class Login extends Base
 					$school_user['department_name'] = $new_student['department_name'] ;
 					$school_user['class_name'] = $new_student['class_name'] ;
 					$school_user['class_number'] = $new_student['class_number'] ;
+					$school_user['faculty_number'] = get_faculty_number_by_dwh($new_student['dwh']);
 				}
 				$rst1 = Db::name('user')->insert($school_user);
 			}
