@@ -13,8 +13,8 @@ class Schedule extends Base
 {
 	public function updateStudentInfo()
 	{
-		ini_set('memory_limit','3072M');
-		set_time_limit(0);
+		set_time_limit(0);      //执行时间无限
+		ini_set('memory_limit', '-1');    //内存无限
 		$data_oracle_class = new DataOracle();
 		$data_class = new Data();
 		$years = getYearArr();
