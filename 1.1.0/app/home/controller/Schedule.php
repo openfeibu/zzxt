@@ -62,7 +62,6 @@ class Schedule extends Base
 			{
 				Db::name('user')->where('id',$local_student['id'])->update($data);
 			}
-			sleep(2);
 		}
 		return "success";
 	}
