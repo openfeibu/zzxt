@@ -15,6 +15,8 @@ class Schedule extends Base
 	{
 		set_time_limit(0);      //执行时间无限
 		ini_set('memory_limit', '-1');    //内存无限
+		error_reporting(E_ALL);
+		ini_set('display_errors', '1');
 		$data_oracle_class = new DataOracle();
 		$data_class = new Data();
 		$years = getYearArr();
