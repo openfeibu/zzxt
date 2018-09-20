@@ -34,7 +34,7 @@ class Data extends Model
 	}
 	public function getUserByIdCard($id_card)
 	{
-		$sql="SELECT top 1 * FROM V学生信息表 where 身份证号 = '".$id_card."'";
+		$sql="SELECT top 1 * FROM V学生信息表 where 身份证号 = '".$id_card."' AND 当前所在级  IS NOT NULL ";
 	    $rs = odbc_exec($this->conn,$sql);
 		return $this->getSafeArr(odbc_fetch_array($rs));
 	}
