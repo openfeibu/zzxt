@@ -81,4 +81,8 @@ class Schedule extends Base
 		}
 		return "success";
 	}
+	public function evaluationStatistics()
+	{
+		
+	}
 }

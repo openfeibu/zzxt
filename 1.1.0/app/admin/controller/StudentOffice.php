@@ -316,13 +316,14 @@ class StudentOffice extends Base
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%' )" ;
         }
-        $data = $this->evaluation->getAllEvaluationList($where);
+        $data = $this->evaluation->getAllEvaluationList($where,'faculty_number asc,class_number asc');
+		$data = Evaluation::handleEvaluationList($data);
         foreach ($data as $key => $val) {
             $data[$key]['rank'] = Evaluation::getGrade($val['score'])['poor_grade_name'];
             $data[$key]['status'] = config('evaluation_status.'.$val['status']);
         }
-        $field_titles = ['姓名','学号','专业','系统分','评议分','总分','评定等级','状态'];
-        $fields = ['studentname','studentid','profession','assess_fraction','change_fraction','score','rank','status'];
+        $field_titles = ['学号','姓名','学院','专业','系统分','系统评级','班级评级','学院评级'];
+        $fields = ['studentid','studentname','department_name','profession','assess_fraction','system_poor_grade_name','group_poor_grade_name','faculty_poor_grade_name'];
         $table = '学生家庭经济困难认定'.date('YmdHis');
         export_excel($data,$table,$field_titles,$fields);
     }
