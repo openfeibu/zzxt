@@ -294,10 +294,10 @@ class StudentOffice extends Base
     }
     public function showEvaluationListExport()
     {
-        $faculty_number = input('faculty_number',0);$this->assign('faculty_number', $faculty_number);
-        $class_number = input('class_number',0);$this->assign('class_number',$class_number );
-        $studentname = input('studentname',''); $this->assign('studentname',$studentname );
-        $status = input('status','');$this->assign('status',$status );
+        $faculty_number = input('faculty_number',0);
+        $class_number = input('class_number',0);
+        $studentname = input('studentname','');
+        $status = input('status','');
         $where = ' 1 = 1 ';
         if($class_number)
         {
@@ -316,7 +316,7 @@ class StudentOffice extends Base
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%' )" ;
         }
-        $data = $this->evaluation->getAllEvaluationList($where,'faculty_number asc,class_number asc');
+        $data = $this->evaluation->getAllEvaluationList($where);
 		$data = Evaluation::handleEvaluationList($data);
         foreach ($data as $key => $val) {
             $data[$key]['rank'] = Evaluation::getGrade($val['score'])['poor_grade_name'];

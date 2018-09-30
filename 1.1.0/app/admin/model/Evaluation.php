@@ -128,23 +128,21 @@ class Evaluation extends Model
                     ->join('yf_user u', 'u.id_number = m.id_number', 'left')
                     ->where($where)
 					->where('app.times',$this->subsidy['begin_time'])
-                    ->order($order)
-					->order('evaluation_id desc')
+					->order('faculty_number asc,class_number asc')
+					->order('score desc')
+					->order($order)
                     ->field('ass.*,m.member_list_username,m.member_list_nickname,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,app.group_opinion,app.faculty_opinion,app.school_opinion,app.group_poor_grade,app.faculty_poor_grade,app.school_poor_grade,u.*')
                     ->paginate(40);
     }
-    public function getAllEvaluationList($where,$order='')
+    public function getAllEvaluationList($where)
     {
         $data = Db::name('evaluation_status')
                     ->alias('ass')
                     ->join('yf_evaluation_application app','ass.evaluation_id = app.evaluation_id')
                     ->join('yf_member_list m', 'm.member_list_id = ass.member_list_id')
-                    ->join('yf_user u', 'u.id_number = m.id_number', 'left');
-		if($order)		
-		{
-			$data = $data->order($order);
-		}			
-        $data =	$data->order('score desc')
+                    ->join('yf_user u', 'u.id_number = m.id_number', 'left')
+					->order('faculty_number asc,class_number asc')
+					->order('score desc')
         			->where($where)
 					->where('app.times',$this->subsidy['begin_time'])
                     ->field('ass.*,m.member_list_username,m.member_list_nickname,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,app.group_opinion,app.faculty_opinion,app.school_opinion,app.group_poor_grade,app.faculty_poor_grade,app.school_poor_grade,u.*')

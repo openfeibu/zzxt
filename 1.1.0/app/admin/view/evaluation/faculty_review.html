@@ -36,6 +36,12 @@
                         <input type="text" name="studentname" placeholder="身份证/学号/姓名" value="{$studentname}">
                         <button class="btn btn-info btn-sm ajax-search-form" type="submit">查询</button>
                     </div>
+					<div class="tab_search">
+                        <a href="{:url('admin/FacultyGroup/showEvaluationListExport')}" title="导出所选">
+                            导出所选：
+    						<i class="fa fa-download export"></i>
+    					</a>
+                    </div>
                 </form>
                 <table  id="simple-table"  class="table table-striped table-bordered table-hover tab_center">
                     <thead>
