@@ -321,9 +321,11 @@ class StudentOffice extends Base
         foreach ($data as $key => $val) {
             $data[$key]['rank'] = Evaluation::getGrade($val['score'])['poor_grade_name'];
             $data[$key]['status'] = config('evaluation_status.'.$val['status']);
+			$data[$key]['group_opinion_text'] = $val['group_opinion']['text'];
+			$data[$key]['faculty_opinion_text'] = $val['faculty_opinion']['text'];
         }
-        $field_titles = ['学号','姓名','学院','专业','系统分','系统评级','班级评级','学院评级'];
-        $fields = ['studentid','studentname','department_name','profession','assess_fraction','system_poor_grade_name','group_poor_grade_name','faculty_poor_grade_name'];
+        $field_titles = ['学号','姓名','学院','专业','系统分','系统评级','班级评级','班级评议','学院评级','学院评议'];
+        $fields = ['studentid','studentname','department_name','profession','assess_fraction','system_poor_grade_name','group_poor_grade_name','group_opinion_text','faculty_poor_grade_name','faculty_opinion_text'];
         $table = '学生家庭经济困难认定'.date('YmdHis');
         export_excel($data,$table,$field_titles,$fields);
     }
