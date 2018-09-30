@@ -8,9 +8,15 @@ use think\captcha\Captcha;
 use app\admin\model\Data;
 use app\admin\model\DataHandle;
 use app\admin\model\DataOracle;
+use app\admin\model\Evaluation;
 
 class Schedule extends Base
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->evaluation = new Evaluation();
+	}
 	public function updateStudentInfo()
 	{
 		set_time_limit(0);      //执行时间无限
@@ -86,6 +92,145 @@ class Schedule extends Base
 	}
 	public function evaluationStatistics()
 	{
-		
+		$facultys = DB::name('faculty')->select();
+		$subsidy = DB::name('set_subsidy')->where('id',5)->find();
+		$grade_1_all_count = $grade_2_all_count = $grade_3_all_count = $grade_all_count = 0;
+		$data = [];
+		foreach($facultys as $faculty_key => $faculty)
+		{
+			/*特殊困难*/
+			$years = getYearArr();
+			
+			$faculty_grade_1_all_count = $faculty_grade_2_all_count = $faculty_grade_3_all_count = $faculty_grade_all_count = 0;
+			foreach($years as $year_key => $year)
+			{
+				$where = "(school_poor_grade = 1 OR (faculty_poor_grade = 1 AND school_poor_grade is NULL)) AND u.faculty_number = '".$faculty['faculty_number']."'";
+				$faculty_year_grade_1_count = $this->evaluation->evaluation_year_count($year,$where);
+				$data[] = [
+					'name' => 'faculty_year_poor_grade_1',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_grade_1_count
+				];
+				
+				$where = "(school_poor_grade = 2 OR (faculty_poor_grade = 2 AND school_poor_grade is NULL)) AND u.faculty_number = '".$faculty['faculty_number']."'";
+				$faculty_year_grade_2_count = $this->evaluation->evaluation_year_count($year,$where);
+				$data[] = [
+					'name' => 'faculty_year_poor_grade_2',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_grade_2_count
+				];
+				
+				$where = "(school_poor_grade = 3 OR (faculty_poor_grade = 3 AND school_poor_grade is NULL)) AND u.faculty_number = '".$faculty['faculty_number']."'";
+				$faculty_year_grade_3_count = $this->evaluation->evaluation_year_count($year,$where);
+				$data[] = [
+					'name' => 'faculty_year_poor_grade_3',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_grade_3_count
+				];
+				/*
+				$where = " u.faculty_number = '".$faculty['faculty_number']."'";
+				$faculty_year_grade_count = $this->evaluation->evaluation_year_count($year,$where);*/
+				$faculty_year_grade_count = $faculty_year_grade_1_count + $faculty_year_grade_2_count + $faculty_year_grade_3_count;
+				$data[] = [
+					'name' => 'faculty_year_poor_grade',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_grade_count
+				];
+				
+				$faculty_grade_1_all_count += $faculty_year_grade_1_count;
+				$faculty_grade_2_all_count += $faculty_year_grade_2_count;
+				$faculty_grade_3_all_count += $faculty_year_grade_3_count;
+				$faculty_grade_all_count += $faculty_year_grade_count;
+
+			}
+			$data[] = [
+				'name' => 'faculty_poor_grade_1',
+				'attr' => 'faculty_number',
+				'attr_value' => $faculty['faculty_number'],
+				'times' => $subsidy['begin_time'],
+				'year' => 'all',
+				'value' => $faculty_grade_1_all_count
+			];
+			$data[] = [
+				'name' => 'faculty_poor_grade_2',
+				'attr' => 'faculty_number',
+				'attr_value' => $faculty['faculty_number'],
+				'times' => $subsidy['begin_time'],
+				'year' => 'all',
+				'value' => $faculty_grade_2_all_count
+			];
+			$data[] = [
+				'name' => 'faculty_poor_grade_3',
+				'attr' => 'faculty_number',
+				'attr_value' => $faculty['faculty_number'],
+				'times' => $subsidy['begin_time'],
+				'year' => 'all',
+				'value' => $faculty_grade_3_all_count
+			];
+			$data[] = [
+				'name' => 'faculty_poor_grade',
+				'attr' => 'faculty_number',
+				'attr_value' => $faculty['faculty_number'],
+				'times' => $subsidy['begin_time'],
+				'year' => 'all',
+				'value' => $faculty_grade_all_count
+			];
+			$grade_1_all_count += $faculty_grade_1_all_count;
+			$grade_2_all_count += $faculty_grade_2_all_count;
+			$grade_3_all_count += $faculty_grade_3_all_count;
+			$grade_all_count += $faculty_grade_all_count;
+		}
+		$data[] = [
+			'name' => 'poor_grade_1',
+			'attr' => 'all',
+			'attr_value' => '',
+			'times' => $subsidy['begin_time'],
+			'year' => 'all',
+			'value' => $grade_1_all_count
+		];
+		$data[] = [
+			'name' => 'poor_grade_2',
+			'attr' => 'all',
+			'attr_value' => '',
+			'times' => $subsidy['begin_time'],
+			'year' => 'all',
+			'value' => $grade_2_all_count
+		];
+		$data[] = [
+			'name' => 'poor_grade_3',
+			'attr' => 'all',
+			'attr_value' => '',
+			'times' => $subsidy['begin_time'],
+			'year' => 'all',
+			'value' => $grade_3_all_count
+		];
+		$data[] = [
+			'name' => 'poor_grade',
+			'attr' => 'all',
+			'attr_value' => '',
+			'times' => $subsidy['begin_time'],
+			'year' => 'all',
+			'value' => $grade_all_count
+		];
+		//print_r($data);exit;
+		DB::name('evaluation_statistics')->where('times',$subsidy['begin_time'])->delete();
+		foreach($data as $key => $value)
+		{
+			DB::name('evaluation_statistics')->insert($value);
+		}
+		return "success";
 	}
+	
 }

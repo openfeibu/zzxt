@@ -25,66 +25,11 @@ class Index extends Base
 	{
 		$news_model=new NewsModel;
 		$member_model=new MemberList;
-		//热门文章排行
-		$news_list=$news_model->where('news_l',$this->lang)->order('news_hits desc')->limit(0,10)->select();
-		$this->assign('news_list',$news_list);
-		//总文章数
-		$news_count=$news_model->count();
-		$this->assign('news_count',$news_count);
-        //总会员数
-        $members_count=$member_model->count();
-        $this->assign('members_count',$members_count);
-        //总留言数
-        $sugs_count=Db::name('plug_sug')->count();
-        $this->assign('sugs_count',$sugs_count);
-        //总评论数
-        $coms_count=Db::name('comments')->count();
-        $this->assign('coms_count',$coms_count);
+		$years = getYearArr();
+		$eval_subsidy = DB::name('set_subsidy')->where('id',5)->find();
+		$this->assign('years',$years);
+		$this->assign('eval_subsidy',$eval_subsidy);
 		
-		//日期时间戳
-		list($start_t, $end_t) = Time::today();
-		list($start_y, $end_y) = Time::yesterday();
-
-		//今日发表文章数
-		$tonews_count=$news_model->whereTime('news_time', 'between', [$start_t, $end_t])->count();
-		$this->assign('tonews_count',$tonews_count);
-
-		//昨日文章数
-		$ztnews_count=$news_model->whereTime('news_time', 'between', [$start_y, $end_y])->count();
-		$this->assign('ztnews_count',$ztnews_count);
-		//今日提升比
-		$difday=($ztnews_count>0)?($tonews_count-$ztnews_count)/$ztnews_count*100:0;
-		$this->assign('difday',$difday);
-		
-		//今日增加会员
-        $tomembers_count=$member_model->whereTime('member_list_addtime', 'between', [$start_t, $end_t])->count();
-        $this->assign('tomembers_count',$tomembers_count);
-        //昨日会员数
-        $ztmembers_count=$member_model->whereTime('member_list_addtime', 'between', [$start_y, $end_y])->count();
-        $this->assign('ztmembers_count',$ztmembers_count);
-		//今日提升比
-        $difday_m=($ztmembers_count>0)?($tomembers_count-$ztmembers_count)/$ztmembers_count*100:0;
-        $this->assign('difday_m',$difday_m);
-		
-        //今日留言
-        $tosugs_count=Db::name('plug_sug')->whereTime('plug_sug_addtime', 'between', [$start_t, $end_t])->count();
-        $this->assign('tosugs_count',$tosugs_count);
-		//昨日留言
-        $ztsugs_count=Db::name('plug_sug')->whereTime('plug_sug_addtime', 'between', [$start_y, $end_y])->count();
-        $this->assign('ztsugs_count',$ztsugs_count);
-		//今日提升比
-        $difday_s=($ztsugs_count>0)?($tosugs_count-$ztsugs_count)/$ztsugs_count*100:0;
-        $this->assign('difday_s',$difday_s);
-		
-        //今日评论
-        $tocoms_count=Db::name('comments')->whereTime('createtime', 'between', [$start_t, $end_t])->count();
-        $this->assign('tocoms_count',$tocoms_count);
-		//昨日评论
-        $ztcoms_count=Db::name('comments')->whereTime('createtime', 'between', [$start_y, $end_y])->count();
-        $this->assign('ztcoms_count',$ztcoms_count);
-		//今日提升比
-        $difday_c=($ztcoms_count>0)?($tocoms_count-$ztcoms_count)/$ztcoms_count*100:0;
-        $this->assign('difday_c',$difday_c);
 		//渲染模板
         return $this->fetch();
 	}
