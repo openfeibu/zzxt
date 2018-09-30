@@ -43,12 +43,13 @@ table.gridtable td {
 			{if $admin['group_id'] == 1}
 			{:hook('maintain')}
 			{/if}
-			{if $admin['group_id'] == 22}
+			{if $admin['group_id'] == 23 || $admin['group_id'] == 1}
 			<div class="row" style="text-align:center">
-				<h4><?php echo \think\Db::name('faculty')->where('faculty_number',$admin['faculty_number'])->value('faculty_name') ?>家庭经济困难认定信息汇总</h4>
+				<h4>广东农工商职业技术学院家庭经济困难认定信息汇总表</h4>
 				<table class="gridtable">
 					<tr>
 						<td>年级</td>
+						<td>年级学生数</td>
 						<td>家庭经济困难学生总人数</td>
 						<td>特殊困难学生总人数</td>
 						<td>比较困难学生总人数</td>
@@ -58,6 +59,41 @@ table.gridtable td {
 					<tr>
 						
 						<td>{$year}</td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_student_count' ")->sum('value') ?></td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade' ")->sum('value') ?></td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_1' ")->sum('value') ?></td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_2'")->sum('value') ?></td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_3'")->sum('value') ?></td>
+					</tr>
+					{/foreach}
+					<tr>
+						<td>总计</td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'student_count' AND attr = 'all'")->value('value') ?></td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade' AND attr = 'all'")->value('value') ?></td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade_1' AND attr = 'all'")->value('value') ?></td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade_2' AND attr = 'all'")->value('value') ?></td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade_3' AND attr = 'all'")->value('value') ?></td>
+					</tr>
+				</table>
+			</div>
+			{/if}
+			{if $admin['group_id'] == 22}
+			<div class="row" style="text-align:center">
+				<h4><?php echo \think\Db::name('faculty')->where('faculty_number',$admin['faculty_number'])->value('faculty_name') ?>家庭经济困难认定信息汇总表</h4>
+				<table class="gridtable">
+					<tr>
+						<td>年级</td>
+						<td>年级学生数</td>
+						<td>家庭经济困难学生总人数</td>
+						<td>特殊困难学生总人数</td>
+						<td>比较困难学生总人数</td>
+						<td>一般困难学生总人数</td>
+					</tr>
+					{foreach $years as $key => $year}
+					<tr>
+						
+						<td>{$year}</td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
 						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
 						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_1' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
 						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_2' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
@@ -66,6 +102,7 @@ table.gridtable td {
 					{/foreach}
 					<tr>
 						<td>总计</td>
+						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
 						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
 						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade_1' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
 						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade_2' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>

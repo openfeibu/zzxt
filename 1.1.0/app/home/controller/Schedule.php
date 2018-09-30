@@ -94,14 +94,14 @@ class Schedule extends Base
 	{
 		$facultys = DB::name('faculty')->select();
 		$subsidy = DB::name('set_subsidy')->where('id',5)->find();
-		$grade_1_all_count = $grade_2_all_count = $grade_3_all_count = $grade_all_count = 0;
+		$grade_1_all_count = $grade_2_all_count = $grade_3_all_count = $grade_all_count = $student_count = 0;
 		$data = [];
 		foreach($facultys as $faculty_key => $faculty)
 		{
 			/*特殊困难*/
 			$years = getYearArr();
 			
-			$faculty_grade_1_all_count = $faculty_grade_2_all_count = $faculty_grade_3_all_count = $faculty_grade_all_count = 0;
+			$faculty_grade_1_all_count = $faculty_grade_2_all_count = $faculty_grade_3_all_count = $faculty_grade_all_count = $faculty_student_count = 0;
 			foreach($years as $year_key => $year)
 			{
 				$where = "(school_poor_grade = 1 OR (faculty_poor_grade = 1 AND school_poor_grade is NULL)) AND u.faculty_number = '".$faculty['faculty_number']."'";
@@ -149,11 +149,23 @@ class Schedule extends Base
 					'value' => $faculty_year_grade_count
 				];
 				
+				$where = " u.faculty_number = '".$faculty['faculty_number']."'";
+				$faculty_year_student_count = $this->evaluation->evaluation_year_count($year,$where);
+				$data[] = [
+					'name' => 'faculty_year_student_count',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_student_count
+				];
+				
 				$faculty_grade_1_all_count += $faculty_year_grade_1_count;
 				$faculty_grade_2_all_count += $faculty_year_grade_2_count;
 				$faculty_grade_3_all_count += $faculty_year_grade_3_count;
 				$faculty_grade_all_count += $faculty_year_grade_count;
-
+				$faculty_student_count += $faculty_year_student_count;
+				
 			}
 			$data[] = [
 				'name' => 'faculty_poor_grade_1',
@@ -187,10 +199,19 @@ class Schedule extends Base
 				'year' => 'all',
 				'value' => $faculty_grade_all_count
 			];
+			$data[] = [
+				'name' => 'faculty_student_count',
+				'attr' => 'faculty_number',
+				'attr_value' => $faculty['faculty_number'],
+				'times' => $subsidy['begin_time'],
+				'year' => 'all',
+				'value' => $faculty_student_count
+			];
 			$grade_1_all_count += $faculty_grade_1_all_count;
 			$grade_2_all_count += $faculty_grade_2_all_count;
 			$grade_3_all_count += $faculty_grade_3_all_count;
 			$grade_all_count += $faculty_grade_all_count;
+			$student_count += $faculty_student_count;
 		}
 		$data[] = [
 			'name' => 'poor_grade_1',
@@ -223,6 +244,14 @@ class Schedule extends Base
 			'times' => $subsidy['begin_time'],
 			'year' => 'all',
 			'value' => $grade_all_count
+		];
+		$data[] = [
+			'name' => 'student_count',
+			'attr' => 'all',
+			'attr_value' => '',
+			'times' => $subsidy['begin_time'],
+			'year' => 'all',
+			'value' => $student_count
 		];
 		//print_r($data);exit;
 		DB::name('evaluation_statistics')->where('times',$subsidy['begin_time'])->delete();
