@@ -42,6 +42,7 @@ class Schedule extends Base
 			if($new_student)
 			{
 				$data = [
+					'studentid' => $new_student['studentid'],
 					'profession' => $new_student['profession'],
 					'department_name' => $new_student['department_name'],
 					'class_name' => $new_student['class_name'],
