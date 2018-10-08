@@ -8,14 +8,14 @@ use think\captcha\Captcha;
 use app\admin\model\Data;
 use app\admin\model\DataHandle;
 use app\admin\model\DataOracle;
-use app\admin\model\Evaluation;
+use app\admin\model\Evaluation as EvaluationModel;
 
 class Schedule extends Base
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->evaluation = new Evaluation();
+		$this->evaluation = new EvaluationModel();
 	}
 	public function updateStudentInfo()
 	{
