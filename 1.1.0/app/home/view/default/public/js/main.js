@@ -202,3 +202,14 @@ function imgRemove() {
 };
 
 
+function ajax_page(page) {
+	load = layer.load(1);
+	$.ajax({
+		type:"POST",
+		data:$('#list-filter').serialize()+'&page='+page,
+		success: function(data,status){
+			layer.close(load);
+			$("#ajax-data").html(data);
+		}
+	});
+}
