@@ -1782,6 +1782,7 @@ function handleApply($apply = array())
 	}
 	if (isset($apply['faculty_opinion']) && !empty($apply['faculty_opinion'])) {
 		$apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
+		$apply['faculty_opinion']['text'] = $apply['faculty_opinion']['text'] == '同意' ? '同意小组评议' : $apply['faculty_opinion']['text'];
 	} else {
 		$apply['faculty_opinion']['time'] = time();
 		$apply['faculty_opinion']['text'] = '';

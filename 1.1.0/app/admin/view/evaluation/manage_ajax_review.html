@@ -32,6 +32,11 @@
         <div class="audit_opera">
             <button class="btn btn-primary btn-sm" type="submit" name="pass" {if $row.status != 4}disabled{/if}>提交</button>
         </div>
+		{if $row.status == 4}
+		<div class="audit_opera">
+            <button class="btn btn-warning btn-sm eval_reject" type="button" attr-id="{$row.evaluation_id}">驳回</button>
+        </div>
+		{/if}
         <!-- <div class="audit_opera"> -->
             <!-- <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if $row.status == 9}disabled{/if} value="1">不同意</button> -->
         <!-- </div> -->

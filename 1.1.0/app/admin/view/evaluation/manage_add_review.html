@@ -79,9 +79,11 @@
                     <tr>
                         <td style="width: 266px;"></td>
                         <td class="tab_content" style="width: 266px;">
+							<div>
                             <input type="hidden" name="evaluation_id" value="{$user.evaluation_id}">
                             <input type="hidden" name="status_id" value="{$status_id}">
                             <button type="submit" class="btn btn-primary" name="pass">提交</button>
+							<button class="btn btn-warning eval_reject" type="button" attr-id="{$user.evaluation_id}">驳回</button>
                             <!-- <button type="submit" class="btn btn-danger" name="fail" value="1">不同意</button> -->
 							{if $previous_url}
 							<a href="{$previous_url}" class="btn btn-success">上一个</a> 
@@ -89,6 +91,7 @@
 							{if $next_url}
 							<a href="{$next_url}" class="btn btn-success">下一个</a> 
 							{/if}
+							</div>
                         </td>
                         <td style="width: 266px;"></td>
                     </tr>

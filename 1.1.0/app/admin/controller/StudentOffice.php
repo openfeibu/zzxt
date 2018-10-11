@@ -285,7 +285,7 @@ class StudentOffice extends Base
         $this->assign('faculty', $this->faculty);
         $this->assign('user', $data_arr);
         $this->assign('page', $show);
-        $this->assign('status', [4,5,9]);
+        //$this->assign('status', [4,5,9]);
         if(request()->isAjax()){
 			return $this->fetch('evaluation/manage_ajax_review');
 		}else{
@@ -418,4 +418,17 @@ class StudentOffice extends Base
 		
         return $this->view->fetch('evaluation/manage_add_review');
     }
+	public function reject()
+	{
+		$evaluation_model = new Evaluation();
+		$evaluation_id = input('evaluation_id');
+		$eval_app = $evaluation_model->getEvaluation($evaluation_id);
+		if($eval_app['evaluation_status'] != 4)
+		{
+			$this->error("该状态下不能驳回");
+		}
+		DB::name('evaluation_application')->where('evaluation_id',$evaluation_id)->update(['evaluation_status' => 3,'faculty_opinion' => '','faculty_poor_grade' => NULL]);
+		DB::name('evaluation_status')->where('evaluation_id',$evaluation_id)->update(['status' => 3]);
+		$this->success("操作成功");
+	}
 }
