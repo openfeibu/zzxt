@@ -23,7 +23,7 @@
 	{/if}
     <td class="tab_content">
         <form action="{:url('admin/EvaluationHandle/faculty')}" class="passingForm2" method="post">
-		<input name="faculty_opinion[text]" class="text" type="hidden" value="同意"/>
+		<input name="faculty_opinion[text]" class="text" type="hidden" value="同意小组评级"/>
         <input type="hidden" name="user_name" value="{:session('admin_auth.admin_username')}">
         <input type="hidden" name="status_id" value="{$row.status_id}" />
         <div class="audit_opera">
