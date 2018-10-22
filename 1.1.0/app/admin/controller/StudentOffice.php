@@ -263,8 +263,8 @@ class StudentOffice extends Base
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%' )" ;
         }
-        $order = "charindex(','+convert(varchar,status)+',',',4,3,2,1,5,6,7,8,9,')";
-        $where .= " AND ass.status in(1,2,3,4,5,6,7,8,9)";
+        $order = "charindex(','+convert(varchar,status)+',',',0,1,2,3,4,5,6,7,8,9,')";
+        $where .= " AND ass.status in(0,1,2,3,4,5,6,7,8,9)";
         $data = $this->evaluation->getEvaluationList($where,$order);
         $show=$data->render();
 		$show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
@@ -409,8 +409,8 @@ class StudentOffice extends Base
         $this->assign('material', $material);
 		
 		$where = " 1 = 1  ";
-		$where .= " AND evaluation_status in(1,2,3,4,5,6,7,8,9) ";
-		$order = "charindex(','+convert(varchar,evaluation_status)+',',',1,2,3,4,5,6,7,8,9,')";
+		$where .= " AND evaluation_status in(0,1,2,3,4,5,6,7,8,9) ";
+		$order = "charindex(','+convert(varchar,evaluation_status)+',','0,1,2,3,4,5,6,7,8,9,')";
 		$previous_url = $this->evaluation->getEvaluationPreviousUrl($apply['evaluation_id'],'StudentOffice',$where);
 		$next_url = $this->evaluation->getEvaluationNextUrl($apply['evaluation_id'],'StudentOffice',$where);
 		$this->assign('previous_url', $previous_url);
