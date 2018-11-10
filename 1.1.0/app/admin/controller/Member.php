@@ -192,7 +192,13 @@ class Member extends Base
 		if($rst){
 			$this->error('此学生已关联管理员,请从管理员处删除',url('admin/Member/member_list', array('p' => $p)));
 		}else{
+			$member = $member_model->where(array('member_list_id'=>$member_list_id))->find();
+			
 			$rst=$member_model->where(array('member_list_id'=>$member_list_id))->delete();
+			DB::name('user')->where(array('id_number'=>$member['id_number']))->delete();
+			DB::name('evaluation_application')->where(array('member_list_id'=>$member_list_id))->delete();
+			DB::name('evaluation_status')->where(array('member_list_id'=>$member_list_id))->delete();
+			DB::name('evaluation_material')->where(array('member_list_id'=>$member_list_id))->delete();
 			if($rst!==false){
 				$this->success('学生删除成功',url('admin/Member/member_list', array('p' => $p)));
 			}else{

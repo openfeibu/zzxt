@@ -1,0 +1,60 @@
+<style>
+.w800 {
+    width: 800px;
+    margin: 0 auto;
+    !important: ;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.table td{
+    padding: 8px;
+    vertical-align: top;
+    border: 1px solid #ddd;
+}
+
+.table_heading{width: 100%;}
+
+.tab_title{text-align: center;font-weight: bold;font-size: 12px;height:30px;line-height: 30px;}
+.tab_content{text-align: center;font-size: 14px;height:30px;line-height: 30px;}
+.table .tab_radio{text-align: left!important;}
+.tab_opinion{width: 90%;height:100px;resize: none;line-height: 24px;overflow: hidden;}
+
+.tab_sign>input,.tab_time>input{border:none;width: 90%;text-align: center;}
+.tab_sign{float: right;margin-right: 5px;}
+.tab_sign>input[type="text"]{width: 120px;border-bottom: 1px solid #555555;}
+.tab_sign>input[disabled]{background-color: #fff!important;}
+.tab_time{float: right;margin-right: 10%;}
+.tab_time>input[type="text"]{width: 50px;border-bottom:1px solid #555555;}
+.tab_time>input[disabled]{background-color: #fff!important;}
+.tab_left{text-align: left;margin-left:5%;}
+
+
+</style>
+
+	<table class="table_heading" style="width:700px">
+	<tr>
+		<td colspan="2"></td>
+		<td style="text-align: right"><span style="font-size: 13px;color:grey;">广东农工商职业技术学院</span></td>
+	</tr>
+	<tr>
+		<td colspan="3" style="font-size: 25px;font-weight: 600;text-align: center;border-top: 1px solid #000;line-height: 48px;">
+			普通本科高校、高等职业学校国家{php}echo config('application_type.'.$type_id);{/php}申请表
+		</td>
+	</tr>
+	</table>
+	<table class="table table-bordered tab_center" style="width:700px">
+	<!--本人情况-->
+	{if $type_id == 1}
+	{include file="common/scholar" /}
+	{else}
+	{include file="common_table/grants_inspirational" /}
+	{/if}
+	</table>

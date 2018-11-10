@@ -635,6 +635,20 @@ function read($filename,$type='Excel5')
     }
     return $excelData;
 }
+function readWithSuffix($filename,$suffix)
+{
+    switch ($suffix)
+    {
+        case "xls":
+            $type = 'Excel5';
+            break;
+        case "xlsx":
+            $type = "Excel2007";
+            break;
+
+    }
+    return read($filename,$type);
+}
 /**
  * 获取新闻分类ids
  * @author rainfer <81818832@qq.com>
