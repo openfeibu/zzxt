@@ -64,12 +64,14 @@ class Test extends Base
 					{
 						var_dump($val[0].$val[1]."不存在，请检查学号是否正确");
 					}else{
+						
 						$evaluation = $evaluation_model->getMemberEvaluation($member_list_id);
 						if(!$evaluation)
 						{
 							var_dump($val[0].$val[1]."未申请，请检查");
 						}else
 						{
+							/*
 							$array = array();
 							$evdata = array();
 							$array['name'] = '林淑贤';
@@ -92,9 +94,10 @@ class Test extends Base
 									'update_at' => time(),
 									'status' => $evdata['evaluation_status']
 								]);
-							
+							*/	
 						}
-					}					
+					}	
+				
 				}
  			}
 			var_dump($res);exit;

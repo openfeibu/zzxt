@@ -55,6 +55,7 @@ class Evaluation extends Model
 			$data['system_poor_grade'] = $grade['poor_grade'];
 			$data['group_poor_grade_name'] = self::getGradeData($data['group_poor_grade'],'name');
 			$data['faculty_poor_grade_name'] = self::getGradeData($data['faculty_poor_grade'],'name');
+			$data['school_poor_grade_name'] = self::getGradeData($data['school_poor_grade'],'name');
 			$data['poor_grade_name'] = self::getGradeData($data['school_poor_grade'],'name');
 			$data = handleApply($data);
 		}

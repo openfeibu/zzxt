@@ -294,6 +294,9 @@ class StudentOffice extends Base
     }
     public function showEvaluationListExport()
     {
+		set_time_limit(0);      //执行时间无限
+		ini_set('memory_limit', '-1');    //内存无限
+		
         $faculty_number = input('faculty_number',0);
         $class_number = input('class_number',0);
         $studentname = input('studentname','');
@@ -323,9 +326,17 @@ class StudentOffice extends Base
             $data[$key]['status'] = config('evaluation_status.'.$val['status']);
 			$data[$key]['group_opinion_text'] = $val['group_opinion']['text'];
 			$data[$key]['faculty_opinion_text'] = $val['faculty_opinion']['text'];
+			$data[$key]['school_opinion_text'] = $val['school_opinion']['text'];
+			
+			if(!$val['school_poor_grade'] && !empty($val['faculty_poor_grade']))
+			{
+				$data[$key]['school_poor_grade'] = $val['faculty_poor_grade'];
+				$data[$key]['school_poor_grade_name'] = Evaluation::getGradeData($data[$key]['school_poor_grade'],'name');
+				$data[$key]['school_opinion_text'] = '同意学院评议';
+			}
         }
-        $field_titles = ['学号','姓名','学院','专业','系统分','系统评级','班级评级','班级评议','学院评级','学院评议'];
-        $fields = ['studentid','studentname','department_name','profession','assess_fraction','system_poor_grade_name','group_poor_grade_name','group_opinion_text','faculty_poor_grade_name','faculty_opinion_text'];
+        $field_titles = ['学号','姓名','学院','专业','系统分','系统评级','班级评级','班级评议','学院评级','学院评议','学校评级','学校评议'];
+        $fields = ['studentid','studentname','department_name','profession','assess_fraction','system_poor_grade_name','group_poor_grade_name','group_opinion_text','faculty_poor_grade_name','faculty_opinion_text','school_poor_grade_name','school_opinion_text'];
         $table = '学生家庭经济困难认定'.date('YmdHis');
         export_excel($data,$table,$field_titles,$fields);
     }
