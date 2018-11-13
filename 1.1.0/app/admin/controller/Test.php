@@ -78,9 +78,9 @@ class Test extends Base
 							$array['time'] = time();
 							if($grade == $evaluation['faculty_poor_grade'])
 							{
-								$array['text'] = '同意学院评级';
+								$array['text'] = '同意学院评议';
 							}else{
-								$array['text'] = '不同意学院评级';
+								$array['text'] = '不同意学院评议';
 							}
 							$evdata['school_opinion'] = json_encode($array);
 							$evdata['school_poor_grade'] = $grade;

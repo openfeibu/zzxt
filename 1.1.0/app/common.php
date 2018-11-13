@@ -1796,7 +1796,9 @@ function handleApply($apply = array())
 	}
 	if (isset($apply['faculty_opinion']) && !empty($apply['faculty_opinion'])) {
 		$apply['faculty_opinion'] = json_decode($apply['faculty_opinion'], true);
-		$apply['faculty_opinion']['text'] = $apply['faculty_opinion']['text'] == '同意' ? '同意小组评议' : $apply['faculty_opinion']['text'];
+		$apply['faculty_opinion']['text'] = in_array($apply['faculty_opinion']['text'],['同意','同意小组评级']) ? '同意小组评议' : $apply['faculty_opinion']['text'];
+		$apply['faculty_opinion']['text'] = in_array($apply['faculty_opinion']['text'],['不同意','不同意小组评级']) ? '不同意小组评议' : $apply['faculty_opinion']['text'];
+		//$apply['faculty_opinion']['text'] = str_replace('评级','评议',$apply['faculty_opinion']['text']);
 	} else {
 		$apply['faculty_opinion']['time'] = time();
 		$apply['faculty_opinion']['text'] = '';
@@ -1804,6 +1806,10 @@ function handleApply($apply = array())
 	}
 	if (isset($apply['school_opinion']) && !empty($apply['school_opinion'])) {
 		$apply['school_opinion'] = json_decode($apply['school_opinion'], true);
+		
+		$apply['school_opinion']['text'] = in_array($apply['school_opinion']['text'],['同意','同意学院评级']) ? '同意学院评议' : $apply['school_opinion']['text'];
+		$apply['school_opinion']['text'] = in_array($apply['school_opinion']['text'],['不同意','不同意学院评级']) ? '不同意学院评议' : $apply['school_opinion']['text'];
+		//$apply['school_opinion']['text'] = str_replace('评级','评议',$apply['school_opinion']['text']);
 	} else {
 		$apply['school_opinion']['time'] = time();
 		$apply['school_opinion']['text'] = '';
