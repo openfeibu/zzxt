@@ -69,7 +69,7 @@ class Student extends Base
                     }
                     $this->success('成功',url('/home/student/nationalScholarship'));
                 }
-                $this->error("抱歉，大二或大三学生才能申请奖学金");
+                $this->error("抱歉，大二及以上学生才能申请奖学金");
                 break;
 
             //励志奖学金
@@ -91,7 +91,7 @@ class Student extends Base
                     }		
 					$this->success('成功',url('/home/student/inspirational'));	
                 }
-                $this->error("抱歉，大二或大三学生才能申请励志奖学金");
+                $this->error("抱歉，大二及以上学生才能申请励志奖学金");
                 break;
 
             //助学金
