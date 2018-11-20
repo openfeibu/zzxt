@@ -69,7 +69,7 @@ class Student extends Base
                     }
                     $this->success('成功',url('/home/student/nationalScholarship'));
                 }
-                $this->error("抱歉，大二或大三生才能申请奖学金");
+                $this->error("抱歉，大二或大三学生才能申请奖学金");
                 break;
 
             //励志奖学金
@@ -84,14 +84,14 @@ class Student extends Base
                 }
 
                 //判断是否大二
-                if($grade == 2) {
+                if($grade == 2|| $grade == 3) {
                     //判断是否申请过国家奖学金
                     if ($this->NationalScholarship->isHaveApply($this->user['member_list_id'], 1)) {
 						$this->error("抱歉，你已申请奖学金，不能申请励志奖学金");
                     }		
 					$this->success('成功',url('/home/student/inspirational'));	
                 }
-                $this->error("抱歉，大二学生才能申请励志奖学金");
+                $this->error("抱歉，大二或大三学生才能申请励志奖学金");
                 break;
 
             //助学金
