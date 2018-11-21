@@ -144,11 +144,12 @@ class Student extends Base
 			];
 			DB::name('user')->where('id_number',$this->user['id_number'])->update($user_data);
             //删除不必要的数据
-            unset($data['studentname'],$data['gender'],$data['birthday'],$data['phone']);
+            unset($data['studentname'],$data['gender'],$data['birthday'],$data['phone'],$data['multiple_id']);
 
             if ($application) {
                 //提交过的话。做更新处理
                 $data['update_at'] = time();
+				$data['check_status'] = 1;
                 $apply = MultipleScholarship::where('multiple_id', $application['multiple_id'])->update($data);
                 if (!$apply) {
 					return [
@@ -157,7 +158,7 @@ class Student extends Base
 					];
                 }
 				//更新申请状态
-				$res = $this->applyStatus->updateStatus($bool['multiple_id'], $type_id ,$this->status);
+				$res = $this->applyStatus->updateStatus($application['multiple_id'], $type_id ,1);
 				return [
 					'code' => 200,
 					'message' => '更新成功',
@@ -235,6 +236,7 @@ class Student extends Base
             if ($application) {
                 //提交过的话。做更新处理
                 $data['update_at'] = time();
+				$data['check_status'] = 1;
                 $apply = MultipleScholarship::where('multiple_id', $application['multiple_id'])
                     ->update($data);
                 if (!$apply) {
@@ -243,7 +245,7 @@ class Student extends Base
 						'message' => '更新失败，请联系管理员',
 					];
                 }
-				$res = $this->applyStatus->updateStatus($application['multiple_id'], $type_id ,$this->status);
+				$res = $this->applyStatus->updateStatus($application['multiple_id'], $type_id ,1);
 				return [
 					'code' => 200,
 					'message' => '更新成功',
@@ -321,12 +323,13 @@ class Student extends Base
             if ($application) {
                 //提交过，做更新处理
                 $data['update_at'] = time();
+				$data['check_status'] = 1;
                 $apply = NationalScholarship::where('national_id', $application['national_id'])
 						->update($data);
                 if (!$apply) {
                     return $this->error("更新失败");
                 }
-				$res = $this->applyStatus->updateStatus($application['national_id'],$type_id ,$this->status);
+				$res = $this->applyStatus->updateStatus($application['national_id'],$type_id ,1);
                 return $this->success("更新成功");
             }
             //没提交过，按新增处理
@@ -509,7 +512,7 @@ class Student extends Base
 				$uApplication = $this->MultipleScholarship->isHaveApply($this->user['member_list_id'],3);
 				if ($uApplication) {
 					$u_status = $ucheck_status = $uApplication['check_status'];
-					if (0 < $ucheck_status && $ucheck_status < 4) {
+					if (0 <= $ucheck_status && $ucheck_status < 4) {
 						$u_class = 'reviewing';
 					} elseif (5 <= $ucheck_status && $ucheck_status <= 7) {
 						$u_class = 'review-error';

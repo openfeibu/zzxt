@@ -1,7 +1,7 @@
 {foreach name="user" item="row" key="k" }
 <tr>
     <td>
-        {if !in_array($row.check_status,[1,2])}
+        {if !in_array($row.check_status,[0,1,2])}
         {$row.status_id}
         {else}
         <label class="pos-rel">
@@ -14,7 +14,7 @@
 	{if $type_id == 1}
 	<td>{$row.reason}</td>
 	<td>
-        {if !in_array($row.check_status,[1,2])}
+        {if !in_array($row.check_status,[0,1,2])}
         {$row.group_opinion.text}
         {else}
         <textarea name="group_opinion[text]" class="text">{$row.group_opinion.text|default="同意"}</textarea>
@@ -24,7 +24,7 @@
 	<td>{$row.poor_grade_name}</td>
 	<td>{$row.reason}</td>
 	<td>
-        {if !in_array($row.check_status,[1,2])}
+        {if !in_array($row.check_status,[0,1,2])}
         {$row.group_opinion.text}
         {else}
         <textarea name="group_opinion[text]" class="text">{$row.group_opinion.text|default="同意"}</textarea>
@@ -32,18 +32,27 @@
     </td>
 	{/if}
 	<td>
-		{php}echo config('check_status.'.$row['check_status']);{/php}
+		{php}echo config('application_status.'.$row['check_status']);{/php}
 	</td>
     <td>
         <div class="audit_opera">
             <div action="{:url('admin/ScholarshipHandle/MultipleCounselorFill')}" class="passingDiv2" method="post">
                 <input type="hidden" name="status_id" value="{$row.status_id}" />
                 <div class="audit_opera">
-                    <button class="btn btn-primary btn-sm" type="submit" name="pass" {if !in_array($row.check_status,[1,2])}disabled{/if}>同意</button>
+                    <button class="btn btn-primary btn-sm" type="submit" name="pass" {if !in_array($row.check_status,[0,1,2])}disabled{/if}>同意</button>
                 </div>
                 <div class="audit_opera">
-                    <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if !in_array($row.check_status,[1,2])}disabled{/if} value="1">不同意</button>
+                    <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if !in_array($row.check_status,[0,1,2])}disabled{/if} value="1">不同意</button>
                 </div>
+			</div>
+			<div>
+				{if in_array($row.check_status,[0,1,2])}
+				<div class="audit_opera">
+					<button type="button" class="btn-sm btn-warning scholar_callback" status_id="{$row.status_id}" {if $row.check_status == 0 }disabled{/if}>打回重填
+					</button>
+				</div>
+				{/if}
+				
                 <a href="{$detail_url}&id={$row.status_id}" class="btn btn-info btn-sm">查看</a>
             </div>
         </div>

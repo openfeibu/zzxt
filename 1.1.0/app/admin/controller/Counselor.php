@@ -74,9 +74,9 @@ class Counselor extends Base
         {
             $where .= " AND (m.member_list_username LIKE '%".$studentname."%' OR m.member_list_nickname LIKE '%".$studentname."%' OR m.id_number LIKE '%".$studentname."%' )" ;
         }
-        $order = "charindex(','+convert(varchar,check_status)+',',',1,2,3,4,5,6,7,8,9,')";
+        $order = "charindex(','+convert(varchar,check_status)+',',',0,1,2,3,4,5,6,7,8,9,')";
 		
-        $where .= " AND check_status in(1,2,3,4,5,6,7,8,9)";
+        $where .= " AND check_status in(0,1,2,3,4,5,6,7,8,9)";
         if($id == 1)
         {
             $data = $this->national->getNationalList($where,$order);
@@ -148,7 +148,7 @@ class Counselor extends Base
         $this->assign('user', $apply);
 		
 		$where = " u.class_number in (".implode(',',$this->class_number).") ";
-		$where .= " AND check_status in(1,2,3,4,5,6,7,8,9) ";
+		$where .= " AND check_status in(0,1,2,3,4,5,6,7,8,9) ";
 		$previous_url = $this->scholarships->getScholarshipPreviousUrl($type_id,$apply_id,'Counselor/showMaterial'.$type_id,$where);
 		$next_url = $this->scholarships->getScholarshipNextUrl($type_id,$apply_id,'Counselor/showMaterial'.$type_id,$where);
 

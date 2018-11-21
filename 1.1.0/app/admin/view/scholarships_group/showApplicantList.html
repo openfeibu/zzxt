@@ -26,7 +26,7 @@
                     </select>
                     <select class="form-control tab_select class_select ajax_change" name="status">
                         <option value="">全部状态</option>
-                        {foreach $Think.config.check_status as $k => $v}
+                        {foreach $Think.config.application_status as $k => $v}
                         <option value="{$k}" {if isset($status) && $status && $status == $k}selected{/if}>{$v}</option>
                         {/foreach}
                     </select>

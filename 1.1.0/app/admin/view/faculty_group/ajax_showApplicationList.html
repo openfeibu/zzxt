@@ -27,7 +27,7 @@
 	<td>{$row.group_opinion.text}</td>
 	{/if}
 	<td>
-		{php}echo config('check_status.'.$row['check_status']);{/php}
+		{php}echo config('application_status.'.$row['check_status']);{/php}
 	</td>
     <!-- <td> -->
         <!-- {if !in_array($row.check_status,[3])} -->

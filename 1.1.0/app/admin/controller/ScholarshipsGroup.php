@@ -142,7 +142,7 @@ class ScholarshipsGroup extends Base
         $this->assign('user', $apply);
 		
 		$where = " u.class_number =  ".$this->class_number;
-		$where .= " AND check_status in(1,2,3,4,5,6,7,8,9) ";
+		$where .= " AND check_status in(0,1,2,3,4,5,6,7,8,9) ";
 		$previous_url = $this->scholarships->getScholarshipPreviousUrl($type_id,$apply_id,'StudentOffice/showMaterial'.$type_id,$where);
 		$next_url = $this->scholarships->getScholarshipNextUrl($type_id,$apply_id,'Scholarships_group/showMaterial'.$type_id,$where);
 

@@ -112,12 +112,12 @@
                 <td colspan="4" class="k-s-content title">工作或学习单位</td>
             </tr>
             {if $is_data}
-                    {foreach $list.members as $r}
+                    {foreach $list.members as $k=> $r}
                     <tr>
-                        <td class="k-s-content content">{$r.name}</td>
-                        <td class="k-s-content content">{$r.age}</td>
-                        <td class="k-s-content content">{$r.relation}</td>
-                        <td colspan="4" class="k-s-content content">{$r.unit}</td>
+                        <td class="k-s-content content"><input type="text" name="members[{$k}][name]" value="{$r.name}" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[{$k}][age]" value="{$r.age}" class="noBlur"/></td>
+                        <td class="k-s-content content"><input type="text" name="members[{$k}][relation]" value="{$r.relation}" class="noBlur"/></td>
+                        <td colspan="4" class="k-s-content content"><input type="text" name="members[{$k}][unit]" value="{$r.unit}" class="noBlur"/></td>
                     </tr>
                     {/foreach}
                     {else}
@@ -206,8 +206,10 @@
 	</div>
 	-->
     <!--endprint3-->
-    {if !$is_data}
+    {if !$is_data }
 	<button class="print printHide" type="submit" id="schosubmit">提交</button>
+	{elseif isset($list) && $list['check_status'] == 0}
+	<button class="print printHide" type="submit" id="schosubmit">修改</button>
 	{/if}
     <button class="print printHide" onclick="preview(3)">打印</button>
     </form>
@@ -254,5 +256,11 @@ $("#schosubmit").click(function(){
 });
 </script>
 
-
+{if $is_data && $list['check_status'] != 0}
+<script>
+$("#schoForm").find("input").attr('disabled',true);
+$("#schoForm").find("select").attr('disabled',true);
+$("#schoForm").find("textarea").attr('disabled',true);
+</script>
+{/if}
 {include file="public/footer"}

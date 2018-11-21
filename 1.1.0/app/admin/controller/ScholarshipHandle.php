@@ -14,6 +14,7 @@ use app\admin\model\User as UserModel;
 use app\admin\model\Evaluation;
 use app\home\model\ScholarshipsApplyStatus;
 use app\home\model\MultipleScholarship;
+use app\home\model\NationalScholarship;
 
 class ScholarshipHandle extends Base
 {
@@ -23,6 +24,7 @@ class ScholarshipHandle extends Base
         $this->time = date('Y', time());
         $this->multiple = new MultipleScholarship();
         $this->applyStatus = new ScholarshipsApplyStatus();
+		$this->national = new NationalScholarship();
     }
     public function MultipleGroupFill(Request $request)
     {
@@ -260,4 +262,36 @@ class ScholarshipHandle extends Base
             'msg' => '操作成功',
         ];
     }
+	public function callback()
+	{
+		$status_id = input('status_id');
+		$apply_status = $this->applyStatus->get($status_id);
+		if(!$apply_status)
+		{
+			$this->error("数据不存在");
+		}
+		if($apply_status['fund_type'] == 3 || $apply_status['fund_type'] == 2)
+		{
+			$app = $this->multiple->get($apply_status['application_id']);
+		}else{
+			$app = $this->national->get($apply_status['application_id']);
+		}
+		if(!$app)
+		{
+			$this->error("数据不存在");
+		}
+		
+		if($apply_status['status'] > 2)
+		{
+			$this->error("已审核，不能打回");
+		}
+		if($apply_status['fund_type'] == 3 || $apply_status['fund_type'] == 2)
+		{	
+			$this->multiple->where('multiple_id',$apply_status['application_id'])->update(['check_status' => 0]);
+		}else{
+			$this->national->where('national_id',$apply_status['application_id'])->update(['check_status' => 0]);
+		}
+		$apply_status->where('status_id',$status_id)->update(['status' => 0]);
+		$this->success("操作成功");
+	}
 }

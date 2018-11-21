@@ -73,8 +73,8 @@ class FacultyGroup extends Base
         }else{
             $where .= " AND u.faculty_number = ".$this->faculty." ";
         }
-        $order = "charindex(','+convert(varchar,check_status)+',',',3,2,1,4,5,6,7,8,9,')";
-        $where .= " AND check_status in(1,2,3,4,5,6,7,8,9)";
+        $order = "charindex(','+convert(varchar,check_status)+',',',3,2,1,0,4,5,6,7,8,9,')";
+        $where .= " AND check_status in(0,1,2,3,4,5,6,7,8,9)";
         if($id == 1)
         {
             $data = $this->national->getNationalList($where,$order);
@@ -145,7 +145,7 @@ class FacultyGroup extends Base
         $this->assign('user', $apply);
 		
 		$where = " u.faculty_number = ".$this->faculty."  ";
-		$where .= " AND check_status in(1,2,3,4,5,6,7,8,9) ";
+		$where .= " AND check_status in(0,1,2,3,4,5,6,7,8,9) ";
 		$previous_url = $this->scholarships->getScholarshipPreviousUrl($type_id,$apply_id,'FacultyGroup/showMaterial'.$type_id,$where);
 		$next_url = $this->scholarships->getScholarshipNextUrl($type_id,$apply_id,'FacultyGroup/showMaterial'.$type_id,$where);
 
