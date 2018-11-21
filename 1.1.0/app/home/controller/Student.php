@@ -450,7 +450,7 @@ class Student extends Base
 				if (!$mApplication) {
 					if ($nApplication) {
 						$n_status = $ncheck_status = $nApplication['check_status'];
-						if(0 < $ncheck_status && $ncheck_status < 4) {
+						if(0 <= $ncheck_status && $ncheck_status < 4) {
 							$n_class = 'reviewing';
 						} elseif(5 <= $ncheck_status && $ncheck_status <= 7) {
 							$n_class = 'review-error';
@@ -474,7 +474,7 @@ class Student extends Base
 					if (!$nApplication) {
 						if ($mApplication) {
 							$m_status = $mcheck_status = $mApplication['check_status'];
-							if(0 < $mcheck_status && $mcheck_status < 4) {
+							if(0 <= $mcheck_status && $mcheck_status < 4) {
 								$m_class = 'reviewing';
 							} elseif(5 <= $mcheck_status && $mcheck_status <= 7) {
 								$m_class = 'review-error';
