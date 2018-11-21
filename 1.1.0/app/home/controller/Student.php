@@ -259,6 +259,7 @@ class Student extends Base
                 ->find();
 				$begintime = $subsidy['begin_time'];
 				$data['times'] = $begintime;
+				
             $insert = DB::name('multiple_scholarship')->insert($data);
             if (!$insert) {
 				return [

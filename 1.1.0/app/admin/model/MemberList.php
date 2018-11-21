@@ -111,4 +111,44 @@ class MemberList extends Model
 		}
 		return $school_user;
 	}
+	public function updateStudent($id_number,$studentid='')
+	{
+		$data_oracle_class = new DataOracle();
+		$data_class = new Data();
+		$where = " WHERE LOWER(SFZH) = LOWER('".$id_number."')";
+		$where_jwxt = " WHERE  当前所在级 <> '' AND 身份证号 = '".$id_number."' ";
+		if($studentid)
+		{
+			$xh = $studentid;
+			$xh_unfulll = substr($xh,-9);
+			$where .= " OR XH = '".$xh."' OR XH = '".$xh_unfulll."' ";
+			$where_jwxt .= " OR 学号 = '".$xh."' OR 学号 = '".$xh_unfulll."' ";
+		}
+		
+		$new_student = $data_oracle_class->getStudent($where);
+		if($new_student)
+		{
+			$data = [
+				'studentid' => $new_student['studentid'],
+				'profession' => $new_student['profession'],
+				'department_name' => $new_student['department_name'],
+				'class_name' => $new_student['class_name'],
+				'class_number' => $new_student['class_number'],
+				'faculty_number' => get_faculty_number_by_dwh($new_student['dwh']),
+			];
+			
+		}
+		
+		$new_student_jwxt = $data_class->getStudent($where_jwxt);
+		
+		if($new_student_jwxt)
+		{
+			$data['current_grade'] = $new_student_jwxt['current_grade'];
+		}
+
+		if(isset($data) && $data)
+		{
+			Db::name('user')->where('id_number',$id_number)->update($data);
+		}
+	}
 }

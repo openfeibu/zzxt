@@ -173,6 +173,8 @@ class Login extends Base
 					$school_user['faculty_number'] = get_faculty_number_by_dwh($new_student['dwh']);
 				}
 				$rst1 = Db::name('user')->insert($school_user);
+			}else{
+				(new MemberListModel())->updateStudent($member['id_number'],$user['studentid']);
 			}
 			if($remember && $member['user_status']){
 				//更新cookie

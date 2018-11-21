@@ -56,7 +56,7 @@
 		}
 		if(value.length <= 0)
 		{
-			layer.msg(title+' 不能为空', {icon: 5});
+			layer.alert(title+' 不能为空', {icon: 5});
 			return false;
 		}
 		if(_this.attr('exp'))
@@ -74,7 +74,7 @@
 			var rst = eval(func);
 			if(rst != true)
 			{
-				layer.msg(title+' '+rst, {icon: 5});
+				layer.alert(title+' '+rst, {icon: 5});
 				return false;
 			}
 			return true;
