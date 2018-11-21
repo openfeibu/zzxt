@@ -27,9 +27,7 @@ class Schedule extends Base
 		$data_oracle_class = new DataOracle();
 		$data_class = new Data();
 		$years = getYearArr();
-		
-		$count = Db::name("member_list")->alias('m')->join('yf_user u', 'u.id_number = m.id_number')->count();
-		
+
 		$local_students = Db::name("member_list")->alias('m')
 			->join('yf_user u', 'u.id_number = m.id_number')
 			//->where(" u.id in (11846,11848)")
