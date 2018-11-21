@@ -42,8 +42,16 @@
             <div class="audit_opera">
                 <button class="btn btn-info btn-sm btn-danger" type="submit" name="fail" {if $row.check_status !=4}disabled{/if} value="1">不同意</button>
             </div>
-            <div class="audit_opera">
-                <a href="{$detail_url}&id={$row.status_id}" class="btn btn-info btn-sm">查看</a>
+        </div>
+		<div>
+			{if in_array($row.check_status,[0,1,2])}
+			<div class="audit_opera">
+				<button type="button" class="btn-sm btn-warning scholar_callback" status_id="{$row.status_id}" {if $row.check_status == 0 }disabled{/if}>打回重填
+				</button>
+			</div>
+			{/if}
+			<div class="audit_opera">
+				<a href="{$detail_url}&id={$row.status_id}" class="btn btn-info btn-sm">查看</a>
             </div>
         </div>
     </td>
