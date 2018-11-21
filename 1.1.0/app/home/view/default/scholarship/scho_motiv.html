@@ -207,9 +207,9 @@
 	-->
     <!--endprint3-->
     {if !$is_data }
-	<button class="print printHide" type="submit" id="schosubmit">提交</button>
+	<button class="print printHide" type="button" id="schosubmit">提交</button>
 	{elseif isset($list) && $list['check_status'] == 0}
-	<button class="print printHide" type="submit" id="schosubmit">修改</button>
+	<button class="print printHide" type="button" id="schosubmit">修改</button>
 	{/if}
     <button class="print printHide" onclick="preview(3)">打印</button>
     </form>
