@@ -191,6 +191,7 @@ class Evaluation extends Model
 				->where("(school_poor_grade in (1,2,3) OR (faculty_poor_grade in (1,2,3) AND school_poor_grade is NULL))")
 				->where('times',$this->subsidy['begin_time'])
 				->find();
+				
         return $eval_app && time() > $this->subsidy['ypublic_end_time'] ? $eval_app : false;
 	}
 	
@@ -237,9 +238,10 @@ class Evaluation extends Model
 				->where('member_list_id',$member_list_id)
 				->where("(school_poor_grade in (1,2,3) OR (faculty_poor_grade in (1,2,3) AND school_poor_grade is NULL))")
 				->where('times',$this->subsidy['begin_time'])
-				->where('create_at','>=',$this->subsidy['ypublic_end_time'])
+				->where('create_at','<=',$this->subsidy['ypublic_end_time'])
                 ->field('evaluation_id,school_poor_grade,faculty_poor_grade')
 				->find();
+
 		if(!$eval_app)
 		{
 			$poor_grade = 4;
