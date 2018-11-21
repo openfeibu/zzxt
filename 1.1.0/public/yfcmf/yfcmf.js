@@ -1626,3 +1626,73 @@ $("body").on("click",".eval_callback",function () {
 		
 	})
 })
+$("body").on("click",".scholar_callback",function () {
+	$this = $(this);
+	layer.confirm('确定打回重填吗？', {
+		btn: ['确定','取消'] 
+	},function(){
+		load = layer.load();
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:'/admin/ScholarshipHandle/callback',
+			data:{'status_id':$this.attr('status_id')},// 你的formid
+			async: false,
+			error: function(request) {
+				layer.close(load);
+				layer.msg("连接失败",{icon: 5});
+				return false;
+			},
+			success: function(data) {
+				layer.close(load);
+				//$this.closest("form").find("button[name='pass']").attr('disabled',true);
+				//$this.closest("form").find("button[name='fail']").attr('disabled',true);
+				$this.attr('disabled',true);
+				if (data.code == 1 || data.code == 200) {
+					layer.msg(data.msg,{icon: 6});
+				}else{
+					layer.msg(data.msg,{icon: 5});
+				}
+				return false;
+			}
+		});
+		return false;	
+	},function(){
+		
+	})
+})
+$("body").on("click",".eval_reject",function () {
+	$this = $(this);
+	layer.confirm('确定驳回吗？', {
+		btn: ['确定','取消'] 
+	},function(){
+		load = layer.load();
+		$.ajax({
+			cache: true,
+			type: "POST",
+			url:'/admin/studentoffice/reject',
+			data:{'evaluation_id':$this.attr('attr-id')},// 你的formid
+			async: false,
+			error: function(request) {
+				layer.close(load);
+				layer.msg("连接失败",{icon: 5});
+				return false;
+			},
+			success: function(data) {
+				layer.close(load);
+				$this.closest("div").find(".eval_reject").attr('disabled',true);
+				$this.closest("div").find("button[name='pass']").attr('disabled',true);
+				$this.closest("div").find("button[name='fail']").attr('disabled',true);
+				if (data.code == 1 || data.code == 200) {
+					layer.msg(data.msg,{icon: 6});
+				}else{
+					layer.msg(data.msg,{icon: 5});
+				}
+				return false;
+			}
+		});
+		return false;	
+	},function(){
+		
+	})
+})
