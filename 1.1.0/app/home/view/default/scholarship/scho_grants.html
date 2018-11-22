@@ -81,12 +81,12 @@
                         <td colspan="3" class="k-s-content content">
                             <div style="display:inline-block;">
                                 <label>
-                                    <input type="radio" name="family_type" value="城镇" style="height:auto;width: auto;margin-right: 5px;" {if condition="$user_info.is_rural_student=='否'"} checked {/if} disabled/>城镇
+                                    <input type="radio" name="is_rural_student" value="否" style="height:auto;width: auto;margin-right: 5px;" {if condition="$user_info.is_rural_student=='否'"} checked {/if} />城镇
                                 </label>
                             </div>
                             <div style="display:inline-block;">
                                 <label>
-                                    <input type="radio" name="family_type" value="农村" style="height:auto;width: auto;margin-right: 5px;" {if condition="$user_info.is_rural_student=='是'"} checked {/if} disabled/>农村
+                                    <input type="radio" name="is_rural_student" value="是" style="height:auto;width: auto;margin-right: 5px;" {if condition="$user_info.is_rural_student=='是'"} checked {/if} />农村
                                 </label>
                             </div>
                         </td>

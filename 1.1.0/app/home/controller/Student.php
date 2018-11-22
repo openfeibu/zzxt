@@ -141,10 +141,11 @@ class Student extends Base
 			
 			$user_data = [
 				'phone' => isset($data['phone']) ? $data['phone'] : '',
+				'is_rural_student' => isset($data['is_rural_student']) ? $data['is_rural_student'] : '',
 			];
 			DB::name('user')->where('id_number',$this->user['id_number'])->update($user_data);
             //删除不必要的数据
-            unset($data['studentname'],$data['gender'],$data['birthday'],$data['phone'],$data['multiple_id']);
+            unset($data['studentname'],$data['gender'],$data['birthday'],$data['phone'],$data['is_rural_student'],$data['multiple_id']);
 
             if ($application) {
                 //提交过的话。做更新处理
@@ -228,10 +229,11 @@ class Student extends Base
 			
 			$user_data = [
 				'phone' => isset($data['phone']) ? $data['phone'] : '',
+				'is_rural_student' => isset($data['is_rural_student']) ? $data['is_rural_student'] : '',
 			];
 			DB::name('user')->where('id_number',$this->user['id_number'])->update($user_data);
             //删除不必要的数据
-            unset($data['studentname'],$data['gender'],$data['birthday'],$data['phone']);
+            unset($data['studentname'],$data['gender'],$data['birthday'],$data['phone'],$data['is_rural_student']);
 
             if ($application) {
                 //提交过的话。做更新处理
