@@ -71,7 +71,7 @@ class Test extends Base
 							var_dump($val[0].$val[1]."未申请，请检查");
 						}else
 						{
-							/*
+							
 							$array = array();
 							$evdata = array();
 							$array['name'] = '林淑贤';
@@ -85,6 +85,7 @@ class Test extends Base
 							$evdata['school_opinion'] = json_encode($array);
 							$evdata['school_poor_grade'] = $grade;
 							$evdata['evaluation_status'] = 5;
+							/*
 							Db::name("evaluation_application")
 								->where('evaluation_id', $evaluation['evaluation_id'])
 								->update($evdata);
@@ -95,6 +96,7 @@ class Test extends Base
 									'status' => $evdata['evaluation_status']
 								]);
 							*/	
+							var_dump($evdata);
 						}
 					}	
 				
