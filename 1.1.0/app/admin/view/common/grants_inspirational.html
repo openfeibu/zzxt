@@ -35,12 +35,12 @@
 	<td colspan="5" class="tab_content">
 		<div style="display:inline-block;margin-right: 20px;">
 			<label>
-				<input {if condition="$user.family_type==0"} checked {/if} disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>城镇
+				<input {if condition="$user.is_rural_student=='否'"} checked {/if} /> disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>城镇
 			</label>
 		</div>
 		<div style="display:inline-block;">
 			<label>
-				<input {if condition="$user.family_type==1"} checked {/if} disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>农村
+				<input {if condition="$user.is_rural_student=='是'"} checked {/if} /> disabled type="radio" name="" style="height:auto;width: auto;margin-right: 5px;"/>农村
 			</label>
 		</div>
 	</td>

@@ -50,8 +50,11 @@
                         <td class="k-s-content title">出生年月</td>
                         <td class="k-s-content content"><input type="text" name="" value="{$user_info.birthday}"/></td>
                         <td colspan="1" class="k-s-content" rowspan="4" style="text-align: center;position:relative;width:125px; ">
-
+							{if $user.member_list_headpic}
                             <img class="test1" style="width: 125px; height: 175px; display: inline;" src="{$user.member_list_headpic}" height="175px" width="125px" alt="照片">
+							{else}
+							<img class="test1" style="width: 125px; height: 175px; display: inline;" src="{$user.member_list_headpic}" height="175px" width="125px" alt="照片">
+							{/if}
                         </td>
 
                     </tr>
