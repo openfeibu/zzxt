@@ -135,6 +135,7 @@ class MemberList extends Model
 				'class_name' => $new_student['class_name'],
 				'class_number' => $new_student['class_number'],
 				'current_grade' => $new_student['current_grade'],
+				'political' => $new_student['political'],
 				'faculty_number' => get_faculty_number_by_dwh($new_student['dwh']),
 			];
 			

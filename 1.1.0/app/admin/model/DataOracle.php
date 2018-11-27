@@ -28,7 +28,7 @@ class Dataoracle extends Model
 			trigger_error(htmlentities($e['message'], ENT_QUOTES), E_USER_ERROR);
 		}
 	}
-	public function getStudent($where,$fields='XH as studentid,BH as class_number,DWH ,DWMC as department_name ,ZY as profession ,BJ as class_name,SFZH as id_number')
+	public function getStudent($where,$fields='XH as studentid,BH as class_number,DWH ,DWMC as department_name ,ZY as profession ,BJ as class_name,SFZH as id_number, ZZMM as political')
 	{
 		$data = $this->query("SELECT ".$fields." FROM LY_YKT_XS_DMT ".$where." AND ROWNUM = 1");
 		if($data)
