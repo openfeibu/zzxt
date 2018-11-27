@@ -134,14 +134,16 @@ class MemberList extends Model
 				'department_name' => $new_student['department_name'],
 				'class_name' => $new_student['class_name'],
 				'class_number' => $new_student['class_number'],
+				'current_grade' => $new_student['current_grade'],
 				'faculty_number' => get_faculty_number_by_dwh($new_student['dwh']),
 			];
 			
 		}
+		var_dump($new_student);exit;
 		
 		$new_student_jwxt = $data_class->getStudent($where_jwxt);
 		
-		if($new_student_jwxt)
+		if($new_student_jwxt && !$data['current_grade'])
 		{
 			$data['current_grade'] = $new_student_jwxt['current_grade'];
 		}

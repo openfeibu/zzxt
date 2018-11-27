@@ -31,6 +31,12 @@ class Dataoracle extends Model
 	public function getStudent($where,$fields='XH as studentid,BH as class_number,DWH ,DWMC as department_name ,ZY as profession ,BJ as class_name,SFZH as id_number')
 	{
 		$data = $this->query("SELECT ".$fields." FROM LY_YKT_XS_DMT ".$where." AND ROWNUM = 1");
+		if($data)
+		{
+			$nj_data = $this->query("SELECT NJ as current_grade FROM LY_XXZX_XS_DMT WHERE XH = '".$data['studentid']."' AND ROWNUM = 1");
+			$data = array_merge($data,$nj_data);
+		}
+		
 		return $data;
 	}
 	public function getStudents($where,$fields,$number=10)
