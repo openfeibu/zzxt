@@ -280,16 +280,17 @@ class ScholarshipHandle extends Base
 		{
 			$this->error("数据不存在");
 		}
-		
+		/*
 		if($apply_status['status'] > 2)
 		{
 			$this->error("已审核，不能打回");
 		}
+		*/
 		if($apply_status['fund_type'] == 3 || $apply_status['fund_type'] == 2)
 		{	
-			$this->multiple->where('multiple_id',$apply_status['application_id'])->update(['check_status' => 0]);
+			$this->multiple->where('multiple_id',$apply_status['application_id'])->update(['check_status' => 0,'group_opinion' => '' ,'faculty_opinion' => '']);
 		}else{
-			$this->national->where('national_id',$apply_status['application_id'])->update(['check_status' => 0]);
+			$this->national->where('national_id',$apply_status['application_id'])->update(['check_status' => 0,'group_opinion' => '' ,'faculty_opinion' => '']);
 		}
 		$apply_status->where('status_id',$status_id)->update(['status' => 0]);
 		$this->success("操作成功");
