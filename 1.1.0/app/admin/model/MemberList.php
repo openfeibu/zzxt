@@ -139,7 +139,6 @@ class MemberList extends Model
 			];
 			
 		}
-		var_dump($new_student);exit;
 		
 		$new_student_jwxt = $data_class->getStudent($where_jwxt);
 		
