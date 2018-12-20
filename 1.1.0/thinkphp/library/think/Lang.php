@@ -155,7 +155,7 @@ class Lang
     public static function detect()
     {
 		/*
-		zsign
+		G_sign
         // 自动侦测设置获取语言选择
         $langSet = '';
 
