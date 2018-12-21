@@ -101,4 +101,24 @@ class MultipleScholarship extends Model
 		$count = $count->count();
 		return $count;
 	}
+	public function getMultipleYearCout($type,$year,$where)
+	{
+		$subsidy = Db::name('set_subsidy')
+                ->where('id', $type)
+                ->find();
+		$count = Db::name('multiple_scholarship')
+				->alias('ms')
+				->join('yf_member_list m', 'm.member_list_id = ms.member_list_id')
+				->join('yf_user u', 'u.id_number = m.id_number', 'left')
+        		->where("u.current_grade",$year)
+				->where('ms.application_type',$type)
+                ->where('ms.times',$subsidy['begin_time']);
+        if($where)
+		{
+			$count = $count->where($where);
+		}
+		$count = $count->count();
+		return $count;
+	}		
+	
 }

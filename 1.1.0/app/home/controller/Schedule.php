@@ -10,6 +10,8 @@ use app\admin\model\DataHandle;
 use app\admin\model\DataOracle;
 use app\admin\model\Evaluation as EvaluationModel;
 use app\admin\model\MemberList as MemberListModel;
+use app\home\model\MultipleScholarship as MultipleScholarshipModel;
+use app\home\model\NationalScholarship as NationalScholarshipModel;
 
 class Schedule extends Base
 {
@@ -17,6 +19,8 @@ class Schedule extends Base
 	{
 		parent::__construct();
 		$this->evaluation = new EvaluationModel();
+		$this->NationalScholarship = new NationalScholarshipModel();
+		$this->MultipleScholarship = new MultipleScholarshipModel();
 	}
 	public function updateStudentInfo()
 	{
@@ -66,7 +70,6 @@ class Schedule extends Base
 		$data = [];
 		foreach($facultys as $faculty_key => $faculty)
 		{
-			/*特殊困难*/
 			$years = getYearArr();
 			
 			$faculty_grade_1_all_count = $faculty_grade_2_all_count = $faculty_grade_3_all_count = $faculty_grade_all_count = $faculty_student_count = 0;
@@ -227,7 +230,168 @@ class Schedule extends Base
 		{
 			DB::name('evaluation_statistics')->insert($value);
 		}
+		$this->scholarShipStatistics();
 		return "success";
 	}
 	
+	public function scholarShipStatistics()
+	{
+		$grants_type = 3;
+		$motiv_type = 2;
+		$national_type = 1;
+		$facultys = DB::name('faculty')->select();
+		$grants_subsidy = DB::name('set_subsidy')->where('id',$grants_type)->find();
+		$motiv_subsidy = DB::name('set_subsidy')->where('id',$motiv_type)->find(); 
+		$national_subsidy = DB::name('set_subsidy')->where('id',$national_type)->find(); 
+		
+		$data = [];
+		foreach($facultys as $faculty_key => $faculty)
+		{
+			$faculty_all_grants_student_count = 0;
+			$faculty_year_grants_student_count = $faculty_year_grants_pass_student_count = $faculty_year_grants_fail_student_count = 0;
+			
+			$faculty_all_motiv_student_count = 0;
+			$faculty_year_motiv_student_count = $faculty_year_motiv_pass_student_count = $faculty_year_motiv_fail_student_count = 0;
+			
+			$faculty_all_national_student_count = 0;
+			$faculty_year_national_student_count = $faculty_year_national_pass_student_count = $faculty_year_national_fail_student_count = 0;
+			
+			$years = getYearArr();
+			foreach($years as $year_key => $year)
+			{
+				//助学金
+				$where = " u.faculty_number = '".$faculty['faculty_number']."'";
+				$faculty_year_grants_student_count = $this->MultipleScholarship->getMultipleYearCout($grants_type,$year,$where);
+				$where = " u.faculty_number = '".$faculty['faculty_number']."' AND (ms.check_status = 4 OR ms.check_status = 5) ";
+				$faculty_year_grants_pass_student_count = $this->MultipleScholarship->getMultipleYearCout($grants_type,$year,$where);
+				$faculty_year_grants_fail_student_count = $faculty_year_grants_student_count - $faculty_year_grants_pass_student_count;
+				
+				$data[] = [
+					'name' => 'faculty_year_grants_student_count',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $grants_subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_grants_student_count,
+				];
+				$data[] = [
+					'name' => 'faculty_year_grants_pass_student_count',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $grants_subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_grants_pass_student_count,
+				];
+				$data[] = [
+					'name' => 'faculty_year_grants_fail_student_count',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $grants_subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_grants_fail_student_count,
+				];
+				$faculty_all_grants_student_count += $faculty_year_grants_student_count;
+				
+				//励志奖学金
+				$where = " u.faculty_number = '".$faculty['faculty_number']."'";
+				$faculty_year_motiv_student_count = $this->MultipleScholarship->getMultipleYearCout($motiv_type,$year,$where);
+				$where = " u.faculty_number = '".$faculty['faculty_number']."' AND (ms.check_status = 4 OR ms.check_status = 5) ";
+				$faculty_year_motiv_pass_student_count = $this->MultipleScholarship->getMultipleYearCout($motiv_type,$year,$where);
+				$faculty_year_motiv_fail_student_count = $faculty_year_motiv_student_count - $faculty_year_motiv_pass_student_count;
+				
+				$data[] = [
+					'name' => 'faculty_year_motiv_student_count',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $motiv_subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_motiv_student_count,
+				];
+				$data[] = [
+					'name' => 'faculty_year_motiv_pass_student_count',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $motiv_subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_motiv_pass_student_count,
+				];
+				$data[] = [
+					'name' => 'faculty_year_motiv_fail_student_count',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $motiv_subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_motiv_fail_student_count,
+				];
+				$faculty_all_motiv_student_count += $faculty_year_motiv_student_count;
+				
+				//奖学金
+				$where = " u.faculty_number = '".$faculty['faculty_number']."'";
+				$faculty_year_national_student_count = $this->NationalScholarship->getNationYearCount($year,$where);
+				$where = " u.faculty_number = '".$faculty['faculty_number']."' AND (ns.check_status = 4 OR ns.check_status = 5) ";
+				$faculty_year_national_pass_student_count = $this->NationalScholarship->getNationYearCount($year,$where);
+				$faculty_year_national_fail_student_count = $faculty_year_national_student_count - $faculty_year_national_pass_student_count;
+				
+				$data[] = [
+					'name' => 'faculty_year_national_student_count',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $national_subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_national_student_count,
+				];
+				$data[] = [
+					'name' => 'faculty_year_national_pass_student_count',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $national_subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_national_pass_student_count,
+				];
+				$data[] = [
+					'name' => 'faculty_year_national_fail_student_count',
+					'attr' => 'faculty_number',
+					'attr_value' => $faculty['faculty_number'],
+					'times' => $national_subsidy['begin_time'],
+					'year' => $year,
+					'value' => $faculty_year_national_fail_student_count,
+				];
+				$faculty_all_national_student_count += $faculty_year_national_student_count;
+			}
+			
+			$data[] = [
+				'name' => 'faculty_all_grants_student_count',
+				'attr' => 'faculty_number',
+				'attr_value' => $faculty['faculty_number'],
+				'times' => $grants_subsidy['begin_time'],
+				'year' => 'all',
+				'value' => $faculty_all_grants_student_count
+			];
+			$data[] = [
+				'name' => 'faculty_all_motiv_student_count',
+				'attr' => 'faculty_number',
+				'attr_value' => $faculty['faculty_number'],
+				'times' => $motiv_subsidy['begin_time'],
+				'year' => 'all',
+				'value' => $faculty_all_motiv_student_count
+			];
+			$data[] = [
+				'name' => 'faculty_all_national_student_count',
+				'attr' => 'faculty_number',
+				'attr_value' => $faculty['faculty_number'],
+				'times' => $national_subsidy['begin_time'],
+				'year' => 'all',
+				'value' => $faculty_all_national_student_count
+			];
+		}
+		
+		foreach($data as $key => $value)
+		{
+			$where_arr = $value;
+			unset($where_arr['value']);
+			DB::name('scholarship_statistics')->where($where_arr)->delete();
+			DB::name('scholarship_statistics')->insert($value);
+		}
+		echo "success";
+	}	
 }

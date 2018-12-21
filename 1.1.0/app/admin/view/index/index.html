@@ -26,91 +26,254 @@ table.gridtable td {
 }
 </style>
 	<div class="page-content">
-	<div class="row">
-		<div class="col-xs-12">
-			<!-- 提示 -->
-			<!--<div class="alert alert-block alert-success">-->
-				<!--<button type="button" class="close" data-dismiss="alert">-->
-					<!--<i class="ace-icon fa fa-times"></i>-->
-				<!--</button>-->
-				<!--<i class="ace-icon fa fa-check green"></i>-->
-				<!--为了您更好的使用本系统，建议屏幕分辨率1280*768以上，并且安装chrome谷歌浏览器-->
-			<!--</div>-->
-			<div class="row">
-				<div class="space-6"></div>
+		<div class="row">
+			<div class="col-xs-12">
+				<!-- 提示 -->
+				<!--<div class="alert alert-block alert-success">-->
+					<!--<button type="button" class="close" data-dismiss="alert">-->
+						<!--<i class="ace-icon fa fa-times"></i>-->
+					<!--</button>-->
+					<!--<i class="ace-icon fa fa-check green"></i>-->
+					<!--为了您更好的使用本系统，建议屏幕分辨率1280*768以上，并且安装chrome谷歌浏览器-->
+				<!--</div>-->
+				<div class="row">
+					<div class="space-6"></div>
+					
+				</div><!-- /.col -->
+				{if $admin['group_id'] == 1}
+				{:hook('maintain')}
+				{/if}
+				{if $admin['group_id'] == 23 || $admin['group_id'] == 1}
+				<div class="row" style="text-align:center">
+					<h4>广东农工商职业技术学院家庭经济困难认定信息汇总表</h4>
+					<table class="gridtable">
+						<tr>
+							<td>年级</td>
+							<td>年级学生数</td>
+							<td>家庭经济困难学生总人数</td>
+							<td>特殊困难学生总人数</td>
+							<td>比较困难学生总人数</td>
+							<td>一般困难学生总人数</td>
+						</tr>
+						{foreach $years as $key => $year}
+						<tr>
+							
+							<td>{$year}</td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_student_count' ")->sum('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade' ")->sum('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_1' ")->sum('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_2'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_3'")->sum('value') ?></td>
+						</tr>
+						{/foreach}
+						<tr>
+							<td>总计</td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'student_count' AND attr = 'all'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade' AND attr = 'all'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade_1' AND attr = 'all'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade_2' AND attr = 'all'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade_3' AND attr = 'all'")->value('value') ?></td>
+						</tr>
+					</table>
+				</div>
 				
-			</div><!-- /.col -->
-			{if $admin['group_id'] == 1}
-			{:hook('maintain')}
-			{/if}
-			{if $admin['group_id'] == 23 || $admin['group_id'] == 1}
-			<div class="row" style="text-align:center">
-				<h4>广东农工商职业技术学院家庭经济困难认定信息汇总表</h4>
-				<table class="gridtable">
-					<tr>
-						<td>年级</td>
-						<td>年级学生数</td>
-						<td>家庭经济困难学生总人数</td>
-						<td>特殊困难学生总人数</td>
-						<td>比较困难学生总人数</td>
-						<td>一般困难学生总人数</td>
-					</tr>
-					{foreach $years as $key => $year}
-					<tr>
-						
-						<td>{$year}</td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_student_count' ")->sum('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade' ")->sum('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_1' ")->sum('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_2'")->sum('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_3'")->sum('value') ?></td>
-					</tr>
-					{/foreach}
-					<tr>
-						<td>总计</td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'student_count' AND attr = 'all'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade' AND attr = 'all'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade_1' AND attr = 'all'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade_2' AND attr = 'all'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'poor_grade_3' AND attr = 'all'")->value('value') ?></td>
-					</tr>
-				</table>
-			</div>
-			{/if}
-			{if $admin['group_id'] == 22}
-			<div class="row" style="text-align:center">
-				<h4><?php echo \think\Db::name('faculty')->where('faculty_number',$admin['faculty_number'])->value('faculty_name') ?>家庭经济困难认定信息汇总表</h4>
-				<table class="gridtable">
-					<tr>
-						<td>年级</td>
-						<td>年级学生数</td>
-						<td>家庭经济困难学生总人数</td>
-						<td>特殊困难学生总人数</td>
-						<td>比较困难学生总人数</td>
-						<td>一般困难学生总人数</td>
-					</tr>
-					{foreach $years as $key => $year}
-					<tr>
-						
-						<td>{$year}</td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_1' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_2' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_3' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
-					</tr>
-					{/foreach}
-					<tr>
-						<td>总计</td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade_1' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade_2' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
-						<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade_3' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
-					</tr>
-				</table>
-			</div>
-			{/if}
-		</div><!-- /.row -->
+				<div class="row" style="text-align:center;margin-top:20px;">
+					<div class="col-xs-4">
+					<h4>助学金申请信息汇总表</h4>
+					<table class="gridtable">
+						<tr>
+							<td>年级</td>
+							<td>年级学生数</td>
+							<td>通过学生数</td>
+							<td>未通过学生数</td>
+						</tr>
+						{foreach $years as $key => $year}
+						<tr>
+							<td>{$year}</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_student_count'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_pass_student_count' ")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_fail_student_count'")->sum('value') ?></td>
+						</tr>
+						{/foreach}
+						<tr>
+							<td>总计</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_student_count'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_pass_student_count'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_fail_student_count'")->sum('value') ?></td>
+						</tr>
+					</table>
+					</div>
+					<div class="col-xs-4">
+					<h4>励志奖学金申请信息汇总表</h4>
+					<table class="gridtable">
+						<tr>
+							<td>年级</td>
+							<td>年级学生数</td>
+							<td>通过学生数</td>
+							<td>未通过学生数</td>
+						</tr>
+						{foreach $years as $key => $year}
+						<tr>
+							<td>{$year}</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_student_count'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_pass_student_count' ")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_fail_student_count'")->sum('value') ?></td>
+						</tr>
+						{/foreach}
+						<tr>
+							<td>总计</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_student_count'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_pass_student_count'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_fail_student_count'")->sum('value') ?></td>
+						</tr>
+					</table>
+					</div>
+					<div class="col-xs-4">
+					<h4>奖学金申请信息汇总表</h4>
+					<table class="gridtable">
+						<tr>
+							<td>年级</td>
+							<td>年级学生数</td>
+							<td>通过学生数</td>
+							<td>未通过学生数</td>
+						</tr>
+						{foreach $years as $key => $year}
+						<tr>
+							<td>{$year}</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_student_count'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_pass_student_count'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_fail_student_count'")->sum('value') ?></td>
+						</tr>
+						{/foreach}
+						<tr>
+							<td>总计</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_student_count'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_pass_student_count'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_fail_student_count'")->sum('value') ?></td>
+						</tr>
+					</table>
+					</div>
+				</div>
+				
+				{/if}
+				{if $admin['group_id'] == 22}
+				<div class="row" style="text-align:center">
+				<?php $faculty_name = \think\Db::name('faculty')->where('faculty_number',$admin['faculty_number'])->value('faculty_name') ?>
+					<h4>{$faculty_name}家庭经济困难认定信息汇总表</h4>
+					<table class="gridtable">
+						<tr>
+							<td>年级</td>
+							<td>年级学生数</td>
+							<td>家庭经济困难学生总人数</td>
+							<td>特殊困难学生总人数</td>
+							<td>比较困难学生总人数</td>
+							<td>一般困难学生总人数</td>
+						</tr>
+						{foreach $years as $key => $year}
+						<tr>
+							
+							<td>{$year}</td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_1' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_2' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = '".$year."' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_year_poor_grade_3' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+						</tr>
+						{/foreach}
+						<tr>
+							<td>总计</td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade_1' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade_2' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('evaluation_statistics')->where("year = 'all' AND times = '".$eval_subsidy['begin_time']."' AND name = 'faculty_poor_grade_3' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+						</tr>
+					</table>
+				</div>
+				
+				<div class="row" style="text-align:center;margin-top:20px;">
+					<div class="col-xs-4">
+					<h4>{$faculty_name}助学金申请信息汇总表</h4>
+					<table class="gridtable">
+						<tr>
+							<td>年级</td>
+							<td>年级学生数</td>
+							<td>通过学生数</td>
+							<td>未通过学生数</td>
+						</tr>
+						{foreach $years as $key => $year}
+						<tr>
+							<td>{$year}</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_pass_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_fail_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+						</tr>
+						{/foreach}
+						<tr>
+							<td>总计</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_pass_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_grants_fail_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->sum('value') ?></td>
+						</tr>
+					</table>
+					</div>
+					<div class="col-xs-4">
+					<h4>{$faculty_name}励志奖学金申请信息汇总表</h4>
+					<table class="gridtable">
+						<tr>
+							<td>年级</td>
+							<td>年级学生数</td>
+							<td>通过学生数</td>
+							<td>未通过学生数</td>
+						</tr>
+						{foreach $years as $key => $year}
+						<tr>
+							<td>{$year}</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_pass_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_fail_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+						</tr>
+						{/foreach}
+						<tr>
+							<td>总计</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_pass_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_motiv_fail_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->sum('value') ?></td>
+						</tr>
+					</table>
+					</div>
+					<div class="col-xs-4">
+					<h4>{$faculty_name}奖学金申请信息汇总表</h4>
+					<table class="gridtable">
+						<tr>
+							<td>年级</td>
+							<td>年级学生数</td>
+							<td>通过学生数</td>
+							<td>未通过学生数</td>
+						</tr>
+						{foreach $years as $key => $year}
+						<tr>
+							<td>{$year}</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_pass_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->where("year = '".$year."' AND times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_fail_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->value('value') ?></td>
+						</tr>
+						{/foreach}
+						<tr>
+							<td>总计</td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_pass_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->sum('value') ?></td>
+							<td><?php echo think\Db::name('scholarship_statistics')->whereIn('year',$years)->where("times = '".$g_subsidy['begin_time']."' AND name = 'faculty_year_national_fail_student_count' AND attr = 'faculty_number' AND attr_value = '".$admin['faculty_number']."'")->sum('value') ?></td>
+						</tr>
+					</table>
+					</div>
+				</div>
+			
+				{/if}
+				
+			</div><!-- /.row -->
+
+		</div>
 	</div>
+	<div class="clearfix"></div>
 {/block}

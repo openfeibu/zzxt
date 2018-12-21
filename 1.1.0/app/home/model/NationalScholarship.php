@@ -118,4 +118,19 @@ class NationalScholarship extends Model
 		$count = $count->count();
 		return $count;
 	}
+	public function getNationYearCount($year,$where = '')
+	{
+		$count = Db::name('national_scholarship')
+				->alias('ns')
+				->join('yf_member_list m', 'm.member_list_id = ns.member_list_id')
+				->join('yf_user u', 'u.id_number = m.id_number', 'left')
+				->where("u.current_grade",$year)
+				->where('ns.times',$this->subsidy['begin_time']);
+        if($where)
+		{
+			$count = $count->where($where);
+		}
+		$count = $count->count();
+		return $count;
+	}
 }

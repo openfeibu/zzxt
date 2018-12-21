@@ -27,8 +27,14 @@ class Index extends Base
 		$member_model=new MemberList;
 		$years = getYearArr();
 		$eval_subsidy = DB::name('set_subsidy')->where('id',5)->find();
+		$g_subsidy = Db::table('yf_set_subsidy')->where('id', 3)->find();
+		$m_subsidy = Db::table('yf_set_subsidy')->where('id', 2)->find();
+		$n_subsidy = Db::table('yf_set_subsidy')->where('id', 1)->find();
 		$this->assign('years',$years);
 		$this->assign('eval_subsidy',$eval_subsidy);
+		$this->assign('g_subsidy',$g_subsidy);
+		$this->assign('m_subsidy',$m_subsidy);
+		$this->assign('n_subsidy',$n_subsidy);
 		
 		//渲染模板
         return $this->fetch();
