@@ -1806,6 +1806,7 @@ function handleApply($apply = array())
 	}
 	if (isset($apply['school_opinion']) && !empty($apply['school_opinion'])) {
 		$apply['school_opinion'] = json_decode($apply['school_opinion'], true);
+		/*
 		if($apply['school_poor_grade'] && $apply['school_poor_grade'] <> $apply['faculty_poor_grade'])
 		{
 			$apply['school_opinion']['text'] = '不同意学院评级';
@@ -1818,7 +1819,7 @@ function handleApply($apply = array())
 			$apply['school_opinion']['text'] = in_array($apply['school_opinion']['text'],['不同意','不同意学院评级']) ? '不同意学院评议' : $apply['school_opinion']['text'];
 		//$apply['school_opinion']['text'] = str_replace('评级','评议',$apply['school_opinion']['text']);
 		}
-		
+		*/
 	} else {
 		$apply['school_opinion']['time'] = time();
 		$apply['school_opinion']['text'] = '';
