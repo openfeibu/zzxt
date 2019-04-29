@@ -216,7 +216,7 @@ class StudentOffice extends Base
                 ->where('ms.office_begin < '.time())
                 ->where('ms.office_end >'.time())
                 ->where('u.faculty_number', $this->faculty)
-                ->paginate(20);
+                ->paginate(20,false,['query'=>get_query()]);
         } else {
             //奖学金
             $data = Db::table('yf_apply_scholarships_status')
@@ -229,7 +229,7 @@ class StudentOffice extends Base
                 ->where('ms.office_begin < '.time())
                 ->where('ms.office_end >'.time())
                 ->where('u.faculty_number', $this->faculty)
-                ->paginate(20);
+                ->paginate(20,false,['query'=>get_query()]);
         }
         $this->assign('list', $data);
         return $this->fetch(':notice_front/grants_notice');
@@ -267,8 +267,9 @@ class StudentOffice extends Base
         $where .= " AND ass.status in(0,1,2,3,4,5,6,7,8,9)";
         $data = $this->evaluation->getEvaluationList($where,$order);
         $show=$data->render();
+		/*
 		$show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
-
+*/
         $data_arr = $data->all();
 		$data_arr = Evaluation::handleEvaluationList($data_arr);
 		

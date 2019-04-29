@@ -172,7 +172,7 @@ class FacultyGroup extends Base
                 ->where('ms.publicity_begin < '.time())
                 ->where('ms.publicity_end >'.time())
                 ->where('u.faculty_number', $this->faculty)
-                ->paginate(20);
+                ->paginate(20,false,['query'=>get_query()]);
         } else {
             //奖学金
             $data = Db::table('yf_apply_scholarships_status')
@@ -185,7 +185,7 @@ class FacultyGroup extends Base
                 ->where('ms.publicity_begin < '.time())
                 ->where('ms.publicity_end >'.time())
                 ->where('u.faculty_number', $this->faculty)
-                ->paginate(20);
+                ->paginate(20,false,['query'=>get_query()]);
         }
         $this->assign('list', $data);
         return $this->fetch(':notice_front/grants_notice');
@@ -290,7 +290,7 @@ class FacultyGroup extends Base
                 ->where('ms.publicity_begin < '.time())
                 ->where('ms.publicity_end >'.time())
                 ->where('u.faculty_number', $this->faculty)
-                ->paginate(20);
+                ->paginate(20,false,['query'=>get_query()]);
         $this->assign('list', $data);
         return $this->fetch();
     }

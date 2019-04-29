@@ -85,7 +85,7 @@ class WorkStudy extends Base
                 ->where('work_apply_id', $id)
                 ->where("ws.status is null")
                 ->where($sql)
-                ->paginate(20);
+                ->paginate(20,false,['query'=>get_query()]);
 			$classCode = new ClassCOde();
             $faculty_list = $classCode->getFaculties();
             $this->assign("faculty_list", $faculty_list);
@@ -100,7 +100,7 @@ class WorkStudy extends Base
             ->field('ws.*,u.studentname,u.profession+u.class as class')
             ->where('work_apply_id', $id)
             ->where("ws.status is null")
-            ->paginate(20);
+            ->paginate(20,false,['query'=>get_query()]);
 		$classCode = new ClassCOde();
         $faculty_list = $classCode->getFaculties();
         $this->assign("faculty_list", $faculty_list);
@@ -207,7 +207,7 @@ class WorkStudy extends Base
         $data = Db::table('yf_work_apply_table')
             ->where('is_special', $type)
             ->where('end_time <= '.time())
-            ->paginate(20);
+            ->paginate(20,false,['query'=>get_query()]);
         halt($data);
     }
 
@@ -221,7 +221,7 @@ class WorkStudy extends Base
         $data = Db::table('yf_work_status')
             ->where('work_id', $job_id)
             ->where('status', 2)
-            ->paginate(20);
+            ->paginate(20,false,['query'=>get_query()]);
     }
 
     /**
@@ -621,7 +621,7 @@ class WorkStudy extends Base
             ->where('work_apply_id', $id)
             ->field('ws.*,u.studentname,u.profession+u.class as class')
             ->where('status', 3)
-            ->paginate(20);
+            ->paginate(20,false,['query'=>get_query()]);
         if (empty($data->count())) {
             return $this->error("该岗位没有聘用学生");
         }
@@ -698,7 +698,7 @@ class WorkStudy extends Base
                 ->where('work_apply_id', $id)
                 ->where("ws.status = 1")
                 ->where($sql)
-                ->paginate(20);
+                ->paginate(20,false,['query'=>get_query()]);
 			$classCode = new ClassCOde();
             $faculty_list =  $classCode->getFaculties();
             $this->assign("faculty_list", $faculty_list);
@@ -713,7 +713,7 @@ class WorkStudy extends Base
             ->field('ws.*,u.studentname,u.profession+u.class as class')
             ->where('work_apply_id', $id)
             ->where("ws.status = 1")
-            ->paginate(20);
+            ->paginate(20,false,['query'=>get_query()]);
 		$classCode = new ClassCOde();
         $faculty_list =  $classCode->getFaculties();
         $this->assign("faculty_list", $faculty_list);

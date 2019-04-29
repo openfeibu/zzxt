@@ -133,7 +133,7 @@ class Evaluation extends Model
 					->order('score desc')
 					->order($order)
                     ->field('ass.*,m.member_list_username,m.member_list_nickname,app.assess_fraction,app.score,app.change_fraction,app.evaluation_status,app.group_opinion,app.faculty_opinion,app.school_opinion,app.group_poor_grade,app.faculty_poor_grade,app.school_poor_grade,u.*')
-                    ->paginate(40);
+                    ->paginate(40,false,['query'=>get_query()]);
     }
     public function getAllEvaluationList($where)
     {

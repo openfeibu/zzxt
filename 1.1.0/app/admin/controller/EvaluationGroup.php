@@ -57,6 +57,7 @@ class EvaluationGroup extends Base
 		
         $data = $this->evaluation->getEvaluationList($where,$order);
         $show=$data->render();
+
         $show=preg_replace("(<a[^>]*page[=|/](\d+).+?>(.+?)<\/a>)","<a href='javascript:ajax_page($1);'>$2</a>",$show);
 
         $data_arr = $data->all();

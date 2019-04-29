@@ -76,6 +76,8 @@ class Test extends Base
 							$evdata = array();
 							$array['name'] = '林淑贤';
 							$array['time'] = time();
+							
+							
 							if($grade == $evaluation['faculty_poor_grade'])
 							{
 								$array['text'] = '同意学院评议';
@@ -85,7 +87,7 @@ class Test extends Base
 							$evdata['school_opinion'] = json_encode($array);
 							$evdata['school_poor_grade'] = $grade;
 							$evdata['evaluation_status'] = 5;
-							/*
+							
 							Db::name("evaluation_application")
 								->where('evaluation_id', $evaluation['evaluation_id'])
 								->update($evdata);
@@ -95,8 +97,7 @@ class Test extends Base
 									'update_at' => time(),
 									'status' => $evdata['evaluation_status']
 								]);
-							*/	
-							var_dump($evdata);
+							
 						}
 					}	
 				
